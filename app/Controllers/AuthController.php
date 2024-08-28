@@ -1,0 +1,71 @@
+<?php 
+namespace App\Controllers;
+
+use App\Models\UserModel;
+
+class AuthController extends BaseController
+{
+    public function register()
+    {
+        return view('register');
+    }
+
+    public function registerUser()
+    {
+        $userModel = new UserModel();
+
+        $data = [
+            'username' => $this->request->getPost('username'),
+            'email' => $this->request->getPost('email'),
+            'password' => $this->request->getPost('password'),
+        ];
+
+        $userModel->save($data);
+
+        return redirect()->to('/login')->with('success', 'Registration successful');
+    }
+
+    public function login()
+    {
+        return view('login');
+    }
+
+    public function loginUser()
+    {
+        $userModel = new UserModel();
+
+        $email = $this->request->getPost('email');
+        $password = $this->request->getPost('password');
+
+        $user = $userModel->where('email', $email)->first();
+
+        if ($user) {
+            if (password_verify($password, $user['password'])) {
+                session()->set([
+                    'username' => $user['username'],
+                    'logged_in' => true,
+                ]);
+                return redirect()->to('/welcome');
+            } else {
+                return redirect()->back()->with('error', 'Invalid Password');
+            }
+        } else {
+            return redirect()->back()->with('error', 'User not found');
+        }
+    }
+
+    public function logout()
+    {
+        session()->destroy();
+        return redirect()->to('/login');
+    }
+    public function welcome()
+    {
+        $session=session();
+        if($session->get('logged_in')) {
+        return view('welcome');
+        } else {
+            return view('login');
+    }
+}
+}
