@@ -97,14 +97,16 @@
 
 <body>
     <div class="login-form">
-        <h2>Es bueno verte de vuelta, Inicia sesion</h2>
         <?= session()->getFlashdata('error') ?>
         <form method="post" action="<?= site_url('loginUser') ?>">
             <input type="email" name="email" placeholder="Correo electrónico" required>
             <input type="password" name="password" placeholder="Contraseña" required>
             <button type="submit">Iniciar Sesión</button>
         </form>
-        <a id="bl" href="<?= site_url('register') ?>">Registrarse</a>
+        <br>
+        <center>
+            <a id="bl" href="<?= site_url('register') ?>">Ir a register</a>
+        </center>
     </div>
 </body>
 </html>

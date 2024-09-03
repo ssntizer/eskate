@@ -94,7 +94,6 @@
 
 <body>
     <div class="register-form">
-        <h2>No eres de por aqui? Registrate</h2>
         <?= session()->getFlashdata('success') ?>
         <form method="post" action="<?= site_url('registerUser') ?>">
             <input type="text" name="username" placeholder="Username" required>
