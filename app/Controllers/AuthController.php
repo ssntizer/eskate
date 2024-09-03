@@ -2,6 +2,8 @@
 namespace App\Controllers;
 
 use App\Models\UserModel;
+use App\Models\SkateModel;
+use App\Models\UbicacionModel;
 
 class AuthController extends BaseController
 {
@@ -59,13 +61,28 @@ class AuthController extends BaseController
         session()->destroy();
         return redirect()->to('/login');
     }
+
     public function welcome()
-    {
-        $session=session();
-        if($session->get('logged_in')) {
-        return view('welcome');
-        } else {
-            return view('login');
+{
+    $session = session();
+
+    if ($session->get('logged_in')) {
+        // Instancia del modelo de la patineta
+        $skateModel = new SkateModel();
+
+        // Obtener los datos del skate junto con la ubicación
+        $skate = $skateModel->getSkateWithLocation();
+
+        // Verificar si se obtuvieron los datos del skate
+        if (!$skate) {
+            // Manejo de error: puedes redirigir a otra vista o mostrar un mensaje
+            return redirect()->to('/error')->with('error', 'No se encontraron datos de skate.');
+        }
+
+        // Pasar los datos a la vista
+        return view('welcome', ['skate' => $skate]);
+    } else {
+        return view('login');
     }
 }
 }
