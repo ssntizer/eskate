@@ -19,7 +19,7 @@ class AuthController extends BaseController
         $data = [
             'username' => $this->request->getPost('username'),
             'email' => $this->request->getPost('email'),
-            'password' => $this->request->getPost('password'),
+            'password' => password_hash($this->request->getPost('password'), PASSWORD_BCRYPT),
         ];
 
         $userModel->save($data);
@@ -41,18 +41,14 @@ class AuthController extends BaseController
 
         $user = $userModel->where('email', $email)->first();
 
-        if ($user) {
-            if (password_verify($password, $user['password'])) {
-                session()->set([
-                    'username' => $user['username'],
-                    'logged_in' => true,
-                ]);
-                return redirect()->to('/welcome');
-            } else {
-                return redirect()->back()->with('error', 'Invalid Password');
-            }
+        if ($user && password_verify($password, $user['password'])) {
+            session()->set([
+                'username' => $user['username'],
+                'logged_in' => true,
+            ]);
+            return redirect()->to('/list-skates');
         } else {
-            return redirect()->back()->with('error', 'User not found');
+            return redirect()->back()->with('error', 'Invalid credentials');
         }
     }
 
@@ -62,27 +58,59 @@ class AuthController extends BaseController
         return redirect()->to('/login');
     }
 
-    public function welcome()
-{
-    $session = session();
+    public function listSkates()
+    {
+        $session = session();
 
-    if ($session->get('logged_in')) {
-        // Instancia del modelo de la patineta
-        $skateModel = new SkateModel();
+        if ($session->get('logged_in')) {
+            $skateModel = new SkateModel();
+            $skates = $skateModel->findAll(); // Asume que quieres obtener todos los skates
 
-        // Obtener los datos del skate junto con la ubicación
-        $skate = $skateModel->getSkateWithLocation();
-
-        // Verificar si se obtuvieron los datos del skate
-        if (!$skate) {
-            // Manejo de error: puedes redirigir a otra vista o mostrar un mensaje
-            return redirect()->to('/error')->with('error', 'No se encontraron datos de skate.');
+            return view('list_skates', ['skates' => $skates]);
+        } else {
+            return redirect()->to('/login');
         }
-
-        // Pasar los datos a la vista
-        return view('welcome', ['skate' => $skate]);
-    } else {
-        return view('login');
     }
-}
+
+    public function viewSkate($codigo)
+    {
+        $session = session();
+
+        if ($session->get('logged_in')) {
+            $skateModel = new SkateModel();
+            $ubicacionModel = new UbicacionModel();
+
+            // Obtener datos del skate con ubicación
+            $skate = $skateModel->getSkateWithLocation($codigo);
+
+            if (!$skate) {
+                return redirect()->to('/list-skates')->with('error', 'Skate no encontrado.');
+            }
+
+            // Pasar datos a la vista
+            return view('welcome', ['skate' => $skate]);
+        } else {
+            return redirect()->to('/login');
+        }
+    }
+
+    public function welcome()
+    {
+        $session = session();
+
+        if ($session->get('logged_in')) {
+            $skateModel = new SkateModel();
+
+            // Aquí podrías obtener un skate por defecto o redirigir a otro método si es necesario
+            $skate = $skateModel->getSkateWithLocation('YYYYY1'); // Ejemplo de skate por defecto
+
+            if (!$skate) {
+                return redirect()->to('/list-skates')->with('error', 'No se encontraron datos de skate.');
+            }
+
+            return view('welcome', ['skate' => $skate]);
+        } else {
+            return redirect()->to('/login');
+        }
+    }
 }
