@@ -24,22 +24,17 @@ class SkateModel extends Model
         return $this->where('skate.codigo', $codigo)->first();
     }
 
-    // Agregar un nuevo skate a la base de datos
+    // Actualizar el ID_usuario para un skate existente
     public function addSkate($codigo, $ID_usuario)
     {
-        // Verificar si el código del skate ya existe
+        // Verificar si el código del skate existe
         $existingSkate = $this->getSkateByCode($codigo);
-        if ($existingSkate) {
-            return false; // Si ya existe, retorna falso
+        if (!$existingSkate) {
+            return false; // Si no existe, retorna falso
         }
 
-        // Insertar un nuevo skate en la base de datos
-        $data = [
-            'codigo' => $codigo,
-            'ID_usuario' => $ID_usuario, // El ID del usuario que lo agregó
-            // 'velocidad', 'bateria', 'temperatura', 'ID_ubicacion' serán agregados automáticamente después
-        ];
-
-        return $this->insert($data); // Insertar el nuevo registro
+        // Actualizar el campo ID_usuario
+        $data = ['ID_usuario' => $ID_usuario];
+        return $this->update($codigo, $data); // Actualizar el registro
     }
 }
