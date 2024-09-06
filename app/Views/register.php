@@ -83,26 +83,58 @@
             background-color: #0056b3; /* Color de fondo en hover */
         }
 
-        /* Estilos de error */
-        .error {
+        /* Estilos de error y éxito */
+        .error, .success {
             color: #e74c3c; /* Color del texto de error */
             font-size: 14px; /* Tamaño de fuente */
             margin-bottom: 20px; /* Margen inferior */
+            text-align: left; /* Alinear texto a la izquierda */
+        }
+
+        .success {
+            color: #2ecc71; /* Color del texto de éxito */
         }
     </style>
 </head>
 
 <body>
     <div class="register-form">
-        <?= session()->getFlashdata('success') ?>
-        <form method="post" action="<?= site_url('registerUser') ?>">
-            <input type="text" name="username" placeholder="Username" required>
-            <input type="email" name="email" placeholder="Email" required>
-            <input type="password" name="password" placeholder="Password" required>
+        <?php if (session()->getFlashdata('error')): ?>
+            <div class="error">
+                <?= session()->getFlashdata('error') ?>
+            </div>
+        <?php elseif (session()->getFlashdata('success')): ?>
+            <div class="success">
+                <?= session()->getFlashdata('success') ?>
+            </div>
+        <?php endif; ?>
+
+        <form id="registrationForm" method="post" action="<?= site_url('registerUser') ?>">
+            <input type="text" name="username" placeholder="Username" value="<?= old('username') ?>" required>
+            <input type="email" name="email" placeholder="Email" value="<?= old('email') ?>" required>
+            <input type="password" name="password" id="password" placeholder="Password" required>
+            <input type="password" name="confirm_password" id="confirm_password" placeholder="Confirm Password" required>
+            <div id="error-message" class="error" style="display:none;"></div>
             <button type="submit">Registrar</button>
         </form>
         <br>
         <a id="bl" href="<?= site_url('login') ?>">Ir a login</a>
     </div>
+
+    <script>
+        document.getElementById('registrationForm').addEventListener('submit', function(event) {
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm_password').value;
+            const errorMessage = document.getElementById('error-message');
+            
+            if (password !== confirmPassword) {
+                errorMessage.textContent = 'Las contraseñas no coinciden.';
+                errorMessage.style.display = 'block';
+                event.preventDefault(); // Previene el envío del formulario
+            } else {
+                errorMessage.style.display = 'none';
+            }
+        });
+    </script>
 </body>
 </html>

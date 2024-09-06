@@ -12,20 +12,40 @@ class AuthController extends BaseController
         return view('register');
     }
 
+ 
     public function registerUser()
-{
-    $userModel = new UserModel();
+    {
+        $userModel = new UserModel();
 
-    $data = [
-        'username' => $this->request->getPost('username'),
-        'email' => $this->request->getPost('email'),
-        'password' =>$this->request->getPost('password')
-    ];
+        // Obtener los datos del formulario
+        $username = $this->request->getPost('username');
+        $email = $this->request->getPost('email');
+        $password = $this->request->getPost('password');
+        $confirmPassword = $this->request->getPost('confirm_password');
 
-    $userModel->save($data);
+        // Validar las contraseñas
+        if ($password !== $confirmPassword) {
+            return redirect()->back()->with('error', 'Las contraseñas no coinciden')->withInput();
+        }
 
-    return redirect()->to('/login')->with('success', 'Registration successful');
-}
+        // Verificar si el correo electrónico ya existe
+        $existingUser = $userModel->where('email', $email)->first();
+        if ($existingUser) {
+            return redirect()->back()->with('error', 'El correo electrónico ya está en uso')->withInput();
+        }
+
+        // Preparar los datos para guardar
+        $data = [
+            'username' => $username,
+            'email' => $email,
+            'password' => $password
+        ];
+
+        // Guardar el nuevo usuario
+        $userModel->save($data);
+
+        return redirect()->to('/login')->with('success', 'Registro exitoso');
+    }
 
     public function login()
     {
