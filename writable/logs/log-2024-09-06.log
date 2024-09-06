@@ -114,3 +114,281 @@ DEBUG - 2024-09-06 19:38:13 --> User found: Array
 DEBUG - 2024-09-06 19:38:13 --> Password verified successfully.
 INFO - 2024-09-06 19:38:13 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
 INFO - 2024-09-06 19:38:14 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-09-06 22:09:57 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-09-06 22:10:19 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-09-06 22:10:20 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-09-06 22:10:26 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-09-06 22:10:56 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-09-06 22:11:35 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-09-06 22:12:12 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-09-06 22:12:13 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2024-09-06 22:12:16 --> ErrorException: Undefined property: App\Controllers\AuthController::$db
+[Method: POST, Route: add-skate]
+in APPPATH/Controllers/AuthController.php on line 135.
+ 1 APPPATH/Controllers/AuthController.php(135): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined property: App\\Controllers\\AuthController::$db', '/Applications/MAMP/htdocs/eskate/app/Controllers/AuthController.php', 135)
+ 2 SYSTEMPATH/CodeIgniter.php(933): App\Controllers\AuthController->add_skate()
+ 3 SYSTEMPATH/CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+ 4 SYSTEMPATH/CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH/Boot.php(325): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH/Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH/index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+INFO - 2024-09-06 22:12:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-09-06 22:12:40 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-09-06 22:12:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-09-06 22:12:49 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-09-06 22:12:58 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2024-09-06 22:13:02 --> ErrorException: Undefined variable $db
+[Method: POST, Route: add-skate]
+in APPPATH/Controllers/AuthController.php on line 135.
+ 1 APPPATH/Controllers/AuthController.php(135): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $db', '/Applications/MAMP/htdocs/eskate/app/Controllers/AuthController.php', 135)
+ 2 SYSTEMPATH/CodeIgniter.php(933): App\Controllers\AuthController->add_skate()
+ 3 SYSTEMPATH/CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+ 4 SYSTEMPATH/CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH/Boot.php(325): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH/Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH/index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+INFO - 2024-09-06 22:13:04 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-09-06 22:14:31 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-09-06 22:14:35 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-09-06 22:16:03 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-09-06 22:16:12 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2024-09-06 22:16:15 --> ErrorException: Undefined variable $db
+[Method: POST, Route: add-skate]
+in APPPATH/Controllers/AuthController.php on line 135.
+ 1 APPPATH/Controllers/AuthController.php(135): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $db', '/Applications/MAMP/htdocs/eskate/app/Controllers/AuthController.php', 135)
+ 2 SYSTEMPATH/CodeIgniter.php(933): App\Controllers\AuthController->add_skate()
+ 3 SYSTEMPATH/CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+ 4 SYSTEMPATH/CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH/Boot.php(325): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH/Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH/index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+INFO - 2024-09-06 22:17:50 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-09-06 22:17:51 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2024-09-06 22:17:54 --> ErrorException: Undefined property: App\Controllers\AuthController::$db
+[Method: POST, Route: add-skate]
+in APPPATH/Controllers/AuthController.php on line 135.
+ 1 APPPATH/Controllers/AuthController.php(135): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined property: App\\Controllers\\AuthController::$db', '/Applications/MAMP/htdocs/eskate/app/Controllers/AuthController.php', 135)
+ 2 SYSTEMPATH/CodeIgniter.php(933): App\Controllers\AuthController->add_skate()
+ 3 SYSTEMPATH/CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+ 4 SYSTEMPATH/CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH/Boot.php(325): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH/Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH/index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+INFO - 2024-09-06 22:18:39 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-09-06 22:18:40 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-09-06 22:18:42 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2024-09-06 22:18:42 --> mysqli_sql_exception: Column 'ID_usuario' cannot be null in /Applications/MAMP/htdocs/eskate/system/Database/MySQLi/Connection.php:312
+Stack trace:
+#0 /Applications/MAMP/htdocs/eskate/system/Database/MySQLi/Connection.php(312): mysqli->query('INSERT INTO `sk...', 0)
+#1 /Applications/MAMP/htdocs/eskate/system/Database/BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `sk...')
+#2 /Applications/MAMP/htdocs/eskate/system/Database/BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `sk...')
+#3 /Applications/MAMP/htdocs/eskate/system/Database/BaseBuilder.php(2340): CodeIgniter\Database\BaseConnection->query('INSERT INTO `sk...', Array, false)
+#4 /Applications/MAMP/htdocs/eskate/system/Model.php(394): CodeIgniter\Database\BaseBuilder->insert()
+#5 /Applications/MAMP/htdocs/eskate/system/BaseModel.php(840): CodeIgniter\Model->doInsert(Array)
+#6 /Applications/MAMP/htdocs/eskate/system/Model.php(802): CodeIgniter\BaseModel->insert(Array, true)
+#7 /Applications/MAMP/htdocs/eskate/app/Models/SkateModel.php(43): CodeIgniter\Model->insert(Array)
+#8 /Applications/MAMP/htdocs/eskate/app/Controllers/AuthController.php(133): App\Models\SkateModel->addSkate('YYYYY3', NULL)
+#9 /Applications/MAMP/htdocs/eskate/system/CodeIgniter.php(933): App\Controllers\AuthController->addSkate()
+#10 /Applications/MAMP/htdocs/eskate/system/CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+#11 /Applications/MAMP/htdocs/eskate/system/CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#12 /Applications/MAMP/htdocs/eskate/system/Boot.php(325): CodeIgniter\CodeIgniter->run()
+#13 /Applications/MAMP/htdocs/eskate/system/Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#14 /Applications/MAMP/htdocs/eskate/public/index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#15 {main}
+CRITICAL - 2024-09-06 22:18:42 --> CodeIgniter\Database\Exceptions\DatabaseException: Column 'ID_usuario' cannot be null
+[Method: POST, Route: add-skate]
+in SYSTEMPATH/Database/BaseConnection.php on line 688.
+ 1 SYSTEMPATH/Database/BaseBuilder.php(2340): CodeIgniter\Database\BaseConnection->query('INSERT INTO `skate` (`codigo`, `ID_usuario`) VALUES (:codigo:, :ID_usuario:)', [...], false)
+ 2 SYSTEMPATH/Model.php(394): CodeIgniter\Database\BaseBuilder->insert()
+ 3 SYSTEMPATH/BaseModel.php(840): CodeIgniter\Model->doInsert([...])
+ 4 SYSTEMPATH/Model.php(802): CodeIgniter\BaseModel->insert([...], true)
+ 5 APPPATH/Models/SkateModel.php(43): CodeIgniter\Model->insert([...])
+ 6 APPPATH/Controllers/AuthController.php(133): App\Models\SkateModel->addSkate('YYYYY3', null)
+ 7 SYSTEMPATH/CodeIgniter.php(933): App\Controllers\AuthController->addSkate()
+ 8 SYSTEMPATH/CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+ 9 SYSTEMPATH/CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH/Boot.php(325): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH/Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH/index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2024-09-06 22:18:42 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Column 'ID_usuario' cannot be null
+in SYSTEMPATH/Database/MySQLi/Connection.php on line 317.
+ 1 SYSTEMPATH/Database/BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `skate` (`codigo`, `ID_usuario`) VALUES (\'YYYYY3\', NULL)')
+ 2 SYSTEMPATH/Database/BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `skate` (`codigo`, `ID_usuario`) VALUES (\'YYYYY3\', NULL)')
+ 3 SYSTEMPATH/Database/BaseBuilder.php(2340): CodeIgniter\Database\BaseConnection->query('INSERT INTO `skate` (`codigo`, `ID_usuario`) VALUES (:codigo:, :ID_usuario:)', [...], false)
+ 4 SYSTEMPATH/Model.php(394): CodeIgniter\Database\BaseBuilder->insert()
+ 5 SYSTEMPATH/BaseModel.php(840): CodeIgniter\Model->doInsert([...])
+ 6 SYSTEMPATH/Model.php(802): CodeIgniter\BaseModel->insert([...], true)
+ 7 APPPATH/Models/SkateModel.php(43): CodeIgniter\Model->insert([...])
+ 8 APPPATH/Controllers/AuthController.php(133): App\Models\SkateModel->addSkate('YYYYY3', null)
+ 9 SYSTEMPATH/CodeIgniter.php(933): App\Controllers\AuthController->addSkate()
+10 SYSTEMPATH/CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+11 SYSTEMPATH/CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+12 SYSTEMPATH/Boot.php(325): CodeIgniter\CodeIgniter->run()
+13 SYSTEMPATH/Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+14 FCPATH/index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2024-09-06 22:18:42 --> [Caused by] mysqli_sql_exception: Column 'ID_usuario' cannot be null
+in SYSTEMPATH/Database/MySQLi/Connection.php on line 312.
+ 1 SYSTEMPATH/Database/MySQLi/Connection.php(312): mysqli->query('INSERT INTO `skate` (`codigo`, `ID_usuario`) VALUES (\'YYYYY3\', NULL)', 0)
+ 2 SYSTEMPATH/Database/BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `skate` (`codigo`, `ID_usuario`) VALUES (\'YYYYY3\', NULL)')
+ 3 SYSTEMPATH/Database/BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `skate` (`codigo`, `ID_usuario`) VALUES (\'YYYYY3\', NULL)')
+ 4 SYSTEMPATH/Database/BaseBuilder.php(2340): CodeIgniter\Database\BaseConnection->query('INSERT INTO `skate` (`codigo`, `ID_usuario`) VALUES (:codigo:, :ID_usuario:)', [...], false)
+ 5 SYSTEMPATH/Model.php(394): CodeIgniter\Database\BaseBuilder->insert()
+ 6 SYSTEMPATH/BaseModel.php(840): CodeIgniter\Model->doInsert([...])
+ 7 SYSTEMPATH/Model.php(802): CodeIgniter\BaseModel->insert([...], true)
+ 8 APPPATH/Models/SkateModel.php(43): CodeIgniter\Model->insert([...])
+ 9 APPPATH/Controllers/AuthController.php(133): App\Models\SkateModel->addSkate('YYYYY3', null)
+10 SYSTEMPATH/CodeIgniter.php(933): App\Controllers\AuthController->addSkate()
+11 SYSTEMPATH/CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+12 SYSTEMPATH/CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+13 SYSTEMPATH/Boot.php(325): CodeIgniter\CodeIgniter->run()
+14 SYSTEMPATH/Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+15 FCPATH/index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+INFO - 2024-09-06 22:19:50 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-09-06 22:19:51 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-09-06 22:19:52 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-09-06 22:19:52 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2024-09-06 22:19:55 --> User found: Array
+(
+    [id] => 41
+    [username] => Erie
+    [email] => venturinierie@gmail.com
+    [password] => $2y$10$OR/seLarGMwHEv0cvVPwDOMl7vi5suwamvQzcgCFfwgG2dVzvPpJG
+)
+
+DEBUG - 2024-09-06 22:19:56 --> Password verified successfully.
+INFO - 2024-09-06 22:19:56 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-09-06 22:19:56 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-09-06 22:21:34 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-09-06 22:21:34 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-09-06 22:21:34 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2024-09-06 22:21:34 --> Error connecting to the database: mysqli_sql_exception: No such file or directory in /Applications/MAMP/htdocs/eskate/system/Database/MySQLi/Connection.php:186
+Stack trace:
+#0 /Applications/MAMP/htdocs/eskate/system/Database/MySQLi/Connection.php(186): mysqli->real_connect('localhost', 'root', Object(SensitiveParameterValue), 'tvz', 3306, '', 0)
+#1 /Applications/MAMP/htdocs/eskate/system/Database/BaseConnection.php(421): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#2 /Applications/MAMP/htdocs/eskate/system/Database/BaseConnection.php(616): CodeIgniter\Database\BaseConnection->initialize()
+#3 /Applications/MAMP/htdocs/eskate/system/Database/BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 /Applications/MAMP/htdocs/eskate/system/Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 /Applications/MAMP/htdocs/eskate/system/BaseModel.php(676): CodeIgniter\Model->doFindAll(0, 0)
+#6 /Applications/MAMP/htdocs/eskate/app/Controllers/AuthController.php(81): CodeIgniter\BaseModel->findAll()
+#7 /Applications/MAMP/htdocs/eskate/system/CodeIgniter.php(933): App\Controllers\AuthController->listSkates()
+#8 /Applications/MAMP/htdocs/eskate/system/CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+#9 /Applications/MAMP/htdocs/eskate/system/CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 /Applications/MAMP/htdocs/eskate/system/Boot.php(325): CodeIgniter\CodeIgniter->run()
+#11 /Applications/MAMP/htdocs/eskate/system/Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#12 /Applications/MAMP/htdocs/eskate/public/index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#13 {main}
+
+Next CodeIgniter\Database\Exceptions\DatabaseException: No such file or directory in /Applications/MAMP/htdocs/eskate/system/Database/MySQLi/Connection.php:231
+Stack trace:
+#0 /Applications/MAMP/htdocs/eskate/system/Database/BaseConnection.php(421): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#1 /Applications/MAMP/htdocs/eskate/system/Database/BaseConnection.php(616): CodeIgniter\Database\BaseConnection->initialize()
+#2 /Applications/MAMP/htdocs/eskate/system/Database/BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#3 /Applications/MAMP/htdocs/eskate/system/Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#4 /Applications/MAMP/htdocs/eskate/system/BaseModel.php(676): CodeIgniter\Model->doFindAll(0, 0)
+#5 /Applications/MAMP/htdocs/eskate/app/Controllers/AuthController.php(81): CodeIgniter\BaseModel->findAll()
+#6 /Applications/MAMP/htdocs/eskate/system/CodeIgniter.php(933): App\Controllers\AuthController->listSkates()
+#7 /Applications/MAMP/htdocs/eskate/system/CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+#8 /Applications/MAMP/htdocs/eskate/system/CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 /Applications/MAMP/htdocs/eskate/system/Boot.php(325): CodeIgniter\CodeIgniter->run()
+#10 /Applications/MAMP/htdocs/eskate/system/Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#11 /Applications/MAMP/htdocs/eskate/public/index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#12 {main}
+CRITICAL - 2024-09-06 22:21:34 --> CodeIgniter\Database\Exceptions\DatabaseException: Unable to connect to the database.
+Main connection [MySQLi]: No such file or directory
+[Method: GET, Route: list-skates]
+in SYSTEMPATH/Database/BaseConnection.php on line 467.
+ 1 SYSTEMPATH/Database/BaseConnection.php(616): CodeIgniter\Database\BaseConnection->initialize()
+ 2 SYSTEMPATH/Database/BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `skate`
+WHERE `ID_usuario` = :ID_usuario:', [...], false)
+ 3 SYSTEMPATH/Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 4 SYSTEMPATH/BaseModel.php(676): CodeIgniter\Model->doFindAll(0, 0)
+ 5 APPPATH/Controllers/AuthController.php(81): CodeIgniter\BaseModel->findAll()
+ 6 SYSTEMPATH/CodeIgniter.php(933): App\Controllers\AuthController->listSkates()
+ 7 SYSTEMPATH/CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+ 8 SYSTEMPATH/CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH/Boot.php(325): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH/Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH/index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+INFO - 2024-09-06 22:21:35 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-09-06 22:21:35 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-09-06 22:21:35 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-09-06 22:22:12 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-09-06 22:22:26 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-09-06 22:22:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2024-09-06 22:22:36 --> User found: Array
+(
+    [id] => 41
+    [username] => Erie
+    [email] => venturinierie@gmail.com
+    [password] => $2y$10$OR/seLarGMwHEv0cvVPwDOMl7vi5suwamvQzcgCFfwgG2dVzvPpJG
+)
+
+DEBUG - 2024-09-06 22:22:37 --> Password verified successfully.
+INFO - 2024-09-06 22:22:37 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-09-06 22:22:37 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-09-06 22:22:40 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-09-06 22:22:40 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-09-06 22:22:42 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-09-06 22:22:42 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-09-06 22:23:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2024-09-06 22:23:16 --> Error connecting to the database: mysqli_sql_exception: No such file or directory in /Applications/MAMP/htdocs/eskate/system/Database/MySQLi/Connection.php:186
+Stack trace:
+#0 /Applications/MAMP/htdocs/eskate/system/Database/MySQLi/Connection.php(186): mysqli->real_connect('localhost', 'root', Object(SensitiveParameterValue), 'tvz', 3306, '', 0)
+#1 /Applications/MAMP/htdocs/eskate/system/Database/BaseConnection.php(421): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#2 /Applications/MAMP/htdocs/eskate/system/Database/BaseConnection.php(616): CodeIgniter\Database\BaseConnection->initialize()
+#3 /Applications/MAMP/htdocs/eskate/system/Database/BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT `skate`....', Array, false)
+#4 /Applications/MAMP/htdocs/eskate/system/Model.php(330): CodeIgniter\Database\BaseBuilder->get()
+#5 /Applications/MAMP/htdocs/eskate/system/BaseModel.php(714): CodeIgniter\Model->doFirst()
+#6 /Applications/MAMP/htdocs/eskate/app/Models/SkateModel.php(24): CodeIgniter\BaseModel->first()
+#7 /Applications/MAMP/htdocs/eskate/app/Controllers/AuthController.php(107): App\Models\SkateModel->getSkateWithLocation('YYYYY3')
+#8 /Applications/MAMP/htdocs/eskate/system/CodeIgniter.php(933): App\Controllers\AuthController->viewSkate('YYYYY3')
+#9 /Applications/MAMP/htdocs/eskate/system/CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+#10 /Applications/MAMP/htdocs/eskate/system/CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 /Applications/MAMP/htdocs/eskate/system/Boot.php(325): CodeIgniter\CodeIgniter->run()
+#12 /Applications/MAMP/htdocs/eskate/system/Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 /Applications/MAMP/htdocs/eskate/public/index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 {main}
+
+Next CodeIgniter\Database\Exceptions\DatabaseException: No such file or directory in /Applications/MAMP/htdocs/eskate/system/Database/MySQLi/Connection.php:231
+Stack trace:
+#0 /Applications/MAMP/htdocs/eskate/system/Database/BaseConnection.php(421): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#1 /Applications/MAMP/htdocs/eskate/system/Database/BaseConnection.php(616): CodeIgniter\Database\BaseConnection->initialize()
+#2 /Applications/MAMP/htdocs/eskate/system/Database/BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT `skate`....', Array, false)
+#3 /Applications/MAMP/htdocs/eskate/system/Model.php(330): CodeIgniter\Database\BaseBuilder->get()
+#4 /Applications/MAMP/htdocs/eskate/system/BaseModel.php(714): CodeIgniter\Model->doFirst()
+#5 /Applications/MAMP/htdocs/eskate/app/Models/SkateModel.php(24): CodeIgniter\BaseModel->first()
+#6 /Applications/MAMP/htdocs/eskate/app/Controllers/AuthController.php(107): App\Models\SkateModel->getSkateWithLocation('YYYYY3')
+#7 /Applications/MAMP/htdocs/eskate/system/CodeIgniter.php(933): App\Controllers\AuthController->viewSkate('YYYYY3')
+#8 /Applications/MAMP/htdocs/eskate/system/CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+#9 /Applications/MAMP/htdocs/eskate/system/CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 /Applications/MAMP/htdocs/eskate/system/Boot.php(325): CodeIgniter\CodeIgniter->run()
+#11 /Applications/MAMP/htdocs/eskate/system/Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#12 /Applications/MAMP/htdocs/eskate/public/index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#13 {main}
+CRITICAL - 2024-09-06 22:23:16 --> CodeIgniter\Database\Exceptions\DatabaseException: Unable to connect to the database.
+Main connection [MySQLi]: No such file or directory
+[Method: GET, Route: view-skate/YYYYY3]
+in SYSTEMPATH/Database/BaseConnection.php on line 467.
+ 1 SYSTEMPATH/Database/BaseConnection.php(616): CodeIgniter\Database\BaseConnection->initialize()
+ 2 SYSTEMPATH/Database/BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT `skate`.*, `ubicacion`.`longitud`, `ubicacion`.`latitud`, `ubicacion`.`hora`
+FROM `skate`
+JOIN `ubicacion` ON `skate`.`ID_ubicacion` = `ubicacion`.`ID_ubicacion`
+WHERE `skate`.`codigo` = :skate.codigo:
+ LIMIT 1', [...], false)
+ 3 SYSTEMPATH/Model.php(330): CodeIgniter\Database\BaseBuilder->get()
+ 4 SYSTEMPATH/BaseModel.php(714): CodeIgniter\Model->doFirst()
+ 5 APPPATH/Models/SkateModel.php(24): CodeIgniter\BaseModel->first()
+ 6 APPPATH/Controllers/AuthController.php(107): App\Models\SkateModel->getSkateWithLocation('YYYYY3')
+ 7 SYSTEMPATH/CodeIgniter.php(933): App\Controllers\AuthController->viewSkate('YYYYY3')
+ 8 SYSTEMPATH/CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+ 9 SYSTEMPATH/CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH/Boot.php(325): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH/Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH/index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+INFO - 2024-09-06 22:23:46 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-09-06 22:23:50 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-09-06 22:23:51 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-09-06 22:23:51 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-09-06 22:23:52 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-09-06 22:23:52 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.

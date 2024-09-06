@@ -27,6 +27,29 @@
         .skate-item:hover {
             background-color: #007ab8;
         }
+        /* Estilos personalizados para el modal */
+        .modal-content {
+            background-color: #00719c;
+            color: #ffffff;
+            border-radius: 10px;
+        }
+        .modal-header, .modal-footer {
+            border-color: #005f87;
+        }
+        .modal-header {
+            background-color: #005f87;
+        }
+        .btn-primary {
+            background-color: #008dc2;
+            border-color: #008dc2;
+        }
+        .btn-primary:hover {
+            background-color: #007ab8;
+            border-color: #007ab8;
+        }
+        .btn-secondary {
+            background-color: #5f6368;
+        }
     </style>
 </head>
 <body>
@@ -54,7 +77,41 @@
             No skates found for this user.
         </div>
     <?php endif; ?>
+    
+    <!-- Botón para agregar un nuevo skate -->
+    <button class="btn btn-light mb-3" data-toggle="modal" data-target="#addSkateModal">Agregar Skate</button>
 </div>
+
+<!-- Modal para agregar skate -->
+<div class="modal fade" id="addSkateModal" tabindex="-1" role="dialog" aria-labelledby="addSkateModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addSkateModalLabel">Agregar Nuevo Skate</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="<?= site_url('add-skate') ?>" method="POST">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <p>Insertar código del skate</p>
+                        <label for="codigo">Código del Skate</label>
+                        <input type="text" class="form-control" id="codigo" name="codigo" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-primary">Guardar Skate</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 </body>
 </html>

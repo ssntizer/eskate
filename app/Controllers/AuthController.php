@@ -116,6 +116,31 @@ class AuthController extends BaseController
             return redirect()->to('/login');
         }
     }
+    public function addSkate()
+{
+    $skateModel = new SkateModel();
+    
+    // Verifica si el usuario ha iniciado sesión
+    $ID_usuario = session()->get('user_id');
+    
+    if (empty($ID_usuario)) {
+        return redirect()->back()->with('error', 'Debes estar autenticado para agregar un skate.');
+    }
 
+    // Obtener el código del skate desde el formulario
+    $codigo = $this->request->getPost('codigo');
+
+    // Validar que se ha ingresado un código
+    if (empty($codigo)) {
+        return redirect()->back()->with('error', 'Debe ingresar el código del skate.');
+    }
+
+    // Intentar agregar el nuevo skate
+    if ($skateModel->addSkate($codigo, $ID_usuario)) {
+        return redirect()->to('/list-skates')->with('message', 'Skate agregado exitosamente.');
+    } else {
+        return redirect()->back()->with('error', 'El código del skate ya existe o ocurrió un error.');
+    }
+}
     
 }
