@@ -136,7 +136,7 @@ class AuthController extends BaseController
         }
     
         // Intentar vincular el skate al usuario
-        if ($skateModel->updateUserForSkate($codigo, $ID_usuario)) {
+        if ($skateModel->addSkate($codigo, $ID_usuario)) {
             return redirect()->to('/list-skates')->with('message', 'Skate vinculado exitosamente.');
         } else {
             return redirect()->back()->with('error', 'El código del skate ya está vinculado a otro usuario o no existe.');

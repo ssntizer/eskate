@@ -60,6 +60,19 @@
 </div>
 
 <div class="container mt-5">
+    <!-- Mostrar mensajes de error y éxito -->
+    <?php if (session()->getFlashdata('error')): ?>
+        <div class="alert alert-danger">
+            <?= session()->getFlashdata('error') ?>
+        </div>
+    <?php endif; ?>
+
+    <?php if (session()->getFlashdata('message')): ?>
+        <div class="alert alert-success">
+            <?= session()->getFlashdata('message') ?>
+        </div>
+    <?php endif; ?>
+
     <?php if (!empty($skates)): ?>
         <div class="row">
             <?php foreach ($skates as $skate): ?>
