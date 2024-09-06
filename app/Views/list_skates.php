@@ -37,17 +37,23 @@
 </div>
 
 <div class="container mt-5">
-    <div class="row">
-        <?php foreach ($skates as $skate): ?>
-            <div class="col-md-4">
-                <div class="skate-item" onclick="window.location.href='<?= site_url('view-skate/' . $skate['codigo']) ?>'">
-                    <h4>Skate Code: <?= $skate['codigo'] ?></h4>
-                    <p><strong>Batería:</strong> <?= $skate['bateria'] ?>%</p>
-                    <p><strong>Velocidad:</strong> <?= $skate['velocidad'] ?> km/h</p>
+    <?php if (!empty($skates)): ?>
+        <div class="row">
+            <?php foreach ($skates as $skate): ?>
+                <div class="col-md-4 mb-3">
+                    <div class="skate-item" onclick="window.location.href='<?= site_url('view-skate/' . esc($skate['codigo'])) ?>'">
+                        <h4>Skate Code: <?= esc($skate['codigo']) ?></h4>
+                        <p><strong>Batería:</strong> <?= esc($skate['bateria']) ?>%</p>
+                        <p><strong>Velocidad:</strong> <?= esc($skate['velocidad']) ?> km/h</p>
+                    </div>
                 </div>
-            </div>
-        <?php endforeach; ?>
-    </div>
+            <?php endforeach; ?>
+        </div>
+    <?php else: ?>
+        <div class="alert alert-info" role="alert">
+            No skates found for this user.
+        </div>
+    <?php endif; ?>
 </div>
 
 </body>
