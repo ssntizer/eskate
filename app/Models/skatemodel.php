@@ -28,18 +28,34 @@ class SkateModel extends Model
     public function addSkate($codigo, $ID_usuario)
     {
         // Verificar si el código del skate existe
-    $existingSkate = $this->getSkateByCode($codigo);
-    if (!$existingSkate) {
-        return false; // Si no existe, retorna falso
+        $existingSkate = $this->getSkateByCode($codigo);
+        if (!$existingSkate) {
+            return false; // Si no existe, retorna falso
+        }
+
+        // Verificar si el ID_usuario es null
+        if ($existingSkate['ID_usuario'] !== null) {
+            return false; // No se puede vincular si ya tiene un usuario
+        }
+
+        // Actualizar el campo ID_usuario
+        $data = ['ID_usuario' => $ID_usuario];
+        return $this->update($codigo, $data); // Actualizar el registro
     }
 
-    // Verificar si el ID_usuario es null
-    if ($existingSkate['ID_usuario'] !== null) {
-        return false; // No se puede vincular si ya tiene un usuario
+    // Desvincular un skate del usuario
+    public function unlinkSkate($codigo)
+    {
+        // Verificar si el código del skate existe
+        $existingSkate = $this->getSkateByCode($codigo);
+        if (!$existingSkate) {
+            return false; // Si no existe, retorna falso
+        }
+
+        // Actualizar el campo ID_usuario a null
+        $data = ['ID_usuario' => null];
+        return $this->update($codigo, $data); // Actualizar el registro
     }
 
-    // Actualizar el campo ID_usuario
-    $data = ['ID_usuario' => $ID_usuario];
-    return $this->update($codigo, $data); // Actualizar el registro
-}
+    
 }

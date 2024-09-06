@@ -81,6 +81,10 @@
                         <h4>Skate Code: <?= esc($skate['codigo']) ?></h4>
                         <p><strong>Batería:</strong> <?= esc($skate['bateria']) ?>%</p>
                         <p><strong>Velocidad:</strong> <?= esc($skate['velocidad']) ?> km/h</p>
+                        <!-- Formulario para borrar skate -->
+                        <form action="<?= site_url('unlink-skate/' . esc($skate['codigo'])) ?>" method="POST" style="display:inline;">
+                            <button type="submit" class="btn btn-danger">Borrar Skate</button>
+                        </form>
                     </div>
                 </div>
             <?php endforeach; ?>
