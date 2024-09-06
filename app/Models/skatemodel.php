@@ -6,19 +6,19 @@ use CodeIgniter\Model;
 class SkateModel extends Model
 {
     protected $table = 'skate';
-    protected $primaryKey = 'codigo'; // Cambia esto si tu clave primaria es diferente
+    protected $primaryKey = 'codigo';
+    protected $allowedFields = ['codigo', 'velocidad', 'bateria', 'temperatura', 'ID_ubicacion', 'ID_usuario'];
 
-    public function getLatestData()
+    public function getSkateByCode($codigo)
     {
-        return $this->orderBy('ID_usuario', 'DESC')->first(); // Obtener la última entrada de skate
+        return $this->where('codigo', $codigo)->first();
     }
 
-    public function getSkateWithLocation()
+    public function getSkateWithLocation($codigo)
     {
-        // Obtener la última entrada de skate junto con su ubicación
-        return $this->select('skate.*, ubicacion.latitud, ubicacion.longitud, ubicacion.hora')
-                    ->join('ubicacion', 'skate.ID_ubicacion = ubicacion.ID_ubicacion')
-                    ->orderBy('skate.ID_usuario', 'DESC')
-                    ->first(); // Cambia 'ID_usuario' si necesitas un orden diferente
+        // Aquí debes realizar una consulta que incluya la ubicación relacionada con el skate
+        $this->select('skate.*, ubicacion.longitud, ubicacion.latitud, ubicacion.hora');
+        $this->join('ubicacion', 'skate.ID_ubicacion = ubicacion.ID_ubicacion');
+        return $this->where('skate.codigo', $codigo)->first();
     }
 }

@@ -1,4 +1,4 @@
-<?php 
+<?php
 namespace App\Controllers;
 
 use App\Models\UserModel;
@@ -13,19 +13,19 @@ class AuthController extends BaseController
     }
 
     public function registerUser()
-    {
-        $userModel = new UserModel();
+{
+    $userModel = new UserModel();
 
-        $data = [
-            'username' => $this->request->getPost('username'),
-            'email' => $this->request->getPost('email'),
-            'password' => $this->request->getPost('password'),
-        ];
+    $data = [
+        'username' => $this->request->getPost('username'),
+        'email' => $this->request->getPost('email'),
+        'password' =>$this->request->getPost('password')
+    ];
 
-        $userModel->save($data);
+    $userModel->save($data);
 
-        return redirect()->to('/login')->with('success', 'Registration successful');
-    }
+    return redirect()->to('/login')->with('success', 'Registration successful');
+}
 
     public function login()
     {
@@ -33,56 +33,89 @@ class AuthController extends BaseController
     }
 
     public function loginUser()
-    {
-        $userModel = new UserModel();
+{
+    $userModel = new UserModel();
 
-        $email = $this->request->getPost('email');
-        $password = $this->request->getPost('password');
+    $email = $this->request->getPost('email');
+    $password = $this->request->getPost('password');
 
-        $user = $userModel->where('email', $email)->first();
+    $user = $userModel->where('email', $email)->first();
 
-        if ($user) {
-            if (password_verify($password, $user['password'])) {
-                session()->set([
-                    'username' => $user['username'],
-                    'logged_in' => true,
-                ]);
-                return redirect()->to('/welcome');
-            } else {
-                return redirect()->back()->with('error', 'Invalid Password');
-            }
+    if ($user) {
+        log_message('debug', 'User found: ' . print_r($user, true));
+
+        if (password_verify($password, $user['password'])) {
+            log_message('debug', 'Password verified successfully.');
+            session()->set([
+                'username' => $user['username'],
+                'user_id' => $user['id'],
+                'logged_in' => true,
+            ]);
+            return redirect()->to('/list-skates');
         } else {
-            return redirect()->back()->with('error', 'User not found');
+            log_message('debug', 'Password verification failed.');
+            return redirect()->back()->with('error', 'Invalid Password');
         }
+    } else {
+        log_message('debug', 'User not found with email: ' . $email);
+        return redirect()->back()->with('error', 'User not found');
     }
+}
 
+    
     public function logout()
     {
         session()->destroy();
         return redirect()->to('/login');
     }
-
-    public function welcome()
-{
-    $session = session();
-
-    if ($session->get('logged_in')) {
-        // Instancia del modelo de la patineta
-        $skateModel = new SkateModel();
-
-        // Obtener los datos del skate junto con la ubicación
-        $skate = $skateModel->getSkateWithLocation();
-
-        // Verificar si se obtuvieron los datos del skate
-        if (!$skate) {
-            // Manejo de error: puedes redirigir a otra vista o mostrar un mensaje
-            return redirect()->to('/error')->with('error', 'No se encontraron datos de skate.');
+    public function listSkates()
+    {
+        $session = session();
+    
+        if ($session->get('logged_in')) {
+            $userId = $session->get('user_id');
+            $skateModel = new SkateModel();
+    
+            // Obtener solo los skates asociados al ID del usuario
+            try {
+                $skates = $skateModel->where('ID_usuario', $userId)->findAll();
+    
+                if (empty($skates)) {
+                    return view('list_skates', ['message' => 'No skates found for this user.']);
+                }
+    
+                return view('list_skates', ['skates' => $skates]);
+    
+            } catch (\Exception $e) {
+                // Manejar cualquier excepción que pueda ocurrir durante la consulta
+                return redirect()->to('/error')->with('error', 'An error occurred while retrieving skates.');
+            }
+        } else {
+            return redirect()->to('/login');
         }
-
-        // Pasar los datos a la vista
-        return view('welcome', ['skate' => $skate]);
-    } else {
-        return view('login');
     }
-}
+
+    public function viewSkate($codigo)
+    {
+        $session = session();
+
+        if ($session->get('logged_in')) {
+            $skateModel = new SkateModel();
+            $ubicacionModel = new UbicacionModel();
+
+            // Obtener datos del skate con ubicación
+            $skate = $skateModel->getSkateWithLocation($codigo);
+
+            if (!$skate) {
+                return redirect()->to('/list-skates')->with('error', 'Skate not found.');
+            }
+
+            // Pasar datos a la vista
+            return view('welcome', ['skate' => $skate]);
+        } else {
+            return redirect()->to('/login');
+        }
+    }
+
+    
 }
