@@ -729,3 +729,18 @@ INFO - 2024-09-06 22:58:26 --> Session: Class initialized using 'CodeIgniter\Ses
 INFO - 2024-09-06 22:58:43 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
 INFO - 2024-09-06 22:58:48 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
 INFO - 2024-09-06 22:58:48 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-09-06 23:31:10 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-09-06 23:31:11 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-09-06 23:31:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2024-09-06 23:31:19 --> User found: Array
+(
+    [id] => 41
+    [username] => Erie
+    [email] => venturinierie@gmail.com
+    [password] => $2y$10$OR/seLarGMwHEv0cvVPwDOMl7vi5suwamvQzcgCFfwgG2dVzvPpJG
+)
+
+DEBUG - 2024-09-06 23:31:20 --> Password verified successfully.
+INFO - 2024-09-06 23:31:20 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-09-06 23:31:20 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-09-06 23:32:40 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.

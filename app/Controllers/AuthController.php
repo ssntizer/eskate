@@ -55,11 +55,11 @@ class AuthController extends BaseController
                 return redirect()->to('/list-skates');
             } else {
                 log_message('debug', 'Password verification failed.');
-                return redirect()->back()->with('error', 'Invalid Password');
+                return redirect()->back()->with('error', 'Contraseña incorrecta');
             }
         } else {
             log_message('debug', 'User not found with email: ' . $email);
-            return redirect()->back()->with('error', 'User not found');
+            return redirect()->back()->with('error', 'Usuario no encontrado');
         }
     }
 
@@ -82,14 +82,14 @@ class AuthController extends BaseController
                 $skates = $skateModel->where('ID_usuario', $userId)->findAll();
 
                 if (empty($skates)) {
-                    return view('list_skates', ['message' => 'No skates found for this user.']);
+                    return view('list_skates', ['message' => 'Este usuario aun no tiene skates.']);
                 }
 
                 return view('list_skates', ['skates' => $skates]);
 
             } catch (\Exception $e) {
                 // Manejar cualquier excepción que pueda ocurrir durante la consulta
-                return redirect()->to('/error')->with('error', 'An error occurred while retrieving skates.');
+                return redirect()->to('/error')->with('error', 'No se ha encontrado informacion de tu skate.');
             }
         } else {
             return redirect()->to('/login');
@@ -108,7 +108,7 @@ class AuthController extends BaseController
             $skate = $skateModel->getSkateWithLocation($codigo);
 
             if (!$skate) {
-                return redirect()->to('/list-skates')->with('error', 'Skate not found.');
+                return redirect()->to('/list-skates')->with('error', 'Skate no encontrada.');
             }
 
             // Pasar datos a la vista
