@@ -10,7 +10,7 @@
         body {
             background-color: #00719c;
             color: #ffffff;
-            font-family: "Baskervville SC", serif;
+            font-family: "Baskervville SC", static;
             background-image: url('https://www.transparenttextures.com/patterns/asfalt-dark.png'); /* Textura de fondo */
             display: flex;
             justify-content: center;
@@ -95,6 +95,14 @@
             color: #00e5ff; /* Color al pasar el mouse */
         }
 
+        /* Nueva clase para el enlace de "Olvidaste tu contraseña" */
+        .login-form a#forgot-password {
+            margin-top: 15px;
+            display: block;
+            text-decoration: none;
+            font-size: 14px;
+            color: #ff6600;
+        }
     </style>
 </head>
 
@@ -108,7 +116,7 @@
             <button type="submit">Iniciar Sesión</button>
         </form>
         <a id="bl" href="<?= site_url('register') ?>">Ir a registro</a>
+        <a id="forgot-password" href="<?= site_url('forgotPassword') ?>">¿Olvidaste tu contraseña?</a>
     </div>
-
 </body>
 </html>
