@@ -91,7 +91,10 @@
 
 <div class="header">
     <h1>Bienvenido, <?= session()->get('username') ?>!</h1>
-    <a href="<?= site_url('logout') ?>" class="btn btn-light">Cerrar sesión</a>
+    <div>
+        <a href="<?= site_url('logout') ?>" class="btn btn-light">Cerrar sesión</a>
+        <a href="javascript:history.back()" class="btn btn-light ml-2">Volver atrás</a> <!-- Botón para volver atrás -->
+    </div>
 </div>
 
 <div class="container mt-5">

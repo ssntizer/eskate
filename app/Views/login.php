@@ -10,7 +10,7 @@
         body {
             background-color: #00719c;
             color: #ffffff;
-            font-family: "Baskervville SC", serif;
+            font-family: "Baskervville SC", static;
             background-image: url('https://www.transparenttextures.com/patterns/asfalt-dark.png'); /* Textura de fondo */
             display: flex;
             justify-content: center;
