@@ -58,7 +58,7 @@ class PasswordResetController extends Controller
         $token = $this->request->getPost('token');
         $newPassword = $this->request->getPost('password');
     
-        log_message('debug', 'Contraseña new: ' . $newPassword);
+       
     
         $user = $this->userModel->verifyToken($token);
     

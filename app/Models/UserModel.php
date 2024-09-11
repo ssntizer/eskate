@@ -49,10 +49,7 @@ class UserModel extends Model
     { 
         // Hashea la nueva contraseña
         $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
-    
-        // Log para verificar el valor de hashedPassword
-        log_message('debug', 'Contraseña hasheada: ' . $hashedPassword); // Agrega esto para depuración
-       
+
         return $this->where('reset_token', $token)
                     ->set('password', $hashedPassword) // Almacena la contraseña hasheada
                     ->set('reset_token', null)
