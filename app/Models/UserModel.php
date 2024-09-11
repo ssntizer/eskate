@@ -20,11 +20,14 @@ class UserModel extends Model
 
         return $data;
     }
+
+    // Encuentra al usuario por email
     public function findUserByEmail($email)
     {
         return $this->where('email', $email)->first();
     }
 
+    // Establece el token de restablecimiento de contraseña
     public function setPasswordResetToken($email, $token, $expiration)
     {
         return $this->where('email', $email)
@@ -33,6 +36,7 @@ class UserModel extends Model
                     ->update();
     }
 
+    // Verifica si el token es válido
     public function verifyToken($token)
     {
         return $this->where('reset_token', $token)
@@ -40,20 +44,31 @@ class UserModel extends Model
                     ->first();
     }
 
+    // Restablece la contraseña con una nueva
     public function resetPassword($token, $newPassword)
     { 
-        $hashedPassword = $newPassword;
-        echo 'Hashed Password: ' . $hashedPassword;
-        
+        // Hashea la nueva contraseña
+        $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
+    
+        // Log para verificar el valor de hashedPassword
+        log_message('debug', 'Contraseña hasheada: ' . $hashedPassword); // Agrega esto para depuración
+       
         return $this->where('reset_token', $token)
-                    ->set('password', password_hash($newPassword, PASSWORD_DEFAULT))
+                    ->set('password', $hashedPassword) // Almacena la contraseña hasheada
                     ->set('reset_token', null)
                     ->set('reset_expiration', null)
                     ->update();
-                   
-
     }
-}   
 
+    // Verifica la contraseña durante el login
+    public function verifyPassword($email, $password)
+    {
+        $user = $this->findUserByEmail($email);
+        
+        if ($user && password_verify($password, $user['password'])) {
+            return true; // Contraseña correcta
+        }
 
-   
+        return false; // Contraseña incorrecta
+    }
+}

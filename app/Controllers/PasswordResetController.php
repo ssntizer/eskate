@@ -20,7 +20,7 @@ class PasswordResetController extends Controller
     $user = $this->userModel->findUserByEmail($email);
 
     if ($user) {
-        $token = bin2hex(random_bytes(32)); // Generar un token único
+        $token = bin2hex(random_bytes(3)); // Generar un token único
         $expiration = date('Y-m-d H:i:s', strtotime('+1 hour')); // Establecer la expiración a 1 hora
 
         // Insertar el token y su expiración en la base de datos
@@ -53,16 +53,17 @@ class PasswordResetController extends Controller
             return redirect()->to('/')->with('error', 'El token de restablecimiento no es válido o ha expirado.');
         }
     }
-
     public function updatePassword()
     {
         $token = $this->request->getPost('token');
         $newPassword = $this->request->getPost('password');
-
+    
+        log_message('debug', 'Contraseña new: ' . $newPassword);
+    
         $user = $this->userModel->verifyToken($token);
-
+    
         if ($user) {
-            $this->userModel->resetPassword($token, $newPassword); // Actualizar la contraseña
+            $this->userModel->resetPassword($token, $newPassword);
             return redirect()->to('/')->with('message', 'Tu contraseña ha sido actualizada exitosamente.');
         } else {
             return redirect()->to('/')->with('error', 'El token de restablecimiento no es válido o ha expirado.');

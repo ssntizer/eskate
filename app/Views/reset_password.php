@@ -103,7 +103,7 @@
         <?= session()->getFlashdata('error') ?>
         <form method="post" action="<?= site_url('passwordreset/update') ?>">
             <input type="text" name="token" placeholder="Ingresa tu token" required>
-            <input type="password" name="new_password" placeholder="Nueva contraseña" required>
+            <input type="password" name="password" placeholder="Nueva contraseña" required>
             <button type="submit">Restablecer contraseña</button>
         </form>
         <a id="bl" href="<?= site_url('login') ?>">Volver a iniciar sesión</a>
