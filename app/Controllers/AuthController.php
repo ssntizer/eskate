@@ -170,4 +170,9 @@ class AuthController extends BaseController
             return redirect()->back()->with('error', 'No puedes desvincular este skate.');
         }
     }
+    public function forgotPassword(){
+    return view('forgot_password'); // Asegúrate de tener la vista de recuperación de contraseña
 }
+}
+
+

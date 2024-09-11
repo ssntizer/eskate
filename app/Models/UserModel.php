@@ -7,7 +7,7 @@ class UserModel extends Model
 {
     protected $table = 'users';
     protected $primaryKey = 'id';
-    protected $allowedFields = ['username', 'email', 'password'];
+    protected $allowedFields = ['username', 'email', 'password', 'reset_token', 'reset_expiration'];
     protected $beforeInsert = ['hashPassword'];
 
     protected function hashPassword(array $data)
@@ -20,4 +20,40 @@ class UserModel extends Model
 
         return $data;
     }
+    public function findUserByEmail($email)
+    {
+        return $this->where('email', $email)->first();
+    }
+
+    public function setPasswordResetToken($email, $token, $expiration)
+    {
+        return $this->where('email', $email)
+                    ->set('reset_token', $token)
+                    ->set('reset_expiration', $expiration)
+                    ->update();
+    }
+
+    public function verifyToken($token)
+    {
+        return $this->where('reset_token', $token)
+                    ->where('reset_expiration >=', date('Y-m-d H:i:s'))
+                    ->first();
+    }
+
+    public function resetPassword($token, $newPassword)
+    { 
+        $hashedPassword = $newPassword;
+        echo 'Hashed Password: ' . $hashedPassword;
+        
+        return $this->where('reset_token', $token)
+                    ->set('password', password_hash($newPassword, PASSWORD_DEFAULT))
+                    ->set('reset_token', null)
+                    ->set('reset_expiration', null)
+                    ->update();
+                   
+
+    }
 }   
+
+
+   
