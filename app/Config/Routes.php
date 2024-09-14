@@ -19,4 +19,4 @@ $routes->get('/forgot-password', 'AuthController::forgotPassword');
 $routes->post('passwordreset/request', 'PasswordResetController::requestReset');
 $routes->get('passwordreset/reset/(:any)', 'PasswordResetController::reset/$1');
 $routes->post('passwordreset/update', 'PasswordResetController::updatePassword');
-
+$routes->post('/skate/update', 'SkateController::updateSkateData');
