@@ -116,7 +116,7 @@
             <button type="submit">Iniciar Sesión</button>
         </form>
         <a id="bl" href="<?= site_url('register') ?>">Ir a registro</a>
-        <a id="forgot-password" href="<?= site_url('forgotPassword') ?>">¿Olvidaste tu contraseña?</a>
+        <a id="forgot-password" href="<?= site_url('forgot-password') ?>">¿Olvidaste tu contraseña?</a>
     </div>
 </body>
 </html>

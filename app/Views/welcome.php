@@ -113,9 +113,9 @@
         </div>
         <div class="col-md-8">
             <div class="map-container">
-                <a href="https://www.google.com/maps?q=<?= $skate['longitud'] ?>,<?= $skate['latitud'] ?>" target="_blank">
+                <a href="https://www.google.com/maps?q=<?= $skate['latitud'] ?>,<?= $skate['longitud'] ?>" target="_blank">
                     <iframe 
-                        src="https://maps.google.com/maps?q=<?= $skate['longitud'] ?>,<?= $skate['latitud'] ?>&z=15&output=embed" 
+                        src="https://maps.google.com/maps?q=<?= $skate['latitud'] ?>,<?= $skate['longitud'] ?>&z=15&output=embed" 
                         width="100%" height="500" style="border:0;" allowfullscreen="" loading="lazy">
                     </iframe>
                 </a>
@@ -125,7 +125,7 @@
 </div>
 
 <footer>
-    <p>&copy; 2024 E-skate - Diseñado para la acción - Contáctanos al E-skate@gmail.com</p>
+    <p>&copy; 2024 E-skate - Diseñado para la acción - Contáctanos al eskatevz@gmail.com</p>
 </footer>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

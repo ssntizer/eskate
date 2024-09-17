@@ -15,3 +15,8 @@ $routes->get('/view-skate/(:any)', 'AuthController::viewSkate/$1');
 $routes->get('/logout', 'AuthController::logout');
 $routes->post('/add-skate', 'AuthController::addSkate');
 $routes->post('/unlink-skate/(:any)', 'AuthController::unlinkSkate/$1');
+$routes->get('/forgot-password', 'AuthController::forgotPassword');
+$routes->post('passwordreset/request', 'PasswordResetController::requestReset');
+$routes->get('passwordreset/reset/(:any)', 'PasswordResetController::reset/$1');
+$routes->post('passwordreset/update', 'PasswordResetController::updatePassword');
+$routes->post('/skate/update', 'SkateController::updateSkateData');
