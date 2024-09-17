@@ -23,41 +23,57 @@ class SkateController extends ResourceController
         if (!$json) {
             return $this->fail('No se recibieron datos en formato JSON.');
         }
-
+    
         // Extraer los datos del JSON
         $codigo = $json->codigo;
-        $velocidad = $json->velocidad;
-        $bateria = $json->bateria;
-        $temperatura = $json->temperatura;
-        $ID_ubicacion = $json->ID_ubicacion;
-
-        log_message('debug', 'Datos recibidos: codigo=' . $codigo . ', velocidad=' . $velocidad . ', bateria=' . $bateria . ', temperatura=' . $temperatura . ', ID_ubicacion=' . $ID_ubicacion);
-
-        // Verificar si se recibieron todos los datos necesarios
-        if (!$codigo || !$velocidad || !$bateria || !$temperatura || !$ID_ubicacion) {
-            return $this->fail('Faltan datos necesarios.');
+        $velocidad = $json->velocidad ?? null; // Permitir que sea nulo
+        $bateria = $json->bateria ?? null;     // Permitir que sea nulo
+        $temperatura = $json->temperatura ?? null; // Permitir que sea nulo
+        $ID_ubicacion = $json->ID_ubicacion;   // Este campo se mantiene requerido
+        $longitud = $json->longitud;            // Nuevo
+        $latitud = $json->latitud;              // Nuevo
+        $hora = $json->hora;                    // Nuevo
+    
+        log_message('debug', 'Datos recibidos: codigo=' . $codigo . ', velocidad=' . $velocidad . ', bateria=' . $bateria . ', temperatura=' . $temperatura . ', ID_ubicacion=' . $ID_ubicacion . ', longitud=' . $longitud . ', latitud=' . $latitud . ', hora=' . $hora);
+    
+        // Verificar si se recibió el código y ID_ubicacion
+        if (!$codigo || !$ID_ubicacion) {
+            return $this->fail('Faltan datos necesarios: codigo e ID_ubicacion son obligatorios.');
         }
-
+    
         // Verificar si el código de skate existe
         $skate = $this->skateModel->getSkateByCode($codigo);
-
+    
         if (!$skate) {
             return $this->failNotFound('Skate no encontrado.');
         }
-
-        // Actualizar el registro del skate
+    
+        // Preparar datos para la actualización
         $updateData = [
             'velocidad' => $velocidad,
             'bateria' => $bateria,
             'temperatura' => $temperatura,
             'ID_ubicacion' => $ID_ubicacion,
         ];
-
+    
         // Usar where para asegurarse de que se actualice usando el campo "codigo"
         if ($this->skateModel->where('codigo', $codigo)->set($updateData)->update()) {
-            return $this->respond(['message' => 'Datos actualizados correctamente.'], 200);
+            // Cargar el modelo de ubicación
+            $ubicacionModel = new \App\Models\UbicacionModel();
+            $ubicacionData = [
+                'longitud' => $longitud,
+                'latitud' => $latitud,
+                'hora' => $hora,  // Usar la hora recibida
+            ];
+    
+            // Realizar el update de la ubicación usando el ID_ubicacion
+            if ($ubicacionModel->where('ID_ubicacion', $ID_ubicacion)->set($ubicacionData)->update()) {
+                return $this->respond(['message' => 'Datos actualizados correctamente.'], 200);
+            } else {
+                return $this->fail('No se pudo actualizar la ubicación.');
+            }
         } else {
-            return $this->fail('No se pudieron actualizar los datos.');
+            return $this->fail('No se pudieron actualizar los datos del skate.');
         }
     }
 }
