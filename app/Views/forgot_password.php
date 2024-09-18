@@ -82,6 +82,13 @@
         .login-form p {
             color: #e74c3c; /* Color del mensaje */
         }
+        .login-form a#volver {
+            margin-top: 15px;
+            display: block;
+            text-decoration: none;
+            font-size: 14px;
+            color: #ff6600;
+        }
     </style>
 </head>
 <body>
@@ -93,6 +100,7 @@
         <input type="email" name="email" required>
     </div>
     <button type="submit">Enviar enlace de recuperación</button>
+    <a id="volver" href="<?= site_url('login') ?>">Volver atras</a>
 </form>
         <?php if (session()->getFlashdata('message')): ?>
             <p class="error"><?= session()->getFlashdata('message') ?></p> <!-- Añadido estilo de error -->
