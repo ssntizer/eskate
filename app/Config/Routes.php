@@ -5,7 +5,7 @@ use CodeIgniter\Router\RouteCollection;
 /**
  * @var RouteCollection $routes
  */
-$routes->get('/', 'AuthController::login');
+$routes->get('/', 'AuthController::primerpag');
 $routes->get('/login', 'AuthController::login');
 $routes->post('/loginUser', 'AuthController::loginUser');
 $routes->get('/register', 'AuthController::register');
@@ -20,3 +20,4 @@ $routes->post('passwordreset/request', 'PasswordResetController::requestReset');
 $routes->get('passwordreset/reset/(:any)', 'PasswordResetController::reset/$1');
 $routes->post('passwordreset/update', 'PasswordResetController::updatePassword');
 $routes->post('/skate/update', 'SkateController::updateSkateData');
+$routes->get('/login', 'AuthController::login');

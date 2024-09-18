@@ -226,3 +226,24 @@ DEBUG - 2024-09-17 23:13:29 --> Datos recibidos: codigo=YYYYY1, velocidad=0, bat
 DEBUG - 2024-09-17 23:14:01 --> Datos recibidos: codigo=YYYYY1, velocidad=0, bateria=90, temperatura=26.3, ID_ubicacion=1, longitud=-64.12708, latitud=-32.17403, hora=20:14:01
 DEBUG - 2024-09-17 23:18:45 --> Datos recibidos: codigo=YYYYY1, velocidad=0, bateria=90, temperatura=26.3, ID_ubicacion=1, longitud=-64.12707, latitud=-32.17356, hora=20:18:44
 DEBUG - 2024-09-17 23:19:17 --> Datos recibidos: codigo=YYYYY1, velocidad=6.659502, bateria=90, temperatura=26.2, ID_ubicacion=1, longitud=-64.12705, latitud=-32.17374, hora=20:19:16
+INFO - 2024-09-17 23:20:43 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-09-17 23:35:11 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2024-09-17 23:44:02 --> User found: Array
+(
+    [id] => 71
+    [username] => Erie
+    [email] => venturinierie@gmail.com
+    [password] => $2y$10$/AOJOol1EpTzBpJ5kAkoeubjgX..Q9suPydGB9jhb/kOrVyIZMNne
+    [reset_token] => 
+    [reset_expiration] => 
+)
+
+DEBUG - 2024-09-17 23:44:03 --> Password verified successfully.
+INFO - 2024-09-17 23:44:03 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-09-17 23:44:03 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-09-17 23:44:09 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-09-17 23:44:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-09-17 23:44:37 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-09-17 23:53:14 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-09-17 23:57:51 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-09-17 23:57:52 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.

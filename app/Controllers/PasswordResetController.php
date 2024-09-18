@@ -64,7 +64,7 @@ class PasswordResetController extends Controller
     
         if ($user) {
             $this->userModel->resetPassword($token, $newPassword);
-            return redirect()->to('/')->with('message', 'Tu contraseña ha sido actualizada exitosamente.');
+            return redirect()->to('/login')->with('message', 'Tu contraseña ha sido actualizada exitosamente.');
         } else {
             return redirect()->to('/')->with('error', 'El token de restablecimiento no es válido o ha expirado.');
         }

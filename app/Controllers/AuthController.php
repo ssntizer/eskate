@@ -173,6 +173,11 @@ class AuthController extends BaseController
     public function forgotPassword(){
     return view('forgot_password'); // Asegúrate de tener la vista de recuperación de contraseña
 }
+public function primerpag()
+{
+    // Cargar la vista principal (landing page)
+    return view('Primerpagina');
+}
 }
 
 
