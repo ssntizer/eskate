@@ -44,7 +44,6 @@ class Database extends Config
         'password' => 'u0STNzjXftknph3HHAbgC124IhFawE4I', // Cambia la contraseña si es necesario
         'database' => 'eskate',
         'hostname' => 'dpg-crp2r5o8fa8c73drc1kg-a.oregon-postgres.render.com',
-        ],
     ];
 
     //    /**
