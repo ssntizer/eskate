@@ -2,7 +2,7 @@
 namespace App\Controllers;
 
 use App\Models\UserModel;
-use App\Models\SkateModel;
+use App\Models\skatemodel;
 use App\Models\UbicacionModel;
 
 class AuthController extends BaseController
@@ -81,7 +81,7 @@ class AuthController extends BaseController
 
         if ($session->get('logged_in')) {
             $userId = $session->get('user_id');
-            $skateModel = new SkateModel();
+            $skateModel = new SkatesModel();
 
             // Obtener solo los skates asociados al ID del usuario
             try {
