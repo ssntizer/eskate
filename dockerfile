@@ -2,7 +2,8 @@
 FROM php:8.1-apache
 
 # Instala las extensiones necesarias de PHP para CodeIgniter
-RUN docker-php-ext-install mysqli pdo pdo_mysql
+RUN apt-get update && apt-get install -y libicu-dev \
+    && docker-php-ext-install intl mysqli pdo pdo_mysql
 
 # Copia el contenido de tu proyecto al contenedor
 COPY . /var/www/html
