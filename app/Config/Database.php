@@ -25,28 +25,25 @@ class Database extends Config
      * @var array<string, mixed>
      */
     public array $default = [
-        'DSN'          => '',
-        'hostname'     => 'localhost',
-        'username'     => 'root',
-        'password'     => 'root',
-        'database'     => 'tvz',
-        'DBDriver'     => 'MySQLi',
-        'DBPrefix'     => '',
-        'pConnect'     => false,
-        'DBDebug'      => true,
-        'charset'      => 'utf8',
-        'DBCollat'     => 'utf8mb4_general_ci',
-        'swapPre'      => '',
-        'encrypt'      => false,
-        'compress'     => false,
-        'strictOn'     => false,
-        'failover'     => [],
-        'port'         => 3306,
-        'numberNative' => false,
-        'dateFormat'   => [
-            'date'     => 'Y-m-d',
-            'datetime' => 'Y-m-d H:i:s',
-            'time'     => 'H:i:s',
+        'DSN'      => '',
+        'DBDriver' => 'PostgreSQL',
+        'DBPrefix' => '',
+        'pConnect' => false,
+        'DBDebug'  => (ENVIRONMENT !== 'production'),
+        'cacheOn'  => false,
+        'cachedir' => '',
+        'charSet'  => 'utf8',
+        'DBCollat' => 'utf8_general_ci',
+        'swap_pre' => '',
+        'encrypt'  => true, // Esto es importante para SSL/TLS
+        'compress' => false,
+        'strictOn' => false,
+        'failover' => [],
+        'port'     => 5432,
+        'username' => 'root',
+        'password' => 'u0STNzjXftknph3HHAbgC124IhFawE4I', // Cambia la contraseña si es necesario
+        'database' => 'eskate',
+        'hostname' => 'dpg-crp2r5o8fa8c73drc1kg-a.oregon-postgres.render.com',
         ],
     ];
 
