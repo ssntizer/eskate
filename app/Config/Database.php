@@ -24,7 +24,132 @@ class Database extends Config
      *
      * @var array<string, mixed>
      */
-    public array $default;
+    public array $default = [
+        'DSN'      => '',
+        'DBDriver' => 'Postgre',
+        'DBPrefix' => '',
+        'pConnect' => false,
+        'DBDebug'  => (ENVIRONMENT !== 'production'),
+        'cacheOn'  => false,
+        'cachedir' => '',
+        'charSet'  => 'utf8',
+        'DBCollat' => 'utf8_general_ci',
+        'swap_pre' => '',
+        'encrypt'  => true, // Esto es importante para SSL/TLS
+        'compress' => false,
+        'strictOn' => false,
+        'failover' => [],
+        'port'     => 5432,
+        'username' => 'root',
+        'password' => 'u0STNzjXftknph3HHAbgC124IhFawE4I', // Cambia la contraseña si es necesario
+        'database' => 'eskate',
+        'hostname' => 'dpg-crp2r5o8fa8c73drc1kg-a.oregon-postgres.render.com',
+    ];
+
+    //    /**
+    //     * Sample database connection for SQLite3.
+    //     *
+    //     * @var array<string, mixed>
+    //     */
+    //    public array $default = [
+    //        'database'    => 'database.db',
+    //        'DBDriver'    => 'SQLite3',
+    //        'DBPrefix'    => '',
+    //        'DBDebug'     => true,
+    //        'swapPre'     => '',
+    //        'failover'    => [],
+    //        'foreignKeys' => true,
+    //        'busyTimeout' => 1000,
+    //        'dateFormat'  => [
+    //            'date'     => 'Y-m-d',
+    //            'datetime' => 'Y-m-d H:i:s',
+    //            'time'     => 'H:i:s',
+    //        ],
+    //    ];
+
+    //    /**
+    //     * Sample database connection for Postgre.
+    //     *
+    //     * @var array<string, mixed>
+    //     */
+    //    public array $default = [
+    //        'DSN'        => '',
+    //        'hostname'   => 'localhost',
+    //        'username'   => 'root',
+    //        'password'   => 'root',
+    //        'database'   => 'ci4',
+    //        'schema'     => 'public',
+    //        'DBDriver'   => 'Postgre',
+    //        'DBPrefix'   => '',
+    //        'pConnect'   => false,
+    //        'DBDebug'    => true,
+    //        'charset'    => 'utf8',
+    //        'swapPre'    => '',
+    //        'failover'   => [],
+    //        'port'       => 5432,
+    //        'dateFormat' => [
+    //            'date'     => 'Y-m-d',
+    //            'datetime' => 'Y-m-d H:i:s',
+    //            'time'     => 'H:i:s',
+    //        ],
+    //    ];
+
+    //    /**
+    //     * Sample database connection for SQLSRV.
+    //     *
+    //     * @var array<string, mixed>
+    //     */
+    //    public array $default = [
+    //        'DSN'        => '',
+    //        'hostname'   => 'localhost',
+    //        'username'   => 'root',
+    //        'password'   => 'root',
+    //        'database'   => 'ci4',
+    //        'schema'     => 'dbo',
+    //        'DBDriver'   => 'SQLSRV',
+    //        'DBPrefix'   => '',
+    //        'pConnect'   => false,
+    //        'DBDebug'    => true,
+    //        'charset'    => 'utf8',
+    //        'swapPre'    => '',
+    //        'encrypt'    => false,
+    //        'failover'   => [],
+    //        'port'       => 1433,
+    //        'dateFormat' => [
+    //            'date'     => 'Y-m-d',
+    //            'datetime' => 'Y-m-d H:i:s',
+    //            'time'     => 'H:i:s',
+    //        ],
+    //    ];
+
+    //    /**
+    //     * Sample database connection for OCI8.
+    //     *
+    //     * You may need the following environment variables:
+    //     *   NLS_LANG                = 'AMERICAN_AMERICA.UTF8'
+    //     *   NLS_DATE_FORMAT         = 'YYYY-MM-DD HH24:MI:SS'
+    //     *   NLS_TIMESTAMP_FORMAT    = 'YYYY-MM-DD HH24:MI:SS'
+    //     *   NLS_TIMESTAMP_TZ_FORMAT = 'YYYY-MM-DD HH24:MI:SS'
+    //     *
+    //     * @var array<string, mixed>
+    //     */
+    //    public array $default = [
+    //        'DSN'        => 'localhost:1521/XEPDB1',
+    //        'username'   => 'root',
+    //        'password'   => 'root',
+    //        'DBDriver'   => 'OCI8',
+    //        'DBPrefix'   => '',
+    //        'pConnect'   => false,
+    //        'DBDebug'    => true,
+    //        'charset'    => 'AL32UTF8',
+    //        'swapPre'    => '',
+    //        'failover'   => [],
+    //        'dateFormat' => [
+    //            'date'     => 'Y-m-d',
+    //            'datetime' => 'Y-m-d H:i:s',
+    //            'time'     => 'H:i:s',
+    //        ],
+    //    ];
 
     /**
      * This database connection is used when running PHPUnit database tests.
@@ -62,33 +187,12 @@ class Database extends Config
     {
         parent::__construct();
 
-        // Inicializar la conexión a la base de datos
-        public array $default = [
-            'DSN'      => '',
-            'DBDriver' => 'Postgre', // Asegúrate de que sea 'Postgre' y no 'PostgreSQL'
-            'DBPrefix' => '',
-            'pConnect' => false,
-            'DBDebug'  => (ENVIRONMENT !== 'production'),
-            'cacheOn'  => false,
-            'cachedir' => '',
-            'charSet'  => 'utf8',
-            'DBCollat' => 'utf8_general_ci',
-            'swap_pre' => '',
-            'encrypt'  => true, // Mantén esto como true para SSL/TLS
-            'compress' => false,
-            'strictOn' => false,
-            'failover' => [],
-            'port'     => getenv('database.default.port') ?: 5432,
-            'username' => getenv('database.default.username') ?: 'your_username', // Cambia esto por tu usuario real
-            'password' => getenv('database.default.password') ?: 'your_password', // Cambia esto por tu contraseña real
-            'database' => getenv('database.default.database') ?: 'eskate',
-            'hostname' => getenv('database.default.hostname') ?: 'your_host', // Cambia esto por tu host real
-        ];
-        
-
-        // Asegúrate de que establezcamos el grupo de base de datos a 'tests' si estamos en modo de prueba
+        // Ensure that we always set the database group to 'tests' if
+        // we are currently running an automated test suite, so that
+        // we don't overwrite live data on accident.
         if (ENVIRONMENT === 'testing') {
             $this->defaultGroup = 'tests';
         }
     }
 }
+esta es la configuracion de mi base de datos
