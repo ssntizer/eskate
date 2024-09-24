@@ -26,14 +26,14 @@ class Database extends Config
      */
     public array $default = [
         'DSN'      => '',
-        'DBDriver' => 'Postgre',
+        'DBDriver' => 'Postgre', // Asegúrate de que esté escrito correctamente
         'DBPrefix' => '',
         'pConnect' => false,
         'DBDebug'  => (ENVIRONMENT !== 'production'),
         'cacheOn'  => false,
         'cachedir' => '',
-        'charSet'  => 'utf8',
-        'DBCollat' => 'utf8_general_ci',
+        'charSet'  => 'utf8', // UTF8 es comúnmente usado
+        'DBCollat' => 'utf8_general_ci', // Cambia esto si no es necesario
         'swap_pre' => '',
         'encrypt'  => true, // Esto es importante para SSL/TLS
         'compress' => false,
@@ -45,6 +45,7 @@ class Database extends Config
         'database' => 'eskate',
         'hostname' => 'dpg-crp2r5o8fa8c73drc1kg-a.oregon-postgres.render.com',
     ];
+    
 
     //    /**
     //     * Sample database connection for SQLite3.
