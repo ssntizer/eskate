@@ -20,7 +20,7 @@ class AuthController extends BaseController
         $data = [
             'username' => $this->request->getPost('username'),
             'email' => $this->request->getPost('email'),
-            'password' => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT) // Hashing de la contraseña
+            'password' => $this->request->getPost('password') // Hashing de la contraseña
         ];
     
         // Verificar si el email ya existe
