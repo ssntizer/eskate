@@ -15,7 +15,7 @@
         "ext-mbstring": "*",
         "laminas/laminas-escaper": "^2.13",
         "psr/log": "^3.0",
-        "ext-pgsql": "*" // Agregado para PostgreSQL
+        "ext-pgsql": "*" 
     },
     "require-dev": {
         "codeigniter/coding-standard": "^1.7",
