@@ -36,7 +36,7 @@ class Database extends Config
         'DBDebug'  => (ENVIRONMENT !== 'production'),
         'cacheOn'  => false,
         'cachedir' => '',
-        'charSet'  => 'utf8mb4', // Para soporte completo de UTF-8
+        'charSet'  => 'utf8', // Para soporte completo de UTF-8
         'DBCollat' => 'utf8mb4_general_ci',
         'swap_pre' => '',
         'encrypt'  => false,
