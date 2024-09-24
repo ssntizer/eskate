@@ -26,7 +26,7 @@ class Database extends Config
      */
     public array $default = [
         'DSN'      => '',
-        'DBDriver' => 'PostgreSQL',
+        'DBDriver' => getenv('database.default.DBDriver') ?: 'PostgreSQL',
         'DBPrefix' => '',
         'pConnect' => false,
         'DBDebug'  => (ENVIRONMENT !== 'production'),
@@ -35,15 +35,15 @@ class Database extends Config
         'charSet'  => 'utf8',
         'DBCollat' => 'utf8_general_ci',
         'swap_pre' => '',
-        'encrypt'  => true, // Esto es importante para SSL/TLS
+        'encrypt'  => true, // Asegúrate de que esto esté en true para SSL/TLS
         'compress' => false,
         'strictOn' => false,
         'failover' => [],
-        'port'     => 5432,
-        'username' => 'root',
-        'password' => 'u0STNzjXftknph3HHAbgC124IhFawE4I', // Cambia la contraseña si es necesario
-        'database' => 'eskate',
-        'hostname' => 'dpg-crp2r5o8fa8c73drc1kg-a.oregon-postgres.render.com',
+        'port'     => getenv('database.default.port') ?: 5432,
+        'username' => getenv('database.default.username') ?: 'root',
+        'password' => getenv('database.default.password') ?: '', // Cambia esto si es necesario
+        'database' => getenv('database.default.database') ?: 'eskate',
+        'hostname' => getenv('database.default.hostname') ?: 'localhost',
     ];
 
     //    /**
