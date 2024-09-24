@@ -1,11 +1,17 @@
 # Usa una imagen base de PHP con Apache
-FROM php:7.4-apache
+FROM php:8.0-apache
 
-# Copia el contenido de tu aplicación al contenedor
-COPY . /var/www/html/
-
-# Instala extensiones de PHP necesarias (opcional)
+# Instala las extensiones necesarias de PHP para CodeIgniter
 RUN docker-php-ext-install mysqli pdo pdo_mysql
 
-# Expon el puerto 80 para el servidor Apache
+# Copia el contenido de la carpeta public de tu proyecto a la carpeta root de Apache
+COPY ./public /var/www/html
+
+# Copia el resto de tu proyecto al contenedor
+COPY . /app
+
+# Configura Apache para apuntar al directorio public
+RUN echo "DocumentRoot /var/www/html" > /etc/apache2/sites-available/000-default.conf
+
+# Expon el puerto 80 para el servidor web
 EXPOSE 80
