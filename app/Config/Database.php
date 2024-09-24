@@ -36,8 +36,8 @@ class Database extends Config
         'DBDebug'  => (ENVIRONMENT !== 'production'),
         'cacheOn'  => false,
         'cachedir' => '',
-        'charSet'  => 'utf8', // Para soporte completo de UTF-8
-        'DBCollat' => 'utf8mb4_general_ci',
+        'charset'  => 'utf8mb4', // Cambiado a utf8mb4
+        'DBCollat' => 'utf8mb4_general_ci', // Cambiado a colación compatible
         'swap_pre' => '',
         'encrypt'  => false,
         'compress' => false,
@@ -61,7 +61,7 @@ class Database extends Config
         'DBPrefix'    => 'db_',
         'pConnect'    => false,
         'DBDebug'     => true,
-        'charset'     => 'utf8',
+        'charset'     => 'utf8', // Esto está bien para SQLite
         'DBCollat'    => '',
         'swapPre'     => '',
         'encrypt'     => false,
