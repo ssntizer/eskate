@@ -63,9 +63,9 @@ class Database extends Config
         parent::__construct();
 
         // Inicializar la conexión a la base de datos
-        $this->default = [
+        public array $default = [
             'DSN'      => '',
-            'DBDriver' => getenv('database.default.DBDriver') ?: 'PostgreSQL',
+            'DBDriver' => 'Postgre', // Asegúrate de que sea 'Postgre' y no 'PostgreSQL'
             'DBPrefix' => '',
             'pConnect' => false,
             'DBDebug'  => (ENVIRONMENT !== 'production'),
@@ -74,16 +74,17 @@ class Database extends Config
             'charSet'  => 'utf8',
             'DBCollat' => 'utf8_general_ci',
             'swap_pre' => '',
-            'encrypt'  => true, // Asegúrate de que esto esté en true para SSL/TLS
+            'encrypt'  => true, // Mantén esto como true para SSL/TLS
             'compress' => false,
             'strictOn' => false,
             'failover' => [],
             'port'     => getenv('database.default.port') ?: 5432,
-            'username' => getenv('database.default.username') ?: 'root',
-            'password' => getenv('database.default.password') ?: '', // Cambia esto si es necesario
+            'username' => getenv('database.default.username') ?: 'your_username', // Cambia esto por tu usuario real
+            'password' => getenv('database.default.password') ?: 'your_password', // Cambia esto por tu contraseña real
             'database' => getenv('database.default.database') ?: 'eskate',
-            'hostname' => getenv('database.default.hostname') ?: 'localhost',
+            'hostname' => getenv('database.default.hostname') ?: 'your_host', // Cambia esto por tu host real
         ];
+        
 
         // Asegúrate de que establezcamos el grupo de base de datos a 'tests' si estamos en modo de prueba
         if (ENVIRONMENT === 'testing') {
