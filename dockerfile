@@ -1,11 +1,9 @@
 # Usa una imagen base de PHP 8.1 con Apache
 FROM php:8.1-apache
 
-# Instala las extensiones necesarias de PHP para CodeIgniter y PostgreSQL
-RUN apt-get update && apt-get install -y \
-    libicu-dev \
-    libpq-dev \
-    && docker-php-ext-install intl pdo pdo_pgsql
+# Instala las extensiones necesarias de PHP para CodeIgniter
+RUN apt-get update && apt-get install -y libicu-dev \
+    && docker-php-ext-install intl mysqli pdo pdo_mysql pdo_pgsql pgsql
 
 # Copia el contenido de tu proyecto al contenedor
 COPY . /var/www/html
