@@ -14,31 +14,45 @@ class AuthController extends BaseController
     }
 
     public function registerUser()
-    {
-        $userModel = new UserModel();
-    
-        // Obtener datos del formulario
-        $data = [
-            'username' => $this->request->getPost('username'),
-            'email' => $this->request->getPost('email'),
-            'password' => $this->request->getPost('password')
-        ];
-    
-        try {
-            // Verificar si el email ya existe
-            if ($userModel->where('email', $data['email'])->first()) {
-                return redirect()->back()->with('error', 'El correo electrónico ya está registrado.')->withInput();
-            }
-    
-            // Guardar el nuevo usuario
-            $userModel->save($data);
-    
-            return redirect()->to('/login')->with('success', 'Registro exitoso');
-        } catch (DatabaseException $e) {
-            // Manejar error de conexión
-            return redirect()->back()->with('error', 'Error de conexión a la base de datos: ' . $e->getMessage())->withInput();
-        }
+{
+    $userModel = new UserModel();
+
+    // Obtener datos del formulario
+    $data = [
+        'username' => $this->request->getPost('username'),
+        'email' => $this->request->getPost('email'),
+        'password' => $this->request->getPost('password')
+    ];
+
+    // Validar que los campos no estén vacíos
+    if (empty($data['username']) || empty($data['email']) || empty($data['password'])) {
+        return redirect()->back()->with('error', 'Todos los campos son obligatorios.')->withInput();
     }
+
+    try {
+        // Verificar si el email ya existe
+        if ($userModel->where('email', $data['email'])->first()) {
+            return redirect()->back()->with('error', 'El correo electrónico ya está registrado.')->withInput();
+        }
+
+        // Hashear la contraseña aquí en lugar del modelo
+        $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
+
+        // Guardar el nuevo usuario
+        if ($userModel->save($data)) {
+            return redirect()->to('/login')->with('success', 'Registro exitoso');
+        } else {
+            // Manejar errores al guardar
+            return redirect()->back()->with('error', 'Error al registrar el usuario: ' . implode(", ", $userModel->errors()));
+        }
+    } catch (DatabaseException $e) {
+        // Manejar error de conexión
+        return redirect()->back()->with('error', 'Error de conexión a la base de datos: ' . $e->getMessage())->withInput();
+    } catch (\Exception $e) {
+        // Manejar cualquier otra excepción
+        return redirect()->back()->with('error', 'Error inesperado: ' . $e->getMessage())->withInput();
+    }
+}
 
     public function login()
     {
