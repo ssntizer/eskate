@@ -1,0 +1,1 @@
+services:  - type: web    name: my-php-app    env: docker    dockerfilePath: Dockerfile    autoDeploy: true    healthCheckPath: "/"    plan: free #%20Cambia%20a%20'starter'%20o%20'standard'%20seg%C3%BAn%20el%20plan%20que%20necesites%20%20%20%20region:%20oregon%20#%20Cambia%20seg%C3%BAn%20la%20regi%C3%B3n%20deseada
