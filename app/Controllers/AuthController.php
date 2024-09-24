@@ -3,7 +3,7 @@ namespace App\Controllers;
 
 use App\Models\UserModel;
 use App\Models\skatemodel;
-use App\Models\UbicacionModel;
+use App\Models\ubicacionmodel;
 
 class AuthController extends BaseController
 {
