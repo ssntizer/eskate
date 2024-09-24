@@ -26,31 +26,62 @@ class Database extends Config
      */
     public array $default = [
         'DSN'      => '',
-        'hostname' => 'sql10.freesqldatabase.com',  // Cambiado a tu nuevo host de MySQL
-        'username' => 'sql10733194',                // Usuario de tu base de datos MySQL
-        'password' => '6747MCSCCX',                 // Contraseña de tu base de datos MySQL
-        'database' => 'sql10733194',                // Nombre de tu base de datos MySQL
-        'DBDriver' => 'MySQLi',                     // Cambiado a MySQLi
+        'hostname' => 'sql10.freesqldatabase.com',
+        'username' => 'sql10733194',
+        'password' => '6747MCSCCX',
+        'database' => 'sql10733194',
+        'DBDriver' => 'MySQLi', // Asegúrate de usar el controlador correcto
         'DBPrefix' => '',
         'pConnect' => false,
         'DBDebug'  => (ENVIRONMENT !== 'production'),
         'cacheOn'  => false,
         'cachedir' => '',
-        'charSet'  => 'utf8mb4',                    // UTF8mb4 es compatible con más caracteres
+        'charSet'  => 'utf8mb4', // Para soporte completo de UTF-8
         'DBCollat' => 'utf8mb4_general_ci',
         'swap_pre' => '',
-        'encrypt'  => false,                        // Desactivado para MySQL
+        'encrypt'  => false,
         'compress' => false,
         'strictOn' => false,
         'failover' => [],
-        'port'     => 3306,                         // Puerto para MySQL
+        'port'     => 3306,
+    ];
+
+    /**
+     * This database connection is used when running PHPUnit database tests.
+     *
+     * @var array<string, mixed>
+     */
+    public array $tests = [
+        'DSN'         => '',
+        'hostname'    => '127.0.0.1',
+        'username'    => '',
+        'password'    => '',
+        'database'    => ':memory:',
+        'DBDriver'    => 'SQLite3',
+        'DBPrefix'    => 'db_',
+        'pConnect'    => false,
+        'DBDebug'     => true,
+        'charset'     => 'utf8',
+        'DBCollat'    => '',
+        'swapPre'     => '',
+        'encrypt'     => false,
+        'compress'    => false,
+        'strictOn'    => false,
+        'failover'    => [],
+        'port'        => 3306,
+        'foreignKeys' => true,
+        'busyTimeout' => 1000,
+        'dateFormat'  => [
+            'date'     => 'Y-m-d',
+            'datetime' => 'Y-m-d H:i:s',
+            'time'     => 'H:i:s',
+        ],
     ];
 
     public function __construct()
     {
         parent::__construct();
 
-        // Aseguramos que se use el grupo 'tests' en entornos de prueba
         if (ENVIRONMENT === 'testing') {
             $this->defaultGroup = 'tests';
         }
