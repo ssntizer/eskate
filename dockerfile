@@ -1,10 +1,11 @@
 # Usa una imagen base de PHP 8.1 con Apache
 FROM php:8.1-apache
 
-# Instala las dependencias necesarias para MySQL y las extensiones de PHP
+# Instala las dependencias necesarias para MySQL, oniguruma y las extensiones de PHP
 RUN apt-get update && apt-get install -y \
     libicu-dev \
     libmariadb-dev \
+    libonig-dev \  # Añadir esta línea para instalar oniguruma
     && docker-php-ext-install intl mysqli pdo pdo_mysql mbstring \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
