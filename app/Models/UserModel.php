@@ -12,10 +12,13 @@ class UserModel extends Model
 
     protected function hashPassword(array $data)
     {
-    if (isset($data['data']['password'])) {
+        if (!isset($data['data']['password'])) {
+            return $data;
+        }
+
         $data['data']['password'] = password_hash($data['data']['password'], PASSWORD_DEFAULT);
-    }
-    return $data;
+
+        return $data;
     }
 
     // Encuentra al usuario por email
