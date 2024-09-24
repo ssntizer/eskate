@@ -1,7 +1,7 @@
 # Usa una imagen base de PHP 8.1 con Apache
 FROM php:8.1-apache
 
-# Instala las extensiones necesarias de PHP para CodeIgniter
+# Instala las extensiones necesarias de PHP para CodeIgniter y PostgreSQL
 RUN apt-get update && apt-get install -y \
     libicu-dev \
     libpq-dev \
