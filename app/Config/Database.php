@@ -195,4 +195,3 @@ class Database extends Config
         }
     }
 }
-esta es la configuracion de mi base de datos
