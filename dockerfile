@@ -4,8 +4,9 @@ FROM php:8.1-apache
 # Instala las dependencias necesarias para MySQL y las extensiones de PHP
 RUN apt-get update && apt-get install -y \
     libicu-dev \
-    libmysqlclient-dev \
+    libmariadb-dev \
     && docker-php-ext-install intl mysqli pdo pdo_mysql
+
 
 # Copia el contenido de tu proyecto al contenedor
 COPY . /var/www/html
