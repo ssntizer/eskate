@@ -5,9 +5,9 @@ FROM php:8.1-apache
 RUN apt-get update && apt-get install -y \
     libicu-dev \
     libmariadb-dev \
-    libonig-dev \  # Añadir esta línea para instalar oniguruma
-    && docker-php-ext-install intl mysqli pdo pdo_mysql mbstring \
-    && apt-get clean && rm -rf /var/lib/apt/lists/*
+    libonig-dev && \  # Añadir esta línea para instalar oniguruma
+    docker-php-ext-install intl mysqli pdo pdo_mysql mbstring && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Copia el contenido de tu proyecto al contenedor
 COPY . /var/www/html
