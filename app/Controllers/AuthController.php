@@ -81,7 +81,7 @@ class AuthController extends BaseController
 
         if ($session->get('logged_in')) {
             $userId = $session->get('user_id');
-            $skateModel = new SkatesModel();
+            $skateModel = new SkateModel();
 
             // Obtener solo los skates asociados al ID del usuario
             try {

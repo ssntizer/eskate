@@ -3,7 +3,7 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class SkatesModel extends Model
+class SkateModel extends Model
 {
     protected $table = 'skate';
     protected $primaryKey = 'codigo';
