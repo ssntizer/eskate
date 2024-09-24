@@ -26,7 +26,7 @@ class Database extends Config
      */
     public array $default = [
         'DSN'      => '',
-        'DBDriver' => getenv('database.default.DBDriver') ?: 'PostgreSQL',
+        'DBDriver' => 'PostgreSQL',
         'DBPrefix' => '',
         'pConnect' => false,
         'DBDebug'  => (ENVIRONMENT !== 'production'),
