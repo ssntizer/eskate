@@ -2,8 +2,8 @@
 namespace App\Controllers;
 
 use App\Models\UserModel;
-use App\Models\SkateModel;
-use App\Models\UbicacionModel;
+use App\Models\skatemodel;
+use App\Models\ubicacionmodel;
 
 class AuthController extends BaseController
 {
@@ -20,7 +20,7 @@ class AuthController extends BaseController
         $data = [
             'username' => $this->request->getPost('username'),
             'email' => $this->request->getPost('email'),
-            'password' => $this->request->getPost('password')
+            'password' => $this->request->getPost('password') 
         ];
     
         // Verificar si el email ya existe
@@ -88,14 +88,15 @@ class AuthController extends BaseController
                 $skates = $skateModel->where('ID_usuario', $userId)->findAll();
 
                 if (empty($skates)) {
-                    return view('list_skates', ['message' => 'Este usuario aun no tiene skates.']);
+                    return view('list_skates', ['message' => 'Este usuario aún no tiene skates.']);
                 }
 
                 return view('list_skates', ['skates' => $skates]);
 
             } catch (\Exception $e) {
                 // Manejar cualquier excepción que pueda ocurrir durante la consulta
-                return redirect()->to('/error')->with('error', 'No se ha encontrado informacion de tu skate.');
+                log_message('error', 'Error al obtener skates: ' . $e->getMessage());
+                return redirect()->to('/error')->with('error', 'No se ha encontrado información de tu skate.');
             }
         } else {
             return redirect()->to('/login');
@@ -111,14 +112,20 @@ class AuthController extends BaseController
             $ubicacionModel = new UbicacionModel();
 
             // Obtener datos del skate con ubicación
-            $skate = $skateModel->getSkateWithLocation($codigo);
+            try {
+                $skate = $skateModel->getSkateWithLocation($codigo);
 
-            if (!$skate) {
-                return redirect()->to('/list-skates')->with('error', 'Skate no encontrada.');
+                if (!$skate) {
+                    return redirect()->to('/list-skates')->with('error', 'Skate no encontrada.');
+                }
+
+                // Pasar datos a la vista
+                return view('welcome', ['skate' => $skate]);
+
+            } catch (\Exception $e) {
+                log_message('error', 'Error al obtener el skate con ubicación: ' . $e->getMessage());
+                return redirect()->to('/list-skates')->with('error', 'No se ha podido obtener información del skate.');
             }
-
-            // Pasar datos a la vista
-            return view('welcome', ['skate' => $skate]);
         } else {
             return redirect()->to('/login');
         }
@@ -144,10 +151,15 @@ class AuthController extends BaseController
         }
     
         // Intentar vincular el skate al usuario
-        if ($skateModel->addSkate($codigo, $ID_usuario)) {
-            return redirect()->to('/list-skates')->with('message', 'Skate vinculado exitosamente.');
-        } else {
-            return redirect()->back()->with('error', 'El código del skate ya está vinculado a otro usuario o no existe.');
+        try {
+            if ($skateModel->addSkate($codigo, $ID_usuario)) {
+                return redirect()->to('/list-skates')->with('message', 'Skate vinculado exitosamente.');
+            } else {
+                return redirect()->back()->with('error', 'El código del skate ya está vinculado a otro usuario o no existe.');
+            }
+        } catch (\Exception $e) {
+            log_message('error', 'Error al vincular el skate: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'No se ha podido vincular el skate.');
         }
     }
 
@@ -160,19 +172,30 @@ class AuthController extends BaseController
         $skate = $skateModel->where('codigo', $codigo)->first();
 
         if ($skate && $skate['ID_usuario'] == $ID_usuario) {
-            // Intentar desvincular el skate del usuario
-            if ($skateModel->unlinkSkate($codigo)) {
-                return redirect()->to('/list-skates')->with('message', 'Skate desvinculado exitosamente.');
-            } else {
+            try {
+                // Intentar desvincular el skate del usuario
+                if ($skateModel->unlinkSkate($codigo)) {
+                    return redirect()->to('/list-skates')->with('message', 'Skate desvinculado exitosamente.');
+                } else {
+                    return redirect()->back()->with('error', 'No se pudo desvincular el skate.');
+                }
+            } catch (\Exception $e) {
+                log_message('error', 'Error al desvincular el skate: ' . $e->getMessage());
                 return redirect()->back()->with('error', 'No se pudo desvincular el skate.');
             }
         } else {
             return redirect()->back()->with('error', 'No puedes desvincular este skate.');
         }
     }
-    public function forgotPassword(){
-    return view('forgot_password'); // Asegúrate de tener la vista de recuperación de contraseña
-}
-}
 
+    public function forgotPassword()
+    {
+        return view('forgot_password'); // Asegúrate de tener la vista de recuperación de contraseña
+    }
 
+    public function primerpag()
+    {
+        // Cargar la vista principal (landing page)
+        return view('Primerpagina');
+    }
+}
