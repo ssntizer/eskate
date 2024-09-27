@@ -27,3 +27,5 @@ INFO - 2024-09-27 17:12:24 --> Session: Class initialized using 'CodeIgniter\Ses
 INFO - 2024-09-27 17:12:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
 DEBUG - 2024-09-27 17:34:27 --> Datos recibidos: codigo=YYYYY1, velocidad=0, bateria=90, temperatura=28.1, ID_ubicacion=1, longitud=-64.12738, latitud=-32.17369, hora=14:34:26
 DEBUG - 2024-09-27 17:34:59 --> Datos recibidos: codigo=YYYYY1, velocidad=0, bateria=90, temperatura=28.1, ID_ubicacion=1, longitud=-64.12734, latitud=-32.17371, hora=14:34:58
+INFO - 2024-09-27 17:41:54 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-09-27 17:41:54 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
