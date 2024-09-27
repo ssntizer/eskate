@@ -59,7 +59,7 @@ class SkateController extends ResourceController
         // Usar where para asegurarse de que se actualice usando el campo "codigo"
         if ($this->skateModel->where('codigo', $codigo)->set($updateData)->update()) {
             // Cargar el modelo de ubicación
-            $ubicacionModel = new \App\Models\UbicacionModel();
+            $ubicacionModel = new \App\Models\ubicacionmodel();
             $ubicacionData = [
                 'longitud' => $longitud,
                 'latitud' => $latitud,
