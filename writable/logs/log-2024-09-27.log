@@ -1,0 +1,29 @@
+INFO - 2024-09-27 17:11:05 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-09-27 17:11:05 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-09-27 17:11:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2024-09-27 17:11:19 --> User not found with email: venturinierie@gmail.com
+INFO - 2024-09-27 17:11:19 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-09-27 17:11:19 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-09-27 17:11:30 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-09-27 17:11:39 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-09-27 17:11:39 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2024-09-27 17:11:44 --> User found: Array
+(
+    [id] => 75
+    [username] => Erie
+    [email] => venturinierie@gmail.com
+    [password] => $2y$10$ZVat7XEwofHM6F195jZFse25ST0QttUXGSoXamPEYq1oWNArDMNIG
+    [reset_token] => 
+    [reset_expiration] => 
+)
+
+DEBUG - 2024-09-27 17:11:44 --> Password verified successfully.
+INFO - 2024-09-27 17:11:44 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-09-27 17:11:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-09-27 17:11:49 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-09-27 17:11:49 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-09-27 17:12:24 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-09-27 17:12:24 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-09-27 17:12:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2024-09-27 17:34:27 --> Datos recibidos: codigo=YYYYY1, velocidad=0, bateria=90, temperatura=28.1, ID_ubicacion=1, longitud=-64.12738, latitud=-32.17369, hora=14:34:26
+DEBUG - 2024-09-27 17:34:59 --> Datos recibidos: codigo=YYYYY1, velocidad=0, bateria=90, temperatura=28.1, ID_ubicacion=1, longitud=-64.12734, latitud=-32.17371, hora=14:34:58
