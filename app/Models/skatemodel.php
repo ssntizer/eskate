@@ -7,7 +7,7 @@ class SkateModel extends Model
 {
     protected $table = 'skate';
     protected $primaryKey = 'codigo';
-    protected $allowedFields = ['codigo', 'velocidad', 'bateria', 'temperatura', 'ID_ubicacion', 'ID_usuario'];
+    protected $allowedFields = ['codigo', 'velocidad', 'bateria', 'temperatura', 'longitud', 'latitud', 'hora', 'ID_usuario'];
 
     // Obtener un skate por código
     public function getSkateByCode($codigo)
@@ -18,10 +18,8 @@ class SkateModel extends Model
     // Obtener un skate junto con su ubicación
     public function getSkateWithLocation($codigo)
     {
-        // Realizar una consulta que incluya la ubicación relacionada con el skate
-        $this->select('skate.*, ubicacion.longitud, ubicacion.latitud, ubicacion.hora');
-        $this->join('ubicacion', 'skate.ID_ubicacion = ubicacion.ID_ubicacion');
-        return $this->where('skate.codigo', $codigo)->first();
+        // Ahora no es necesario hacer un join, ya que los datos de ubicación están en la tabla skate
+        return $this->where('codigo', $codigo)->first();
     }
 
     // Actualizar el ID_usuario para un skate existente
@@ -56,6 +54,4 @@ class SkateModel extends Model
         $data = ['ID_usuario' => null];
         return $this->update($codigo, $data); // Actualizar el registro
     }
-
-    
 }

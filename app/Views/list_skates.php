@@ -13,6 +13,9 @@
             color: #ffffff;
             font-family: 'Montserrat', sans-serif;
             background-image: url('https://www.transparenttextures.com/patterns/asfalt-dark.png'); /* Textura ligera de asfalto */
+            min-height: 100vh; /* Aseguramos que el cuerpo ocupe al menos la altura de la ventana */
+            display: flex;
+            flex-direction: column; /* Establecemos la dirección de la flexbox para un diseño vertical */
         }
 
         .header {
@@ -32,6 +35,7 @@
 
         .container {
             margin-top: 40px;
+            flex: 1; /* Permite que la sección contenedora ocupe el espacio restante */
         }
 
         .skate-item {
@@ -127,9 +131,6 @@
             text-align: center;
             padding: 20px 0;
             background-color: #005f87;
-            position: absolute;
-            bottom: 0;
-            width: 100%;
         }
 
         footer p {
@@ -147,6 +148,19 @@
             color: #ffb700;
         }
 
+        @media (max-width: 768px) {
+            .skate-item {
+                padding: 15px; /* Espaciado interno reducido para pantallas más pequeñas */
+            }
+
+            .skate-item h4 {
+                font-size: 1.25rem; /* Tamaño de fuente ajustado para pantallas más pequeñas */
+            }
+
+            .skate-item p {
+                font-size: 1rem; /* Tamaño de fuente ajustado para pantallas más pequeñas */
+            }
+        }
     </style>
 </head>
 <body>
@@ -173,7 +187,7 @@
     <?php if (!empty($skates)): ?>
         <div class="row">
             <?php foreach ($skates as $skate): ?>
-                <div class="col-md-4 mb-4">
+                <div class="col-md-4 mb-4 col-sm-6 col-12"> <!-- Ajustado para ser responsivo -->
                     <div class="skate-item" onclick="window.location.href='<?= site_url('view-skate/' . esc($skate['codigo'])) ?>'">
                         <h4>Codigo del skate: <?= esc($skate['codigo']) ?></h4>
                         <p><strong>Batería:</strong> <?= esc($skate['bateria']) ?>%</p>
@@ -221,7 +235,7 @@
 </div>
 
 <footer>
-    <p>&copy; 2024 E-skate - Diseñado para la accion - Contactanos al eskatevz@gmail.com </p>
+    <p>&copy; 2024 E-skate - Diseñado para la acción - Contáctanos al eskatevz@gmail.com </p>
 </footer>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

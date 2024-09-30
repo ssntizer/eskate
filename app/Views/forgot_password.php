@@ -20,7 +20,8 @@
         }
 
         .login-form {
-            width: 400px; /* Ancho del formulario igual al de registro */
+            width: 100%;
+            max-width: 400px; /* Ancho máximo del formulario */
             padding: 40px; /* Espaciado interno */
             border-radius: 15px; /* Bordes redondeados */
             background: linear-gradient(145deg, #006f99, #008dc2); /* Degradado de fondo */
@@ -82,18 +83,58 @@
         .login-form p {
             color: #e74c3c; /* Color del mensaje */
         }
+
+        @media (max-width: 768px) {
+            body {
+                height: auto; /* Ajustar la altura en dispositivos más pequeños */
+                padding: 20px; /* Añadir padding */
+            }
+
+            .login-form {
+                padding: 30px; /* Ajustar el padding del formulario */
+            }
+
+            .login-form h2 {
+                font-size: 1.8rem; /* Ajustar el tamaño del título */
+            }
+
+            .login-form button[type="submit"] {
+                height: 45px; /* Ajustar la altura del botón */
+                font-size: 16px; /* Ajustar el tamaño de la fuente */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .login-form {
+                padding: 20px; /* Reducir el padding en pantallas más pequeñas */
+            }
+
+            .login-form h2 {
+                font-size: 1.6rem; /* Reducir el tamaño del título */
+            }
+
+            .login-form button[type="submit"] {
+                height: 40px; /* Reducir la altura del botón */
+                font-size: 14px; /* Reducir el tamaño de la fuente */
+            }
+
+            .login-form input[type="email"] {
+                height: 45px; /* Reducir la altura de los campos de texto */
+                font-size: 1rem; /* Ajustar el tamaño de la fuente en los campos */
+            }
+        }
     </style>
 </head>
 <body>
     <div class="login-form">
         <h2>Recuperar contraseña</h2>
         <form action="<?= site_url('passwordreset/request') ?>" method="post">
-    <div>
-        <label for="email" style="color: #ffffff;">Correo electrónico:</label>
-        <input type="email" name="email" required>
-    </div>
-    <button type="submit">Enviar enlace de recuperación</button>
-</form>
+            <div>
+                <label for="email" style="color: #ffffff;">Correo electrónico:</label>
+                <input type="email" name="email" required>
+            </div>
+            <button type="submit">Enviar enlace de recuperación</button>
+        </form>
         <?php if (session()->getFlashdata('message')): ?>
             <p class="error"><?= session()->getFlashdata('message') ?></p> <!-- Añadido estilo de error -->
         <?php endif; ?>

@@ -109,14 +109,13 @@ class AuthController extends BaseController
 
         if ($session->get('logged_in')) {
             $skateModel = new SkateModel();
-            $ubicacionModel = new UbicacionModel();
 
             // Obtener datos del skate con ubicación
             try {
                 $skate = $skateModel->getSkateWithLocation($codigo);
 
                 if (!$skate) {
-                    return redirect()->to('/list-skates')->with('error', 'Skate no encontrada.');
+                    return redirect()->to('/list-skates')->with('error', 'Skate no encontrado.');
                 }
 
                 // Pasar datos a la vista

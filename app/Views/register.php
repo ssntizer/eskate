@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,7 +12,7 @@
         body {
             background-color: #00719c; /* Color de fondo */
             color: #ffffff; /* Color del texto */
-            font-family: "Baskervville SC", serif;/* Fuente del texto */
+            font-family: "Baskervville SC", serif; /* Fuente del texto */
             background-image: url('https://www.transparenttextures.com/patterns/asfalt-dark.png'); /* Textura de fondo */
             display: flex;
             justify-content: center;
@@ -21,7 +22,8 @@
         }
 
         .register-form {
-            width: 400px; /* Ancho del formulario */
+            width: 90%; /* Ancho del formulario adaptativo */
+            max-width: 400px; /* Ancho máximo del formulario */
             padding: 40px; /* Espaciado interno */
             border-radius: 15px; /* Bordes redondeados */
             background: linear-gradient(145deg, #006f99, #008dc2); /* Degradado de fondo */
@@ -36,8 +38,8 @@
             font-size: 2rem; /* Tamaño de fuente */
         }
 
-        .register-form input[type="text"], 
-        .register-form input[type="email"], 
+        .register-form input[type="text"],
+        .register-form input[type="email"],
         .register-form input[type="password"] {
             width: 100%; /* Ancho completo */
             height: 50px; /* Altura del campo */
@@ -49,8 +51,8 @@
             color: #333; /* Color del texto en los campos */
         }
 
-        .register-form input[type="text"]:focus, 
-        .register-form input[type="email"]:focus, 
+        .register-form input[type="text"]:focus,
+        .register-form input[type="email"]:focus,
         .register-form input[type="password"]:focus {
             border-color: #00e5ff; /* Color del borde al enfocar */
             outline: none; /* Sin contorno */
@@ -79,11 +81,15 @@
             transform: scale(0.98); /* Escala al hacer clic */
         }
 
-        .error, .success {
-            color: #e74c3c; /* Color del texto de error */
+        .error,
+        .success {
             font-size: 14px; /* Tamaño de fuente */
             margin-bottom: 20px; /* Margen inferior */
             text-align: left; /* Alinear texto a la izquierda */
+        }
+
+        .error {
+            color: #e74c3c; /* Color del texto de error */
         }
 
         .success {
@@ -131,11 +137,11 @@
     </div>
 
     <script>
-        document.getElementById('registrationForm').addEventListener('submit', function(event) {
+        document.getElementById('registrationForm').addEventListener('submit', function (event) {
             const password = document.getElementById('password').value;
             const confirmPassword = document.getElementById('confirm_password').value;
             const errorMessage = document.getElementById('error-message');
-            
+
             if (password !== confirmPassword) {
                 errorMessage.textContent = 'Las contraseñas no coinciden.'; // Mensaje de error
                 errorMessage.style.display = 'block'; // Mostrar mensaje de error
@@ -147,4 +153,5 @@
     </script>
 
 </body>
+
 </html>

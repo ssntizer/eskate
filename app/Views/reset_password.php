@@ -20,7 +20,8 @@
         }
 
         .reset-password-form {
-            width: 400px; /* Ancho del formulario igual al de registro */
+            width: 100%;
+            max-width: 400px; /* Ancho máximo del formulario */
             padding: 40px; /* Espaciado interno */
             border-radius: 15px; /* Bordes redondeados */
             background: linear-gradient(145deg, #006f99, #008dc2); /* Degradado de fondo */
@@ -93,6 +94,48 @@
 
         .reset-password-form a#bl:hover {
             color: #00e5ff; /* Color al pasar el mouse */
+        }
+
+        @media (max-width: 768px) {
+            body {
+                height: auto;
+                padding: 20px;
+            }
+
+            .reset-password-form {
+                width: 100%;
+                padding: 30px; /* Ajustar espaciado interno */
+            }
+
+            .reset-password-form h2 {
+                font-size: 1.8rem; /* Ajustar tamaño del título */
+            }
+
+            .reset-password-form button[type="submit"] {
+                height: 45px; /* Ajustar altura del botón */
+                font-size: 16px; /* Ajustar tamaño de fuente */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .reset-password-form {
+                padding: 20px; /* Reducir el espaciado en pantallas más pequeñas */
+            }
+
+            .reset-password-form h2 {
+                font-size: 1.6rem; /* Ajustar tamaño del título */
+            }
+
+            .reset-password-form button[type="submit"] {
+                height: 40px; /* Ajustar altura del botón */
+                font-size: 14px; /* Ajustar tamaño de fuente */
+            }
+
+            .reset-password-form input[type="text"], 
+            .reset-password-form input[type="password"] {
+                height: 45px; /* Ajustar altura de los campos */
+                font-size: 1rem; /* Ajustar tamaño de fuente en campos */
+            }
         }
     </style>
 </head>
