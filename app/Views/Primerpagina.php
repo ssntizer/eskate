@@ -6,198 +6,265 @@
     <title>E-Skate: Revoluciona tu Movimiento</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+       @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
 
-        /* Estilos generales */
-        body {
-            background-color: #00719c; /* Fondo de la página */
-            background-image: url('https://www.transparenttextures.com/patterns/asfalt-dark.png');
-            color: #ffffff; /* Texto blanco */
-            font-family: 'Montserrat', sans-serif;
-            margin: 0;
-            padding: 0;
-        }
+/* Estilos generales */
+body {
+    background-color: #00719c; /* Fondo de la página */
+    background-image: url('https://www.transparenttextures.com/patterns/asfalt-dark.png');
+    color: #ffffff; /* Texto blanco */
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    padding: 0;
+}
 
-        /* Header */
-        .header {
-            background-color: #005f87; /* Color de fondo del encabezado */
-            padding: 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 3px solid #004b6b;
-            position: fixed; /* Fija el header en la parte superior */
-            width: 100%;
-            top: 0;
-            left: 0;
-            z-index: 1000; /* Asegura que esté siempre sobre el contenido */
-        }
+/* Header */
+.header {
+    background-color: #005f87; /* Color de fondo del encabezado */
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 3px solid #004b6b;
+    position: fixed; /* Fija el header en la parte superior */
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000; /* Asegura que esté siempre sobre el contenido */
+}
 
-        .header h1 {
-            color: #ffcc00;
-            margin: 0;
-            font-size: 1.5rem;
-        }
+.header h1 {
+    color: #ffcc00;
+    margin: 0;
+    font-size: 1.5rem;
+}
 
-        .header a {
-            color: #ffcc00;
-            text-decoration: none;
-            margin-left: 20px;
-            font-size: 1.2rem;
-            transition: color 0.3s ease;
-        }
+.header a {
+    color: #ffcc00;
+    text-decoration: none;
+    margin-left: 20px;
+    font-size: 1.2rem;
+    transition: color 0.3s ease;
+}
 
-        .header a:hover {
-            color: #ffb700;
-        }
+.header a:hover {
+    color: #ffb700;
+}
 
-        /* Sección Hero */
-        .hero {
-            background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('https://example.com/hero-image.jpg'); /* Imagen con superposición */
-            background-size: cover;
-            background-position: center;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: #fff;
-            text-align: center;
-            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2); /* Sombra */
-        }
+/* Sección Hero */
+.hero {
+    background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('https://example.com/hero-image.jpg'); /* Imagen con superposición */
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    text-align: center;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2); /* Sombra */
+}
 
-        .hero h1 {
-            font-size: 4rem;
-            font-weight: 700;
-            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5); /* Sombra en el texto */
-        }
+.hero h1 {
+    font-size: 4rem;
+    font-weight: 700;
+    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5); /* Sombra en el texto */
+}
 
-        .hero p {
-            font-size: 1.5rem;
-            margin-bottom: 30px;
-        }
+.hero p {
+    font-size: 1.5rem;
+    margin-bottom: 30px;
+}
 
-        .btn-main {
-            background-color: #ffcc00;
-            color: #333;
-            padding: 15px 30px;
-            font-size: 1.2rem;
-            border-radius: 50px;
-            border: none;
-            transition: all 0.3s ease;
-            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3); /* Sombra suave */
-        }
+.btn-main {
+    background-color: #ffcc00;
+    color: #333;
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    border-radius: 50px;
+    border: none;
+    transition: all 0.3s ease;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3); /* Sombra suave */
+}
 
-        .btn-main:hover {
-            background-color: #ffb700;
-            transform: scale(1.05); /* Efecto de hover dinámico */
-        }
+.btn-main:hover {
+    background-color: #ffb700;
+    transform: scale(1.05); /* Efecto de hover dinámico */
+}
 
-        /* Sección de características (sin recuadros) */
-        .features {
-            padding: 50px 0;
-            background-color: #00719c; /* Mismo color que el fondo */
-            
-        }
+/* Sección de características (sin recuadros) */
+.features {
+    padding: 50px 0;
+    background-color: #00719c; /* Mismo color que el fondo */
+}
 
-        .features h2 {
-            text-align: center;
-            margin-bottom: 50px;
-            color: #ffcc00; /* Color llamativo */
-            font-size: 2.5rem;
-        }
+.features h2 {
+    text-align: center;
+    margin-bottom: 50px;
+    color: #ffcc00; /* Color llamativo */
+    font-size: 2.5rem;
+}
 
-        .features .feature {
-            text-align: center;
-            margin-bottom: 30px;
-            color: white;
-        }
+.features .feature {
+    text-align: center;
+    margin-bottom: 30px;
+    color: white;
+}
 
-        .features .feature img {
-            width: 120px;
-            margin-bottom: 20px;
-            border-radius: 50%; /* Imágenes redondeadas */
-        }
+.features .feature img {
+    width: 120px;
+    margin-bottom: 20px;
+    border-radius: 50%; /* Imágenes redondeadas */
+}
 
-        /* Sección ¿Quiénes Somos? */
-        .quienes-somos {
-            padding: 50px 0;
-            background-color: #005f87; /* Color de fondo */
-            background-image: url('https://www.transparenttextures.com/patterns/asfalt-dark.png');
-        }
+/* Sección ¿Quiénes Somos? */
+.quienes-somos {
+    padding: 50px 0;
+    background-color: #005f87; /* Color de fondo */
+    background-image: url('https://www.transparenttextures.com/patterns/asfalt-dark.png');
+}
 
-        .quienes-somos h2 {
-            text-align: center;
-            margin-bottom: 30px;
-            color: #ffcc00; /* Color llamativo */
-            font-size: 2.5rem;
-        }
+.quienes-somos h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #ffcc00; /* Color llamativo */
+    font-size: 2.5rem;
+}
 
-        .quienes-somos p {
-            text-align: center;
-            font-size: 1.2rem;
-            margin: 0 20px;
-            color: white;
-        }
+.quienes-somos p {
+    text-align: center;
+    font-size: 1.2rem;
+    margin: 0 20px;
+    color: white;
+}
 
-        /* Formulario de contacto */
-        .contact-form {
-            background-color: #005f87; /* Color más oscuro */
-            padding: 50px;
-            border-radius: 10px;
-            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2); /* Sombra */
-            margin-top: 50px;
-        }
+/* Formulario de contacto */
+.contact-form {
+    background-color: #005f87; /* Color más oscuro */
+    padding: 50px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2); /* Sombra */
+    margin-top: 50px;
+}
 
-        .contact-form h3 {
-            color: #ffcc00;
-            margin-bottom: 30px;
-        }
+.contact-form h3 {
+    color: #ffcc00;
+    margin-bottom: 30px;
+}
 
-        .contact-form input, .contact-form textarea {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 20px;
-            border-radius: 5px;
-            border: none;
-        }
+.contact-form input, .contact-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: none;
+}
 
-        .contact-form button {
-            background-color: #ffcc00;
-            color: #333;
-            padding: 15px 30px;
-            font-size: 1rem;
-            border-radius: 50px;
-            border: none;
-            transition: all 0.3s ease;
-        }
+.contact-form button {
+    background-color: #ffcc00;
+    color: #333;
+    padding: 15px 30px;
+    font-size: 1rem;
+    border-radius: 50px;
+    border: none;
+    transition: all 0.3s ease;
+}
 
-        .contact-form button:hover {
-            background-color: #ffb700;
-            transform: scale(1.05);
-        }
+.contact-form button:hover {
+    background-color: #ffb700;
+    transform: scale(1.05);
+}
 
-        /* Footer */
-        footer {
-            background-color: #004b6b;
-            color: #fff;
-            padding: 30px 0;
-            text-align: center;
-        }
+/* Footer */
+footer {
+    background-color: #004b6b;
+    color: #fff;
+    padding: 30px 0;
+    text-align: center;
+}
 
-        footer p {
-            margin: 0;
-            font-size: 0.9rem;
-        }
+footer p {
+    margin: 0;
+    font-size: 0.9rem;
+}
 
-        footer a {
-            color: #ffcc00;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
+footer a {
+    color: #ffcc00;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
 
-        footer a:hover {
-            color: #ffb700;
-        }
+footer a:hover {
+    color: #ffb700;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+    .header h1 {
+        font-size: 1.2rem;
+    }
+
+    .header a {
+        font-size: 1rem;
+    }
+
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+
+    .hero p {
+        font-size: 1.2rem;
+    }
+
+    .btn-main {
+        font-size: 1rem;
+        padding: 10px 20px;
+    }
+
+    .features h2 {
+        font-size: 2rem;
+    }
+
+    .quienes-somos h2 {
+        font-size: 2rem;
+    }
+
+    .quienes-somos p {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .hero h1 {
+        font-size: 2rem;
+    }
+
+    .hero p {
+        font-size: 1rem;
+    }
+
+    .features h2 {
+        font-size: 1.8rem;
+    }
+
+    .features .feature img {
+        width: 100px;
+    }
+
+    .contact-form h3 {
+        font-size: 1.5rem;
+    }
+
+    .contact-form input, .contact-form textarea {
+        font-size: 0.9rem;
+    }
+
+    .btn-main {
+        font-size: 0.9rem;
+        padding: 8px 15px;
+    }
+}
+</style>
     </style>
 </head>
 <body>
