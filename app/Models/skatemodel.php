@@ -7,65 +7,51 @@ class SkateModel extends Model
 {
     protected $table = 'skate';
     protected $primaryKey = 'codigo';
-    protected $allowedFields = ['codigo', 'velocidad', 'bateria', 'temperatura', 'ID_ubicacion', 'ID_usuario'];
+    protected $allowedFields = ['codigo', 'velocidad', 'bateria', 'temperatura', 'longitud', 'latitud', 'hora', 'ID_usuario'];
 
     // Obtener un skate por código
     public function getSkateByCode($codigo)
     {
-        try {
-            return $this->where('codigo', $codigo)->first();
-        } catch (\Exception $e) {
-            log_message('error', 'Error al obtener skate por código: ' . $e->getMessage());
-            return null;
-        }
+        return $this->where('codigo', $codigo)->first();
     }
 
     // Obtener un skate junto con su ubicación
     public function getSkateWithLocation($codigo)
     {
-        try {
-            // Realizar una consulta que incluya la ubicación relacionada con el skate
-            $this->select('skate.*, ubicacion.longitud, ubicacion.latitud, ubicacion.hora');
-            $this->join('ubicacion', 'skate.ID_ubicacion = ubicacion.ID_ubicacion');
-            return $this->where('skate.codigo', $codigo)->first();
-        } catch (\Exception $e) {
-            log_message('error', 'Error al obtener skate con ubicación: ' . $e->getMessage());
-            return null;
-        }
+        // Ahora no es necesario hacer un join, ya que los datos de ubicación están en la tabla skate
+        return $this->where('codigo', $codigo)->first();
     }
 
     // Actualizar el ID_usuario para un skate existente
     public function addSkate($codigo, $ID_usuario)
     {
-        try {
-            // Verificar si el código del skate existe
-            $existingSkate = $this->getSkateByCode($codigo);
-            if (!$existingSkate) {
-                return false; // Si no existe, retorna falso
-            }
-
-            // Verificar si el ID_usuario es null
-            if ($existingSkate['ID_usuario'] !== null) {
-                return false; // No se puede vincular si ya tiene un usuario
-            }
-
-            // Actualizar el skate con el nuevo ID_usuario
-            return $this->update($codigo, ['ID_usuario' => $ID_usuario]);
-        } catch (\Exception $e) {
-            log_message('error', 'Error al agregar skate: ' . $e->getMessage());
-            return false;
+        // Verificar si el código del skate existe
+        $existingSkate = $this->getSkateByCode($codigo);
+        if (!$existingSkate) {
+            return false; // Si no existe, retorna falso
         }
+
+        // Verificar si el ID_usuario es null
+        if ($existingSkate['ID_usuario'] !== null) {
+            return false; // No se puede vincular si ya tiene un usuario
+        }
+
+        // Actualizar el campo ID_usuario
+        $data = ['ID_usuario' => $ID_usuario];
+        return $this->update($codigo, $data); // Actualizar el registro
     }
 
-    // Desvincular el skate del usuario
+    // Desvincular un skate del usuario
     public function unlinkSkate($codigo)
     {
-        try {
-            // Establecer el ID_usuario como null
-            return $this->update($codigo, ['ID_usuario' => null]);
-        } catch (\Exception $e) {
-            log_message('error', 'Error al desvincular skate: ' . $e->getMessage());
-            return false;
+        // Verificar si el código del skate existe
+        $existingSkate = $this->getSkateByCode($codigo);
+        if (!$existingSkate) {
+            return false; // Si no existe, retorna falso
         }
+
+        // Actualizar el campo ID_usuario a null
+        $data = ['ID_usuario' => null];
+        return $this->update($codigo, $data); // Actualizar el registro
     }
 }
