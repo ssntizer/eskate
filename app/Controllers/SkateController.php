@@ -2,7 +2,7 @@
 <?php 
 namespace App\Controllers;
 
-use App\Models\SkateModel;
+use App\Models\skatemodel;
 use CodeIgniter\RESTful\ResourceController;
 
 class SkateController extends ResourceController
