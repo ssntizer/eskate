@@ -26,10 +26,10 @@ class Database extends Config
      */
     public array $default = [
         'DSN'      => '',
-        'hostname' => 'sql10.freesqldatabase.com',
-        'username' => 'sql10733194',
-        'password' => '6747MCSCCX',
-        'database' => 'sql10733194',
+        'hostname' => 'bjb5de3zoi98bnkzpitc-mysql.services.clever-cloud.com',
+        'username' => 'uqoj8ke6f0xmvjk6',
+        'password' => 'Ko7ugu1JnyPq1baR9TQQ',
+        'database' => 'bjb5de3zoi98bnkzpitc',
         'DBDriver' => 'MySQLi', // Asegúrate de usar el controlador correcto
         'DBPrefix' => '',
         'pConnect' => false,
