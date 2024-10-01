@@ -36,7 +36,14 @@ class AuthController extends BaseController
 
     public function login()
     {
-        return view('login');
+        $session = session();
+
+        if ($session->get('logged_in')){
+        return view('list_skates');
+        }
+        else{
+            return view('login');
+        }
     }
 
     public function loginUser()
