@@ -11,7 +11,6 @@ class AuthController extends BaseController
     {
         return view('register');
     }
-
     public function registerUser()
     {
         $userModel = new UserModel();
