@@ -37,11 +37,27 @@ class AuthController extends BaseController
     {
         $session = session();
 
-        if ($session->get('logged_in')){
-        return view('list_skates');
-        }
-        else{
-            return view('login');
+        if ($session->get('logged_in')) {
+            $userId = $session->get('user_id');
+            $skateModel = new SkateModel();
+
+            // Obtener solo los skates asociados al ID del usuario
+            try {
+                $skates = $skateModel->where('ID_usuario', $userId)->findAll();
+
+                if (empty($skates)) {
+                    return view('list_skates', ['message' => 'Este usuario aún no tiene skates.']);
+                }
+
+                return view('list_skates', ['skates' => $skates]);
+
+            } catch (\Exception $e) {
+                // Manejar cualquier excepción que pueda ocurrir durante la consulta
+                log_message('error', 'Error al obtener skates: ' . $e->getMessage());
+                return redirect()->to('/error')->with('error', 'No se ha encontrado información de tu skate.');
+            }
+        } else {
+            return redirect()->to('/login');
         }
     }
 
