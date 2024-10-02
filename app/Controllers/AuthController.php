@@ -11,6 +11,7 @@ class AuthController extends BaseController
     {
         return view('register');
     }
+
     public function registerUser()
     {
         $userModel = new UserModel();
@@ -19,7 +20,7 @@ class AuthController extends BaseController
         $data = [
             'username' => $this->request->getPost('username'),
             'email' => $this->request->getPost('email'),
-            'password' => $this->request->getPost('password') // Hashing de la contraseña
+            'password' => $this->request->getPost('password') 
         ];
     
         // Verificar si el email ya existe
@@ -38,28 +39,12 @@ class AuthController extends BaseController
         $session = session();
 
         if ($session->get('logged_in')) {
-            $userId = $session->get('user_id');
-            $skateModel = new SkateModel();
-
-            // Obtener solo los skates asociados al ID del usuario
-            try {
-                $skates = $skateModel->where('ID_usuario', $userId)->findAll();
-
-                if (empty($skates)) {
-                    return view('list_skates', ['message' => 'Este usuario aún no tiene skates.']);
-                }
-
-                return view('list_skates', ['skates' => $skates]);
-
-            } catch (\Exception $e) {
-                // Manejar cualquier excepción que pueda ocurrir durante la consulta
-                log_message('error', 'Error al obtener skates: ' . $e->getMessage());
-                return redirect()->to('/error')->with('error', 'No se ha encontrado información de tu skate.');
-            }
-        } else {
-            return redirect()->to('/login');
+            return redirect()->to('/list-skates');
         }
+        else{
+        return view('login');
     }
+}
 
     public function loginUser()
     {
@@ -131,14 +116,13 @@ class AuthController extends BaseController
 
         if ($session->get('logged_in')) {
             $skateModel = new SkateModel();
-            $ubicacionModel = new UbicacionModel();
 
             // Obtener datos del skate con ubicación
             try {
                 $skate = $skateModel->getSkateWithLocation($codigo);
 
                 if (!$skate) {
-                    return redirect()->to('/list-skates')->with('error', 'Skate no encontrada.');
+                    return redirect()->to('/list-skates')->with('error', 'Skate no encontrado.');
                 }
 
                 // Pasar datos a la vista
