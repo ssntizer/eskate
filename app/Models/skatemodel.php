@@ -7,7 +7,7 @@ class SkateModel extends Model
 {
     protected $table = 'skate';
     protected $primaryKey = 'codigo';
-    protected $allowedFields = ['codigo', 'velocidad', 'bateria', 'temperatura', 'longitud', 'latitud', 'hora', 'ID_usuario'];
+    protected $allowedFields = ['codigo', 'velocidad', 'bateria', 'temperatura', 'longitud', 'latitud', 'hora', 'ID_usuario', 'buzzer'];
 
     // Obtener un skate por código
     public function getSkateByCode($codigo)
@@ -53,5 +53,16 @@ class SkateModel extends Model
         // Actualizar el campo ID_usuario a null
         $data = ['ID_usuario' => null];
         return $this->update($codigo, $data); // Actualizar el registro
+    }
+    public function activateBuzzer($codigo)
+    {
+        // Establecer el buzzer en 1 (prendido)
+        $this->update($codigo, ['buzzer' => 1]);
+
+        // Esperar 15 segundos antes de apagarlo
+        sleep(15); // Solo funciona en entornos de consola, no en un entorno web
+
+        // Establecer el buzzer en 0 (apagado)
+        $this->update($codigo, ['buzzer' => 0]);
     }
 }

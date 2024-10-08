@@ -1,0 +1,82 @@
+INFO - 2024-10-08 19:52:50 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-08 19:52:50 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-08 19:53:43 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-08 20:11:59 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-08 20:12:02 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-08 20:12:03 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-08 20:12:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-08 20:57:01 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-08 20:57:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2024-10-08 20:57:30 --> CodeIgniter\HTTP\Exceptions\HTTPException: 7 : Failed to connect to 192.168.118.98 port 8080: Connection refused
+[Method: POST, Route: skate/activate-buzzer/YYYYY4]
+in SYSTEMPATH/HTTP/CURLRequest.php on line 694.
+ 1 SYSTEMPATH/HTTP/CURLRequest.php(694): CodeIgniter\HTTP\Exceptions\HTTPException::forCurlError('7', 'Failed to connect to 192.168.118.98 port 8080: Connection refused')
+ 2 SYSTEMPATH/HTTP/CURLRequest.php(383): CodeIgniter\HTTP\CURLRequest->sendRequest([...])
+ 3 SYSTEMPATH/HTTP/CURLRequest.php(152): CodeIgniter\HTTP\CURLRequest->send('GET', 'http://192.168.118.98:8080/activate-buzzer?duration=10')
+ 4 SYSTEMPATH/HTTP/CURLRequest.php(187): CodeIgniter\HTTP\CURLRequest->request('GET', 'http://192.168.118.98:8080/activate-buzzer?duration=10', [])
+ 5 APPPATH/Controllers/SkateController.php(125): CodeIgniter\HTTP\CURLRequest->get('http://192.168.118.98:8080/activate-buzzer?duration=10')
+ 6 SYSTEMPATH/CodeIgniter.php(933): App\Controllers\SkateController->activateBuzzerTimed('YYYYY4')
+ 7 SYSTEMPATH/CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\SkateController))
+ 8 SYSTEMPATH/CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH/Boot.php(325): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH/Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH/index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+INFO - 2024-10-08 20:57:36 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2024-10-08 21:01:28 --> CodeIgniter\HTTP\Exceptions\HTTPException: 7 : Failed to connect to 192.168.118.98 port 8080: Connection refused
+[Method: POST, Route: skate/activate-buzzer/YYYYY4]
+in SYSTEMPATH/HTTP/CURLRequest.php on line 694.
+ 1 SYSTEMPATH/HTTP/CURLRequest.php(694): CodeIgniter\HTTP\Exceptions\HTTPException::forCurlError('7', 'Failed to connect to 192.168.118.98 port 8080: Connection refused')
+ 2 SYSTEMPATH/HTTP/CURLRequest.php(383): CodeIgniter\HTTP\CURLRequest->sendRequest([...])
+ 3 SYSTEMPATH/HTTP/CURLRequest.php(152): CodeIgniter\HTTP\CURLRequest->send('GET', 'http://192.168.118.98:8080/activate-buzzer?duration=10')
+ 4 SYSTEMPATH/HTTP/CURLRequest.php(187): CodeIgniter\HTTP\CURLRequest->request('GET', 'http://192.168.118.98:8080/activate-buzzer?duration=10', [])
+ 5 APPPATH/Controllers/SkateController.php(125): CodeIgniter\HTTP\CURLRequest->get('http://192.168.118.98:8080/activate-buzzer?duration=10')
+ 6 SYSTEMPATH/CodeIgniter.php(933): App\Controllers\SkateController->activateBuzzerTimed('YYYYY4')
+ 7 SYSTEMPATH/CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\SkateController))
+ 8 SYSTEMPATH/CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH/Boot.php(325): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH/Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH/index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+INFO - 2024-10-08 21:01:30 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2024-10-08 21:01:30 --> CodeIgniter\HTTP\Exceptions\HTTPException: 7 : Failed to connect to 192.168.118.98 port 8080: Connection refused
+[Method: POST, Route: skate/activate-buzzer/YYYYY4]
+in SYSTEMPATH/HTTP/CURLRequest.php on line 694.
+ 1 SYSTEMPATH/HTTP/CURLRequest.php(694): CodeIgniter\HTTP\Exceptions\HTTPException::forCurlError('7', 'Failed to connect to 192.168.118.98 port 8080: Connection refused')
+ 2 SYSTEMPATH/HTTP/CURLRequest.php(383): CodeIgniter\HTTP\CURLRequest->sendRequest([...])
+ 3 SYSTEMPATH/HTTP/CURLRequest.php(152): CodeIgniter\HTTP\CURLRequest->send('GET', 'http://192.168.118.98:8080/activate-buzzer?duration=10')
+ 4 SYSTEMPATH/HTTP/CURLRequest.php(187): CodeIgniter\HTTP\CURLRequest->request('GET', 'http://192.168.118.98:8080/activate-buzzer?duration=10', [])
+ 5 APPPATH/Controllers/SkateController.php(125): CodeIgniter\HTTP\CURLRequest->get('http://192.168.118.98:8080/activate-buzzer?duration=10')
+ 6 SYSTEMPATH/CodeIgniter.php(933): App\Controllers\SkateController->activateBuzzerTimed('YYYYY4')
+ 7 SYSTEMPATH/CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\SkateController))
+ 8 SYSTEMPATH/CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH/Boot.php(325): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH/Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH/index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+INFO - 2024-10-08 21:01:31 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2024-10-08 21:42:07 --> CodeIgniter\HTTP\Exceptions\HTTPException: 7 : Failed to connect to 192.168.118.98 port 8080: Connection refused
+[Method: POST, Route: skate/activate-buzzer/YYYYY4]
+in SYSTEMPATH/HTTP/CURLRequest.php on line 694.
+ 1 SYSTEMPATH/HTTP/CURLRequest.php(694): CodeIgniter\HTTP\Exceptions\HTTPException::forCurlError('7', 'Failed to connect to 192.168.118.98 port 8080: Connection refused')
+ 2 SYSTEMPATH/HTTP/CURLRequest.php(383): CodeIgniter\HTTP\CURLRequest->sendRequest([...])
+ 3 SYSTEMPATH/HTTP/CURLRequest.php(152): CodeIgniter\HTTP\CURLRequest->send('GET', 'http://192.168.118.98:8080/activate-buzzer?duration=10')
+ 4 SYSTEMPATH/HTTP/CURLRequest.php(187): CodeIgniter\HTTP\CURLRequest->request('GET', 'http://192.168.118.98:8080/activate-buzzer?duration=10', [])
+ 5 APPPATH/Controllers/SkateController.php(125): CodeIgniter\HTTP\CURLRequest->get('http://192.168.118.98:8080/activate-buzzer?duration=10')
+ 6 SYSTEMPATH/CodeIgniter.php(933): App\Controllers\SkateController->activateBuzzerTimed('YYYYY4')
+ 7 SYSTEMPATH/CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\SkateController))
+ 8 SYSTEMPATH/CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH/Boot.php(325): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH/Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH/index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+INFO - 2024-10-08 21:42:09 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-08 21:46:36 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-08 21:47:52 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-08 21:47:59 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-08 21:53:37 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-08 21:55:18 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-08 21:59:56 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-08 22:01:59 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-08 22:02:10 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-08 22:11:19 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-08 22:12:26 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-08 22:15:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-08 22:15:15 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-08 22:20:05 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
