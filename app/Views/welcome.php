@@ -120,6 +120,15 @@
                 <p><strong>Velocidad:</strong> <?= $skate['velocidad'] ?> km/h</p>
                 <p><strong>Temperatura:</strong> <?= $skate['temperatura'] ?>°C</p>
                 <p><strong>Hora de Ubicación:</strong> <?= $skate['hora'] ?></p>
+                <form action="<?= site_url('skate/activate-buzzer/' . $skate['codigo']) ?>" method="post">
+    <button type="submit" class="btn btn-danger">
+        Activar Buzzer (10 seg)
+    </button>
+</form>
+    </button>
+</form>
+    </button>
+</form>
             </div>
         </div>
         <div class="col-12 col-md-8">
@@ -145,3 +154,5 @@
 
 </body>
 </html>
+
+

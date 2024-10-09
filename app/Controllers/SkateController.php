@@ -78,4 +78,55 @@ class SkateController extends ResourceController
         // Devolver los datos del skate
         return $this->respond($skate, 200);
     }
+    public function activateBuzzer($codigo)
+    {
+        // Verificar si el skate existe
+        $skate = $this->skateModel->getSkateByCode($codigo);
+
+        if (!$skate) {
+            return $this->failNotFound('Skate no encontrado.');
+        }
+
+        // Cambiar el estado del buzzer en la base de datos (toggle)
+        $newBuzzerState = !$skate['buzzer']; // Si el buzzer está en 1, lo cambia a 0 y viceversa
+        $this->skateModel->where('codigo', $codigo)->set(['buzzer' => $newBuzzerState])->update();
+
+        return $this->respond(['message' => 'Buzzer ' . ($newBuzzerState ? 'activado' : 'desactivado') . '.'], 200);
+    }
+
+    // Nueva función para que la ESP32 consulte el estado del buzzer
+    public function getBuzzerState($codigo)
+    {
+        // Verificar si el skate existe
+        $skate = $this->skateModel->getSkateByCode($codigo);
+
+        if (!$skate) {
+            return $this->failNotFound('Skate no encontrado.');
+        }
+
+        // Devolver el estado del buzzer
+        return $this->respond(['buzzer' => $skate['buzzer']], 200);
+    }
+
+public function activateBuzzerTimed($codigo)
+{
+    // Verificar si el skate existe
+    $skate = $this->skateModel->getSkateByCode($codigo);
+
+    if (!$skate) {
+        return $this->failNotFound('Skate no encontrado.');
+    }
+
+    // Enviar una solicitud a la ESP32 para activar el buzzer por 10 segundos
+    $buzzerURL = "http://192.168.118.98:80/activate-buzzer?duration=10";  // Reemplaza con la IP de tu ESP32
+
+    $client = \Config\Services::curlrequest();
+    $response = $client->get($buzzerURL);
+
+    if ($response->getStatusCode() == 200) {
+        return $this->respond(['message' => 'Buzzer activado durante 10 segundos.'], 200);
+    } else {
+        return $this->fail('Error al activar el buzzer.');
+    }
+}
 }

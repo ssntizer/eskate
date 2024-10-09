@@ -54,4 +54,5 @@ class SkateModel extends Model
         $data = ['ID_usuario' => null];
         return $this->update($codigo, $data); // Actualizar el registro
     }
+
 }
