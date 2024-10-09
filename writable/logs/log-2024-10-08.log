@@ -99,3 +99,36 @@ in SYSTEMPATH/HTTP/CURLRequest.php on line 694.
 11 FCPATH/index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
 INFO - 2024-10-08 22:31:43 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
 INFO - 2024-10-08 22:32:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-08 23:15:49 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-08 23:15:51 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2024-10-08 23:36:49 --> Datos recibidos: codigo=YYYYY4, velocidad=2.380353, bateria=90, temperatura=25.4, longitud=-64.12733, latitud=-32.17389, hora=20:36:43
+DEBUG - 2024-10-08 23:37:21 --> Datos recibidos: codigo=YYYYY4, velocidad=3.160314, bateria=90, temperatura=25.3, longitud=-64.12733, latitud=-32.17388, hora=20:37:18
+DEBUG - 2024-10-08 23:40:48 --> Datos recibidos: codigo=YYYYY4, velocidad=1.946128, bateria=90, temperatura=25.3, longitud=-64.12735, latitud=-32.17381, hora=20:40:43
+DEBUG - 2024-10-08 23:41:21 --> Datos recibidos: codigo=YYYYY4, velocidad=1.064642, bateria=90, temperatura=25.3, longitud=-64.12732, latitud=-32.17375, hora=20:41:15
+DEBUG - 2024-10-08 23:41:53 --> Datos recibidos: codigo=YYYYY4, velocidad=1.35687, bateria=90, temperatura=25.3, longitud=-64.12732, latitud=-32.17373, hora=20:41:47
+DEBUG - 2024-10-08 23:42:25 --> Datos recibidos: codigo=YYYYY4, velocidad=1.635378, bateria=90, temperatura=25.3, longitud=-64.12735, latitud=-32.17374, hora=20:42:19
+DEBUG - 2024-10-08 23:42:57 --> Datos recibidos: codigo=YYYYY4, velocidad=2.585461, bateria=90, temperatura=25.3, longitud=-64.12735, latitud=-32.17373, hora=20:42:54
+DEBUG - 2024-10-08 23:44:51 --> Datos recibidos: codigo=YYYYY4, velocidad=3.56367, bateria=90, temperatura=25.4, longitud=-64.12734, latitud=-32.17381, hora=20:44:46
+DEBUG - 2024-10-08 23:45:24 --> Datos recibidos: codigo=YYYYY4, velocidad=1.105801, bateria=90, temperatura=25.4, longitud=-64.12733, latitud=-32.17379, hora=20:45:18
+DEBUG - 2024-10-08 23:45:56 --> Datos recibidos: codigo=YYYYY4, velocidad=0.820433, bateria=90, temperatura=25.4, longitud=-64.1273, latitud=-32.17379, hora=20:45:50
+DEBUG - 2024-10-08 23:46:28 --> Datos recibidos: codigo=YYYYY4, velocidad=3.200786, bateria=90, temperatura=25.4, longitud=-64.1273, latitud=-32.17362, hora=20:46:22
+DEBUG - 2024-10-08 23:47:00 --> Datos recibidos: codigo=YYYYY4, velocidad=1.622345, bateria=90, temperatura=25.4, longitud=-64.1273, latitud=-32.17357, hora=20:46:57
+DEBUG - 2024-10-08 23:47:33 --> Datos recibidos: codigo=YYYYY4, velocidad=2.256877, bateria=90, temperatura=25.3, longitud=-64.1273, latitud=-32.17341, hora=20:47:27
+DEBUG - 2024-10-08 23:48:05 --> Datos recibidos: codigo=YYYYY4, velocidad=2.658176, bateria=90, temperatura=25.3, longitud=-64.1273, latitud=-32.17358, hora=20:48:02
+DEBUG - 2024-10-08 23:48:37 --> Datos recibidos: codigo=YYYYY4, velocidad=3.909405, bateria=90, temperatura=25.3, longitud=-64.1273, latitud=-32.17375, hora=20:48:34
+DEBUG - 2024-10-08 23:49:09 --> Datos recibidos: codigo=YYYYY4, velocidad=4.429378, bateria=90, temperatura=25.3, longitud=-64.1273, latitud=-32.17361, hora=20:49:06
+DEBUG - 2024-10-08 23:49:42 --> Datos recibidos: codigo=YYYYY4, velocidad=1.85009, bateria=90, temperatura=25.3, longitud=-64.1273, latitud=-32.17365, hora=20:49:36
+DEBUG - 2024-10-08 23:50:14 --> Datos recibidos: codigo=YYYYY4, velocidad=1.561292, bateria=90, temperatura=25.3, longitud=-64.12727, latitud=-32.17367, hora=20:50:11
+DEBUG - 2024-10-08 23:50:46 --> Datos recibidos: codigo=YYYYY4, velocidad=2.885921, bateria=90, temperatura=25.3, longitud=-64.12725, latitud=-32.17385, hora=20:50:40
+DEBUG - 2024-10-08 23:51:19 --> Datos recibidos: codigo=YYYYY4, velocidad=1.852148, bateria=90, temperatura=25.4, longitud=-64.12729, latitud=-32.17378, hora=20:51:15
+INFO - 2024-10-08 23:51:36 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2024-10-08 23:51:51 --> Datos recibidos: codigo=YYYYY4, velocidad=2.865342, bateria=90, temperatura=25.3, longitud=-64.12729, latitud=-32.17368, hora=20:51:48
+DEBUG - 2024-10-08 23:52:23 --> Datos recibidos: codigo=YYYYY4, velocidad=3.791416, bateria=90, temperatura=25.3, longitud=-64.12727, latitud=-32.17372, hora=20:52:17
+DEBUG - 2024-10-08 23:52:55 --> Datos recibidos: codigo=YYYYY4, velocidad=2.410537, bateria=90, temperatura=25.3, longitud=-64.12723, latitud=-32.17378, hora=20:52:50
+DEBUG - 2024-10-08 23:53:28 --> Datos recibidos: codigo=YYYYY4, velocidad=2.883863, bateria=90, temperatura=25.3, longitud=-64.12723, latitud=-32.17368, hora=20:53:25
+DEBUG - 2024-10-08 23:54:00 --> Datos recibidos: codigo=YYYYY4, velocidad=2.343997, bateria=90, temperatura=25.3, longitud=-64.12723, latitud=-32.17381, hora=20:53:57
+DEBUG - 2024-10-08 23:54:33 --> Datos recibidos: codigo=YYYYY4, velocidad=1.665561, bateria=90, temperatura=25.3, longitud=-64.12726, latitud=-32.17366, hora=20:54:27
+DEBUG - 2024-10-08 23:55:05 --> Datos recibidos: codigo=YYYYY4, velocidad=2.789198, bateria=90, temperatura=25.4, longitud=-64.12726, latitud=-32.17377, hora=20:55:02
+DEBUG - 2024-10-08 23:55:37 --> Datos recibidos: codigo=YYYYY4, velocidad=5.736171, bateria=90, temperatura=25.3, longitud=-64.12727, latitud=-32.17382, hora=20:55:32
+DEBUG - 2024-10-08 23:56:10 --> Datos recibidos: codigo=YYYYY4, velocidad=2.597809, bateria=90, temperatura=25.3, longitud=-64.12726, latitud=-32.17387, hora=20:56:06
+DEBUG - 2024-10-08 23:56:42 --> Datos recibidos: codigo=YYYYY4, velocidad=1.411749, bateria=90, temperatura=25.3, longitud=-64.12712, latitud=-32.17347, hora=20:56:36
