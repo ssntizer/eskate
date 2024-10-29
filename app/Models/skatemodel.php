@@ -7,7 +7,7 @@ class SkateModel extends Model
 {
     protected $table = 'skate';
     protected $primaryKey = 'codigo';
-    protected $allowedFields = ['codigo', 'velocidad', 'bateria', 'temperatura', 'longitud', 'latitud', 'hora', 'ID_usuario'];
+    protected $allowedFields = ['codigo', 'velocidad', 'bateria', 'temperatura', 'longitud', 'latitud', 'hora', 'ID_usuario','precio','descripcion','imagen','nombre'];
 
     // Obtener un skate por código
     public function getSkateByCode($codigo)

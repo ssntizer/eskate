@@ -79,7 +79,7 @@ class AuthController extends BaseController
     public function logout()
     {
         session()->destroy();
-        return redirect()->to('/login');
+        return redirect()->to('/primerpagina');
     }
 
     public function listSkates()
@@ -204,4 +204,5 @@ class AuthController extends BaseController
         // Cargar la vista principal (landing page)
         return view('Primerpagina');
     }
+   
 }

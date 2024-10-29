@@ -92,7 +92,7 @@ body {
     transform: scale(1.05); /* Efecto de hover dinámico */
 }
 
-/* Sección de características (sin recuadros) */
+/* Sección de características (Features) */
 .features {
     padding: 50px 0;
     background-color: #00719c; /* Mismo color que el fondo */
@@ -116,6 +116,22 @@ body {
     margin-bottom: 20px;
     border-radius: 50%; /* Imágenes redondeadas */
 }
+
+
+.models .feature img {
+    width: 100% !important; /* Hace que las imágenes se ajusten al tamaño del contenedor */
+    height: auto !important; /* Altura automática para mantener la proporción de la imagen */
+    max-height: 400px !important; /* Altura máxima para las imágenes (ajusta este valor según sea necesario) */
+    object-fit: cover !important; /* Ajusta la imagen sin distorsión */
+    border: 3px solid #004b6b !important; /* Borde azul oscuro */
+    border-radius: 15px !important; /* Bordes redondeados */
+    margin-bottom: 20px !important; /* Separación entre imagen y texto */
+}
+
+/* 
+Para cambiar el tamaño de las imágenes, ajusta el valor de 'max-height'.
+Por ejemplo, puedes aumentar o disminuir 'max-height: 400px;' según lo que necesites.
+*/
 
 /* Sección ¿Quiénes Somos? */
 .quienes-somos {
@@ -221,11 +237,7 @@ footer a:hover {
         padding: 10px 20px;
     }
 
-    .features h2 {
-        font-size: 2rem;
-    }
-
-    .quienes-somos h2 {
+    .features h2, .quienes-somos h2 {
         font-size: 2rem;
     }
 
@@ -304,24 +316,27 @@ footer a:hover {
         <h2 class="text-center">Nuestros Modelos</h2> <!-- Título centrado -->
         <div class="row">
             <div class="col-md-4 feature">
-                <img src="https://example.com/modelo1.png" alt="Modelo 1">
+                <img src="https://imgs.search.brave.com/tps24H47-2oaLseYhRphCnOSszeFXtoK-3EaI9JezrA/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9za2F0/ZXNlbGVjdHJpY29z/LmNvbS93cC1jb250/ZW50L3VwbG9hZHMv/MjAyMS8wNi9tZWVw/by1taW5pMi1zY2Fs/ZWQuanBlZw" alt="Modelo 1">
                 <h4>Modelo E-Skate 1</h4>
-                <p>Precio: $499</p>
+                <p>Precio: $299</p>
+                <a href="<?= base_url('/index.php/skate/detail/1') ?>" class="btn btn-main">Comprar</a>
+
             </div>
             <div class="col-md-4 feature">
-                <img src="https://example.com/modelo2.png" alt="Modelo 2">
+                <img src="https://imgs.search.brave.com/qH8RsQ019QLQkGLFWZExzsnL4kvsrQ_GwfP-ckTx5pI/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL0kv/NTF1a3dQK3F5b1Mu/anBn" alt="Modelo 2">
                 <h4>Modelo E-Skate 2</h4>
                 <p>Precio: $599</p>
+                <a href="<?= base_url('/index.php/skate/detail/2') ?>" class="btn btn-main">Comprar</a> <!-- Botón de compra -->
             </div>
             <div class="col-md-4 feature">
-                <img src="https://example.com/modelo3.png" alt="Modelo 3">
+                <img src="https://imgs.search.brave.com/4hfX1Aw6h9uwaa7HX6i2vtgTdUT3mvVz1GoT5ojtQQE/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL0kv/NDFNMnd5YTMzMEwu/anBn" alt="Modelo 3">
                 <h4>Modelo E-Skate 3</h4>
                 <p>Precio: $699</p>
+                <a href="<?= base_url('/index.php/skate/detail/3') ?>" class="btn btn-main">Comprar</a> <!-- Botón de compra -->
             </div>
         </div>
     </div>
 </section>
-
 <!-- Formulario de contacto -->
 <section id="contactanos" class="contact-form container">
     <h3>Contáctanos</h3>

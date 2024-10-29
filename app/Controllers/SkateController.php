@@ -78,56 +78,52 @@ class SkateController extends ResourceController
         // Devolver los datos del skate
         return $this->respond($skate, 200);
     }
-    // Función para activar o desactivar el buzzer
-    public function activateBuzzer($codigo)
-    {
-        // Verificar si el skate existe
-        $skate = $this->skateModel->getSkateByCode($codigo);
-
-        if (!$skate) {
-            return $this->failNotFound('Skate no encontrado.');
+    public function detail($id) {
+        // Definir los modelos de skates en un array
+        $modelos = [
+            1 => [
+                'id' => 1,
+                'nombre' => 'E-Skate 1',
+                'precio' => '$299',
+                'descripcion' => 'Descripción del Modelo E-Skate 1.',
+                'imagen' => 'https://imgs.search.brave.com/tps24H47-2oaLseYhRphCnOSszeFXtoK-3EaI9JezrA/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9za2F0/ZXNlbGVjdHJpY29z/LmNvbS93cC1jb250/ZW50L3VwbG9hZHMv/MjAyMS8wNi9tZWVw/by1taW5pMi1zY2Fs/ZWQuanBlZw'
+            ],
+            2 => [
+                'id' => 2,
+                'nombre' => 'E-Skate 2',
+                'precio' => '$599',
+                'descripcion' => 'Descripción del Modelo E-Skate 2.',
+                'imagen' => 'https://imgs.search.brave.com/qH8RsQ019QLQkGLFWZExzsnL4kvsrQ_GwfP-ckTx5pI/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL0kv/NTF1a3dQK3F5b1Mu/anBn'
+            ],
+            3 => [
+                'id' => 3,
+                'nombre' => 'E-Skate 3',
+                'precio' => '$699',
+                'descripcion' => 'Descripción del Modelo E-Skate 3.',
+                'imagen' => 'https://imgs.search.brave.com/4hfX1Aw6h9uwaa7HX6i2vtgTdUT3mvVz1GoT5ojtQQE/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL0kv/NDFNMnd5YTMzMEwu/anBn'
+            ],
+        ];
+    
+        // Registro de depuración en el log
+        log_message('debug', 'ID recibido: ' . $id);
+        log_message('debug', 'Modelos disponibles: ' . print_r(array_keys($modelos), true));
+    
+        // Verifica si el modelo existe
+        if (!array_key_exists($id, $modelos)) {
+            log_message('error', 'Modelo no encontrado para el ID: ' . $id);
+            throw new \CodeIgniter\Exceptions\PageNotFoundException("Modelo no encontrado");
         }
-
-        // Cambiar el estado del buzzer en la base de datos (toggle)
-        $newBuzzerState = !$skate['buzzer']; // Si el buzzer está en 1, lo cambia a 0 y viceversa
-        $this->skateModel->where('codigo', $codigo)->set(['buzzer' => $newBuzzerState])->update();
-
-        return $this->respond(['message' => 'Buzzer ' . ($newBuzzerState ? 'activado' : 'desactivado') . '.'], 200);
+    
+        // Obtener los otros modelos
+        $otrosModelos = array_filter($modelos, function($modelo) use ($id) {
+            return $modelo['id'] != $id; // Excluye el modelo actual
+        });
+    
+        // Pasa la información a la vista
+        log_message('debug', 'Modelo encontrado: ' . print_r($modelos[$id], true));
+        return view('skate_detail', [
+            'modelo' => $modelos[$id],
+            'otrosModelos' => $otrosModelos // Pasa los otros modelos a la vista
+        ]);
     }
-
-    // Nueva función para que la ESP32 consulte el estado del buzzer
-    public function getBuzzerState($codigo)
-    {
-        // Verificar si el skate existe
-        $skate = $this->skateModel->getSkateByCode($codigo);
-
-        if (!$skate) {
-            return $this->failNotFound('Skate no encontrado.');
-        }
-
-        // Devolver el estado del buzzer
-        return $this->respond(['buzzer' => $skate['buzzer']], 200);
-    }
-
-public function activateBuzzerTimed($codigo)
-{
-    // Verificar si el skate existe
-    $skate = $this->skateModel->getSkateByCode($codigo);
-
-    if (!$skate) {
-        return $this->failNotFound('Skate no encontrado.');
-    }
-
-    // Enviar una solicitud a la ESP32 para activar el buzzer por 10 segundos
-    $buzzerURL = "http://192.168.118.98:80/activate-buzzer?duration=10";  // Reemplaza con la IP de tu ESP32
-
-    $client = \Config\Services::curlrequest();
-    $response = $client->get($buzzerURL);
-
-    if ($response->getStatusCode() == 200) {
-        return $this->respond(['message' => 'Buzzer activado durante 10 segundos.'], 200);
-    } else {
-        return $this->fail('Error al activar el buzzer.');
-    }
-}
 }

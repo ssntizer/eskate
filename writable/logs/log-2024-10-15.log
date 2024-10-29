@@ -1,0 +1,15 @@
+INFO - 2024-10-15 20:32:18 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2024-10-15 20:32:22 --> User found: Array
+(
+    [id] => 75
+    [username] => Erie
+    [email] => venturinierie@gmail.com
+    [password] => $2y$10$Z.Tmgj3C7vEX1hK5/1e.UOeW0Ts3W9bTiU/kyWM.hM51Jv40n8c8K
+    [reset_token] => 
+    [reset_expiration] => 
+)
+
+DEBUG - 2024-10-15 20:32:23 --> Password verified successfully.
+INFO - 2024-10-15 20:32:23 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-15 20:32:23 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-15 20:32:24 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
