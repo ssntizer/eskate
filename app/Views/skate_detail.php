@@ -64,7 +64,7 @@
        .product-image {
            width: 100%;
            max-height: 400px;
-           object-fit: contain; /* Cambiado a contain para evitar cortes */
+           object-fit: contain;
            border: 3px solid #004b6b;
            border-radius: 15px;
            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
@@ -109,18 +109,41 @@
            transform: scale(1.05);
        }
 
-       /* Modelos relacionados */
-       .related-model-title {
-           font-size: 1.5rem; /* Tamaño del título más pequeño */
-       }
+       /* Estilos de la ventana de compra */
+.purchase-panel {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%; /* Más estrecho en pantallas pequeñas */
+    max-width: 500px; /* Ancho máximo para pantallas grandes */
+    background-color: #005f87;
+    color: #fff;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
+    z-index: 2000;
+    display: none; /* Para ocultarlo inicialmente */
+}
 
-       .related-model-price {
-           font-size: 1.2rem; /* Tamaño del precio más pequeño */
-       }
+.purchase-panel.active {
+    display: block; /* Mostrar el panel cuando se activa */
+    animation: fadeIn 0.5s ease; /* Animación de entrada */
+}
 
-       .related-model-button {
-           font-size: 1rem; /* Tamaño del botón más pequeño */
-           padding: 10px 15px; /* Espaciado del botón más pequeño */
+/* Animación de aparición */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translate(-50%, -60%); }
+    to { opacity: 1; transform: translate(-50%, -50%); }
+}
+
+       .close-btn {
+           color: #ffcc00;
+           font-size: 1.5rem;
+           background: none;
+           border: none;
+           float: right;
+           cursor: pointer;
        }
     </style>
 </head>
@@ -138,16 +161,12 @@
         <!-- Encabezado del producto -->
         <div class="product-container row">
             <div class="col-md-6">
-                <!-- Imagen del producto -->
                 <img src="<?= $modelo['imagen'] ?>" alt="Modelo E-Skate <?= $modelo['id'] ?>" class="product-image">
             </div>
             <div class="col-md-6">
-                <!-- Título y precio del producto -->
                 <h1 class="product-title">Modelo <?= $modelo['nombre'] ?></h1>
                 <p class="product-price">Precio: <?= $modelo['precio'] ?></p>
-
-                <!-- Botón de compra -->
-                <a href="#" class="btn btn-main btn-buy">Comprar</a>
+                <button class="btn btn-main btn-buy" onclick="openPurchasePanel()">Comprar</button>
             </div>
         </div>
 
@@ -176,5 +195,36 @@
             </div>
         </div>
     </div>
+
+    <!-- Panel de compra -->
+    <div class="purchase-panel" id="purchasePanel">
+        <button class="close-btn" onclick="closePurchasePanel()">×</button>
+        <h3 class="product-title">Finalizar Compra</h3>
+        <form>
+            <div class="form-group">
+                <label for="cardNumber">Número de Tarjeta</label>
+                <input type="text" class="form-control" id="cardNumber" placeholder="1234 5678 9012 3456" required>
+            </div>
+            <div class="form-group">
+                <label for="expiryDate">Fecha de Expiración</label>
+                <input type="text" class="form-control" id="expiryDate" placeholder="MM/AA" required>
+            </div>
+            <div class="form-group">
+                <label for="cvv">CVV</label>
+                <input type="password" class="form-control" id="cvv" placeholder="123" required>
+            </div>
+            <button type="submit" class="btn btn-buy">Confirmar Compra</button>
+        </form>
+    </div>
+
+    <script>
+       function openPurchasePanel() {
+           document.getElementById('purchasePanel').classList.add('active');
+       }
+
+       function closePurchasePanel() {
+           document.getElementById('purchasePanel').classList.remove('active');
+       }
+    </script>
 </body>
 </html>

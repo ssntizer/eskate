@@ -21,6 +21,5 @@ $routes->get('passwordreset/reset/(:any)', 'PasswordResetController::reset/$1');
 $routes->post('passwordreset/update', 'PasswordResetController::updatePassword');
 $routes->post('/skate/update', 'SkateController::updateSkateData');
 $routes->get('/login', 'AuthController::login');
-$routes->post('skate/activate-buzzer/(:any)', 'SkateController::activateBuzzerTimed/$1');
 $routes->get('/primerpagina', 'AuthController::primerpag');
 $routes->get('skate/detail/(:num)', 'SkateController::detail/$1');
