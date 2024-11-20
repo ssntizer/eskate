@@ -205,7 +205,7 @@ class AuthController extends BaseController
             try {
                 // Intentar desvincular el skate del usuario
                 if ($skateModel->deleteapodo($codigo)) {
-                    return redirect()->to('/list-skates')->with('message', 'Apodo cambiado exitosamente.');
+                    return redirect()->to('/list-skates')->with('message', 'Apodo borrado exitosamente.');
                 } else {
                     return redirect()->back()->with('error', 'No se pudo borrar este apodo');
                 }
