@@ -20,7 +20,6 @@ $routes->post('passwordreset/request', 'PasswordResetController::requestReset');
 $routes->get('passwordreset/reset/(:any)', 'PasswordResetController::reset/$1');
 $routes->post('passwordreset/update', 'PasswordResetController::updatePassword');
 $routes->post('/skate/update', 'SkateController::updateSkateData');
-$routes->get('/login', 'AuthController::login');
 $routes->get('/primerpagina', 'AuthController::primerpag');
 $routes->get('skate/detail/(:num)', 'SkateController::detail/$1');
 $routes->post('update-skate-apodo', 'SkateController::updateSkateApodo');
