@@ -7,7 +7,7 @@ class SkateModel extends Model
 {
     protected $table = 'skate';
     protected $primaryKey = 'codigo';
-    protected $allowedFields = ['codigo', 'velocidad', 'bateria', 'temperatura', 'longitud', 'latitud', 'hora', 'ID_usuario','precio','descripcion','imagen','nombre'];
+    protected $allowedFields = ['codigo','apodo', 'velocidad', 'bateria', 'temperatura', 'longitud', 'latitud', 'hora', 'ID_usuario'];
 
     // Obtener un skate por código
     public function getSkateByCode($codigo)
@@ -54,5 +54,20 @@ class SkateModel extends Model
         $data = ['ID_usuario' => null];
         return $this->update($codigo, $data); // Actualizar el registro
     }
+    public function updateApodo($codigo, $apodo)
+{
+    // Buscar si existe el skate con el código proporcionado
+    $skate = $this->where('codigo', $codigo)->first();
+
+    if (!$skate) {
+        return false; // Retorna falso si no se encuentra
+    }
+
+    // Preparar los datos para actualizar
+    $data = ['apodo' => $apodo];
+
+    // Realizar la actualización (se basa en CodeIgniter\Model)
+    return $this->update($codigo, $data);
+}
 
 }
