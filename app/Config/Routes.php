@@ -23,3 +23,4 @@ $routes->post('/skate/update', 'SkateController::updateSkateData');
 $routes->get('/primerpagina', 'AuthController::primerpag');
 $routes->get('skate/detail/(:num)', 'SkateController::detail/$1');
 $routes->post('update-skate-apodo', 'SkateController::updateSkateApodo');
+$routes->post('/deleteapodo/(:any)', 'AuthController::deleteapodo/$1');

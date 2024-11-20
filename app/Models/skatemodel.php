@@ -69,5 +69,17 @@ class SkateModel extends Model
     // Realizar la actualización (se basa en CodeIgniter\Model)
     return $this->update($codigo, $data);
 }
+public function deleteapodo($codigo)
+{
+    // Verificar si el código del skate existe
+    $existingSkate = $this->getSkateByCode($codigo);
+    if (!$existingSkate) {
+        return false; // Si no existe, retorna falso
+    }
+
+    // Actualizar el campo ID_usuario a null
+    $data = ['apodo' => null];
+    return $this->update($codigo, $data); // Actualizar el registro
+}
 
 }

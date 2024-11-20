@@ -183,17 +183,40 @@ class AuthController extends BaseController
                 if ($skateModel->unlinkSkate($codigo)) {
                     return redirect()->to('/list-skates')->with('message', 'Skate desvinculado exitosamente.');
                 } else {
-                    return redirect()->back()->with('error', 'No se pudo desvincular el skate.');
+                    return redirect()->back()->with('error', 'No se pudo borrar este apodo');
                 }
             } catch (\Exception $e) {
                 log_message('error', 'Error al desvincular el skate: ' . $e->getMessage());
-                return redirect()->back()->with('error', 'No se pudo desvincular el skate.');
+                return redirect()->back()->with('error', 'No se pudo borrar este apodo');
             }
         } else {
             return redirect()->back()->with('error', 'No puedes desvincular este skate.');
         }
     }
+    public function deleteapodo($codigo)
+    {
+        $skateModel = new SkateModel();
 
+        // Verifica si el skate está vinculado al usuario actual
+        $ID_usuario = session()->get('user_id');
+        $skate = $skateModel->where('codigo', $codigo)->first();
+
+        if ($skate && $skate['ID_usuario'] == $ID_usuario) {
+            try {
+                // Intentar desvincular el skate del usuario
+                if ($skateModel->deleteapodo($codigo)) {
+                    return redirect()->to('/list-skates')->with('message', 'Apodo cambiado exitosamente.');
+                } else {
+                    return redirect()->back()->with('error', 'No se pudo borrar este apodo');
+                }
+            } catch (\Exception $e) {
+                log_message('error', 'Error al desvincular el skate: ' . $e->getMessage());
+                return redirect()->back()->with('error', 'No se pudo borrar este apodo');
+            }
+        } else {
+            return redirect()->back()->with('error', 'No puedes borrar este apodo.');
+        }
+    }
     public function forgotPassword()
     {
         return view('forgot_password'); // Asegúrate de tener la vista de recuperación de contraseña

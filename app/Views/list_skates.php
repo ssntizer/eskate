@@ -196,6 +196,9 @@
             <form action="<?= site_url('unlink-skate/' . esc($skate['codigo'])) ?>" method="POST">
                 <button type="submit" class="btn btn-danger">Borrar Skate</button>
             </form>
+            <form action="<?= site_url('deleteapodo/' . esc($skate['codigo'])) ?>" method="POST">
+                <button type="submit" class="btn btn-danger">Borrar Apodo</button>
+            </form>
         </div>
     </div>
 <?php endforeach; ?>
