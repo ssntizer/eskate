@@ -186,19 +186,19 @@
 
     <?php if (!empty($skates)): ?>
         <div class="row">
-            <?php foreach ($skates as $skate): ?>
-                <div class="col-md-4 mb-4 col-sm-6 col-12"> <!-- Ajustado para ser responsivo -->
-                    <div class="skate-item" onclick="window.location.href='<?= site_url('view-skate/' . esc($skate['codigo'])) ?>'">
-                        <h3> <strong><?= esc($skate['apodo']) ?></strong></h3>
-                        <h5>Codigo del skate: <?= esc($skate['codigo']) ?></h5>
-                        <p>Batería: <?= esc($skate['bateria']) ?>%</p>
-                        <p>Velocidad: <?= esc($skate['velocidad']) ?> km/h</p>
-                        <form action="<?= site_url('unlink-skate/' . esc($skate['codigo'])) ?>" method="POST">
-                            <button type="submit" class="btn btn-danger">Borrar Skate</button>
-                        </form>
-                    </div>
-                </div>
-            <?php endforeach; ?>
+        <?php foreach ($skates as $skate): ?>
+    <div class="col-md-4 mb-4 col-sm-6 col-12">
+        <div class="skate-item" onclick="window.location.href='<?= site_url('view-skate/' . esc($skate['codigo'])) ?>'">
+            <h3> <strong><?= !empty($skate['apodo']) ? esc($skate['apodo']) : esc($skate['codigo']) ?></strong></h3>
+            <h5>Codigo del skate: <?= esc($skate['codigo']) ?></h5>
+            <p>Batería: <?= esc($skate['bateria']) ?>%</p>
+            <p>Velocidad: <?= esc($skate['velocidad']) ?> km/h</p>
+            <form action="<?= site_url('unlink-skate/' . esc($skate['codigo'])) ?>" method="POST">
+                <button type="submit" class="btn btn-danger">Borrar Skate</button>
+            </form>
+        </div>
+    </div>
+<?php endforeach; ?>
         </div>
     <?php else: ?>
         <div class="alert alert-info">
@@ -265,7 +265,7 @@
 </div>
 
 <footer>
-    <p>&copy;<p>&copy; 2024 E-skate - Diseñado para la acción - <a href="mailto:eskatevz@gmail.com">Contáctanos</a></p></p>
+    <p>&copy; <p>&copy; 2024 E-skate - Diseñado para la acción - <a href="mailto:eskatevz@gmail.com">Contáctanos</a></p> </p>
 </footer>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
