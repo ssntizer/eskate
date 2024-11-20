@@ -103,7 +103,7 @@ class AuthController extends BaseController
             } catch (\Exception $e) {
                 // Manejar cualquier excepción que pueda ocurrir durante la consulta
                 log_message('error', 'Error al obtener skates: ' . $e->getMessage());
-                return redirect()->to('/list-skates')->with('error', 'No se ha encontrado información de tu skate.');
+                return redirect()->to('/error')->with('error', 'No se ha encontrado información de tu skate.');
             }
         } else {
             return redirect()->to('/login');
