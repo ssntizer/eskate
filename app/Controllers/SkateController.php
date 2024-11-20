@@ -126,4 +126,28 @@ class SkateController extends ResourceController
             'otrosModelos' => $otrosModelos // Pasa los otros modelos a la vista
         ]);
     }
+    public function updateSkateApodo()
+    {
+        $codigo = $this->request->getPost('codigo');
+        
+        // Validar que se ha ingresado un código
+        if (empty($codigo)) {
+            return redirect()->back()->with('error', 'Debe ingresar el código del skate.');
+        }
+        // Obtener el apodo desde la solicitud
+        $apodo = $this->request->getPost('apodo');
+    
+        if (!$apodo) {
+            return redirect()->back()->with('error', 'El apodo es requerido.');
+        }
+    
+        // Actualizar el apodo usando el modelo
+        $resultado = $this->skateModel->updateApodo($codigo, $apodo);
+    
+        if ($resultado) {
+            return redirect()->to('/list-skates')->with('message', 'Apodo cambiado exitosamente.');
+        } else {
+            return redirect()->back()->with('error', 'No se pudo actualizar el apodo. Verifica el código.');
+        }
+    }
 }

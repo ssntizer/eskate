@@ -189,9 +189,10 @@
             <?php foreach ($skates as $skate): ?>
                 <div class="col-md-4 mb-4 col-sm-6 col-12"> <!-- Ajustado para ser responsivo -->
                     <div class="skate-item" onclick="window.location.href='<?= site_url('view-skate/' . esc($skate['codigo'])) ?>'">
-                        <h4>Codigo del skate: <?= esc($skate['codigo']) ?></h4>
-                        <p><strong>Batería:</strong> <?= esc($skate['bateria']) ?>%</p>
-                        <p><strong>Velocidad:</strong> <?= esc($skate['velocidad']) ?> km/h</p>
+                        <h3> <strong><?= esc($skate['apodo']) ?></strong></h3>
+                        <h5>Codigo del skate: <?= esc($skate['codigo']) ?></h5>
+                        <p>Batería: <?= esc($skate['bateria']) ?>%</p>
+                        <p>Velocidad: <?= esc($skate['velocidad']) ?> km/h</p>
                         <form action="<?= site_url('unlink-skate/' . esc($skate['codigo'])) ?>" method="POST">
                             <button type="submit" class="btn btn-danger">Borrar Skate</button>
                         </form>
@@ -206,7 +207,9 @@
     <?php endif; ?>
 
     <button class="btn btn-light" data-toggle="modal" data-target="#addSkateModal">Agregar Skate</button>
+    <button class="btn btn-light" data-toggle="modal" data-target="#apodoSkateModal">Cambiar Apodo</button>
 </div>
+
 
 <!-- Modal para agregar skate -->
 <div class="modal fade" id="addSkateModal" tabindex="-1" role="dialog" aria-labelledby="addSkateModalLabel" aria-hidden="true">
@@ -233,9 +236,36 @@
         </div>
     </div>
 </div>
+<!-- Modal para cambiar apodo-->
+<div class="modal fade" id="apodoSkateModal" tabindex="-1" role="dialog" aria-labelledby="apodoSkateModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addSkateModalLabel">Cambiar apodo</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="<?= site_url('update-skate-apodo/') ?>" method="POST">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="codigo">Código del Skate</label>
+                        <input type="text" class="form-control" id="codigo" name="codigo" required>
+                        <label for="apodo">Apodo deseado</label>
+                        <input type="text" class="form-control" id="apodo" name="apodo" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 <footer>
-<p>&copy; 2024 E-skate - Diseñado para la acción - <a href="mailto:eskatevz@gmail.com">Contáctanos</a></p>
+    <p>&copy; 2024 E-skate - Diseñado para la acción - Contáctanos al eskatevz@gmail.com </p>
 </footer>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
