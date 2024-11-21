@@ -69,21 +69,5 @@ class PasswordResetController extends Controller
             return redirect()->to('/')->with('error', 'El token de restablecimiento no es válido o ha expirado.');
         }
     }
-    public function verifyToken()
-{
-    $token = $this->request->getPost('token');
-    $newPassword = $this->request->getPost('new_password');
-
-    // Verifica si el token es válido
-    $user = $this->userModel->verifyToken($token);
-
-    if ($user) {
-        // Restablecer la contraseña
-        $this->userModel->resetPassword($token, $newPassword);
-        return redirect()->to('/')->with('message', 'Tu contraseña ha sido restablecida.');
-    } else {
-        return redirect()->back()->with('error', 'El token es inválido o ha expirado.');
-    }
-}
 
 }

@@ -21,6 +21,6 @@ $routes->get('passwordreset/reset/(:any)', 'PasswordResetController::reset/$1');
 $routes->post('passwordreset/update', 'PasswordResetController::updatePassword');
 $routes->post('/skate/update', 'SkateController::updateSkateData');
 $routes->get('/primerpagina', 'AuthController::primerpag');
-$routes->get('skate/detail/(:num)', 'SkateController::detail/$1');
-$routes->post('update-skate-apodo', 'SkateController::updateSkateApodo');
+$routes->get('skate/detail/(:num)', 'AuthController::detail/$1');
+$routes->post('update-skate-apodo', 'AuthController::updateSkateApodo');
 $routes->post('/deleteapodo/(:any)', 'AuthController::deleteapodo/$1');
