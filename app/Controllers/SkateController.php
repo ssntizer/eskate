@@ -1,7 +1,7 @@
 <?php 
 namespace App\Controllers;
 
-use App\Models\SkateModel;
+use App\Models\skatemodel;
 use CodeIgniter\RESTful\ResourceController;
 
 class SkateController extends ResourceController
@@ -65,89 +65,6 @@ class SkateController extends ResourceController
         }
     }
 
-    // Función para obtener datos del skate
-    public function getSkateData($codigo)
-    {
-        // Obtener los datos del skate por el código
-        $skate = $this->skateModel->getSkateByCode($codigo);
-        
-        if (!$skate) {
-            return $this->failNotFound('Skate no encontrado.');
-        }
-
-        // Devolver los datos del skate
-        return $this->respond($skate, 200);
-    }
-    public function detail($id) {
-        // Definir los modelos de skates en un array
-        $modelos = [
-            1 => [
-                'id' => 1,
-                'nombre' => 'E-Skate 1',
-                'precio' => '$299',
-                'descripcion' => 'Descripción del Modelo E-Skate 1.',
-                'imagen' => 'https://imgs.search.brave.com/tps24H47-2oaLseYhRphCnOSszeFXtoK-3EaI9JezrA/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9za2F0/ZXNlbGVjdHJpY29z/LmNvbS93cC1jb250/ZW50L3VwbG9hZHMv/MjAyMS8wNi9tZWVw/by1taW5pMi1zY2Fs/ZWQuanBlZw'
-            ],
-            2 => [
-                'id' => 2,
-                'nombre' => 'E-Skate 2',
-                'precio' => '$599',
-                'descripcion' => 'Descripción del Modelo E-Skate 2.',
-                'imagen' => 'https://imgs.search.brave.com/qH8RsQ019QLQkGLFWZExzsnL4kvsrQ_GwfP-ckTx5pI/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL0kv/NTF1a3dQK3F5b1Mu/anBn'
-            ],
-            3 => [
-                'id' => 3,
-                'nombre' => 'E-Skate 3',
-                'precio' => '$699',
-                'descripcion' => 'Descripción del Modelo E-Skate 3.',
-                'imagen' => 'https://imgs.search.brave.com/4hfX1Aw6h9uwaa7HX6i2vtgTdUT3mvVz1GoT5ojtQQE/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL0kv/NDFNMnd5YTMzMEwu/anBn'
-            ],
-        ];
-    
-        // Registro de depuración en el log
-        log_message('debug', 'ID recibido: ' . $id);
-        log_message('debug', 'Modelos disponibles: ' . print_r(array_keys($modelos), true));
-    
-        // Verifica si el modelo existe
-        if (!array_key_exists($id, $modelos)) {
-            log_message('error', 'Modelo no encontrado para el ID: ' . $id);
-            throw new \CodeIgniter\Exceptions\PageNotFoundException("Modelo no encontrado");
-        }
-    
-        // Obtener los otros modelos
-        $otrosModelos = array_filter($modelos, function($modelo) use ($id) {
-            return $modelo['id'] != $id; // Excluye el modelo actual
-        });
-    
-        // Pasa la información a la vista
-        log_message('debug', 'Modelo encontrado: ' . print_r($modelos[$id], true));
-        return view('skate_detail', [
-            'modelo' => $modelos[$id],
-            'otrosModelos' => $otrosModelos // Pasa los otros modelos a la vista
-        ]);
-    }
-    public function updateSkateApodo()
-{
-    $codigo = $this->request->getPost('codigo');
-    
-    // Validar que se ha ingresado un código
-    if (empty($codigo)) {
-        return redirect()->back()->with('error', 'Debe ingresar el código del skate.');
-    }
-    // Obtener el apodo desde la solicitud
-    $apodo = $this->request->getPost('apodo');
-
-    if (!$apodo) {
-        return redirect()->back()->with('error', 'El apodo es requerido.');
-    }
-
-    // Actualizar el apodo usando el modelo
-    $resultado = $this->skateModel->updateApodo($codigo, $apodo);
-
-    if ($resultado) {
-        return redirect()->to('/list-skates')->with('message', 'Apodo cambiado exitosamente.');
-    } else {
-        return redirect()->back()->with('error', 'No se pudo actualizar el apodo. Verifica el código.');
-    }
-}
+ 
+   
 }
