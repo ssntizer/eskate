@@ -188,11 +188,11 @@ class AuthController extends BaseController
                 if ($skateModel->unlinkSkate($codigo)) {
                     return redirect()->to('/list-skates')->with('message', 'Skate desvinculado exitosamente.');
                 } else {
-                    return redirect()->back()->with('error', 'No se pudo borrar este apodo');
+                    return redirect()->back()->with('error', 'No se pudo borrar este skate');
                 }
             } catch (\Exception $e) {
                 log_message('error', 'Error al desvincular el skate: ' . $e->getMessage());
-                return redirect()->back()->with('error', 'No se pudo borrar este apodo');
+                return redirect()->back()->with('error', 'No se pudo borrar este skate');
             }
         } else {
             return redirect()->back()->with('error', 'No puedes desvincular este skate.');
