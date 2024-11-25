@@ -340,7 +340,7 @@ footer a:hover {
 <!-- Formulario de contacto -->
 <section id="contactanos" class="contact-form container">
     <h3>Contáctanos</h3>
-    <form action="enviar_correo.php" method="post">
+    <form action="<?= site_url('enviarmail') ?>" method="post">
         <div class="form-group">
             <input type="email" name="email" placeholder="Correo Electrónico" required>
         </div>
