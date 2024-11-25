@@ -304,4 +304,42 @@ class AuthController extends BaseController
         return redirect()->back()->with('error', 'No se pudo actualizar el apodo. Verifica el código.');
     }
 }
+public function enviarmail()
+{
+    // Cargar el servicio de correo
+    $emailService = \Config\Services::email();
+
+    // Obtener los datos del formulario
+    $nombre = $this->request->getPost('nombre');
+    $correo = $this->request->getPost('email');
+    $telefono = $this->request->getPost('telefono');
+    $mensaje = $this->request->getPost('mensaje');
+
+    // Configurar el correo
+    $emailService->setFrom($correo,$nombre); // Cambiar según tu configuración
+    $emailService->setTo('eskatevz@gmail.com'); // Cambiar al correo donde se reciban los mensajes
+    $emailService->setSubject('Nuevo mensaje de contacto');
+    
+    // Cuerpo del correo
+    $cuerpo = "
+        <p>Hola, tienes un nuevo mensaje de contacto:</p>
+        <p><strong>Nombre:</strong> $nombre</p>
+        <p><strong>Correo:</strong> $correo</p>
+        <p><strong>Teléfono:</strong> $telefono</p>
+        <p><strong>Mensaje:</strong><br>$mensaje</p>
+    ";
+    
+    $emailService->setMessage($cuerpo);
+    $emailService->setMailType('html'); // Para enviar en formato HTML
+
+    // Enviar el correo
+    if ($emailService->send()) {
+        return redirect()->to('/')->with('message', 'Tu mensaje ha sido enviado exitosamente.');
+    } else {
+        // Obtener errores en caso de fallo
+        $error = $emailService->printDebugger(['headers']);
+        log_message('error', $error); // Log del error
+        return redirect()->back()->with('error', 'Hubo un problema al enviar tu mensaje. Inténtalo de nuevo.');
+    }
+}
 }
