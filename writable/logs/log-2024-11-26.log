@@ -178,3 +178,47 @@ Message-ID: &lt;674625ae417c07.29228780@gmail.com&gt;
 Mime-Version: 1.0
 
 </pre>
+CRITICAL - 2024-11-26 20:55:06 --> ErrorException: Undefined variable $userAddresses
+[Method: GET, Route: comprar]
+in APPPATH/Views/comprar.php on line 135.
+ 1 APPPATH/Views/comprar.php(135): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $userAddresses', '/Applications/MAMP/htdocs/eskate/app/Views/comprar.php', 135)
+ 2 SYSTEMPATH/View/View.php(234): include('/Applications/MAMP/htdocs/eskate/app/Views/comprar.php')
+ 3 SYSTEMPATH/View/View.php(237): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH/Common.php(1169): CodeIgniter\View\View->render('comprar', [], true)
+ 5 APPPATH/Controllers/AuthController.php(347): view('comprar')
+ 6 SYSTEMPATH/CodeIgniter.php(933): App\Controllers\AuthController->comprar()
+ 7 SYSTEMPATH/CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+ 8 SYSTEMPATH/CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH/Boot.php(325): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH/Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH/index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2024-11-26 21:13:09 --> Usuario no logueado
+ERROR - 2024-11-26 21:13:34 --> Usuario no logueado
+CRITICAL - 2024-11-26 21:51:45 --> ErrorException: Undefined array key "id"
+[Method: GET, Route: comprar]
+in APPPATH/Views/comprar.php on line 136.
+ 1 APPPATH/Views/comprar.php(136): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "id"', '/Applications/MAMP/htdocs/eskate/app/Views/comprar.php', 136)
+ 2 SYSTEMPATH/View/View.php(234): include('/Applications/MAMP/htdocs/eskate/app/Views/comprar.php')
+ 3 SYSTEMPATH/View/View.php(237): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH/Common.php(1169): CodeIgniter\View\View->render('comprar', [], true)
+ 5 APPPATH/Controllers/AuthController.php(365): view('comprar', [...])
+ 6 SYSTEMPATH/CodeIgniter.php(933): App\Controllers\AuthController->comprar()
+ 7 SYSTEMPATH/CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+ 8 SYSTEMPATH/CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH/Boot.php(325): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH/Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH/index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2024-11-26 21:52:36 --> ErrorException: Undefined array key "street"
+[Method: GET, Route: comprar]
+in APPPATH/Views/comprar.php on line 137.
+ 1 APPPATH/Views/comprar.php(137): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "street"', '/Applications/MAMP/htdocs/eskate/app/Views/comprar.php', 137)
+ 2 SYSTEMPATH/View/View.php(234): include('/Applications/MAMP/htdocs/eskate/app/Views/comprar.php')
+ 3 SYSTEMPATH/View/View.php(237): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH/Common.php(1169): CodeIgniter\View\View->render('comprar', [], true)
+ 5 APPPATH/Controllers/AuthController.php(365): view('comprar', [...])
+ 6 SYSTEMPATH/CodeIgniter.php(933): App\Controllers\AuthController->comprar()
+ 7 SYSTEMPATH/CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+ 8 SYSTEMPATH/CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH/Boot.php(325): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH/Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH/index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))

@@ -166,8 +166,10 @@
             <div class="col-md-6">
                 <h1 class="product-title">Modelo <?= $modelo['nombre'] ?></h1>
                 <p class="product-price">Precio: <?= $modelo['precio'] ?></p>
-                <button class="btn btn-main btn-buy" onclick="openPurchasePanel()">Comprar</button>
+                <a class="btn btn-main btn-buy" href="<?= site_url('comprar') ?>">Comprar</a>
             </div>
+            
+
         </div>
 
         <!-- Descripción del producto -->
@@ -195,36 +197,5 @@
             </div>
         </div>
     </div>
-
-    <!-- Panel de compra -->
-    <div class="purchase-panel" id="purchasePanel">
-        <button class="close-btn" onclick="closePurchasePanel()">×</button>
-        <h3 class="product-title">Finalizar Compra</h3>
-        <form>
-            <div class="form-group">
-                <label for="cardNumber">Número de Tarjeta</label>
-                <input type="text" class="form-control" id="cardNumber" placeholder="1234 5678 9012 3456" required>
-            </div>
-            <div class="form-group">
-                <label for="expiryDate">Fecha de Expiración</label>
-                <input type="text" class="form-control" id="expiryDate" placeholder="MM/AA" required>
-            </div>
-            <div class="form-group">
-                <label for="cvv">CVV</label>
-                <input type="password" class="form-control" id="cvv" placeholder="123" required>
-            </div>
-            <button type="submit" class="btn btn-buy">Confirmar Compra</button>
-        </form>
-    </div>
-
-    <script>
-       function openPurchasePanel() {
-           document.getElementById('purchasePanel').classList.add('active');
-       }
-
-       function closePurchasePanel() {
-           document.getElementById('purchasePanel').classList.remove('active');
-       }
-    </script>
 </body>
 </html>

@@ -3,6 +3,7 @@ namespace App\Controllers;
 
 use App\Models\UserModel;
 use App\Models\skatemodel;
+use App\Models\DireccionModel;
 
 class AuthController extends BaseController
 {
@@ -341,6 +342,69 @@ public function enviarmail()
         $error = $emailService->printDebugger(['headers']);
         log_message('error', $error); // Log del error
         return redirect()->back()->with('error', 'Hubo un problema al enviar tu mensaje. Inténtalo de nuevo.');
+    }
+}
+public function comprar()
+{
+    $direccionModel = new \App\Models\DireccionModel();
+    $session = session();
+
+    // Obtener el ID del usuario desde la sesión
+    $userId = $session->get('user_id');
+    if (!$userId) {
+        log_message('error', 'Usuario no logueado');
+        return redirect()->to('/login')->with('error', 'Por favor inicia sesión para realizar una compra.');
+    }
+
+    // Obtener todas las direcciones del usuario
+    $userAddresses = $direccionModel->getDireccionesPorUsuario($userId);
+    
+    log_message('debug', 'Direcciones obtenidas: ' . print_r($userAddresses, true));
+
+    // Pasar las direcciones a la vista sin más procesamiento
+    return view('comprar', [
+        'userAddresses' => $userAddresses,  // Aquí pasas las direcciones al frontend
+    ]);
+}
+public function nuevadireccion(){
+    return view ('nuevadireccion');
+}
+public function guardardireccion()
+{
+    // Depuración: verificar si la solicitud es POST
+    log_message('debug', 'Método POST recibido para guardar dirección');
+
+    // Validación básica de campos
+    if (!$this->validate([
+        'calle'    => 'required|min_length[3]',
+        'provincia' => 'required|min_length[3]',
+        'numero'   => 'required|is_natural_no_zero'
+    ])) {
+        // Depuración: mostrar el error de validación
+        log_message('debug', 'Validación fallida: ' . implode(', ', $this->validator->getErrors()));
+        return redirect()->back()->withInput()->with('error', 'Hubo un problema con los datos ingresados');
+    }
+
+    // Obtener los datos del formulario
+    $data = [
+        'calle'    => $this->request->getPost('calle'),
+        'ciudad' => $this->request->getPost('ciudad'),
+        'provincia' => $this->request->getPost('provincia'),
+        'numero'   => $this->request->getPost('numero'),
+        'ID_usuario' => session()->get('user_id'), // Asumiendo que el usuario está logueado
+    ];
+
+    // Insertar la dirección en la base de datos
+    $direccionModel = new DireccionModel();
+    if ($direccionModel->insert($data)) {
+        // Depuración: confirmación de inserción exitosa
+        log_message('debug', 'Dirección guardada exitosamente');
+        // Redirigir a la página de compra con un mensaje de éxito
+        return redirect()->to('/comprar')->with('success', 'Dirección guardada correctamente');
+    } else {
+        // Depuración: error en la inserción
+        log_message('debug', 'Error al guardar la dirección');
+        return redirect()->back()->withInput()->with('error', 'Error al guardar la dirección');
     }
 }
 }

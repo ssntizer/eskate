@@ -25,4 +25,7 @@ $routes->get('skate/detail/(:num)', 'AuthController::detail/$1');
 $routes->post('update-skate-apodo', 'AuthController::updateSkateApodo');
 $routes->post('/deleteapodo/(:any)', 'AuthController::deleteapodo/$1');
 $routes->post('enviarmail', 'AuthController::enviarmail');
+$routes->get('comprar', 'AuthController::comprar');
+$routes->get('nuevadireccion', 'AuthController::nuevadireccion');
+$routes->post('/direccion/guardar', 'AuthController::guardardireccion');
 
