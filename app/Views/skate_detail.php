@@ -166,9 +166,9 @@
             <div class="col-md-6">
                 <h1 class="product-title">Modelo <?= $modelo['nombre'] ?></h1>
                 <p class="product-price">Precio: <?= $modelo['precio'] ?></p>
+
                 <a class="btn btn-main btn-buy" href="<?= site_url('comprar') ?>">Comprar</a>
             </div>
-            
 
         </div>
 
@@ -197,5 +197,6 @@
             </div>
         </div>
     </div>
+
 </body>
 </html>

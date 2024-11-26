@@ -64,7 +64,5 @@ class SkateController extends ResourceController
             return $this->fail('No se pudieron actualizar los datos del skate.');
         }
     }
-
- 
-   
 }
+

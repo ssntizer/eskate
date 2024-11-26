@@ -82,3 +82,4 @@ public function deleteapodo($codigo)
     return $this->update($codigo, $data); // Actualizar el registro
 }
 }
+

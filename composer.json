@@ -14,7 +14,8 @@
         "ext-intl": "*",
         "ext-mbstring": "*",
         "laminas/laminas-escaper": "^2.13",
-        "psr/log": "^3.0"
+        "psr/log": "^3.0",
+        "ext-pgsql": "*" 
     },
     "require-dev": {
         "codeigniter/coding-standard": "^1.7",
@@ -38,7 +39,7 @@
         "ext-memcached": "If you use Cache class MemcachedHandler with Memcached",
         "ext-mysqli": "If you use MySQL",
         "ext-oci8": "If you use Oracle Database",
-        "ext-pgsql": "If you use PostgreSQL",
+        "ext-pgsql": "If you use PostgreSQL", 
         "ext-readline": "Improves CLI::input() usability",
         "ext-redis": "If you use Cache class RedisHandler",
         "ext-simplexml": "If you format XML",

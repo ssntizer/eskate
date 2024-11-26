@@ -3,7 +3,9 @@ namespace App\Controllers;
 
 use App\Models\UserModel;
 use App\Models\skatemodel;
+
 use App\Models\DireccionModel;
+
 
 class AuthController extends BaseController
 {
@@ -189,11 +191,13 @@ class AuthController extends BaseController
                 if ($skateModel->unlinkSkate($codigo)) {
                     return redirect()->to('/list-skates')->with('message', 'Skate desvinculado exitosamente.');
                 } else {
+
                     return redirect()->back()->with('error', 'No se pudo borrar este apodo');
                 }
             } catch (\Exception $e) {
                 log_message('error', 'Error al desvincular el skate: ' . $e->getMessage());
                 return redirect()->back()->with('error', 'No se pudo borrar este apodo');
+
             }
         } else {
             return redirect()->back()->with('error', 'No puedes desvincular este skate.');
@@ -234,8 +238,10 @@ class AuthController extends BaseController
         return view('Primerpagina');
     }
     public function detail($id) {
+
         $session = session();
         if ($session->get('logged_in')) {// Definir los modelos de skates en un array
+
         $modelos = [
             1 => [
                 'id' => 1,
@@ -281,6 +287,7 @@ class AuthController extends BaseController
             'modelo' => $modelos[$id],
             'otrosModelos' => $otrosModelos // Pasa los otros modelos a la vista
         ]);
+
     }else{
         return redirect()->to('/login');
     }}
@@ -308,6 +315,7 @@ class AuthController extends BaseController
     } else {
         return redirect()->back()->with('error', 'No se pudo actualizar el apodo. Verifica el código.');
     }
+
 }
 public function enviarmail()
 {
@@ -405,6 +413,7 @@ public function guardardireccion()
         // Depuración: error en la inserción
         log_message('debug', 'Error al guardar la dirección');
         return redirect()->back()->withInput()->with('error', 'Error al guardar la dirección');
+
     }
 }
 }

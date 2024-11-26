@@ -120,7 +120,6 @@
                 <p><strong>Velocidad:</strong> <?= $skate['velocidad'] ?> km/h</p>
                 <p><strong>Temperatura:</strong> <?= $skate['temperatura'] ?>°C</p>
                 <p><strong>Hora de Ubicación:</strong> <?= $skate['hora'] ?></p>
-            
     </button>
 </form>
     </button>
@@ -152,3 +151,5 @@
 
 </body>
 </html>
+
+
