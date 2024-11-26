@@ -233,7 +233,7 @@ class AuthController extends BaseController
         return view('Primerpagina');
     }
     public function detail($id) {
-        // Definir los modelos de skates en un array
+        if ($session->get('logged_in')) {// Definir los modelos de skates en un array
         $modelos = [
             1 => [
                 'id' => 1,
@@ -279,7 +279,9 @@ class AuthController extends BaseController
             'modelo' => $modelos[$id],
             'otrosModelos' => $otrosModelos // Pasa los otros modelos a la vista
         ]);
-    }
+    }else{
+        return redirect()->to('/login');
+    }}
     public function updateSkateApodo()
 {
     $codigo = $this->request->getPost('codigo');
