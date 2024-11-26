@@ -1,0 +1,360 @@
+INFO - 2024-10-25 17:36:49 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-25 17:39:34 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2024-10-25 17:39:38 --> User found: Array
+(
+    [id] => 75
+    [username] => Erie
+    [email] => venturinierie@gmail.com
+    [password] => $2y$10$Z.Tmgj3C7vEX1hK5/1e.UOeW0Ts3W9bTiU/kyWM.hM51Jv40n8c8K
+    [reset_token] => 
+    [reset_expiration] => 
+)
+
+DEBUG - 2024-10-25 17:39:38 --> Password verified successfully.
+INFO - 2024-10-25 17:39:38 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-25 17:39:39 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-25 17:39:44 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-25 17:40:02 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-25 17:40:59 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-25 17:40:59 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2024-10-25 17:43:06 --> User found: Array
+(
+    [id] => 75
+    [username] => Erie
+    [email] => venturinierie@gmail.com
+    [password] => $2y$10$Z.Tmgj3C7vEX1hK5/1e.UOeW0Ts3W9bTiU/kyWM.hM51Jv40n8c8K
+    [reset_token] => 
+    [reset_expiration] => 
+)
+
+DEBUG - 2024-10-25 17:43:06 --> Password verified successfully.
+INFO - 2024-10-25 17:43:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-25 17:43:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-25 17:43:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-25 17:43:41 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-25 17:43:41 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2024-10-25 17:43:44 --> User found: Array
+(
+    [id] => 75
+    [username] => Erie
+    [email] => venturinierie@gmail.com
+    [password] => $2y$10$Z.Tmgj3C7vEX1hK5/1e.UOeW0Ts3W9bTiU/kyWM.hM51Jv40n8c8K
+    [reset_token] => 
+    [reset_expiration] => 
+)
+
+DEBUG - 2024-10-25 17:43:45 --> Password verified successfully.
+INFO - 2024-10-25 17:43:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-25 17:43:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-25 17:44:54 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-25 17:44:54 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2024-10-25 17:44:58 --> User found: Array
+(
+    [id] => 75
+    [username] => Erie
+    [email] => venturinierie@gmail.com
+    [password] => $2y$10$Z.Tmgj3C7vEX1hK5/1e.UOeW0Ts3W9bTiU/kyWM.hM51Jv40n8c8K
+    [reset_token] => 
+    [reset_expiration] => 
+)
+
+DEBUG - 2024-10-25 17:44:58 --> Password verified successfully.
+INFO - 2024-10-25 17:44:58 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-25 17:44:58 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-25 17:44:59 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-25 17:44:59 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-25 17:45:02 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-25 17:45:02 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2024-10-25 17:45:07 --> User found: Array
+(
+    [id] => 75
+    [username] => Erie
+    [email] => venturinierie@gmail.com
+    [password] => $2y$10$Z.Tmgj3C7vEX1hK5/1e.UOeW0Ts3W9bTiU/kyWM.hM51Jv40n8c8K
+    [reset_token] => 
+    [reset_expiration] => 
+)
+
+DEBUG - 2024-10-25 17:45:07 --> Password verified successfully.
+INFO - 2024-10-25 17:45:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-25 17:45:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-25 17:45:23 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-25 17:45:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-25 17:45:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2024-10-25 17:45:49 --> User found: Array
+(
+    [id] => 75
+    [username] => Erie
+    [email] => venturinierie@gmail.com
+    [password] => $2y$10$Z.Tmgj3C7vEX1hK5/1e.UOeW0Ts3W9bTiU/kyWM.hM51Jv40n8c8K
+    [reset_token] => 
+    [reset_expiration] => 
+)
+
+DEBUG - 2024-10-25 17:45:50 --> Password verified successfully.
+INFO - 2024-10-25 17:45:50 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-25 17:45:50 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-25 17:46:04 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-25 17:46:09 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-25 17:46:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-25 17:46:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-25 17:46:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2024-10-25 17:46:49 --> User found: Array
+(
+    [id] => 75
+    [username] => Erie
+    [email] => venturinierie@gmail.com
+    [password] => $2y$10$Z.Tmgj3C7vEX1hK5/1e.UOeW0Ts3W9bTiU/kyWM.hM51Jv40n8c8K
+    [reset_token] => 
+    [reset_expiration] => 
+)
+
+DEBUG - 2024-10-25 17:46:49 --> Password verified successfully.
+INFO - 2024-10-25 17:46:49 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-25 17:46:49 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-25 17:46:50 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-25 17:48:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-25 17:48:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-25 17:48:18 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2024-10-25 17:48:27 --> User found: Array
+(
+    [id] => 75
+    [username] => Erie
+    [email] => venturinierie@gmail.com
+    [password] => $2y$10$Z.Tmgj3C7vEX1hK5/1e.UOeW0Ts3W9bTiU/kyWM.hM51Jv40n8c8K
+    [reset_token] => 
+    [reset_expiration] => 
+)
+
+DEBUG - 2024-10-25 17:48:27 --> Password verified successfully.
+INFO - 2024-10-25 17:48:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-25 17:48:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-25 17:48:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-25 17:48:33 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-25 17:48:33 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2024-10-25 17:49:11 --> User found: Array
+(
+    [id] => 75
+    [username] => Erie
+    [email] => venturinierie@gmail.com
+    [password] => $2y$10$Z.Tmgj3C7vEX1hK5/1e.UOeW0Ts3W9bTiU/kyWM.hM51Jv40n8c8K
+    [reset_token] => 
+    [reset_expiration] => 
+)
+
+DEBUG - 2024-10-25 17:49:12 --> Password verified successfully.
+INFO - 2024-10-25 17:49:12 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-25 17:49:12 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-25 17:49:13 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2024-10-25 18:11:09 --> ErrorException: Undefined variable $skate1_codigo
+[Method: GET, Route: primerpagina]
+in APPPATH/Views/Primerpagina.php on line 322.
+ 1 APPPATH/Views/Primerpagina.php(322): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $skate1_codigo', '/Applications/MAMP/htdocs/eskate/app/Views/Primerpagina.php', 322)
+ 2 SYSTEMPATH/View/View.php(234): include('/Applications/MAMP/htdocs/eskate/app/Views/Primerpagina.php')
+ 3 SYSTEMPATH/View/View.php(237): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH/Common.php(1169): CodeIgniter\View\View->render('Primerpagina', [], true)
+ 5 APPPATH/Controllers/AuthController.php(205): view('Primerpagina')
+ 6 SYSTEMPATH/CodeIgniter.php(933): App\Controllers\AuthController->primerpag()
+ 7 SYSTEMPATH/CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+ 8 SYSTEMPATH/CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH/Boot.php(325): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH/Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH/index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+INFO - 2024-10-25 18:11:10 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-25 18:11:10 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2024-10-25 18:11:14 --> User found: Array
+(
+    [id] => 75
+    [username] => Erie
+    [email] => venturinierie@gmail.com
+    [password] => $2y$10$Z.Tmgj3C7vEX1hK5/1e.UOeW0Ts3W9bTiU/kyWM.hM51Jv40n8c8K
+    [reset_token] => 
+    [reset_expiration] => 
+)
+
+DEBUG - 2024-10-25 18:11:15 --> Password verified successfully.
+INFO - 2024-10-25 18:11:15 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-25 18:11:15 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-25 18:11:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2024-10-25 18:11:16 --> ErrorException: Undefined variable $skate1_codigo
+[Method: GET, Route: primerpagina]
+in APPPATH/Views/Primerpagina.php on line 322.
+ 1 APPPATH/Views/Primerpagina.php(322): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $skate1_codigo', '/Applications/MAMP/htdocs/eskate/app/Views/Primerpagina.php', 322)
+ 2 SYSTEMPATH/View/View.php(234): include('/Applications/MAMP/htdocs/eskate/app/Views/Primerpagina.php')
+ 3 SYSTEMPATH/View/View.php(237): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH/Common.php(1169): CodeIgniter\View\View->render('Primerpagina', [], true)
+ 5 APPPATH/Controllers/AuthController.php(205): view('Primerpagina')
+ 6 SYSTEMPATH/CodeIgniter.php(933): App\Controllers\AuthController->primerpag()
+ 7 SYSTEMPATH/CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+ 8 SYSTEMPATH/CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH/Boot.php(325): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH/Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH/index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+INFO - 2024-10-25 18:12:53 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-25 18:12:54 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-25 21:55:11 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-25 22:00:20 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-25 22:00:47 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-25 22:00:48 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2024-10-25 22:00:52 --> User found: Array
+(
+    [id] => 75
+    [username] => Erie
+    [email] => venturinierie@gmail.com
+    [password] => $2y$10$Z.Tmgj3C7vEX1hK5/1e.UOeW0Ts3W9bTiU/kyWM.hM51Jv40n8c8K
+    [reset_token] => 
+    [reset_expiration] => 
+)
+
+DEBUG - 2024-10-25 22:00:53 --> Password verified successfully.
+INFO - 2024-10-25 22:00:53 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-25 22:00:53 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-25 22:01:14 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-25 22:01:15 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-25 22:01:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-25 22:01:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-25 22:01:38 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-25 22:01:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-25 22:01:47 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2024-10-25 22:01:50 --> User found: Array
+(
+    [id] => 75
+    [username] => Erie
+    [email] => venturinierie@gmail.com
+    [password] => $2y$10$6xV28ApKoYm/DILeqXCooepsP0RuU.bWtNvb0m/MOotrUCz6gH6qS
+    [reset_token] => 
+    [reset_expiration] => 
+)
+
+DEBUG - 2024-10-25 22:01:51 --> Password verified successfully.
+INFO - 2024-10-25 22:01:51 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-25 22:01:51 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-25 22:02:32 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-25 22:03:02 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-25 22:03:02 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-25 22:08:13 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2024-10-25 22:13:31 --> ID recibido: 2
+DEBUG - 2024-10-25 22:13:31 --> Modelos disponibles: Array
+(
+    [0] => 1
+    [1] => 2
+    [2] => 3
+)
+
+DEBUG - 2024-10-25 22:13:31 --> Modelo encontrado: Array
+(
+    [id] => 2
+    [nombre] => Modelo E-Skate 2
+    [precio] => $599
+    [descripcion] => Descripción del Modelo E-Skate 2.
+    [imagen] => https://imgs.search.brave.com/qH8RsQ019QLQkGLFWZExzsnL4kvsrQ_GwfP-ckTx5pI/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL0kv/NTF1a3dQK3F5b1Mu/anBn
+)
+
+INFO - 2024-10-25 22:14:00 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-25 22:14:01 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2024-10-25 22:15:56 --> ID recibido: 1
+DEBUG - 2024-10-25 22:15:56 --> Modelos disponibles: Array
+(
+    [0] => 1
+    [1] => 2
+    [2] => 3
+)
+
+DEBUG - 2024-10-25 22:15:56 --> Modelo encontrado: Array
+(
+    [id] => 1
+    [nombre] => Modelo E-Skate 1
+    [precio] => $299
+    [descripcion] => Descripción del Modelo E-Skate 1.
+    [imagen] => https://imgs.search.brave.com/tps24H47-2oaLseYhRphCnOSszeFXtoK-3EaI9JezrA/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9za2F0/ZXNlbGVjdHJpY29z/LmNvbS93cC1jb250/ZW50L3VwbG9hZHMv/MjAyMS8wNi9tZWVw/by1taW5pMi1zY2Fs/ZWQuanBlZw
+)
+
+DEBUG - 2024-10-25 22:16:10 --> ID recibido: 2
+DEBUG - 2024-10-25 22:16:10 --> Modelos disponibles: Array
+(
+    [0] => 1
+    [1] => 2
+    [2] => 3
+)
+
+DEBUG - 2024-10-25 22:16:10 --> Modelo encontrado: Array
+(
+    [id] => 2
+    [nombre] => Modelo E-Skate 2
+    [precio] => $599
+    [descripcion] => Descripción del Modelo E-Skate 2.
+    [imagen] => https://imgs.search.brave.com/qH8RsQ019QLQkGLFWZExzsnL4kvsrQ_GwfP-ckTx5pI/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL0kv/NTF1a3dQK3F5b1Mu/anBn
+)
+
+DEBUG - 2024-10-25 22:16:13 --> ID recibido: 3
+DEBUG - 2024-10-25 22:16:13 --> Modelos disponibles: Array
+(
+    [0] => 1
+    [1] => 2
+    [2] => 3
+)
+
+DEBUG - 2024-10-25 22:16:13 --> Modelo encontrado: Array
+(
+    [id] => 3
+    [nombre] => Modelo E-Skate 3
+    [precio] => $699
+    [descripcion] => Descripción del Modelo E-Skate 3.
+    [imagen] => https://imgs.search.brave.com/4hfX1Aw6h9uwaa7HX6i2vtgTdUT3mvVz1GoT5ojtQQE/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL0kv/NDFNMnd5YTMzMEwu/anBn
+)
+
+DEBUG - 2024-10-25 22:16:26 --> ID recibido: 1
+DEBUG - 2024-10-25 22:16:26 --> Modelos disponibles: Array
+(
+    [0] => 1
+    [1] => 2
+    [2] => 3
+)
+
+DEBUG - 2024-10-25 22:16:26 --> Modelo encontrado: Array
+(
+    [id] => 1
+    [nombre] => Modelo E-Skate 1
+    [precio] => $299
+    [descripcion] => Descripción del Modelo E-Skate 1.
+    [imagen] => https://imgs.search.brave.com/tps24H47-2oaLseYhRphCnOSszeFXtoK-3EaI9JezrA/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9za2F0/ZXNlbGVjdHJpY29z/LmNvbS93cC1jb250/ZW50L3VwbG9hZHMv/MjAyMS8wNi9tZWVw/by1taW5pMi1zY2Fs/ZWQuanBlZw
+)
+
+INFO - 2024-10-25 22:16:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-25 22:16:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-25 22:16:34 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2024-10-25 22:16:39 --> ID recibido: 1
+DEBUG - 2024-10-25 22:16:39 --> Modelos disponibles: Array
+(
+    [0] => 1
+    [1] => 2
+    [2] => 3
+)
+
+DEBUG - 2024-10-25 22:16:39 --> Modelo encontrado: Array
+(
+    [id] => 1
+    [nombre] => Modelo E-Skate 1
+    [precio] => $299
+    [descripcion] => Descripción del Modelo E-Skate 1.
+    [imagen] => https://imgs.search.brave.com/tps24H47-2oaLseYhRphCnOSszeFXtoK-3EaI9JezrA/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9za2F0/ZXNlbGVjdHJpY29z/LmNvbS93cC1jb250/ZW50L3VwbG9hZHMv/MjAyMS8wNi9tZWVw/by1taW5pMi1zY2Fs/ZWQuanBlZw
+)
+
+INFO - 2024-10-25 22:16:44 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2024-10-25 22:16:50 --> User found: Array
+(
+    [id] => 75
+    [username] => Erie
+    [email] => venturinierie@gmail.com
+    [password] => $2y$10$6xV28ApKoYm/DILeqXCooepsP0RuU.bWtNvb0m/MOotrUCz6gH6qS
+    [reset_token] => 
+    [reset_expiration] => 
+)
+
+DEBUG - 2024-10-25 22:16:51 --> Password verified successfully.
+INFO - 2024-10-25 22:16:51 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-25 22:16:51 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-25 22:17:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-25 22:17:12 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-25 22:18:13 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-10-25 22:18:13 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.

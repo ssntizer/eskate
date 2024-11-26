@@ -167,6 +167,7 @@
 
 <div class="header">
     <h1>Lista de Skates</h1>
+    <a href="<?= site_url('/') ?>" class="btn btn-light">Inicio</a>
     <a href="<?= site_url('logout') ?>" class="btn btn-light">Cerrar sesión</a>
 </div>
 
@@ -268,7 +269,7 @@
 </div>
 
 <footer>
-    <p>&copy;  2024 E-skate - Diseñado para la acción - <a href="mailto:eskatevz@gmail.com">Contáctanos</a></p>
+    <p>&copy; 2024 E-skate - Diseñado para la acción - <a href="mailto:eskatevz@gmail.com">Contáctanos</a></p>
 </footer>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

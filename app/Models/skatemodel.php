@@ -81,5 +81,5 @@ public function deleteapodo($codigo)
     $data = ['apodo' => null];
     return $this->update($codigo, $data); // Actualizar el registro
 }
-
 }
+

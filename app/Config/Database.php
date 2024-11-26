@@ -30,14 +30,14 @@ class Database extends Config
         'username' => 'uqoj8ke6f0xmvjk6',
         'password' => 'Ko7ugu1JnyPq1baR9TQQ',
         'database' => 'bjb5de3zoi98bnkzpitc',
-        'DBDriver' => 'MySQLi', 
+        'DBDriver' => 'MySQLi', // Asegúrate de usar el controlador correcto
         'DBPrefix' => '',
         'pConnect' => false,
-        'DBDebug'  => (ENVIRONMENT == 'production'),
+        'DBDebug'  => (ENVIRONMENT !== 'production'),
         'cacheOn'  => false,
         'cachedir' => '',
-        'charset'  => 'utf8mb4', 
-        'DBCollat' => 'utf8mb4_general_ci', 
+        'charset'  => 'utf8mb4', // Cambiado a utf8mb4
+        'DBCollat' => 'utf8mb4_general_ci', // Cambiado a colación compatible
         'swap_pre' => '',
         'encrypt'  => false,
         'compress' => false,
@@ -45,6 +45,7 @@ class Database extends Config
         'failover' => [],
         'port'     => 3306,
     ];
+    
 
     /**
      * This database connection is used when running PHPUnit database tests.
