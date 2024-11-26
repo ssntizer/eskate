@@ -312,15 +312,13 @@ public function enviarmail()
 {
     // Cargar el servicio de correo
     $emailService = \Config\Services::email();
-
     // Obtener los datos del formulario
     $nombre = $this->request->getPost('nombre');
     $correo = $this->request->getPost('email');
     $telefono = $this->request->getPost('telefono');
     $mensaje = $this->request->getPost('mensaje');
-
     // Configurar el correo
-    $emailService->setFrom('eskatevz@gmail.com', 'E-Skate'); // Dirección que coincide con $SMTPUser // Cambiar según tu configuración
+    $emailService->setFrom($correo,$nombre); // Cambiar según tu configuración
     $emailService->setTo('eskatevz@gmail.com'); // Cambiar al correo donde se reciban los mensajes
     $emailService->setSubject('Nuevo mensaje de contacto');
     
@@ -335,7 +333,6 @@ public function enviarmail()
     
     $emailService->setMessage($cuerpo);
     $emailService->setMailType('html'); // Para enviar en formato HTML
-
     // Enviar el correo
     if ($emailService->send()) {
         return redirect()->to('/')->with('message', 'Tu mensaje ha sido enviado exitosamente.');
