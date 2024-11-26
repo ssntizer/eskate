@@ -233,6 +233,7 @@ class AuthController extends BaseController
         return view('Primerpagina');
     }
     public function detail($id) {
+        $session = session();
         if ($session->get('logged_in')) {// Definir los modelos de skates en un array
         $modelos = [
             1 => [
@@ -282,6 +283,7 @@ class AuthController extends BaseController
     }else{
         return redirect()->to('/login');
     }}
+
     public function updateSkateApodo()
 {
     $codigo = $this->request->getPost('codigo');
@@ -318,7 +320,7 @@ public function enviarmail()
     $mensaje = $this->request->getPost('mensaje');
 
     // Configurar el correo
-    $emailService->setFrom($correo,$nombre); // Cambiar según tu configuración
+    $emailService->setFrom('eskatevz@gmail.com', 'E-Skate'); // Dirección que coincide con $SMTPUser // Cambiar según tu configuración
     $emailService->setTo('eskatevz@gmail.com'); // Cambiar al correo donde se reciban los mensajes
     $emailService->setSubject('Nuevo mensaje de contacto');
     
