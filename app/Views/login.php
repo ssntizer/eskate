@@ -20,7 +20,8 @@
         }
 
         .login-form {
-            width: 400px; /* Ancho del formulario igual al de registro */
+            width: 90%; /* Ancho del formulario en pantallas pequeñas */
+            max-width: 400px; /* Ancho máximo */
             padding: 40px; /* Espaciado interno */
             border-radius: 15px; /* Bordes redondeados */
             background: linear-gradient(145deg, #006f99, #008dc2); /* Degradado de fondo */
@@ -102,6 +103,17 @@
             text-decoration: none;
             font-size: 14px;
             color: #ff6600;
+        }
+
+        @media (max-width: 768px) {
+            .login-form {
+                width: 80%; /* Ancho del formulario en pantallas pequeñas */
+                padding: 30px; /* Espaciado interno reducido */
+            }
+
+            .login-form h2 {
+                font-size: 1.5rem; /* Tamaño de fuente reducido */
+            }
         }
     </style>
 </head>

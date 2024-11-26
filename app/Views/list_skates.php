@@ -13,6 +13,9 @@
             color: #ffffff;
             font-family: 'Montserrat', sans-serif;
             background-image: url('https://www.transparenttextures.com/patterns/asfalt-dark.png'); /* Textura ligera de asfalto */
+            min-height: 100vh; /* Aseguramos que el cuerpo ocupe al menos la altura de la ventana */
+            display: flex;
+            flex-direction: column; /* Establecemos la dirección de la flexbox para un diseño vertical */
         }
 
         .header {
@@ -32,6 +35,7 @@
 
         .container {
             margin-top: 40px;
+            flex: 1; /* Permite que la sección contenedora ocupe el espacio restante */
         }
 
         .skate-item {
@@ -127,9 +131,6 @@
             text-align: center;
             padding: 20px 0;
             background-color: #005f87;
-            position: absolute;
-            bottom: 0;
-            width: 100%;
         }
 
         footer p {
@@ -147,12 +148,26 @@
             color: #ffb700;
         }
 
+        @media (max-width: 768px) {
+            .skate-item {
+                padding: 15px; /* Espaciado interno reducido para pantallas más pequeñas */
+            }
+
+            .skate-item h4 {
+                font-size: 1.25rem; /* Tamaño de fuente ajustado para pantallas más pequeñas */
+            }
+
+            .skate-item p {
+                font-size: 1rem; /* Tamaño de fuente ajustado para pantallas más pequeñas */
+            }
+        }
     </style>
 </head>
 <body>
 
 <div class="header">
     <h1>Lista de Skates</h1>
+    <a href="<?= site_url('/') ?>" class="btn btn-light">Inicio</a>
     <a href="<?= site_url('logout') ?>" class="btn btn-light">Cerrar sesión</a>
 </div>
 
@@ -172,18 +187,22 @@
 
     <?php if (!empty($skates)): ?>
         <div class="row">
-            <?php foreach ($skates as $skate): ?>
-                <div class="col-md-4 mb-4">
-                    <div class="skate-item" onclick="window.location.href='<?= site_url('view-skate/' . esc($skate['codigo'])) ?>'">
-                        <h4>Codigo del skate: <?= esc($skate['codigo']) ?></h4>
-                        <p><strong>Batería:</strong> <?= esc($skate['bateria']) ?>%</p>
-                        <p><strong>Velocidad:</strong> <?= esc($skate['velocidad']) ?> km/h</p>
-                        <form action="<?= site_url('unlink-skate/' . esc($skate['codigo'])) ?>" method="POST">
-                            <button type="submit" class="btn btn-danger">Borrar Skate</button>
-                        </form>
-                    </div>
-                </div>
-            <?php endforeach; ?>
+        <?php foreach ($skates as $skate): ?>
+    <div class="col-md-4 mb-4 col-sm-6 col-12">
+        <div class="skate-item" onclick="window.location.href='<?= site_url('view-skate/' . esc($skate['codigo'])) ?>'">
+            <h3> <strong><?= !empty($skate['apodo']) ? esc($skate['apodo']) : esc($skate['codigo']) ?></strong></h3>
+            <h5>Codigo del skate: <?= esc($skate['codigo']) ?></h5>
+            <p>Batería: <?= esc($skate['bateria']) ?>%</p>
+            <p>Velocidad: <?= esc($skate['velocidad']) ?> km/h</p>
+            <form action="<?= site_url('unlink-skate/' . esc($skate['codigo'])) ?>" method="POST">
+                <button type="submit" class="btn btn-danger">Borrar Skate</button>
+            </form>
+            <form action="<?= site_url('deleteapodo/' . esc($skate['codigo'])) ?>" method="POST">
+                <button type="submit" class="btn btn-danger">Borrar Apodo</button>
+            </form>
+        </div>
+    </div>
+<?php endforeach; ?>
         </div>
     <?php else: ?>
         <div class="alert alert-info">
@@ -192,7 +211,9 @@
     <?php endif; ?>
 
     <button class="btn btn-light" data-toggle="modal" data-target="#addSkateModal">Agregar Skate</button>
+    <button class="btn btn-light" data-toggle="modal" data-target="#apodoSkateModal">Cambiar Apodo</button>
 </div>
+
 
 <!-- Modal para agregar skate -->
 <div class="modal fade" id="addSkateModal" tabindex="-1" role="dialog" aria-labelledby="addSkateModalLabel" aria-hidden="true">
@@ -219,9 +240,36 @@
         </div>
     </div>
 </div>
+<!-- Modal para cambiar apodo-->
+<div class="modal fade" id="apodoSkateModal" tabindex="-1" role="dialog" aria-labelledby="apodoSkateModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addSkateModalLabel">Cambiar apodo</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="<?= site_url('update-skate-apodo/') ?>" method="POST">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="codigo">Código del Skate</label>
+                        <input type="text" class="form-control" id="codigo" name="codigo" required>
+                        <label for="apodo">Apodo deseado</label>
+                        <input type="text" class="form-control" id="apodo" name="apodo" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 <footer>
-    <p>&copy; 2024 E-skate - Diseñado para la accion - Contactanos al eskatevz@gmail.com </p>
+    <p>&copy; 2024 E-skate - Diseñado para la acción - <a href="mailto:eskatevz@gmail.com">Contáctanos</a></p>
 </footer>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

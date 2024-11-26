@@ -5,7 +5,7 @@ use CodeIgniter\Router\RouteCollection;
 /**
  * @var RouteCollection $routes
  */
-$routes->get('/', 'AuthController::login');
+$routes->get('/', 'AuthController::primerpag');
 $routes->get('/login', 'AuthController::login');
 $routes->post('/loginUser', 'AuthController::loginUser');
 $routes->get('/register', 'AuthController::register');
@@ -20,3 +20,12 @@ $routes->post('passwordreset/request', 'PasswordResetController::requestReset');
 $routes->get('passwordreset/reset/(:any)', 'PasswordResetController::reset/$1');
 $routes->post('passwordreset/update', 'PasswordResetController::updatePassword');
 $routes->post('/skate/update', 'SkateController::updateSkateData');
+$routes->get('/primerpagina', 'AuthController::primerpag');
+$routes->get('skate/detail/(:num)', 'AuthController::detail/$1');
+$routes->post('update-skate-apodo', 'AuthController::updateSkateApodo');
+$routes->post('/deleteapodo/(:any)', 'AuthController::deleteapodo/$1');
+$routes->post('enviarmail', 'AuthController::enviarmail');
+$routes->get('comprar', 'AuthController::comprar');
+$routes->get('nuevadireccion', 'AuthController::nuevadireccion');
+$routes->post('/direccion/guardar', 'AuthController::guardardireccion');
+

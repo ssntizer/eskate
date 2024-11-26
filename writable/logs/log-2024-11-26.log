@@ -1,0 +1,224 @@
+ERROR - 2024-11-26 19:42:25 --> Email: Unable to send email using SMTP. Your server might not be configured to send mail using this method.
+ERROR - 2024-11-26 19:42:25 --> 220 smtp.gmail.com ESMTP d9443c01a7336-2129dbfa310sm88467365ad.136 - gsmtp
+
+hello: 250-smtp.gmail.com at your service, [181.164.211.92]
+250-SIZE 35882577
+250-8BITMIME
+250-STARTTLS
+250-ENHANCEDSTATUSCODES
+250-PIPELINING
+250-CHUNKING
+250 SMTPUTF8
+
+starttls: 220 2.0.0 Ready to start TLS
+
+hello: 250-smtp.gmail.com at your service, [181.164.211.92]
+250-SIZE 35882577
+250-8BITMIME
+250-AUTH LOGIN PLAIN XOAUTH2 PLAIN-CLIENTTOKEN OAUTHBEARER XOAUTH
+250-ENHANCEDSTATUSCODES
+250-PIPELINING
+250-CHUNKING
+250 SMTPUTF8
+
+Failed to authenticate password. Error: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials d9443c01a7336-2129dbfa310sm88467365ad.136 - gsmtp
+
+ERROR - 2024-11-26 19:42:25 --> 220 smtp.gmail.com ESMTP d9443c01a7336-2129dbfa310sm88467365ad.136 - gsmtp
+<br><pre>hello: 250-smtp.gmail.com at your service, [181.164.211.92]
+250-SIZE 35882577
+250-8BITMIME
+250-STARTTLS
+250-ENHANCEDSTATUSCODES
+250-PIPELINING
+250-CHUNKING
+250 SMTPUTF8
+</pre><pre>starttls: 220 2.0.0 Ready to start TLS
+</pre><pre>hello: 250-smtp.gmail.com at your service, [181.164.211.92]
+250-SIZE 35882577
+250-8BITMIME
+250-AUTH LOGIN PLAIN XOAUTH2 PLAIN-CLIENTTOKEN OAUTHBEARER XOAUTH
+250-ENHANCEDSTATUSCODES
+250-PIPELINING
+250-CHUNKING
+250 SMTPUTF8
+</pre>Failed to authenticate password. Error: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials d9443c01a7336-2129dbfa310sm88467365ad.136 - gsmtp
+<br>Unable to send email using SMTP. Your server might not be configured to send mail using this method.<br><pre>Date: Tue, 26 Nov 2024 19:42:23 +0000
+From: &quot;Leonidas&quot; &lt;venturinierie@gmail.com&gt;
+Return-Path: &lt;venturinierie@gmail.com&gt;
+To: eskatevz@gmail.com
+Subject: =?UTF-8?Q?Nuevo=20mensaje=20de=20contacto?=
+Reply-To: &lt;venturinierie@gmail.com&gt;
+User-Agent: CodeIgniter
+X-Sender: venturinierie@gmail.com
+X-Mailer: CodeIgniter
+X-Priority: 3 (Normal)
+Message-ID: &lt;6746249f75c7f2.52686441@gmail.com&gt;
+Mime-Version: 1.0
+
+</pre>
+ERROR - 2024-11-26 19:43:47 --> Email: Unable to send email using SMTP. Your server might not be configured to send mail using this method.
+ERROR - 2024-11-26 19:43:47 --> 220 smtp.gmail.com ESMTP d2e1a72fcca58-72529e2f37dsm1088243b3a.188 - gsmtp
+
+hello: 250-smtp.gmail.com at your service, [181.164.211.92]
+250-SIZE 35882577
+250-8BITMIME
+250-STARTTLS
+250-ENHANCEDSTATUSCODES
+250-PIPELINING
+250-CHUNKING
+250 SMTPUTF8
+
+starttls: 220 2.0.0 Ready to start TLS
+
+hello: 250-smtp.gmail.com at your service, [181.164.211.92]
+250-SIZE 35882577
+250-8BITMIME
+250-AUTH LOGIN PLAIN XOAUTH2 PLAIN-CLIENTTOKEN OAUTHBEARER XOAUTH
+250-ENHANCEDSTATUSCODES
+250-PIPELINING
+250-CHUNKING
+250 SMTPUTF8
+
+Failed to authenticate password. Error: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials d2e1a72fcca58-72529e2f37dsm1088243b3a.188 - gsmtp
+
+ERROR - 2024-11-26 19:43:47 --> 220 smtp.gmail.com ESMTP d2e1a72fcca58-72529e2f37dsm1088243b3a.188 - gsmtp
+<br><pre>hello: 250-smtp.gmail.com at your service, [181.164.211.92]
+250-SIZE 35882577
+250-8BITMIME
+250-STARTTLS
+250-ENHANCEDSTATUSCODES
+250-PIPELINING
+250-CHUNKING
+250 SMTPUTF8
+</pre><pre>starttls: 220 2.0.0 Ready to start TLS
+</pre><pre>hello: 250-smtp.gmail.com at your service, [181.164.211.92]
+250-SIZE 35882577
+250-8BITMIME
+250-AUTH LOGIN PLAIN XOAUTH2 PLAIN-CLIENTTOKEN OAUTHBEARER XOAUTH
+250-ENHANCEDSTATUSCODES
+250-PIPELINING
+250-CHUNKING
+250 SMTPUTF8
+</pre>Failed to authenticate password. Error: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials d2e1a72fcca58-72529e2f37dsm1088243b3a.188 - gsmtp
+<br>Unable to send email using SMTP. Your server might not be configured to send mail using this method.<br><pre>Date: Tue, 26 Nov 2024 19:43:46 +0000
+From: &quot;Leonidas&quot; &lt;venturinierie@gmail.com&gt;
+Return-Path: &lt;venturinierie@gmail.com&gt;
+To: eskatevz@gmail.com
+Subject: =?UTF-8?Q?Nuevo=20mensaje=20de=20contacto?=
+Reply-To: &lt;venturinierie@gmail.com&gt;
+User-Agent: CodeIgniter
+X-Sender: venturinierie@gmail.com
+X-Mailer: CodeIgniter
+X-Priority: 3 (Normal)
+Message-ID: &lt;674624f2089379.29750800@gmail.com&gt;
+Mime-Version: 1.0
+
+</pre>
+ERROR - 2024-11-26 19:46:56 --> Email: Unable to send email using SMTP. Your server might not be configured to send mail using this method.
+ERROR - 2024-11-26 19:46:56 --> 220 smtp.gmail.com ESMTP d9443c01a7336-2129db8c783sm88252605ad.25 - gsmtp
+
+hello: 250-smtp.gmail.com at your service, [181.164.211.92]
+250-SIZE 35882577
+250-8BITMIME
+250-STARTTLS
+250-ENHANCEDSTATUSCODES
+250-PIPELINING
+250-CHUNKING
+250 SMTPUTF8
+
+starttls: 220 2.0.0 Ready to start TLS
+
+hello: 250-smtp.gmail.com at your service, [181.164.211.92]
+250-SIZE 35882577
+250-8BITMIME
+250-AUTH LOGIN PLAIN XOAUTH2 PLAIN-CLIENTTOKEN OAUTHBEARER XOAUTH
+250-ENHANCEDSTATUSCODES
+250-PIPELINING
+250-CHUNKING
+250 SMTPUTF8
+
+Failed to authenticate password. Error: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials d9443c01a7336-2129db8c783sm88252605ad.25 - gsmtp
+
+ERROR - 2024-11-26 19:46:56 --> 220 smtp.gmail.com ESMTP d9443c01a7336-2129db8c783sm88252605ad.25 - gsmtp
+<br><pre>hello: 250-smtp.gmail.com at your service, [181.164.211.92]
+250-SIZE 35882577
+250-8BITMIME
+250-STARTTLS
+250-ENHANCEDSTATUSCODES
+250-PIPELINING
+250-CHUNKING
+250 SMTPUTF8
+</pre><pre>starttls: 220 2.0.0 Ready to start TLS
+</pre><pre>hello: 250-smtp.gmail.com at your service, [181.164.211.92]
+250-SIZE 35882577
+250-8BITMIME
+250-AUTH LOGIN PLAIN XOAUTH2 PLAIN-CLIENTTOKEN OAUTHBEARER XOAUTH
+250-ENHANCEDSTATUSCODES
+250-PIPELINING
+250-CHUNKING
+250 SMTPUTF8
+</pre>Failed to authenticate password. Error: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials d9443c01a7336-2129db8c783sm88252605ad.25 - gsmtp
+<br>Unable to send email using SMTP. Your server might not be configured to send mail using this method.<br><pre>Date: Tue, 26 Nov 2024 19:46:54 +0000
+From: &quot;Leonidas&quot; &lt;venturinierie@gmail.com&gt;
+Return-Path: &lt;venturinierie@gmail.com&gt;
+To: eskatevz@gmail.com
+Subject: =?UTF-8?Q?Nuevo=20mensaje=20de=20contacto?=
+Reply-To: &lt;venturinierie@gmail.com&gt;
+User-Agent: CodeIgniter
+X-Sender: venturinierie@gmail.com
+X-Mailer: CodeIgniter
+X-Priority: 3 (Normal)
+Message-ID: &lt;674625ae417c07.29228780@gmail.com&gt;
+Mime-Version: 1.0
+
+</pre>
+CRITICAL - 2024-11-26 20:55:06 --> ErrorException: Undefined variable $userAddresses
+[Method: GET, Route: comprar]
+in APPPATH/Views/comprar.php on line 135.
+ 1 APPPATH/Views/comprar.php(135): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $userAddresses', '/Applications/MAMP/htdocs/eskate/app/Views/comprar.php', 135)
+ 2 SYSTEMPATH/View/View.php(234): include('/Applications/MAMP/htdocs/eskate/app/Views/comprar.php')
+ 3 SYSTEMPATH/View/View.php(237): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH/Common.php(1169): CodeIgniter\View\View->render('comprar', [], true)
+ 5 APPPATH/Controllers/AuthController.php(347): view('comprar')
+ 6 SYSTEMPATH/CodeIgniter.php(933): App\Controllers\AuthController->comprar()
+ 7 SYSTEMPATH/CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+ 8 SYSTEMPATH/CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH/Boot.php(325): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH/Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH/index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2024-11-26 21:13:09 --> Usuario no logueado
+ERROR - 2024-11-26 21:13:34 --> Usuario no logueado
+CRITICAL - 2024-11-26 21:51:45 --> ErrorException: Undefined array key "id"
+[Method: GET, Route: comprar]
+in APPPATH/Views/comprar.php on line 136.
+ 1 APPPATH/Views/comprar.php(136): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "id"', '/Applications/MAMP/htdocs/eskate/app/Views/comprar.php', 136)
+ 2 SYSTEMPATH/View/View.php(234): include('/Applications/MAMP/htdocs/eskate/app/Views/comprar.php')
+ 3 SYSTEMPATH/View/View.php(237): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH/Common.php(1169): CodeIgniter\View\View->render('comprar', [], true)
+ 5 APPPATH/Controllers/AuthController.php(365): view('comprar', [...])
+ 6 SYSTEMPATH/CodeIgniter.php(933): App\Controllers\AuthController->comprar()
+ 7 SYSTEMPATH/CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+ 8 SYSTEMPATH/CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH/Boot.php(325): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH/Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH/index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2024-11-26 21:52:36 --> ErrorException: Undefined array key "street"
+[Method: GET, Route: comprar]
+in APPPATH/Views/comprar.php on line 137.
+ 1 APPPATH/Views/comprar.php(137): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "street"', '/Applications/MAMP/htdocs/eskate/app/Views/comprar.php', 137)
+ 2 SYSTEMPATH/View/View.php(234): include('/Applications/MAMP/htdocs/eskate/app/Views/comprar.php')
+ 3 SYSTEMPATH/View/View.php(237): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH/Common.php(1169): CodeIgniter\View\View->render('comprar', [], true)
+ 5 APPPATH/Controllers/AuthController.php(365): view('comprar', [...])
+ 6 SYSTEMPATH/CodeIgniter.php(933): App\Controllers\AuthController->comprar()
+ 7 SYSTEMPATH/CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+ 8 SYSTEMPATH/CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH/Boot.php(325): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH/Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH/index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))

@@ -2,11 +2,17 @@
 namespace App\Controllers;
 
 use App\Models\UserModel;
-use App\Models\SkateModel;
-use App\Models\UbicacionModel;
+use App\Models\skatemodel;
+use App\Models\DireccionModel;
 
 class AuthController extends BaseController
 {
+    protected $skateModel;
+
+    public function __construct()
+    {
+        $this->skateModel = new SkateModel();
+    }
     public function register()
     {
         return view('register');
@@ -20,7 +26,7 @@ class AuthController extends BaseController
         $data = [
             'username' => $this->request->getPost('username'),
             'email' => $this->request->getPost('email'),
-            'password' => $this->request->getPost('password')
+            'password' => $this->request->getPost('password') 
         ];
     
         // Verificar si el email ya existe
@@ -36,8 +42,15 @@ class AuthController extends BaseController
 
     public function login()
     {
+        $session = session();
+
+        if ($session->get('logged_in')) {
+            return redirect()->to('/list-skates');
+        }
+        else{
         return view('login');
     }
+}
 
     public function loginUser()
     {
@@ -72,7 +85,7 @@ class AuthController extends BaseController
     public function logout()
     {
         session()->destroy();
-        return redirect()->to('/login');
+        return redirect()->to('/primerpagina');
     }
 
     public function listSkates()
@@ -88,14 +101,15 @@ class AuthController extends BaseController
                 $skates = $skateModel->where('ID_usuario', $userId)->findAll();
 
                 if (empty($skates)) {
-                    return view('list_skates', ['message' => 'Este usuario aun no tiene skates.']);
+                    return view('list_skates', ['message' => 'Este usuario aún no tiene skates.']);
                 }
 
                 return view('list_skates', ['skates' => $skates]);
 
             } catch (\Exception $e) {
                 // Manejar cualquier excepción que pueda ocurrir durante la consulta
-                return redirect()->to('/error')->with('error', 'No se ha encontrado informacion de tu skate.');
+                log_message('error', 'Error al obtener skates: ' . $e->getMessage());
+                return redirect()->to('/list-skates')->with('error', 'No se ha encontrado información de tu skate.');
             }
         } else {
             return redirect()->to('/login');
@@ -108,17 +122,22 @@ class AuthController extends BaseController
 
         if ($session->get('logged_in')) {
             $skateModel = new SkateModel();
-            $ubicacionModel = new UbicacionModel();
 
             // Obtener datos del skate con ubicación
-            $skate = $skateModel->getSkateWithLocation($codigo);
+            try {
+                $skate = $skateModel->getSkateWithLocation($codigo);
 
-            if (!$skate) {
-                return redirect()->to('/list-skates')->with('error', 'Skate no encontrada.');
+                if (!$skate) {
+                    return redirect()->to('/list-skates')->with('error', 'Skate no encontrado.');
+                }
+
+                // Pasar datos a la vista
+                return view('welcome', ['skate' => $skate]);
+
+            } catch (\Exception $e) {
+                log_message('error', 'Error al obtener el skate con ubicación: ' . $e->getMessage());
+                return redirect()->to('/list-skates')->with('error', 'No se ha podido obtener información del skate.');
             }
-
-            // Pasar datos a la vista
-            return view('welcome', ['skate' => $skate]);
         } else {
             return redirect()->to('/login');
         }
@@ -144,10 +163,15 @@ class AuthController extends BaseController
         }
     
         // Intentar vincular el skate al usuario
-        if ($skateModel->addSkate($codigo, $ID_usuario)) {
-            return redirect()->to('/list-skates')->with('message', 'Skate vinculado exitosamente.');
-        } else {
-            return redirect()->back()->with('error', 'El código del skate ya está vinculado a otro usuario o no existe.');
+        try {
+            if ($skateModel->addSkate($codigo, $ID_usuario)) {
+                return redirect()->to('/list-skates')->with('message', 'Skate vinculado exitosamente.');
+            } else {
+                return redirect()->back()->with('error', 'El código del skate ya está vinculado a otro usuario o no existe.');
+            }
+        } catch (\Exception $e) {
+            log_message('error', 'Error al vincular el skate: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'No se ha podido vincular el skate.');
         }
     }
 
@@ -160,19 +184,227 @@ class AuthController extends BaseController
         $skate = $skateModel->where('codigo', $codigo)->first();
 
         if ($skate && $skate['ID_usuario'] == $ID_usuario) {
-            // Intentar desvincular el skate del usuario
-            if ($skateModel->unlinkSkate($codigo)) {
-                return redirect()->to('/list-skates')->with('message', 'Skate desvinculado exitosamente.');
-            } else {
-                return redirect()->back()->with('error', 'No se pudo desvincular el skate.');
+            try {
+                // Intentar desvincular el skate del usuario
+                if ($skateModel->unlinkSkate($codigo)) {
+                    return redirect()->to('/list-skates')->with('message', 'Skate desvinculado exitosamente.');
+                } else {
+                    return redirect()->back()->with('error', 'No se pudo borrar este apodo');
+                }
+            } catch (\Exception $e) {
+                log_message('error', 'Error al desvincular el skate: ' . $e->getMessage());
+                return redirect()->back()->with('error', 'No se pudo borrar este apodo');
             }
         } else {
             return redirect()->back()->with('error', 'No puedes desvincular este skate.');
         }
     }
-    public function forgotPassword(){
-    return view('forgot_password'); // Asegúrate de tener la vista de recuperación de contraseña
+    public function deleteapodo($codigo)
+    {
+        $skateModel = new SkateModel();
+
+        // Verifica si el skate está vinculado al usuario actual
+        $ID_usuario = session()->get('user_id');
+        $skate = $skateModel->where('codigo', $codigo)->first();
+
+        if ($skate && $skate['ID_usuario'] == $ID_usuario) {
+            try {
+                // Intentar desvincular el skate del usuario
+                if ($skateModel->deleteapodo($codigo)) {
+                    return redirect()->to('/list-skates')->with('message', 'Apodo borrado exitosamente.');
+                } else {
+                    return redirect()->back()->with('error', 'No se pudo borrar este apodo');
+                }
+            } catch (\Exception $e) {
+                log_message('error', 'Error al desvincular el skate: ' . $e->getMessage());
+                return redirect()->back()->with('error', 'No se pudo borrar este apodo');
+            }
+        } else {
+            return redirect()->back()->with('error', 'No puedes borrar este apodo.');
+        }
+    }
+    public function forgotPassword()
+    {
+        return view('forgot_password'); // Asegúrate de tener la vista de recuperación de contraseña
+    }
+
+    public function primerpag()
+    {
+        // Cargar la vista principal (landing page)
+        return view('Primerpagina');
+    }
+    public function detail($id) {
+        $session = session();
+        if ($session->get('logged_in')) {// Definir los modelos de skates en un array
+        $modelos = [
+            1 => [
+                'id' => 1,
+                'nombre' => 'E-Skate 1',
+                'precio' => '$299',
+                'descripcion' => 'Descripción del Modelo E-Skate 1.',
+                'imagen' => 'https://imgs.search.brave.com/tps24H47-2oaLseYhRphCnOSszeFXtoK-3EaI9JezrA/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9za2F0/ZXNlbGVjdHJpY29z/LmNvbS93cC1jb250/ZW50L3VwbG9hZHMv/MjAyMS8wNi9tZWVw/by1taW5pMi1zY2Fs/ZWQuanBlZw'
+            ],
+            2 => [
+                'id' => 2,
+                'nombre' => 'E-Skate 2',
+                'precio' => '$599',
+                'descripcion' => 'Descripción del Modelo E-Skate 2.',
+                'imagen' => 'https://imgs.search.brave.com/qH8RsQ019QLQkGLFWZExzsnL4kvsrQ_GwfP-ckTx5pI/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL0kv/NTF1a3dQK3F5b1Mu/anBn'
+            ],
+            3 => [
+                'id' => 3,
+                'nombre' => 'E-Skate 3',
+                'precio' => '$699',
+                'descripcion' => 'Descripción del Modelo E-Skate 3.',
+                'imagen' => 'https://imgs.search.brave.com/4hfX1Aw6h9uwaa7HX6i2vtgTdUT3mvVz1GoT5ojtQQE/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL0kv/NDFNMnd5YTMzMEwu/anBn'
+            ],
+        ];
+    
+        // Registro de depuración en el log
+        log_message('debug', 'ID recibido: ' . $id);
+        log_message('debug', 'Modelos disponibles: ' . print_r(array_keys($modelos), true));
+    
+        // Verifica si el modelo existe
+        if (!array_key_exists($id, $modelos)) {
+            log_message('error', 'Modelo no encontrado para el ID: ' . $id);
+            throw new \CodeIgniter\Exceptions\PageNotFoundException("Modelo no encontrado");
+        }
+    
+        // Obtener los otros modelos
+        $otrosModelos = array_filter($modelos, function($modelo) use ($id) {
+            return $modelo['id'] != $id; // Excluye el modelo actual
+        });
+    
+        // Pasa la información a la vista
+        log_message('debug', 'Modelo encontrado: ' . print_r($modelos[$id], true));
+        return view('skate_detail', [
+            'modelo' => $modelos[$id],
+            'otrosModelos' => $otrosModelos // Pasa los otros modelos a la vista
+        ]);
+    }else{
+        return redirect()->to('/login');
+    }}
+
+    public function updateSkateApodo()
+{
+    $codigo = $this->request->getPost('codigo');
+    
+    // Validar que se ha ingresado un código
+    if (empty($codigo)) {
+        return redirect()->back()->with('error', 'Debe ingresar el código del skate.');
+    }
+    // Obtener el apodo desde la solicitud
+    $apodo = $this->request->getPost('apodo');
+
+    if (!$apodo) {
+        return redirect()->back()->with('error', 'El apodo es requerido.');
+    }
+
+    // Actualizar el apodo usando el modelo
+    $resultado = $this->skateModel->updateApodo($codigo, $apodo);
+
+    if ($resultado) {
+        return redirect()->to('/list-skates')->with('message', 'Apodo cambiado exitosamente.');
+    } else {
+        return redirect()->back()->with('error', 'No se pudo actualizar el apodo. Verifica el código.');
+    }
+}
+public function enviarmail()
+{
+    // Cargar el servicio de correo
+    $emailService = \Config\Services::email();
+    // Obtener los datos del formulario
+    $nombre = $this->request->getPost('nombre');
+    $correo = $this->request->getPost('email');
+    $telefono = $this->request->getPost('telefono');
+    $mensaje = $this->request->getPost('mensaje');
+    // Configurar el correo
+    $emailService->setFrom($correo,$nombre); // Cambiar según tu configuración
+    $emailService->setTo('eskatevz@gmail.com'); // Cambiar al correo donde se reciban los mensajes
+    $emailService->setSubject('Nuevo mensaje de contacto');
+    
+    // Cuerpo del correo
+    $cuerpo = "
+        <p>Hola, tienes un nuevo mensaje de contacto:</p>
+        <p><strong>Nombre:</strong> $nombre</p>
+        <p><strong>Correo:</strong> $correo</p>
+        <p><strong>Teléfono:</strong> $telefono</p>
+        <p><strong>Mensaje:</strong><br>$mensaje</p>
+    ";
+    
+    $emailService->setMessage($cuerpo);
+    $emailService->setMailType('html'); // Para enviar en formato HTML
+    // Enviar el correo
+    if ($emailService->send()) {
+        return redirect()->to('/')->with('message', 'Tu mensaje ha sido enviado exitosamente.');
+    } else {
+        // Obtener errores en caso de fallo
+        $error = $emailService->printDebugger(['headers']);
+        log_message('error', $error); // Log del error
+        return redirect()->back()->with('error', 'Hubo un problema al enviar tu mensaje. Inténtalo de nuevo.');
+    }
+}
+public function comprar()
+{
+    $direccionModel = new \App\Models\DireccionModel();
+    $session = session();
+
+    // Obtener el ID del usuario desde la sesión
+    $userId = $session->get('user_id');
+    if (!$userId) {
+        log_message('error', 'Usuario no logueado');
+        return redirect()->to('/login')->with('error', 'Por favor inicia sesión para realizar una compra.');
+    }
+
+    // Obtener todas las direcciones del usuario
+    $userAddresses = $direccionModel->getDireccionesPorUsuario($userId);
+    
+    log_message('debug', 'Direcciones obtenidas: ' . print_r($userAddresses, true));
+
+    // Pasar las direcciones a la vista sin más procesamiento
+    return view('comprar', [
+        'userAddresses' => $userAddresses,  // Aquí pasas las direcciones al frontend
+    ]);
+}
+public function nuevadireccion(){
+    return view ('nuevadireccion');
+}
+public function guardardireccion()
+{
+    // Depuración: verificar si la solicitud es POST
+    log_message('debug', 'Método POST recibido para guardar dirección');
+
+    // Validación básica de campos
+    if (!$this->validate([
+        'calle'    => 'required|min_length[3]',
+        'provincia' => 'required|min_length[3]',
+        'numero'   => 'required|is_natural_no_zero'
+    ])) {
+        // Depuración: mostrar el error de validación
+        log_message('debug', 'Validación fallida: ' . implode(', ', $this->validator->getErrors()));
+        return redirect()->back()->withInput()->with('error', 'Hubo un problema con los datos ingresados');
+    }
+
+    // Obtener los datos del formulario
+    $data = [
+        'calle'    => $this->request->getPost('calle'),
+        'ciudad' => $this->request->getPost('ciudad'),
+        'provincia' => $this->request->getPost('provincia'),
+        'numero'   => $this->request->getPost('numero'),
+        'ID_usuario' => session()->get('user_id'), // Asumiendo que el usuario está logueado
+    ];
+
+    // Insertar la dirección en la base de datos
+    $direccionModel = new DireccionModel();
+    if ($direccionModel->insert($data)) {
+        // Depuración: confirmación de inserción exitosa
+        log_message('debug', 'Dirección guardada exitosamente');
+        // Redirigir a la página de compra con un mensaje de éxito
+        return redirect()->to('/comprar')->with('success', 'Dirección guardada correctamente');
+    } else {
+        // Depuración: error en la inserción
+        log_message('debug', 'Error al guardar la dirección');
+        return redirect()->back()->withInput()->with('error', 'Error al guardar la dirección');
+    }
 }
 }
-
-
