@@ -122,9 +122,9 @@
         <h2>Registrar Dirección</h2>
         <form id="addressForm" method="post" action="<?= site_url('direccion/guardar') ?>">
             <input type="text" name="calle" placeholder="Calle" value="<?= old('calle') ?>" required>
-            <input type="text" name="provincia" placeholder="Numero" value="<?= old('numero') ?>" required>
+            <input type="number" name="numero" placeholder="Numero" value="<?= old('numero') ?>" required>
             <input type="text" name="ciudad" placeholder="Ciudad" value="<?= old('ciudad') ?>" required>
-            <input type="number" name="numero" placeholder="Provincia" value="<?= old('provincia') ?>" required>
+            <input type="text" name="provincia" placeholder="Provincia" value="<?= old('provincia') ?>" required>
             <button type="submit">Guardar Dirección</button>
         </form>
     </div>
