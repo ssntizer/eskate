@@ -131,13 +131,17 @@
 
             <!-- Campo de direcciones -->
             <select name="address_id" required>
-                <option value="" disabled selected>Seleccione su dirección</option>
-                <?php foreach ($userAddresses as $address): ?>
-                    <option value="<?= $address['ID_direccion'] ?>">
-                        <?= $address['calle'] ?> (<?= $address['numero'] ?>), <?= $address['ciudad'] ?>,<?= $address['provincia'] ?> 
-                    </option>
-                <?php endforeach; ?>
-            </select>
+    <option value="" disabled selected>Seleccione su dirección</option>
+    <?php if (!empty($userAddresses)): ?>
+        <?php foreach ($userAddresses as $address): ?>
+            <option value="<?= $address['ID_direccion'] ?>">
+                <?= $address['calle'] ?> (<?= $address['numero'] ?>), <?= $address['localidad_nombre'] ?>, <?= $address['provincia_nombre'] ?>
+            </option>
+        <?php endforeach; ?>
+    <?php else: ?>
+        <option value="" disabled>No tienes direcciones registradas</option>
+    <?php endif; ?>
+</select>
 
             <button type="submit">Pagar</button>
         </form>

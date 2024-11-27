@@ -41,7 +41,8 @@
         .register-form input[type="number"],
         .register-form input[type="text"],
         .register-form input[type="email"],
-        .register-form input[type="password"] {
+        .register-form input[type="password"],
+        .register-form input[list] {
             width: 100%; /* Ancho completo */
             height: 50px; /* Altura del campo */
             margin-bottom: 20px; /* Margen inferior */
@@ -53,12 +54,14 @@
             -webkit-appearance: none; /* Desactivar estilos predeterminados del navegador */
             -moz-appearance: none; /* Desactivar estilos predeterminados del navegador */
             appearance: none; /* Desactivar estilos predeterminados del navegador */
+            background-color: #ffffff; /* Fondo blanco para los select */
         }
 
         .register-form input[type="number"]:focus,
         .register-form input[type="text"]:focus,
         .register-form input[type="email"]:focus,
-        .register-form input[type="password"]:focus {
+        .register-form input[type="password"]:focus,
+        .register-form input[list]:focus {
             border-color: #00e5ff; /* Color del borde al enfocar */
             outline: none; /* Sin contorno */
             box-shadow: 0 0 8px rgba(0, 229, 255, 0.5); /* Sombra al enfocar */
@@ -119,15 +122,86 @@
 
 <body>
     <div class="register-form">
-        <h2>Registrar Dirección</h2>
-        <form id="addressForm" method="post" action="<?= site_url('direccion/guardar') ?>">
+        <?php if (session()->getFlashdata('error')): ?>
+            <div class="error">
+                <?= session()->getFlashdata('error') ?>
+            </div>
+        <?php elseif (session()->getFlashdata('success')): ?>
+            <div class="success">
+                <?= session()->getFlashdata('success') ?>
+            </div>
+        <?php endif; ?>
+
+        <h2>Agregar Dirección</h2>
+
+        <form id="registrationForm" method="post" action="<?= site_url('direccion/guardarNueva') ?>">
+
+            <!-- Campo Calle -->
             <input type="text" name="calle" placeholder="Calle" value="<?= old('calle') ?>" required>
-            <input type="number" name="numero" placeholder="Numero" value="<?= old('numero') ?>" required>
-            <input type="text" name="ciudad" placeholder="Ciudad" value="<?= old('ciudad') ?>" required>
-            <input type="text" name="provincia" placeholder="Provincia" value="<?= old('provincia') ?>" required>
+
+
+            <!-- Campo Número -->
+            <input type="number" name="numero" placeholder="Número" value="<?= old('numero') ?>" required>
+
+            <!-- Campo Provincia -->
+            <input list="provinciasList" id="provinciaInput" name="provincia" placeholder="Seleccionar provincia" value="<?= old('provincia') ?>" required>
+            <datalist id="provinciasList">
+                <?php foreach ($provincias as $provincia): ?>
+                    <option value="<?= $provincia['provincia'] ?>" data-id="<?= $provincia['id'] ?>"></option>
+                <?php endforeach; ?>
+            </datalist>
+
+            <!-- Campo Localidad -->
+            <input list="localidadesList" id="localidadInput" name="localidad" placeholder="Seleccionar localidad" value="<?= old('localidad') ?>" required>
+            <datalist id="localidadesList">
+                <!-- Las localidades se llenarán dinámicamente con JavaScript -->
+            </datalist>
+
+            <!-- Botón para guardar la dirección -->
+
             <button type="submit">Guardar Dirección</button>
+
         </form>
     </div>
+
+    <script>
+        // Cuando se elige una provincia, actualizamos las localidades
+        document.getElementById('provinciaInput').addEventListener('change', function() {
+            var provinciaValue = this.value;  // Obtener el valor de la provincia seleccionada
+
+            // Buscar el ID de la provincia desde el datalist
+            var provinciaOption = document.querySelector(`#provinciasList option[value="${provinciaValue}"]`);
+            
+            if (provinciaOption) {
+                var provinciaId = provinciaOption.getAttribute('data-id');
+                
+                if (provinciaId) {
+                    // Realizar una solicitud AJAX para obtener las localidades de la provincia seleccionada
+                    fetch(`http://localhost/eskate/public/index.php/obtener-localidades/${provinciaId}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            const localidadInput = document.getElementById('localidadesList');
+                            localidadInput.innerHTML = '';  // Limpiar las opciones anteriores
+
+                            // Si no se reciben localidades, mostrar un mensaje
+                            if (data.error) {
+                                console.error(data.error);
+                            } else {
+                                // Agregar las nuevas opciones de localidad al datalist
+                                data.forEach(localidad => {
+                                    let option = document.createElement('option');
+                                    option.value = localidad.localidad;
+                                    localidadInput.appendChild(option);
+                                });
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error al obtener localidades:', error);
+                        });
+                }
+            }
+        });
+    </script>
 </body>
 
 </html>

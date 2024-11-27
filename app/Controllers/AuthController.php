@@ -3,8 +3,9 @@ namespace App\Controllers;
 
 use App\Models\UserModel;
 use App\Models\skatemodel;
-
 use App\Models\DireccionModel;
+use App\Models\ProvinciaModel;
+use App\Models\LocalidadModel;
 
 
 class AuthController extends BaseController
@@ -354,66 +355,141 @@ public function enviarmail()
 }
 public function comprar()
 {
-    $direccionModel = new \App\Models\DireccionModel();
-    $session = session();
-
-    // Obtener el ID del usuario desde la sesión
-    $userId = $session->get('user_id');
-    if (!$userId) {
-        log_message('error', 'Usuario no logueado');
-        return redirect()->to('/login')->with('error', 'Por favor inicia sesión para realizar una compra.');
+    // Verificar que el usuario está logueado
+    if (!session()->has('user_id')) {
+        return redirect()->to('login');  // Si no está logueado, redirigir al login
     }
 
-    // Obtener todas las direcciones del usuario
-    $userAddresses = $direccionModel->getDireccionesPorUsuario($userId);
+    // Obtener el ID del usuario
+    $userId = session()->get('user_id');
     
-    log_message('debug', 'Direcciones obtenidas: ' . print_r($userAddresses, true));
+    // Obtener las direcciones asociadas a este usuario
+    $direccionModel = new DireccionModel();
+    $userAddresses = $direccionModel->where('ID_usuario', $userId)->findAll();
+    
+    // Verificar si hay direcciones
+    if (empty($userAddresses)) {
+        session()->setFlashdata('error', 'No tienes direcciones registradas.');
+        return redirect()->to('nuevadireccion');  // Redirigir a la página de registrar nueva dirección
+    }
 
-    // Pasar las direcciones a la vista sin más procesamiento
-    return view('comprar', [
-        'userAddresses' => $userAddresses,  // Aquí pasas las direcciones al frontend
+    // Obtener las provincias y localidades
+    $provinciaModel = new ProvinciaModel();
+    $localidadModel = new LocalidadModel();
+
+    foreach ($userAddresses as &$address) {
+        // Obtener nombre de la provincia y localidad usando sus IDs
+        $provincia = $provinciaModel->find($address['ID_provincia']);
+        $localidad = $localidadModel->find($address['ID_localidad']);
+        
+        $address['provincia_nombre'] = $provincia ? $provincia['provincia'] : 'Desconocida';
+        $address['localidad_nombre'] = $localidad ? $localidad['localidad'] : 'Desconocida';
+    }
+
+    // Pasar las direcciones a la vista
+    return view('comprar', ['userAddresses' => $userAddresses]);
+}
+
+public function guardar()
+{
+    // Verificar que el usuario está logueado
+    $userId = session()->get('user_id');
+    if (!$userId) {
+        return redirect()->to('/login');
+    }
+
+    // Obtener las direcciones del usuario
+    $direccionModel = new DireccionModel();
+    $direcciones = $direccionModel->getDireccionesPorUsuario($userId);
+
+    // Obtener provincias disponibles
+    $provinciaModel = new ProvinciaModel();
+    $provincias = $provinciaModel->findAll();
+
+    // Obtener todas las localidades para usar con la función de búsqueda en el frontend
+    $localidadModel = new LocalidadModel();
+    $localidades = $localidadModel->select('id, localidad, id_provincia')->findAll();
+
+    // Cargar la vista con las direcciones y las provincias/localidades
+    return view('nuevadireccion', [
+        'direcciones' => $direcciones,
+        'provincias'  => $provincias,
+        'localidades' => $localidades
     ]);
 }
-public function nuevadireccion(){
-    return view ('nuevadireccion');
-}
-public function guardardireccion()
+
+public function guardarNueva()
 {
-    // Depuración: verificar si la solicitud es POST
-    log_message('debug', 'Método POST recibido para guardar dirección');
-
-    // Validación básica de campos
-    if (!$this->validate([
-        'calle'    => 'required|min_length[3]',
-        'provincia' => 'required|min_length[3]',
-        'numero'   => 'required|is_natural_no_zero'
+    // Validar los campos
+    if ($this->validate([
+        'calle' => 'required|string',
+        'numero' => 'required|integer',
+        'localidad' => 'required|string',
+        'provincia' => 'required|string',
     ])) {
-        // Depuración: mostrar el error de validación
-        log_message('debug', 'Validación fallida: ' . implode(', ', $this->validator->getErrors()));
-        return redirect()->back()->withInput()->with('error', 'Hubo un problema con los datos ingresados');
+        
+        // Obtener los valores del formulario
+        $calle = $this->request->getPost('calle');
+        $numero = $this->request->getPost('numero');
+        $localidadNombre = $this->request->getPost('localidad');
+        $provinciaNombre = $this->request->getPost('provincia');
+        $user_id = session()->get('user_id');
+        if (!$user_id) {
+            session()->setFlashdata('error', 'No se pudo identificar al usuario.');
+            return redirect()->to('/');
+        }
+        
+        // Buscar el ID de la localidad
+        $localidadModel = new LocalidadModel();
+        $localidad = $localidadModel->where('localidad', $localidadNombre)->first();
+        $id_localidad = $localidad ? $localidad['id'] : null;
+
+        // Buscar el ID de la provincia
+        $provinciaModel = new ProvinciaModel();
+        $provincia = $provinciaModel->where('provincia', $provinciaNombre)->first();
+        $id_provincia = $provincia ? $provincia['id'] : null;
+
+        // Verificar si se encontraron los IDs
+        if ($id_localidad && $id_provincia) {
+            // Guardar los datos en la tabla direccion
+            $direccionModel = new DireccionModel();
+            $direccionData = [
+                'calle' => $calle,
+                'numero' => $numero,
+                'ID_localidad' => $id_localidad,
+                'ID_provincia' => $id_provincia,
+                'ID_usuario' => $user_id 
+            ];
+
+            // Intentar guardar la dirección
+            if ($direccionModel->save($direccionData)) {
+                session()->setFlashdata('success', 'Dirección guardada correctamente.');
+            } else {
+                session()->setFlashdata('error', 'Hubo un error al guardar la dirección.');
+            }
+        } else {
+            session()->setFlashdata('error', 'La localidad o provincia no se encuentran registradas.');
+        }
+    } else {
+        session()->setFlashdata('error', 'Por favor, completa todos los campos correctamente.');
     }
 
-    // Obtener los datos del formulario
-    $data = [
-        'calle'    => $this->request->getPost('calle'),
-        'ciudad' => $this->request->getPost('ciudad'),
-        'provincia' => $this->request->getPost('provincia'),
-        'numero'   => $this->request->getPost('numero'),
-        'ID_usuario' => session()->get('user_id'), // Asumiendo que el usuario está logueado
-    ];
+    // Redirigir después de la operación
+    return redirect()->to('/comprar');
+}
+public function obtenerLocalidadesPorProvincia($provinciaId)
+{
+    $localidadModel = new LocalidadModel();
 
-    // Insertar la dirección en la base de datos
-    $direccionModel = new DireccionModel();
-    if ($direccionModel->insert($data)) {
-        // Depuración: confirmación de inserción exitosa
-        log_message('debug', 'Dirección guardada exitosamente');
-        // Redirigir a la página de compra con un mensaje de éxito
-        return redirect()->to('/comprar')->with('success', 'Dirección guardada correctamente');
+    // Obtener las localidades asociadas a la provincia
+    $localidades = $localidadModel->where('id_provincia', $provinciaId)->findAll();
+
+    if ($localidades) {
+        return $this->response->setJSON($localidades);  // Devuelve las localidades en formato JSON
     } else {
-        // Depuración: error en la inserción
-        log_message('debug', 'Error al guardar la dirección');
-        return redirect()->back()->withInput()->with('error', 'Error al guardar la dirección');
-
+        // Si no hay localidades, devuelve un error 404
+        return $this->response->setStatusCode(404, 'No se encontraron localidades');
     }
 }
+
 }
