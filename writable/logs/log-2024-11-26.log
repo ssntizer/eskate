@@ -222,3 +222,211 @@ in APPPATH/Views/comprar.php on line 137.
  9 SYSTEMPATH/Boot.php(325): CodeIgniter\CodeIgniter->run()
 10 SYSTEMPATH/Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
 11 FCPATH/index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2024-11-26 22:44:11 --> ErrorException: Undefined variable $direcciones
+[Method: GET, Route: nuevadireccion]
+in APPPATH/Views/nuevadireccion.php on line 138.
+ 1 APPPATH/Views/nuevadireccion.php(138): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $direcciones', '/Applications/MAMP/htdocs/eskate/app/Views/nuevadireccion.php', 138)
+ 2 SYSTEMPATH/View/View.php(234): include('/Applications/MAMP/htdocs/eskate/app/Views/nuevadireccion.php')
+ 3 SYSTEMPATH/View/View.php(237): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH/Common.php(1169): CodeIgniter\View\View->render('nuevadireccion', [], true)
+ 5 APPPATH/Controllers/AuthController.php(379): view('nuevadireccion')
+ 6 SYSTEMPATH/CodeIgniter.php(933): App\Controllers\AuthController->nuevadireccion()
+ 7 SYSTEMPATH/CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+ 8 SYSTEMPATH/CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH/Boot.php(325): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH/Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH/index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2024-11-26 22:44:40 --> ErrorException: Undefined variable $direcciones
+[Method: GET, Route: nuevadireccion]
+in APPPATH/Views/nuevadireccion.php on line 138.
+ 1 APPPATH/Views/nuevadireccion.php(138): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $direcciones', '/Applications/MAMP/htdocs/eskate/app/Views/nuevadireccion.php', 138)
+ 2 SYSTEMPATH/View/View.php(234): include('/Applications/MAMP/htdocs/eskate/app/Views/nuevadireccion.php')
+ 3 SYSTEMPATH/View/View.php(237): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH/Common.php(1169): CodeIgniter\View\View->render('nuevadireccion', [], true)
+ 5 APPPATH/Controllers/AuthController.php(379): view('nuevadireccion')
+ 6 SYSTEMPATH/CodeIgniter.php(933): App\Controllers\AuthController->nuevadireccion()
+ 7 SYSTEMPATH/CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+ 8 SYSTEMPATH/CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH/Boot.php(325): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH/Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH/index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2024-11-26 22:46:37 --> Error: Class "App\Models\ProvinciaModel" not found
+[Method: GET, Route: nuevadireccion]
+in APPPATH/Controllers/AuthController.php on line 392.
+ 1 SYSTEMPATH/CodeIgniter.php(933): App\Controllers\AuthController->guardar()
+ 2 SYSTEMPATH/CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+ 3 SYSTEMPATH/CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH/Boot.php(325): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH/Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH/index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2024-11-26 22:47:08 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "guardar_direccion.php"
+[Method: GET, Route: nuevadireccion]
+in SYSTEMPATH/Exceptions/FrameworkException.php on line 41.
+ 1 SYSTEMPATH/View/View.php(222): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('guardar_direccion.php')
+ 2 SYSTEMPATH/Common.php(1169): CodeIgniter\View\View->render('guardar_direccion', [], true)
+ 3 APPPATH/Controllers/AuthController.php(399): view('guardar_direccion', [...])
+ 4 SYSTEMPATH/CodeIgniter.php(933): App\Controllers\AuthController->guardar()
+ 5 SYSTEMPATH/CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+ 6 SYSTEMPATH/CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH/Boot.php(325): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH/Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH/index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2024-11-26 22:47:47 --> ErrorException: Undefined array key "ID_provincia"
+[Method: GET, Route: nuevadireccion]
+in APPPATH/Views/nuevadireccion.php on line 152.
+ 1 APPPATH/Views/nuevadireccion.php(152): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "ID_provincia"', '/Applications/MAMP/htdocs/eskate/app/Views/nuevadireccion.php', 152)
+ 2 SYSTEMPATH/View/View.php(234): include('/Applications/MAMP/htdocs/eskate/app/Views/nuevadireccion.php')
+ 3 SYSTEMPATH/View/View.php(237): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH/Common.php(1169): CodeIgniter\View\View->render('nuevadireccion', [], true)
+ 5 APPPATH/Controllers/AuthController.php(399): view('nuevadireccion', [...])
+ 6 SYSTEMPATH/CodeIgniter.php(933): App\Controllers\AuthController->guardar()
+ 7 SYSTEMPATH/CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+ 8 SYSTEMPATH/CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH/Boot.php(325): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH/Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH/index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2024-11-26 23:12:51 --> mysqli_sql_exception: Unknown column 'created_at' in 'field list' in /Applications/MAMP/htdocs/eskate/system/Database/MySQLi/Connection.php:312
+Stack trace:
+#0 /Applications/MAMP/htdocs/eskate/system/Database/MySQLi/Connection.php(312): mysqli->query('INSERT INTO `di...', 0)
+#1 /Applications/MAMP/htdocs/eskate/system/Database/BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `di...')
+#2 /Applications/MAMP/htdocs/eskate/system/Database/BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `di...')
+#3 /Applications/MAMP/htdocs/eskate/system/Database/BaseBuilder.php(2340): CodeIgniter\Database\BaseConnection->query('INSERT INTO `di...', Array, false)
+#4 /Applications/MAMP/htdocs/eskate/system/Model.php(394): CodeIgniter\Database\BaseBuilder->insert()
+#5 /Applications/MAMP/htdocs/eskate/system/BaseModel.php(840): CodeIgniter\Model->doInsert(Array)
+#6 /Applications/MAMP/htdocs/eskate/system/Model.php(802): CodeIgniter\BaseModel->insert(Array, true)
+#7 /Applications/MAMP/htdocs/eskate/app/Controllers/AuthController.php(434): CodeIgniter\Model->insert(Array)
+#8 /Applications/MAMP/htdocs/eskate/system/CodeIgniter.php(933): App\Controllers\AuthController->guardarNueva()
+#9 /Applications/MAMP/htdocs/eskate/system/CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+#10 /Applications/MAMP/htdocs/eskate/system/CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 /Applications/MAMP/htdocs/eskate/system/Boot.php(325): CodeIgniter\CodeIgniter->run()
+#12 /Applications/MAMP/htdocs/eskate/system/Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 /Applications/MAMP/htdocs/eskate/public/index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 {main}
+ERROR - 2024-11-26 23:15:40 --> mysqli_sql_exception: Unknown column 'created_at' in 'field list' in /Applications/MAMP/htdocs/eskate/system/Database/MySQLi/Connection.php:312
+Stack trace:
+#0 /Applications/MAMP/htdocs/eskate/system/Database/MySQLi/Connection.php(312): mysqli->query('INSERT INTO `di...', 0)
+#1 /Applications/MAMP/htdocs/eskate/system/Database/BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `di...')
+#2 /Applications/MAMP/htdocs/eskate/system/Database/BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `di...')
+#3 /Applications/MAMP/htdocs/eskate/system/Database/BaseBuilder.php(2340): CodeIgniter\Database\BaseConnection->query('INSERT INTO `di...', Array, false)
+#4 /Applications/MAMP/htdocs/eskate/system/Model.php(394): CodeIgniter\Database\BaseBuilder->insert()
+#5 /Applications/MAMP/htdocs/eskate/system/BaseModel.php(840): CodeIgniter\Model->doInsert(Array)
+#6 /Applications/MAMP/htdocs/eskate/system/Model.php(802): CodeIgniter\BaseModel->insert(Array, true)
+#7 /Applications/MAMP/htdocs/eskate/app/Controllers/AuthController.php(434): CodeIgniter\Model->insert(Array)
+#8 /Applications/MAMP/htdocs/eskate/system/CodeIgniter.php(933): App\Controllers\AuthController->guardarNueva()
+#9 /Applications/MAMP/htdocs/eskate/system/CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+#10 /Applications/MAMP/htdocs/eskate/system/CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 /Applications/MAMP/htdocs/eskate/system/Boot.php(325): CodeIgniter\CodeIgniter->run()
+#12 /Applications/MAMP/htdocs/eskate/system/Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 /Applications/MAMP/htdocs/eskate/public/index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 {main}
+ERROR - 2024-11-26 23:23:27 --> mysqli_sql_exception: Unknown column 'created_at' in 'field list' in /Applications/MAMP/htdocs/eskate/system/Database/MySQLi/Connection.php:312
+Stack trace:
+#0 /Applications/MAMP/htdocs/eskate/system/Database/MySQLi/Connection.php(312): mysqli->query('INSERT INTO `di...', 0)
+#1 /Applications/MAMP/htdocs/eskate/system/Database/BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `di...')
+#2 /Applications/MAMP/htdocs/eskate/system/Database/BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `di...')
+#3 /Applications/MAMP/htdocs/eskate/system/Database/BaseBuilder.php(2340): CodeIgniter\Database\BaseConnection->query('INSERT INTO `di...', Array, false)
+#4 /Applications/MAMP/htdocs/eskate/system/Model.php(394): CodeIgniter\Database\BaseBuilder->insert()
+#5 /Applications/MAMP/htdocs/eskate/system/BaseModel.php(840): CodeIgniter\Model->doInsert(Array)
+#6 /Applications/MAMP/htdocs/eskate/system/Model.php(802): CodeIgniter\BaseModel->insert(Array, true)
+#7 /Applications/MAMP/htdocs/eskate/app/Models/DireccionModel.php(39): CodeIgniter\Model->insert(Array)
+#8 /Applications/MAMP/htdocs/eskate/app/Controllers/AuthController.php(434): App\Models\DireccionModel->guardarDireccion(Array)
+#9 /Applications/MAMP/htdocs/eskate/system/CodeIgniter.php(933): App\Controllers\AuthController->guardarNueva()
+#10 /Applications/MAMP/htdocs/eskate/system/CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+#11 /Applications/MAMP/htdocs/eskate/system/CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#12 /Applications/MAMP/htdocs/eskate/system/Boot.php(325): CodeIgniter\CodeIgniter->run()
+#13 /Applications/MAMP/htdocs/eskate/system/Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#14 /Applications/MAMP/htdocs/eskate/public/index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#15 {main}
+ERROR - 2024-11-26 23:24:13 --> mysqli_sql_exception: Unknown column 'created_at' in 'field list' in /Applications/MAMP/htdocs/eskate/system/Database/MySQLi/Connection.php:312
+Stack trace:
+#0 /Applications/MAMP/htdocs/eskate/system/Database/MySQLi/Connection.php(312): mysqli->query('INSERT INTO `di...', 0)
+#1 /Applications/MAMP/htdocs/eskate/system/Database/BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `di...')
+#2 /Applications/MAMP/htdocs/eskate/system/Database/BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `di...')
+#3 /Applications/MAMP/htdocs/eskate/system/Database/BaseBuilder.php(2340): CodeIgniter\Database\BaseConnection->query('INSERT INTO `di...', Array, false)
+#4 /Applications/MAMP/htdocs/eskate/system/Model.php(394): CodeIgniter\Database\BaseBuilder->insert()
+#5 /Applications/MAMP/htdocs/eskate/system/BaseModel.php(840): CodeIgniter\Model->doInsert(Array)
+#6 /Applications/MAMP/htdocs/eskate/system/Model.php(802): CodeIgniter\BaseModel->insert(Array, true)
+#7 /Applications/MAMP/htdocs/eskate/app/Models/DireccionModel.php(39): CodeIgniter\Model->insert(Array)
+#8 /Applications/MAMP/htdocs/eskate/app/Controllers/AuthController.php(434): App\Models\DireccionModel->guardarDireccion(Array)
+#9 /Applications/MAMP/htdocs/eskate/system/CodeIgniter.php(933): App\Controllers\AuthController->guardarNueva()
+#10 /Applications/MAMP/htdocs/eskate/system/CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+#11 /Applications/MAMP/htdocs/eskate/system/CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#12 /Applications/MAMP/htdocs/eskate/system/Boot.php(325): CodeIgniter\CodeIgniter->run()
+#13 /Applications/MAMP/htdocs/eskate/system/Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#14 /Applications/MAMP/htdocs/eskate/public/index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#15 {main}
+ERROR - 2024-11-26 23:27:01 --> mysqli_sql_exception: Unknown column 'created_at' in 'field list' in /Applications/MAMP/htdocs/eskate/system/Database/MySQLi/Connection.php:312
+Stack trace:
+#0 /Applications/MAMP/htdocs/eskate/system/Database/MySQLi/Connection.php(312): mysqli->query('INSERT INTO `di...', 0)
+#1 /Applications/MAMP/htdocs/eskate/system/Database/BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `di...')
+#2 /Applications/MAMP/htdocs/eskate/system/Database/BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `di...')
+#3 /Applications/MAMP/htdocs/eskate/system/Database/BaseBuilder.php(2340): CodeIgniter\Database\BaseConnection->query('INSERT INTO `di...', Array, false)
+#4 /Applications/MAMP/htdocs/eskate/system/Model.php(394): CodeIgniter\Database\BaseBuilder->insert()
+#5 /Applications/MAMP/htdocs/eskate/system/BaseModel.php(840): CodeIgniter\Model->doInsert(Array)
+#6 /Applications/MAMP/htdocs/eskate/system/Model.php(802): CodeIgniter\BaseModel->insert(Array, true)
+#7 /Applications/MAMP/htdocs/eskate/app/Models/DireccionModel.php(39): CodeIgniter\Model->insert(Array)
+#8 /Applications/MAMP/htdocs/eskate/app/Controllers/AuthController.php(436): App\Models\DireccionModel->guardarDireccion(Array)
+#9 /Applications/MAMP/htdocs/eskate/system/CodeIgniter.php(933): App\Controllers\AuthController->guardarNueva()
+#10 /Applications/MAMP/htdocs/eskate/system/CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+#11 /Applications/MAMP/htdocs/eskate/system/CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#12 /Applications/MAMP/htdocs/eskate/system/Boot.php(325): CodeIgniter\CodeIgniter->run()
+#13 /Applications/MAMP/htdocs/eskate/system/Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#14 /Applications/MAMP/htdocs/eskate/public/index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#15 {main}
+ERROR - 2024-11-26 23:27:01 --> Error al guardar la dirección.
+ERROR - 2024-11-26 23:32:03 --> mysqli_sql_exception: Column 'ID_usuario' cannot be null in /Applications/MAMP/htdocs/eskate/system/Database/MySQLi/Connection.php:312
+Stack trace:
+#0 /Applications/MAMP/htdocs/eskate/system/Database/MySQLi/Connection.php(312): mysqli->query('INSERT INTO `di...', 0)
+#1 /Applications/MAMP/htdocs/eskate/system/Database/BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `di...')
+#2 /Applications/MAMP/htdocs/eskate/system/Database/BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `di...')
+#3 /Applications/MAMP/htdocs/eskate/system/Database/BaseBuilder.php(2340): CodeIgniter\Database\BaseConnection->query('INSERT INTO `di...', Array, false)
+#4 /Applications/MAMP/htdocs/eskate/system/Model.php(394): CodeIgniter\Database\BaseBuilder->insert()
+#5 /Applications/MAMP/htdocs/eskate/system/BaseModel.php(840): CodeIgniter\Model->doInsert(Array)
+#6 /Applications/MAMP/htdocs/eskate/system/Model.php(802): CodeIgniter\BaseModel->insert(Array, true)
+#7 /Applications/MAMP/htdocs/eskate/app/Models/DireccionModel.php(48): CodeIgniter\Model->insert(Array)
+#8 /Applications/MAMP/htdocs/eskate/app/Controllers/AuthController.php(421): App\Models\DireccionModel->guardarDireccion(Array)
+#9 /Applications/MAMP/htdocs/eskate/system/CodeIgniter.php(933): App\Controllers\AuthController->guardarNueva()
+#10 /Applications/MAMP/htdocs/eskate/system/CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+#11 /Applications/MAMP/htdocs/eskate/system/CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#12 /Applications/MAMP/htdocs/eskate/system/Boot.php(325): CodeIgniter\CodeIgniter->run()
+#13 /Applications/MAMP/htdocs/eskate/system/Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#14 /Applications/MAMP/htdocs/eskate/public/index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#15 {main}
+CRITICAL - 2024-11-26 23:33:48 --> ErrorException: Undefined array key "ciudad"
+[Method: GET, Route: comprar]
+in APPPATH/Views/comprar.php on line 137.
+ 1 APPPATH/Views/comprar.php(137): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "ciudad"', '/Applications/MAMP/htdocs/eskate/app/Views/comprar.php', 137)
+ 2 SYSTEMPATH/View/View.php(234): include('/Applications/MAMP/htdocs/eskate/app/Views/comprar.php')
+ 3 SYSTEMPATH/View/View.php(237): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH/Common.php(1169): CodeIgniter\View\View->render('comprar', [], true)
+ 5 APPPATH/Controllers/AuthController.php(374): view('comprar', [...])
+ 6 SYSTEMPATH/CodeIgniter.php(933): App\Controllers\AuthController->comprar()
+ 7 SYSTEMPATH/CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+ 8 SYSTEMPATH/CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH/Boot.php(325): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH/Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH/index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2024-11-26 23:36:05 --> ErrorException: Undefined array key "localidad"
+[Method: GET, Route: comprar]
+in APPPATH/Views/comprar.php on line 137.
+ 1 APPPATH/Views/comprar.php(137): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "localidad"', '/Applications/MAMP/htdocs/eskate/app/Views/comprar.php', 137)
+ 2 SYSTEMPATH/View/View.php(234): include('/Applications/MAMP/htdocs/eskate/app/Views/comprar.php')
+ 3 SYSTEMPATH/View/View.php(237): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH/Common.php(1169): CodeIgniter\View\View->render('comprar', [], true)
+ 5 APPPATH/Controllers/AuthController.php(374): view('comprar', [...])
+ 6 SYSTEMPATH/CodeIgniter.php(933): App\Controllers\AuthController->comprar()
+ 7 SYSTEMPATH/CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+ 8 SYSTEMPATH/CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH/Boot.php(325): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH/Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH/index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2024-11-26 23:50:49 --> ErrorException: Undefined array key "id_localidad"
+[Method: POST, Route: direccion/guardarNueva]
+in APPPATH/Controllers/AuthController.php on line 439.
+ 1 APPPATH/Controllers/AuthController.php(439): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "id_localidad"', '/Applications/MAMP/htdocs/eskate/app/Controllers/AuthController.php', 439)
+ 2 SYSTEMPATH/CodeIgniter.php(933): App\Controllers\AuthController->guardarNueva()
+ 3 SYSTEMPATH/CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+ 4 SYSTEMPATH/CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH/Boot.php(325): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH/Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH/index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
