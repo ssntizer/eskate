@@ -139,6 +139,7 @@
             <!-- Campo Calle -->
             <input type="text" name="calle" placeholder="Calle" value="<?= old('calle') ?>" required>
 
+
             <!-- Campo Número -->
             <input type="number" name="numero" placeholder="Número" value="<?= old('numero') ?>" required>
 
@@ -157,6 +158,7 @@
             </datalist>
 
             <!-- Botón para guardar la dirección -->
+
             <button type="submit">Guardar Dirección</button>
 
         </form>
