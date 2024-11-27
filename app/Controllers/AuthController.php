@@ -402,12 +402,13 @@ public function guardar()
     $direccionModel = new DireccionModel();
     $direcciones = $direccionModel->getDireccionesPorUsuario($userId);
 
-    // Obtener provincias y localidades disponibles
+    // Obtener provincias disponibles
     $provinciaModel = new ProvinciaModel();
-    $localidadModel = new LocalidadModel();
-
     $provincias = $provinciaModel->findAll();
-    $localidades = $localidadModel->findAll();
+
+    // Obtener todas las localidades para usar con la función de búsqueda en el frontend
+    $localidadModel = new LocalidadModel();
+    $localidades = $localidadModel->select('id, localidad, id_provincia')->findAll();
 
     // Cargar la vista con las direcciones y las provincias/localidades
     return view('nuevadireccion', [
@@ -476,4 +477,19 @@ public function guardarNueva()
     // Redirigir después de la operación
     return redirect()->to('/comprar');
 }
+public function obtenerLocalidadesPorProvincia($provinciaId)
+{
+    $localidadModel = new LocalidadModel();
+
+    // Obtener las localidades asociadas a la provincia
+    $localidades = $localidadModel->where('id_provincia', $provinciaId)->findAll();
+
+    if ($localidades) {
+        return $this->response->setJSON($localidades);  // Devuelve las localidades en formato JSON
+    } else {
+        // Si no hay localidades, devuelve un error 404
+        return $this->response->setStatusCode(404, 'No se encontraron localidades');
+    }
+}
+
 }

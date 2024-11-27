@@ -136,32 +136,70 @@
 
         <form id="registrationForm" method="post" action="<?= site_url('direccion/guardarNueva') ?>">
 
-            <div class="mt-3">O ingresa una nueva dirección:</div>
-
-            <!-- Campos para una nueva dirección -->
+            <!-- Campo Calle -->
             <input type="text" name="calle" placeholder="Calle" value="<?= old('calle') ?>" required>
 
+            <!-- Campo Número -->
             <input type="number" name="numero" placeholder="Número" value="<?= old('numero') ?>" required>
 
-            <!-- Campo Localidad con Datalist -->
-            <input list="localidadesList" name="localidad" placeholder="Seleccionar localidad" value="<?= old('localidad') ?>" required>
-            <datalist id="localidadesList">
-                <?php foreach ($localidades as $localidad): ?>
-                    <option value="<?= $localidad['localidad'] ?>">
-                <?php endforeach; ?>
-            </datalist>
-
-            <!-- Campo Provincia con Datalist -->
-            <input list="provinciasList" name="provincia" placeholder="Seleccionar provincia" value="<?= old('provincia') ?>" required>
+            <!-- Campo Provincia -->
+            <input list="provinciasList" id="provinciaInput" name="provincia" placeholder="Seleccionar provincia" value="<?= old('provincia') ?>" required>
             <datalist id="provinciasList">
                 <?php foreach ($provincias as $provincia): ?>
-                    <option value="<?= $provincia['provincia'] ?>">
+                    <option value="<?= $provincia['provincia'] ?>" data-id="<?= $provincia['id'] ?>"></option>
                 <?php endforeach; ?>
             </datalist>
 
+            <!-- Campo Localidad -->
+            <input list="localidadesList" id="localidadInput" name="localidad" placeholder="Seleccionar localidad" value="<?= old('localidad') ?>" required>
+            <datalist id="localidadesList">
+                <!-- Las localidades se llenarán dinámicamente con JavaScript -->
+            </datalist>
+
+            <!-- Botón para guardar la dirección -->
             <button type="submit">Guardar Dirección</button>
+
         </form>
     </div>
+
+    <script>
+        // Cuando se elige una provincia, actualizamos las localidades
+        document.getElementById('provinciaInput').addEventListener('change', function() {
+            var provinciaValue = this.value;  // Obtener el valor de la provincia seleccionada
+
+            // Buscar el ID de la provincia desde el datalist
+            var provinciaOption = document.querySelector(`#provinciasList option[value="${provinciaValue}"]`);
+            
+            if (provinciaOption) {
+                var provinciaId = provinciaOption.getAttribute('data-id');
+                
+                if (provinciaId) {
+                    // Realizar una solicitud AJAX para obtener las localidades de la provincia seleccionada
+                    fetch(`http://localhost/eskate/public/index.php/obtener-localidades/${provinciaId}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            const localidadInput = document.getElementById('localidadesList');
+                            localidadInput.innerHTML = '';  // Limpiar las opciones anteriores
+
+                            // Si no se reciben localidades, mostrar un mensaje
+                            if (data.error) {
+                                console.error(data.error);
+                            } else {
+                                // Agregar las nuevas opciones de localidad al datalist
+                                data.forEach(localidad => {
+                                    let option = document.createElement('option');
+                                    option.value = localidad.localidad;
+                                    localidadInput.appendChild(option);
+                                });
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error al obtener localidades:', error);
+                        });
+                }
+            }
+        });
+    </script>
 </body>
 
 </html>

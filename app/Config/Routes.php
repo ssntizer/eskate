@@ -28,4 +28,5 @@ $routes->post('enviarmail', 'AuthController::enviarmail');
 $routes->get('comprar', 'AuthController::comprar');
 $routes->get('nuevadireccion', 'AuthController::guardar');
 $routes->post('/direccion/guardarNueva', 'AuthController::guardarNueva');
+$routes->get('/obtener-localidades/(:num)', 'AuthController::obtenerLocalidadesPorProvincia/$1');
 
