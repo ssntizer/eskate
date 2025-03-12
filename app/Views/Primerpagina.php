@@ -2,6 +2,13 @@
 <html lang="es">
 <head>
 <link rel="manifest" href="/manifest.json">
+<script>
+    // Verifica si la app está instalada y ejecutándose en modo standalone
+    if (window.matchMedia('(display-mode: standalone)').matches) {
+        // Redirige automáticamente a la nueva rama
+        window.location.href = "https://eskate-prueba-erie.onrender.com/";
+    }
+</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>E-Skate: Revoluciona tu Movimiento</title>
