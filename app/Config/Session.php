@@ -22,6 +22,8 @@ class Session extends BaseConfig
      * @var class-string<BaseHandler>
      */
     public string $driver = FileHandler::class;
+    public string $cookieSameSite = 'None';
+    public bool $cookieSecure = true;
 
     /**
      * --------------------------------------------------------------------------
