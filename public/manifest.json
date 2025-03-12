@@ -1,0 +1,30 @@
+{
+  "name": "E-skate",
+  "theme_color": "#d4dc0f",
+  "background_color": "#1164b1",
+  "short_name": "ESK",
+  "id": "E-skate",
+  "description": "Aplicación para monitorear tu increible E-skate",
+  "prefer_related_applications": false,
+  "iarc_rating_id": "15",
+  "categories": [
+    "security"
+  ],
+  "edge_side_panel": {
+    "preferred_width": 0
+  },
+  "start_url": "/",
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "/icons/eskate192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/eskate512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
