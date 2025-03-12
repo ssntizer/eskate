@@ -1,10 +1,12 @@
 <IfModule mod_rewrite.c>
     RewriteEngine On
     RewriteBase /
-    
-    # Permitir que los archivos estáticos como manifest.json sean accesibles directamente
-    RewriteRule ^public/manifest.json$ - [L]
 
+    # Permitir que el manifest.json y los iconos sean accesibles directamente
+    RewriteRule ^manifest.json$ - [L]
+    RewriteRule ^icons/ - [L]
+
+    # Reescribir otras URLs a index.php
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteRule ^(.*)$ index.php/$1 [L]
