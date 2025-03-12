@@ -29,4 +29,6 @@ $routes->get('comprar', 'AuthController::comprar');
 $routes->get('nuevadireccion', 'AuthController::guardar');
 $routes->post('/direccion/guardarNueva', 'AuthController::guardarNueva');
 $routes->get('/obtener-localidades/(:num)', 'AuthController::obtenerLocalidadesPorProvincia/$1');
-
+$routes->get('/manifest.json', 'AuthController::manifest');
+$routes->get('/icons/eskate192x192.png', 'AuthController::eskate192');
+$routes->get('/icons/eskate512x512.png', 'AuthController::eskate512');
