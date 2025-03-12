@@ -5,13 +5,13 @@
 <script>
     // Verifica si la app ya fue abierta antes en modo PWA
     if (localStorage.getItem('isPWA') === 'true') {
-        window.location.href = "https://nueva-rama.render.com/";
+        window.location.href = "https://eskate-prueba-erie.onrender.com/";
     }
 
     // Detecta si la PWA está en modo standalone y guarda en localStorage
     if (window.matchMedia('(display-mode: standalone)').matches) {
         localStorage.setItem('isPWA', 'true');
-        window.location.href = "https://nueva-rama.render.com/";
+        window.location.href = "https://eskate-prueba-erie.onrender.com/";
     }
 </script>
     <meta charset="UTF-8">
