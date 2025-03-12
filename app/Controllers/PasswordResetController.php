@@ -34,6 +34,7 @@ class PasswordResetController extends Controller
         $cuerpo = 'Haga clic en este enlace para restablecer su contraseña: ' . $resetLink."   y este es su token de restauracion:".$token;
 
         if (\Config\Services::sendEmail($email, $asunto, $cuerpo)) {
+            log_message('debug', 'Solicitud de restablecimiento de contraseña recibida.');
             return redirect()->to('/')->with('message', 'Se ha enviado un enlace de restablecimiento de contraseña a tu correo.');
         } else {
             return redirect()->back()->with('error', 'Error al enviar el correo de restablecimiento.');
