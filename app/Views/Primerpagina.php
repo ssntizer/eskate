@@ -3,15 +3,10 @@
 <head>
 <link rel="manifest" href="/manifest.json">
 <script>
-    // Verifica si la app ya fue abierta antes en modo PWA
-    if (localStorage.getItem('isPWA') === 'true') {
-        window.location.href = "https://eskate-prueba-erie.onrender.com/";
-    }
-
-    // Detecta si la PWA está en modo standalone y guarda en localStorage
-    if (window.matchMedia('(display-mode: standalone)').matches) {
-        localStorage.setItem('isPWA', 'true');
-        window.location.href = "https://eskate-prueba-erie.onrender.com/";
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js')
+            .then(() => console.log('Service Worker registrado'))
+            .catch(err => console.error('Error al registrar SW', err));
     }
 </script>
     <meta charset="UTF-8">
