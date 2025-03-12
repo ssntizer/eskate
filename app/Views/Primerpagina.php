@@ -4,7 +4,7 @@
 <link rel="manifest" href="/manifest.json">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>E-Skate: Revoluciona tu Movimient</title>
+    <title>E-Skate: Revoluciona tu Movimiento</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
@@ -294,7 +294,7 @@ footer a:hover {
 <!-- Sección Hero -->
 <section class="hero">
     <div class="container">
-        <h1>Revoluciona tu Movimiento</h1>
+        <h1>Revoluciona tu Movimient</h1>
         <p>Explora el futuro del transporte con nuestras innovadoras e-skates.</p>
         <a href="<?= site_url('login') ?>" class="btn btn-main">Inicia Sesión para Monitorear tu Skate</a> <!-- Enlace a la página de login -->
     </div>
