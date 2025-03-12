@@ -17,12 +17,12 @@
   "display": "standalone",
   "icons": [
     {
-      "src": "/icons/eskate192x192.png",
+      "src": "/eskate192x192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "/icons/eskate512x512.png",
+      "src": "/eskate512x512.png",
       "sizes": "512x512",
       "type": "image/png"
     }
