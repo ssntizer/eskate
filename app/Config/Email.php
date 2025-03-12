@@ -43,7 +43,7 @@ class Email extends BaseConfig
     /**
      * SMTP Port
      */
-    public int $SMTPPort = 587; // Puerto SMTP de Gmail con TLS
+    public int $SMTPPort = 465; // Puerto SMTP de Gmail con TLS
 
     /**
      * SMTP Timeout (in seconds)
@@ -62,7 +62,7 @@ class Email extends BaseConfig
      *             to the server. 'ssl' means implicit SSL. Connection on port
      *             465 should set this to ''.
      */
-    public string $SMTPCrypto = 'tls'; // TLS para Gmail
+    public string $SMTPCrypto = 'ssl'; // TLS para Gmail
 
     /**
      * Enable word-wrap
