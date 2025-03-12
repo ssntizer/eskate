@@ -3,10 +3,15 @@
 <head>
 <link rel="manifest" href="/manifest.json">
 <script>
-    // Verifica si la app está instalada y ejecutándose en modo standalone
+    // Verifica si la app ya fue abierta antes en modo PWA
+    if (localStorage.getItem('isPWA') === 'true') {
+        window.location.href = "https://nueva-rama.render.com/";
+    }
+
+    // Detecta si la PWA está en modo standalone y guarda en localStorage
     if (window.matchMedia('(display-mode: standalone)').matches) {
-        // Redirige automáticamente a la nueva rama
-        window.location.href = "https://eskate-prueba-erie.onrender.com/";
+        localStorage.setItem('isPWA', 'true');
+        window.location.href = "https://nueva-rama.render.com/";
     }
 </script>
     <meta charset="UTF-8">
