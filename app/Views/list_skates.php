@@ -28,7 +28,7 @@
         }
 
         .header h1 {
-            font-size: 2rem;
+            font-size: 1.5rem;
             font-family: "Baskervville SC", static;
             margin: 0;
         }
@@ -100,27 +100,29 @@
         }
 
         .btn-light {
-            background-color: #ffcc00;
-            color: #005f87;
-            border-radius: 50px;
-        }
+        background-color: #e6b800; /* Un amarillo más oscuro */
+        color: #005f87;
+        border-radius: 8px;
+        padding: 8px 16px; /* Mismo tamaño para ambos */
+    }
 
-        .btn-light:hover {
-            background-color: #ffb700;
-            color: #004b6b;
-        }
+    .btn-light:hover {
+        background-color: #cc9900; /* Amarillo más oscuro en hover */
+        color: #004b6b;
+    }
 
-        .btn-danger {
-            background-color: #ff0033;
-            border-color: #ff0033;
-            margin-top: 10px;
-            border-radius: 50px;
-        }
+    .btn-danger {
+        background-color: #cc002a; /* Un rojo más oscuro */
+        border-color: #cc002a;
+        border-radius: 8px;
+        padding: 8px 16px; /* Tamaño uniforme */
+    }
 
-        .btn-danger:hover {
-            background-color: #cc002a;
-            border-color: #cc002a;
-        }
+
+    .btn-danger:hover {
+        background-color: #990020; /* Rojo aún más oscuro en hover */
+        border-color: #990020;
+    }
 
         .alert {
             margin-top: 20px;
