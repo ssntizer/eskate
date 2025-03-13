@@ -88,7 +88,7 @@ class AuthController extends BaseController
     public function logout()
     {
         session()->destroy();
-        return redirect()->to('/primerpagina');
+        return redirect()->to('/');
     }
 
     public function listSkates()
