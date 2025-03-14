@@ -94,6 +94,7 @@
             border-color: #ff6600;
             border-radius: 50px;
             padding: 10px 20px;
+
         }
 
         .btn-primary:hover {
@@ -106,6 +107,7 @@
         color: #005f87;
         border-radius: 8px;
         padding: 8px 16px; /* Mismo tamaño para ambos */
+        margin-bottom: 5px;
     }
 
     .btn-light:hover {
