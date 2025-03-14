@@ -2,13 +2,6 @@
 <html lang="es">
 <head>
 <link rel="manifest" href="/manifest.json">
-<script>
-    if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('/sw.js')
-            .then(() => console.log('Service Worker registrado'))
-            .catch(err => console.error('Error al registrar SW', err));
-    }
-</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>E-Skate: Revoluciona tu Movimiento</title>
@@ -378,6 +371,37 @@ footer a:hover {
         });
     });
 </script>
+<script>
+// Esperar que el evento 'beforeinstallprompt' se dispare
+let deferredPrompt;
+window.addEventListener('beforeinstallprompt', (e) => {
+    // Prevenir la aparición del cuadro de instalación predeterminado
+    e.preventDefault();
+    // Guardar el evento para usarlo después
+    deferredPrompt = e;
 
+    // Mostrar el botón personalizado de instalación
+    // Asegúrate de que tienes un botón en tu HTML con id="installButton"
+    const installButton = document.getElementById('installButton');
+    installButton.style.display = 'block';
+
+    installButton.addEventListener('click', () => {
+        // Cuando el usuario hace click en el botón, se dispara la instalación
+        if (deferredPrompt) {
+            // Redirigir la instalación a la segunda rama antes de mostrar el cuadro de instalación
+            window.location.href = 'https://eskate-prueba-erie.onrender.com/';
+            deferredPrompt.prompt();  // Esto muestra el cuadro de instalación
+            deferredPrompt.userChoice.then((choiceResult) => {
+                if (choiceResult.outcome === 'accepted') {
+                    console.log('Usuario aceptó la instalación');
+                } else {
+                    console.log('Usuario rechazó la instalación');
+                }
+                deferredPrompt = null;
+            });
+        }
+    });
+});
+</script>
 </body>
 </html>
