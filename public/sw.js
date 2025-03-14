@@ -1,45 +1,48 @@
 self.addEventListener('install', (event) => {
-    self.skipWaiting();
+    self.skipWaiting(); // Activa el Service Worker de inmediato
 });
 
 self.addEventListener('activate', (event) => {
-    event.waitUntil(self.clients.claim());
+    event.waitUntil(self.clients.claim()); // Reclama el control de todas las pestañas abiertas
 });
 
-// Interceptamos la solicitud de instalación para redirigir a la segunda rama
-self.addEventListener('beforeinstallprompt', (event) => {
-    // Prevenir que el evento de instalación se ejecute de forma predeterminada
-    event.preventDefault();
+self.addEventListener('fetch', (event) => {
+    // Mantener el fetch normal, pero cuando sea necesario, redirigir la instalación a la segunda rama
+    const url = new URL(event.request.url);
 
-    // Guardamos el evento para poder instalarla más tarde
-    self.deferredPrompt = event;
-
-    // Aquí puedes mostrar el botón de instalación en la interfaz de usuario
-    // Cuando el usuario toque el botón para instalar, usamos la segunda rama
-    // (esto es un ejemplo, lo puedes ajustar a tus necesidades)
-    self.clients.matchAll().then((clients) => {
-        for (let client of clients) {
-            client.postMessage({
-                type: 'SHOW_INSTALL_BUTTON',
-                message: 'Puedes instalar la app',
-            });
-        }
-    });
-});
-
-// Esperamos a que el usuario acepte la instalación
-self.addEventListener('message', (event) => {
-    if (event.data && event.data.type === 'INSTALL_PWA') {
-        // Redirigir a la segunda rama para la instalación
-        const nuevaRamaURL = 'https://eskate-prueba-erie.onrender.com/';
-        window.location.href = nuevaRamaURL; // Redirigimos a la segunda rama para instalar la PWA
+    // Si el servicio está siendo usado para instalar la PWA desde la primera página
+    if (url.origin === self.location.origin && (url.pathname === '/' || url.pathname.startsWith('/index.html'))) {
+        // Redirigir solo si está buscando la instalación
+        event.respondWith(fetch(event.request));
+    } else {
+        // Si no es la raíz de la aplicación, seguir la solicitud normalmente
+        event.respondWith(fetch(event.request));
     }
 });
 
-// Manejo del fetch, no hay cambios aquí
-self.addEventListener('fetch', (event) => {
-    const url = new URL(event.request.url);
-    
-    // Realizar el fetch normalmente
-    event.respondWith(fetch(event.request));
+// Si el navegador trata de instalar la PWA, redirigir a la segunda rama (donde se alojan los archivos de la app)
+self.addEventListener('beforeinstallprompt', (event) => {
+    event.preventDefault(); // Prevenir que el navegador maneje la instalación automáticamente
+
+    // Guardar el evento para usarlo cuando sea necesario
+    self.deferredPrompt = event;
+
+    // Enviar un mensaje a los clientes activos para indicar que la instalación está lista
+    event.waitUntil(
+        self.clients.matchAll().then((clients) => {
+            for (let client of clients) {
+                client.postMessage({
+                    type: 'SHOW_INSTALL_PROMPT',
+                });
+            }
+        })
+    );
+});
+
+self.addEventListener('message', (event) => {
+    if (event.data && event.data.type === 'INSTALL_PWA') {
+        // Redirigir al usuario a la segunda rama para que la instalación se haga desde allí
+        const nuevaRamaURL = 'https://eskate-prueba-erie.onrender.com/';
+        event.waitUntil(self.clients.openWindow(nuevaRamaURL)); // Redirigir a la segunda rama
+    }
 });
