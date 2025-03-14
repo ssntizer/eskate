@@ -9,16 +9,19 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
     const url = new URL(event.request.url);
 
-    // Si la PWA está abierta, redirigir a la nueva rama
-    if (url.origin === self.location.origin) {
-        const nuevaRamaURL = 'https://eskate-prueba-erie.onrender.com/'; // URL de la nueva rama
+    // Verificar si la aplicación está en modo standalone (PWA)
+    event.respondWith(
+        (async () => {
+            const isPWA = (await self.clients.matchAll()).some(client => client.visibilityState === 'visible');
+            
+            // Si está en modo PWA y la URL es la raíz o index, redirigir a la otra rama
+            if (isPWA && (url.pathname === '/' || url.pathname.startsWith('/index.html'))) {
+                const nuevaRamaURL = 'https://eskate-prueba-erie.onrender.com/'; // URL de la nueva rama
+                return Response.redirect(nuevaRamaURL);
+            }
 
-        if (url.pathname === '/' || url.pathname.startsWith('/index.html')) {
-            event.respondWith(Response.redirect(nuevaRamaURL));
-            return;
-        }
-    }
-
-    // Seguir con la solicitud normal
-    event.respondWith(fetch(event.request));
+            // Si no es una PWA o no es la página raíz, proceder normalmente
+            return fetch(event.request);
+        })()
+    );
 });
