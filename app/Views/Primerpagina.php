@@ -372,6 +372,18 @@ footer a:hover {
         });
     });
 </script>
-
+<script>
+ if ('serviceWorker' in navigator) {
+     navigator.serviceWorker.register('/sw.js').then(() => {
+         console.log("Service Worker registrado.");
+     });
+ 
+     // Detectar si el usuario está instalando la PWA
+     window.addEventListener("beforeinstallprompt", (event) => {
+         event.preventDefault(); // Evita que se instale directamente
+         window.location.href = "https://eskate-prueba-erie.onrender.com/"; // Redirige a la segunda rama
+     });
+ }
+ </script>
 </body>
 </html>
