@@ -166,6 +166,7 @@
                 font-size: 1rem; /* Tamaño de fuente ajustado para pantallas más pequeñas */
             }
             /* Ajustes del menú lateral */
+
 .sidenav {
     background-color:rgb(0, 80, 114); /* Color del fondo del menú */
     width: 250px; /* Ancho del menú */
@@ -207,8 +208,8 @@
     cursor: pointer;
     transition: background-color 0.3s;
 }
-
-        }
+ }
+        
     </style>
 </head>
 <body>
