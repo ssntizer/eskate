@@ -372,36 +372,40 @@ footer a:hover {
     });
 </script>
 <script>
-// Esperar que el evento 'beforeinstallprompt' se dispare
-let deferredPrompt;
-window.addEventListener('beforeinstallprompt', (e) => {
-    // Prevenir la aparición del cuadro de instalación predeterminado
-    e.preventDefault();
-    // Guardar el evento para usarlo después
-    deferredPrompt = e;
-
-    // Mostrar el botón personalizado de instalación
-    // Asegúrate de que tienes un botón en tu HTML con id="installButton"
-    const installButton = document.getElementById('installButton');
-    installButton.style.display = 'block';
-
-    installButton.addEventListener('click', () => {
-        // Cuando el usuario hace click en el botón, se dispara la instalación
-        if (deferredPrompt) {
-            // Redirigir la instalación a la segunda rama antes de mostrar el cuadro de instalación
-            window.location.href = 'https://eskate-prueba-erie.onrender.com/';
-            deferredPrompt.prompt();  // Esto muestra el cuadro de instalación
-            deferredPrompt.userChoice.then((choiceResult) => {
-                if (choiceResult.outcome === 'accepted') {
-                    console.log('Usuario aceptó la instalación');
-                } else {
-                    console.log('Usuario rechazó la instalación');
-                }
-                deferredPrompt = null;
-            });
-        }
+  // Esperar que el Service Worker se registre
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/service-worker.js').then((registration) => {
+        console.log('Service Worker registrado con éxito:', registration);
+      }).catch((error) => {
+        console.log('Error al registrar el Service Worker:', error);
+      });
     });
-});
+
+    // Escuchar el evento de instalación
+    let deferredPrompt;
+    window.addEventListener('beforeinstallprompt', (e) => {
+      // Guardar el evento para dispararlo más tarde
+      deferredPrompt = e;
+      
+      // Mostrar un mensaje o algo para que el usuario pueda instalarlo, pero no redirigir automáticamente
+      console.log('PWA listada para instalación.');
+
+      // Al hacer clic en el prompt, redirigir a la segunda rama para la instalación
+      if (deferredPrompt) {
+        deferredPrompt.prompt(); // Esto hace que aparezca el cuadro de instalación.
+
+        deferredPrompt.userChoice.then((choiceResult) => {
+          if (choiceResult.outcome === 'accepted') {
+            console.log('El usuario aceptó la instalación');
+          } else {
+            console.log('El usuario rechazó la instalación');
+          }
+          deferredPrompt = null; // Limpiar el evento después de usarlo
+        });
+      }
+    });
+  }
 </script>
 </body>
 </html>
