@@ -167,7 +167,7 @@
             }
             /* Ajustes del menú lateral */
 .sidenav {
-    background-color: #2c3e50; /* Color del fondo del menú */
+    background-color:rgb(0, 80, 114); /* Color del fondo del menú */
     width: 250px; /* Ancho del menú */
     position: fixed;
     top: 0;
@@ -197,21 +197,17 @@
 
 /* Botón flotante para abrir el menú */
 .sidenav-trigger {
-    background-color: #3498db;
+    background-color:rgb(38, 130, 192);
     color: white;
     border-radius: 50%;
     padding: 10px;
     display: flex;
-    align-items: center;
+    align-items: right;
     justify-content: center;
     cursor: pointer;
     transition: background-color 0.3s;
 }
 
-/* Oscurecer el botón del menú al pasar el mouse */
-.sidenav-trigger:hover {
-    background-color: #2980b9;
-}
         }
     </style>
 </head>
@@ -219,8 +215,6 @@
 
 <div class="header">
     <h1>Lista de Skates</h1>
-    <a href="<?= site_url('/') ?>" class="btn btn-light">Inicio</a>
-    <a href="<?= site_url('logout') ?>" class="btn btn-light">Cerrar sesión</a>
     <a href="#" data-target="mobile-demo" class="sidenav-trigger btn-floating pulse">
                 <i class="material-icons">menu</i>
             </a>
