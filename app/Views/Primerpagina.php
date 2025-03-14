@@ -372,40 +372,17 @@ footer a:hover {
     });
 </script>
 <script>
-  // Esperar que el Service Worker se registre
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/service-worker.js').then((registration) => {
-        console.log('Service Worker registrado con éxito:', registration);
-      }).catch((error) => {
-        console.log('Error al registrar el Service Worker:', error);
-      });
-    });
-
-    // Escuchar el evento de instalación
-    let deferredPrompt;
-    window.addEventListener('beforeinstallprompt', (e) => {
-      // Guardar el evento para dispararlo más tarde
-      deferredPrompt = e;
-      
-      // Mostrar un mensaje o algo para que el usuario pueda instalarlo, pero no redirigir automáticamente
-      console.log('PWA listada para instalación.');
-
-      // Al hacer clic en el prompt, redirigir a la segunda rama para la instalación
-      if (deferredPrompt) {
-        deferredPrompt.prompt(); // Esto hace que aparezca el cuadro de instalación.
-
-        deferredPrompt.userChoice.then((choiceResult) => {
-          if (choiceResult.outcome === 'accepted') {
-            console.log('El usuario aceptó la instalación');
-          } else {
-            console.log('El usuario rechazó la instalación');
-          }
-          deferredPrompt = null; // Limpiar el evento después de usarlo
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/service-worker.js')
+                .then(registration => {
+                    console.log('Service Worker registrado con éxito: ', registration);
+                })
+                .catch(error => {
+                    console.log('Error al registrar el Service Worker: ', error);
+                });
         });
-      }
-    });
-  }
+    }
 </script>
 </body>
 </html>

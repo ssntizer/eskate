@@ -1,33 +1,28 @@
 self.addEventListener('install', (event) => {
-    self.skipWaiting(); // Asegura que el SW se active inmediatamente.
+    self.skipWaiting();  // Fuerza la activación inmediata del service worker
 });
 
 self.addEventListener('activate', (event) => {
-    event.waitUntil(self.clients.claim()); // Toma el control de los clientes abiertos inmediatamente.
+    event.waitUntil(self.clients.claim());  // Asegura que el service worker controle las pestañas abiertas
 });
 
 self.addEventListener('fetch', (event) => {
-    const url = new URL(event.request.url);
-
-    // Solo redirigir a la segunda rama cuando el servicio esté en modo standalone (es decir, cuando sea PWA).
-    if (url.origin === self.location.origin && (url.pathname === '/' || url.pathname.startsWith('/index.html'))) {
-        // No redirigir la página cuando no sea la PWA
-        event.respondWith(fetch(event.request));
-    } else {
-        // Realizar el fetch normalmente si no es la página principal
-        event.respondWith(fetch(event.request));
-    }
+    // No cambiamos nada en el comportamiento de fetch, solo se gestionan las solicitudes de la página principal
+    event.respondWith(fetch(event.request));
 });
 
-// Manejo del evento de instalación para redirigir a la segunda rama cuando el usuario elija instalar la PWA
+// Manejo de la instalación de la PWA
 self.addEventListener('beforeinstallprompt', (event) => {
-    event.preventDefault(); // Prevenir la instalación predeterminada
-
-    // Guardar el evento para dispararlo más tarde
-    self.deferredPrompt = event;
-});
-
-self.addEventListener('appinstalled', (event) => {
-    // Limpiar el evento de instalación cuando la PWA se instala
-    self.deferredPrompt = null;
+    // Prevenimos que el evento de instalación se ejecute automáticamente
+    event.preventDefault();
+    
+    // Aquí es donde redirigimos a la segunda rama cuando el usuario decide instalar la PWA
+    event.userChoice.then((choiceResult) => {
+        if (choiceResult.outcome === 'accepted') {
+            // En lugar de cambiar de página, realizamos la instalación directamente desde la segunda rama
+            const nuevaRamaURL = 'https://eskate-prueba-erie.onrender.com/';  // URL de la segunda rama
+            // Instalamos la app usando la segunda rama sin redirigir al usuario
+            window.location.href = nuevaRamaURL;
+        }
+    });
 });
