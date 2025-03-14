@@ -4,8 +4,8 @@
 <link rel="manifest" href="/manifest.json">
 <script>
     if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('/sw.js', { scope: 'https://eskate-prueba-erie.onrender.com/' })
-            .then(() => console.log('Service Worker registrado en la nueva rama'))
+        navigator.serviceWorker.register('/sw.js')
+            .then(() => console.log('Service Worker registrado'))
             .catch(err => console.error('Error al registrar SW', err));
     }
 </script>
