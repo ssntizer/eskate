@@ -11,7 +11,7 @@ self.addEventListener('fetch', (event) => {
 
     // Si la PWA está abierta, redirigir a la nueva rama
     if (url.origin === self.location.origin) {
-        const nuevaRamaURL = 'https://eskate-prueba-erie.onrender.com'; // URL de la nueva rama
+        const nuevaRamaURL = 'https://eskate-prueba-erie.onrender.com/'; // URL de la nueva rama
 
         if (url.pathname === '/' || url.pathname.startsWith('/index.html')) {
             event.respondWith(Response.redirect(nuevaRamaURL));
