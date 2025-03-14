@@ -8,7 +8,7 @@ self.addEventListener('activate', (event) => {
 
 self.addEventListener('fetch', (event) => {
     const url = new URL(event.request.url);
-    const nuevaRamaURL = 'https://nueva-rama.eskate.com'; // Cambia esto por la URL de la nueva rama
+    const nuevaRamaURL = 'https://eskate-prueba-erie.onrender.com'; // Cambia esto por la URL de la nueva rama
 
     // Si la PWA está abierta desde la raíz o index.html, redirigir a la nueva rama
     if (url.origin === self.location.origin) {
