@@ -6,6 +6,7 @@
     <title>List of Skates</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Permanent+Marker&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Baskervville+SC&display=swap');
@@ -172,7 +173,22 @@
     <h1>Lista de Skates</h1>
     <a href="<?= site_url('/') ?>" class="btn btn-light">Inicio</a>
     <a href="<?= site_url('logout') ?>" class="btn btn-light">Cerrar sesión</a>
-    <a class="btn-floating pulse"><i class="material-icons">menu</i></a>
+    <a href="#" data-target="mobile-demo" class="sidenav-trigger btn-floating pulse">
+                <i class="material-icons">menu</i>
+            </a>
+    <ul id="mobile-demo" class="sidenav">
+        <li><a href="<?= site_url('/') ?>">Inicio</a></li>
+        <li><a href="<?= site_url('logout') ?>">Cerrar sesión</a></li>
+    </ul>
+</header>
+
+<!-- Inicialización del menú con Materialize -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var elems = document.querySelectorAll('.sidenav');
+        var instances = M.Sidenav.init(elems);
+    });
+</script>
 </div>
 
 <div class="container">
