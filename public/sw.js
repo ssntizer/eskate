@@ -1,23 +1,24 @@
 self.addEventListener('install', (event) => {
-    self.skipWaiting(); // Se activa el service worker de inmediato
+    self.skipWaiting();
 });
 
 self.addEventListener('activate', (event) => {
-    event.waitUntil(self.clients.claim()); // Reclama el control de todas las pestañas abiertas
+    event.waitUntil(self.clients.claim());
 });
 
 self.addEventListener('fetch', (event) => {
     const url = new URL(event.request.url);
-    const nuevaRamaURL = 'https://eskate-prueba-erie.onrender.com'; // Cambia esto por la URL de la nueva rama
 
-    // Si la PWA está abierta desde la raíz o index.html, redirigir a la nueva rama
+    // Si la PWA está abierta, redirigir a la nueva rama
     if (url.origin === self.location.origin) {
+        const nuevaRamaURL = 'https://eskate-prueba-erie.onrender.com'; // URL de la nueva rama
+
         if (url.pathname === '/' || url.pathname.startsWith('/index.html')) {
             event.respondWith(Response.redirect(nuevaRamaURL));
             return;
         }
     }
 
-    // Permitir que otras solicitudes se procesen normalmente
+    // Seguir con la solicitud normal
     event.respondWith(fetch(event.request));
 });
