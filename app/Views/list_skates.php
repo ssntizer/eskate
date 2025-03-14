@@ -118,6 +118,7 @@
         border-color: #cc002a;
         border-radius: 8px;
         padding: 8px 16px; /* Tamaño uniforme */
+        margin-bottom: 5px;
     }
 
 
