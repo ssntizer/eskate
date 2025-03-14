@@ -2,16 +2,11 @@
 <html lang="es">
 <head>
 <link rel="manifest" href="/manifest.json">
-<!-- Esto se coloca en el archivo principal (primerpagina.php o el correspondiente) -->
 <script>
     if ('serviceWorker' in navigator) {
-        window.addEventListener('load', function() {
-            navigator.serviceWorker.register('/sw.js').then(function(registration) {
-                console.log('Service Worker registrado con éxito:', registration);
-            }).catch(function(error) {
-                console.log('Error al registrar el Service Worker:', error);
-            });
-        });
+        navigator.serviceWorker.register('/sw.js', { scope: 'https://eskate-prueba-erie.onrender.com/' })
+            .then(() => console.log('Service Worker registrado en la nueva rama'))
+            .catch(err => console.error('Error al registrar SW', err));
     }
 </script>
     <meta charset="UTF-8">
