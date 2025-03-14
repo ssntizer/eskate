@@ -371,6 +371,40 @@ footer a:hover {
         });
     });
 </script>
+<script>
+    let deferredPrompt;
 
+    // Esperar el evento de instalación
+    window.addEventListener('beforeinstallprompt', (event) => {
+        // Prevenir la instalación automática
+        event.preventDefault();
+
+        // Guardamos el evento
+        deferredPrompt = event;
+
+        // Mostramos un botón personalizado para instalar
+        const installButton = document.getElementById('installButton');
+        installButton.style.display = 'block'; // Mostrar el botón
+
+        // Cuando el usuario haga clic en el botón de instalación, se dispara el evento
+        installButton.addEventListener('click', () => {
+            // Redirigir al cliente a la segunda rama para la instalación
+            if (deferredPrompt) {
+                deferredPrompt.prompt();  // Muestra el cuadro de instalación
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('Usuario aceptó la instalación');
+                    } else {
+                        console.log('Usuario rechazó la instalación');
+                    }
+                    deferredPrompt = null; // Reseteamos el evento
+                });
+            }
+        });
+    });
+</script>
+
+<!-- Botón para instalar -->
+<button id="installButton" style="display: none;">Instalar PWA</button>
 </body>
 </html>
