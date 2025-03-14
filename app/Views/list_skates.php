@@ -166,23 +166,25 @@
                 font-size: 1rem; /* Tamaño de fuente ajustado para pantallas más pequeñas */
             }
             /* Ajustes del menú lateral */
+/* Menú lateral */
 .sidenav {
-    background-color:rgb(0, 80, 114); /* Color del fondo del menú */
-    width: 250px; /* Ancho del menú */
+    background-color: rgb(0, 80, 114); /* Color del fondo del menú */
+    width: 250px;
     position: fixed;
     top: 0;
-    right: -250px; /* Oculto fuera de la pantalla */
+    right: 0; /* Lo posicionamos en la derecha */
     height: 100%;
-    transition: right 0.3s ease-in-out;
+    transform: translateX(100%); /* Oculto fuera de la pantalla */
+    transition: transform 0.3s ease-in-out;
     padding-top: 60px;
 }
 
-/* Asegurar que el menú se abra desde la derecha */
+/* Mostrar el menú */
 .sidenav.open {
-    right: 0;
+    transform: translateX(0);
 }
 
-/* Color del texto en el menú */
+/* Estilos de los enlaces dentro del menú */
 .sidenav a {
     color: white;
     padding: 15px;
@@ -192,20 +194,25 @@
 
 /* Oscurecer los enlaces del menú al pasar el mouse */
 .sidenav a:hover {
-    background-color: #34495e;
+    background-color: rgb(0, 60, 90); /* Oscurecer un poco el color */
 }
 
 /* Botón flotante para abrir el menú */
 .sidenav-trigger {
-    background-color:rgb(38, 130, 192);
+    background-color: rgb(38, 130, 192);
     color: white;
     border-radius: 50%;
     padding: 10px;
     display: flex;
-    align-items: right;
+    align-items: center;
     justify-content: center;
     cursor: pointer;
     transition: background-color 0.3s;
+}
+
+/* Oscurecer botón flotante al pasar el mouse */
+.sidenav-trigger:hover {
+    background-color: rgb(25, 100, 160);
 }
 
         }
