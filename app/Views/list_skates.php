@@ -165,6 +165,53 @@
             .skate-item p {
                 font-size: 1rem; /* Tamaño de fuente ajustado para pantallas más pequeñas */
             }
+            /* Ajustes del menú lateral */
+.sidenav {
+    background-color: #2c3e50; /* Color del fondo del menú */
+    width: 250px; /* Ancho del menú */
+    position: fixed;
+    top: 0;
+    right: -250px; /* Oculto fuera de la pantalla */
+    height: 100%;
+    transition: right 0.3s ease-in-out;
+    padding-top: 60px;
+}
+
+/* Asegurar que el menú se abra desde la derecha */
+.sidenav.open {
+    right: 0;
+}
+
+/* Color del texto en el menú */
+.sidenav a {
+    color: white;
+    padding: 15px;
+    display: block;
+    transition: background-color 0.3s;
+}
+
+/* Oscurecer los enlaces del menú al pasar el mouse */
+.sidenav a:hover {
+    background-color: #34495e;
+}
+
+/* Botón flotante para abrir el menú */
+.sidenav-trigger {
+    background-color: #3498db;
+    color: white;
+    border-radius: 50%;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+/* Oscurecer el botón del menú al pasar el mouse */
+.sidenav-trigger:hover {
+    background-color: #2980b9;
+}
         }
     </style>
 </head>
