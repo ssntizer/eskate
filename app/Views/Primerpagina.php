@@ -1,14 +1,8 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<link rel="manifest" href="/manifest.json">
-<script>
-    if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('/sw.js')
-            .then(() => console.log('Service Worker registrado'))
-            .catch(err => console.error('Error al registrar SW', err));
-    }
-</script>
+
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>E-Skate: Revoluciona tu Movimiento</title>
@@ -301,7 +295,7 @@ footer a:hover {
 <!-- Sección Hero -->
 <section class="hero">
     <div class="container">
-        <h1>Revoluciona tu Movimient</h1>
+        <h1>Revoluciona tu Movimiento</h1>
         <p>Explora el futuro del transporte con nuestras innovadoras e-skates.</p>
         <a href="<?= site_url('login') ?>" class="btn btn-main">Inicia Sesión para Monitorear tu Skate</a> <!-- Enlace a la página de login -->
     </div>
@@ -378,18 +372,6 @@ footer a:hover {
         });
     });
 </script>
-<script>
-if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/sw.js').then(() => {
-        console.log("Service Worker registrado.");
-    });
 
-    // Detectar si el usuario está instalando la PWA
-    window.addEventListener("beforeinstallprompt", (event) => {
-        event.preventDefault(); // Evita que se instale directamente
-        window.location.href = "https://eskate-prueba-erie.onrender.com/"; // Redirige a la segunda rama
-    });
-}
-</script>
 </body>
 </html>
