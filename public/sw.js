@@ -1,31 +1,23 @@
 self.addEventListener('install', (event) => {
-    self.skipWaiting();
+    self.skipWaiting(); // Se activa el service worker de inmediato
 });
 
 self.addEventListener('activate', (event) => {
-    event.waitUntil(self.clients.claim());
+    event.waitUntil(self.clients.claim()); // Reclama el control de todas las pestañas abiertas
 });
 
 self.addEventListener('fetch', (event) => {
     const url = new URL(event.request.url);
-    const nuevaRamaURL = 'https://eskate-prueba-erie.onrender.com/'; // URL de la segunda rama
+    const nuevaRamaURL = 'https://nueva-rama.eskate.com'; // Cambia esto por la URL de la nueva rama
 
-    // Verifica si el botón especial fue usado (ejemplo: "?openApp" en la URL)
-    if (url.searchParams.has('openApp')) {
-        event.respondWith(Response.redirect(nuevaRamaURL));
-        return;
+    // Si la PWA está abierta desde la raíz o index.html, redirigir a la nueva rama
+    if (url.origin === self.location.origin) {
+        if (url.pathname === '/' || url.pathname.startsWith('/index.html')) {
+            event.respondWith(Response.redirect(nuevaRamaURL));
+            return;
+        }
     }
 
-    // Si la PWA está abierta en modo standalone, redirigir a la nueva rama
-    event.respondWith(
-        clients.matchAll().then((clients) => {
-            const isPWA = clients.some(client => client.visibilityState === 'visible' && client.displayMode === 'standalone');
-
-            if (isPWA && url.origin === self.location.origin) {
-                return Response.redirect(nuevaRamaURL);
-            }
-
-            return fetch(event.request);
-        })
-    );
+    // Permitir que otras solicitudes se procesen normalmente
+    event.respondWith(fetch(event.request));
 });
