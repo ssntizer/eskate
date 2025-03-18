@@ -29,4 +29,9 @@ $routes->get('comprar', 'AuthController::comprar');
 $routes->get('nuevadireccion', 'AuthController::guardar');
 $routes->post('/direccion/guardarNueva', 'AuthController::guardarNueva');
 $routes->get('/obtener-localidades/(:num)', 'AuthController::obtenerLocalidadesPorProvincia/$1');
+$routes->get('comprar', 'CompraController::index'); // Página de compra
+$routes->post('processPurchase', 'CompraController::procesarCompra'); // Procesar compra con tarjeta
+$routes->post('PaypalController/simularPagoPayPal', 'PaypalController::simularPagoPayPal'); // Pago con PayPal
+
+
 

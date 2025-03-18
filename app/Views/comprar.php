@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Comprar</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
-        /* Estilos reutilizados */
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Permanent+Marker&display=swap');
 
         body {
@@ -35,11 +35,11 @@
 
         .register-form h2 {
             margin-bottom: 20px;
-            font-family: "Baskervville SC", static;
             font-size: 2rem;
         }
 
-        .register-form input, .register-form select {
+        .register-form input,
+        .register-form select {
             width: 100%;
             height: 50px;
             margin-bottom: 20px;
@@ -50,32 +50,43 @@
             color: #333;
         }
 
-        .register-form input:focus, .register-form select:focus {
+        .register-form input:focus,
+        .register-form select:focus {
             border-color: #00e5ff;
             outline: none;
             box-shadow: 0 0 8px rgba(0, 229, 255, 0.5);
         }
 
-        .register-form button[type="submit"] {
+        .register-form button {
             width: 100%;
             height: 50px;
             border: none;
             border-radius: 10px;
-            background-color: #ff6600;
-            color: white;
             font-size: 18px;
             font-weight: 600;
             cursor: pointer;
             transition: background-color 0.3s ease, transform 0.2s;
         }
 
-        .register-form button[type="submit"]:hover {
+        .register-form .btn-tarjeta {
+            background-color: #ff6600;
+            color: white;
+        }
+
+        .register-form .btn-tarjeta:hover {
             background-color: #e65c00;
             transform: scale(1.05);
         }
 
-        .register-form button[type="submit"]:active {
-            transform: scale(0.98);
+        .register-form .btn-paypal {
+            background-color: #003087;
+            color: white;
+            margin-top: 10px;
+        }
+
+        .register-form .btn-paypal:hover {
+            background-color: #001f5b;
+            transform: scale(1.05);
         }
 
         .error,
@@ -93,7 +104,7 @@
             color: #2ecc71;
         }
 
-        .register-form a#bl {
+        .register-form a {
             display: block;
             margin-top: 15px;
             text-decoration: none;
@@ -103,7 +114,7 @@
             transition: color 0.3s ease;
         }
 
-        .register-form a#bl:hover {
+        .register-form a:hover {
             color: #00e5ff;
         }
     </style>
@@ -122,54 +133,104 @@
         <?php endif; ?>
 
         <h2>Compra Segura</h2>
+
+        <select id="paymentMethod" name="payment_method" required>
+            <option value="tarjeta" selected>Pagar con Tarjeta</option>
+            <option value="paypal">Pagar con PayPal</option>
+        </select>
+
         <form id="purchaseForm" method="post" action="<?= site_url('processPurchase') ?>">
-            <input type="text" name="card_number" placeholder="Número de Tarjeta" maxlength="16" pattern="\d{16}" required>
-            <input type="text" name="cardholder_name" placeholder="Nombre en la Tarjeta" required>
-            <input type="text" name="expiration_date" placeholder="Fecha de Expiración (MM/AA)" pattern="\d{2}/\d{2}" required>
-            <input type="password" name="security_code" placeholder="Código de Seguridad (CVV)" maxlength="3" pattern="\d{3}" required>
+            
+            <!-- Siempre visible: campo de email -->
             <input type="email" name="email" placeholder="Correo Electrónico" value="<?= old('email') ?>" required>
 
-            <!-- Campo de direcciones -->
-            <select name="address_id" required>
-    <option value="" disabled selected>Seleccione su dirección</option>
-    <?php if (!empty($userAddresses)): ?>
-        <?php foreach ($userAddresses as $address): ?>
-            <option value="<?= $address['ID_direccion'] ?>">
-                <?= $address['calle'] ?> (<?= $address['numero'] ?>), <?= $address['localidad_nombre'] ?>, <?= $address['provincia_nombre'] ?>
-            </option>
-        <?php endforeach; ?>
-    <?php else: ?>
-        <option value="" disabled>No tienes direcciones registradas</option>
-    <?php endif; ?>
-</select>
+            <div id="tarjetaFields">
+                <input type="text" name="card_number" placeholder="Número de Tarjeta" maxlength="16" pattern="\d{16}" required>
+                <input type="text" name="cardholder_name" placeholder="Nombre en la Tarjeta" required>
+                <input type="text" name="expiration_date" placeholder="Fecha de Expiración (MM/AA)" pattern="\d{2}/\d{2}" required>
+                <input type="password" name="security_code" placeholder="Código de Seguridad (CVV)" maxlength="3" pattern="\d{3}" required>
+            </div>
 
-            <button type="submit">Pagar</button>
+            <select name="address_id" required>
+                <option value="" disabled selected>Seleccione su dirección</option>
+                <?php if (!empty($userAddresses)): ?>
+                    <?php foreach ($userAddresses as $address): ?>
+                        <option value="<?= $address['ID_direccion'] ?>">
+                            <?= $address['calle'] ?> (<?= $address['numero'] ?>), <?= $address['localidad_nombre'] ?>, <?= $address['provincia_nombre'] ?>
+                        </option>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <option value="" disabled>No tienes direcciones registradas</option>
+                <?php endif; ?>
+            </select>
+
+            <button type="submit" class="btn-tarjeta">Pagar con Tarjeta</button>
         </form>
-        <a id="bl" href="<?= site_url('nuevadireccion') ?>">Registrar nueva dirección</a>
-        <a id="bl" href="<?= site_url('/') ?>">Volver al inicio</a>
+
+        <button id="paypalButton" class="btn-paypal" style="display: none;">Pagar con PayPal</button>
+
+        <a href="<?= site_url('nuevadireccion') ?>">Registrar nueva dirección</a>
+        <a href="<?= site_url('/') ?>">Volver al inicio</a>
     </div>
 
     <script>
-        document.getElementById('purchaseForm').addEventListener('submit', function (event) {
-            const cardNumber = this.card_number.value.replace(/\s+/g, '');
-            const expirationDate = this.expiration_date.value;
-            const cvv = this.security_code.value;
+        $(document).ready(function() {
+            // Cambia la vista entre métodos de pago
+            $("#paymentMethod").change(function() {
+                if ($(this).val() === "paypal") {
+                    $("#tarjetaFields").hide();  // Esconde campos de tarjeta
+                    $("#purchaseForm button").hide();  // Esconde el botón de tarjeta
+                    $("#paypalButton").show();  // Muestra el botón de PayPal
+                } else {
+                    $("#tarjetaFields").show();  // Muestra campos de tarjeta
+                    $("#purchaseForm button").show();  // Muestra el botón de tarjeta
+                    $("#paypalButton").hide();  // Esconde el botón de PayPal
+                }
+            });
 
-            const expirationRegex = /^\d{2}\/\d{2}$/;
-            if (!expirationRegex.test(expirationDate)) {
-                alert('Fecha de expiración no válida. Use el formato MM/AA.');
-                event.preventDefault();
-            }
+            // Maneja el clic en el botón de PayPal
+            $("#paypalButton").click(function(e) {
+                e.preventDefault();  // Previene que el formulario se envíe
 
-            if (!/^\d{16}$/.test(cardNumber)) {
-                alert('El número de tarjeta debe contener 16 dígitos.');
-                event.preventDefault();
-            }
+                var address_id = $("select[name='address_id']").val();
+                var email = $("input[name='email']").val();
 
-            if (!/^\d{3}$/.test(cvv)) {
-                alert('El CVV debe contener 3 dígitos.');
-                event.preventDefault();
-            }
+                // Validación
+                if (!address_id) {
+                    alert("Por favor, seleccione una dirección.");
+                    return;
+                }
+
+                // Validación del email
+                if (!email) {
+                    alert("Por favor, ingrese un correo electrónico.");
+                    return;
+                }
+
+                // Llamada AJAX para simular el pago
+                $.ajax({
+                    url: "<?= site_url('PaypalController/simularPagoPayPal') ?>",  // Asegúrate de que esta URL sea la correcta
+                    type: "POST",
+                    data: {
+                        usuario_id: 1,  // Pasa el ID del usuario real
+                        monto: 100,  // Monto simulado, ajústalo a la lógica real
+                        email: email,
+                        address_id: address_id
+                    },
+                    dataType: "json",
+                    success: function(response) {
+                        alert(response.message);
+                        if (response.status === "success") {
+                            window.location.href = "<?= site_url('successPage') ?>";  // Redirige a la página de éxito
+                        } else {
+                            alert("Error en el pago. Intenta de nuevo.");
+                        }
+                    },
+                    error: function() {
+                        alert("Error en la conexión. Intenta de nuevo.");
+                    }
+                });
+            });
         });
     </script>
 </body>
