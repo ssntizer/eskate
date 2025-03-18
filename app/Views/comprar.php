@@ -174,65 +174,58 @@
     </div>
 
     <script>
-        $(document).ready(function() {
-            // Cambia la vista entre métodos de pago
-            $("#paymentMethod").change(function() {
-                if ($(this).val() === "paypal") {
-                    $("#tarjetaFields").hide();  // Esconde campos de tarjeta
-                    $("#purchaseForm button").hide();  // Esconde el botón de tarjeta
-                    $("#paypalButton").show();  // Muestra el botón de PayPal
-                } else {
-                    $("#tarjetaFields").show();  // Muestra campos de tarjeta
-                    $("#purchaseForm button").show();  // Muestra el botón de tarjeta
-                    $("#paypalButton").hide();  // Esconde el botón de PayPal
-                }
-            });
+    $(document).ready(function() {
+        $("#paymentMethod").change(function() {
+            if ($(this).val() === "paypal") {
+                $("#tarjetaFields").hide();
+                $("#purchaseForm button").hide();
+                $("#paypalButton").show();
+                $("input[name='email']").parent().show(); // Asegurar que el campo email se mantenga visible
+            } else {
+                $("#tarjetaFields").show();
+                $("#purchaseForm button").show();
+                $("#paypalButton").hide();
+            }
+        });
 
-            // Maneja el clic en el botón de PayPal
-            $("#paypalButton").click(function(e) {
-                e.preventDefault();  // Previene que el formulario se envíe
+        $("#paypalButton").click(function() {
+            var address_id = $("select[name='address_id']").val();
+            var email = $("input[name='email']").val();
 
-                var address_id = $("select[name='address_id']").val();
-                var email = $("input[name='email']").val();
+            if (!address_id) {
+                alert("Por favor, seleccione una dirección.");
+                return;
+            }
+            if (!email) {
+                alert("Por favor, ingrese su correo electrónico.");
+                return;
+            }
 
-                // Validación
-                if (!address_id) {
-                    alert("Por favor, seleccione una dirección.");
-                    return;
-                }
-
-                // Validación del email
-                if (!email) {
-                    alert("Por favor, ingrese un correo electrónico.");
-                    return;
-                }
-
-                // Llamada AJAX para simular el pago
-                $.ajax({
-                    url: "<?= site_url('PaypalController/simularPagoPayPal') ?>",  // Asegúrate de que esta URL sea la correcta
-                    type: "POST",
-                    data: {
-                        usuario_id: 1,  // Pasa el ID del usuario real
-                        monto: 100,  // Monto simulado, ajústalo a la lógica real
-                        email: email,
-                        address_id: address_id
-                    },
-                    dataType: "json",
-                    success: function(response) {
-                        alert(response.message);
-                        if (response.status === "success") {
-                            window.location.href = "<?= site_url('successPage') ?>";  // Redirige a la página de éxito
-                        } else {
-                            alert("Error en el pago. Intenta de nuevo.");
-                        }
-                    },
-                    error: function() {
-                        alert("Error en la conexión. Intenta de nuevo.");
+            $.ajax({
+                url: "<?= site_url('PaypalController/simularPagoPayPal') ?>",
+                type: "POST",
+                data: {
+                   
+                    monto: 100, // Simulación
+                    email: email,
+                    direccion: address_id
+                },
+                dataType: "json",
+                success: function(response) {
+                    alert(response.message);
+                    if (response.status === "success") {
+                        window.location.href = "<?= site_url('') ?>";
                     }
-                });
+                },
+                error: function(xhr, status, error) {
+                    console.error(xhr.responseText);
+                    alert("Hubo un error en la conexión con el servidor.");
+                }
             });
         });
-    </script>
+    });
+</script>
+
 </body>
 
 </html>

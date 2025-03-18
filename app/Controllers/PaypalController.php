@@ -1,44 +1,50 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+namespace App\Controllers;
 
-class PaypalController extends CI_Controller {
+use App\Models\PagoModel;
+use CodeIgniter\Controller;
 
-    public function __construct() {
-        parent::__construct();
-        $this->load->model('Pago_model');
+class PaypalController extends Controller
+{
+    protected $pagoModel;
+
+    public function __construct()
+    {
+        $this->pagoModel = new PagoModel();
     }
 
-    // Carga la vista del pago
-    public function index() {
-        $this->load->view('paypal_pago');
-    }
+    // Simula el pago con PayPal
+    public function simularPagoPayPal()
+    {
+        // Obtener el ID del usuario desde la sesión
+        $usuario_id = session()->get('user_id');  // Asegúrate de que esté disponible
 
-    // Simula un pago con PayPal
-    public function simularPagoPayPal() {
-        $usuario_id = $this->input->post('usuario_id'); // ID del usuario
-        $monto = $this->input->post('monto'); // Monto del pago
+        if (!$usuario_id) {
+            return json_encode(['status' => 'error', 'message' => 'Usuario no autenticado']);
+        }
+
+        // Obtener el monto, dirección (ID) y email desde el formulario
+        $monto = $this->request->getPost('monto');
+        $direccion_id = $this->request->getPost('direccion');  // Ahora recibimos el ID de la dirección
+        $email = $this->request->getPost('email');
 
         // Simulamos una transacción exitosa
         $datosPago = [
             'usuario_id' => $usuario_id,
             'monto' => $monto,
+            'direccion_id' => $direccion_id,   // Guardamos el ID de la dirección
+            'email' => $email,                  // Guardamos el email
             'estado' => 'Completado',
             'fecha' => date('Y-m-d H:i:s')
         ];
 
-        $resultado = $this->Pago_model->guardarPago($datosPago);
+        // Guardar el pago en la base de datos
+        $resultado = $this->pagoModel->guardarPago($datosPago);
 
         if ($resultado) {
-            echo json_encode(['status' => 'success', 'message' => 'Pago simulado con éxito']);
+            return json_encode(['status' => 'success', 'message' => 'Pago simulado con éxito']);
         } else {
-            echo json_encode(['status' => 'error', 'message' => 'Error al procesar el pago']);
+            return json_encode(['status' => 'error', 'message' => 'Error al procesar el pago']);
         }
     }
-
-    // Obtiene todos los pagos simulados
-    public function obtenerPagos() {
-        $pagos = $this->Pago_model->obtenerPagos();
-        echo json_encode($pagos);
-    }
 }
-?>

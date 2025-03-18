@@ -1,0 +1,107 @@
+CRITICAL - 2025-03-18 16:01:43 --> Error: Class "App\Models\PagoModel" not found
+[Method: POST, Route: PaypalController/simularPagoPayPal]
+in APPPATH\Controllers\PaypalController.php on line 13.
+ 1 SYSTEMPATH\CodeIgniter.php(903): App\Controllers\PaypalController->__construct()
+ 2 SYSTEMPATH\CodeIgniter.php(500): CodeIgniter\CodeIgniter->createController()
+ 3 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-03-18 16:02:52 --> Error: Class "App\Controllers\PagoModel" not found
+[Method: POST, Route: PaypalController/simularPagoPayPal]
+in APPPATH\Controllers\PaypalController.php on line 13.
+ 1 SYSTEMPATH\CodeIgniter.php(903): App\Controllers\PaypalController->__construct()
+ 2 SYSTEMPATH\CodeIgniter.php(500): CodeIgniter\CodeIgniter->createController()
+ 3 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-03-18 16:02:54 --> Error: Class "App\Controllers\PagoModel" not found
+[Method: POST, Route: PaypalController/simularPagoPayPal]
+in APPPATH\Controllers\PaypalController.php on line 13.
+ 1 SYSTEMPATH\CodeIgniter.php(903): App\Controllers\PaypalController->__construct()
+ 2 SYSTEMPATH\CodeIgniter.php(500): CodeIgniter\CodeIgniter->createController()
+ 3 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-03-18 16:04:47 --> Error: Class "App\Models\Pago_model" not found
+[Method: POST, Route: PaypalController/simularPagoPayPal]
+in APPPATH\Controllers\PaypalController.php on line 13.
+ 1 SYSTEMPATH\CodeIgniter.php(903): App\Controllers\PaypalController->__construct()
+ 2 SYSTEMPATH\CodeIgniter.php(500): CodeIgniter\CodeIgniter->createController()
+ 3 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2025-03-18 16:06:22 --> mysqli_sql_exception: Unknown column 'monto' in 'field list' in C:\xampp\htdocs\eskate\system\Database\MySQLi\Connection.php:312
+Stack trace:
+#0 C:\xampp\htdocs\eskate\system\Database\MySQLi\Connection.php(312): mysqli->query('INSERT INTO `pa...', 0)
+#1 C:\xampp\htdocs\eskate\system\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `pa...')
+#2 C:\xampp\htdocs\eskate\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `pa...')
+#3 C:\xampp\htdocs\eskate\system\Database\BaseBuilder.php(2340): CodeIgniter\Database\BaseConnection->query('INSERT INTO `pa...', Array, false)
+#4 C:\xampp\htdocs\eskate\system\Model.php(394): CodeIgniter\Database\BaseBuilder->insert()
+#5 C:\xampp\htdocs\eskate\system\BaseModel.php(840): CodeIgniter\Model->doInsert(Array)
+#6 C:\xampp\htdocs\eskate\system\Model.php(802): CodeIgniter\BaseModel->insert(Array, true)
+#7 C:\xampp\htdocs\eskate\app\Controllers\PaypalController.php(49): CodeIgniter\Model->insert(Array)
+#8 C:\xampp\htdocs\eskate\system\CodeIgniter.php(933): App\Controllers\PaypalController->simularPagoPayPal()
+#9 C:\xampp\htdocs\eskate\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\PaypalController))
+#10 C:\xampp\htdocs\eskate\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\xampp\htdocs\eskate\system\Boot.php(325): CodeIgniter\CodeIgniter->run()
+#12 C:\xampp\htdocs\eskate\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 C:\xampp\htdocs\eskate\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 {main}
+ERROR - 2025-03-18 16:09:31 --> mysqli_sql_exception: Unknown column 'metodo_pago' in 'field list' in C:\xampp\htdocs\eskate\system\Database\MySQLi\Connection.php:312
+Stack trace:
+#0 C:\xampp\htdocs\eskate\system\Database\MySQLi\Connection.php(312): mysqli->query('INSERT INTO `pa...', 0)
+#1 C:\xampp\htdocs\eskate\system\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `pa...')
+#2 C:\xampp\htdocs\eskate\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `pa...')
+#3 C:\xampp\htdocs\eskate\system\Database\BaseBuilder.php(2340): CodeIgniter\Database\BaseConnection->query('INSERT INTO `pa...', Array, false)
+#4 C:\xampp\htdocs\eskate\system\Model.php(394): CodeIgniter\Database\BaseBuilder->insert()
+#5 C:\xampp\htdocs\eskate\system\BaseModel.php(840): CodeIgniter\Model->doInsert(Array)
+#6 C:\xampp\htdocs\eskate\system\Model.php(802): CodeIgniter\BaseModel->insert(Array, true)
+#7 C:\xampp\htdocs\eskate\app\Controllers\PaypalController.php(49): CodeIgniter\Model->insert(Array)
+#8 C:\xampp\htdocs\eskate\system\CodeIgniter.php(933): App\Controllers\PaypalController->simularPagoPayPal()
+#9 C:\xampp\htdocs\eskate\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\PaypalController))
+#10 C:\xampp\htdocs\eskate\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\xampp\htdocs\eskate\system\Boot.php(325): CodeIgniter\CodeIgniter->run()
+#12 C:\xampp\htdocs\eskate\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 C:\xampp\htdocs\eskate\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 {main}
+ERROR - 2025-03-18 16:10:24 --> mysqli_sql_exception: Cannot add or update a child row: a foreign key constraint fails in C:\xampp\htdocs\eskate\system\Database\MySQLi\Connection.php:312
+Stack trace:
+#0 C:\xampp\htdocs\eskate\system\Database\MySQLi\Connection.php(312): mysqli->query('INSERT INTO `pa...', 0)
+#1 C:\xampp\htdocs\eskate\system\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `pa...')
+#2 C:\xampp\htdocs\eskate\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `pa...')
+#3 C:\xampp\htdocs\eskate\system\Database\BaseBuilder.php(2340): CodeIgniter\Database\BaseConnection->query('INSERT INTO `pa...', Array, false)
+#4 C:\xampp\htdocs\eskate\system\Model.php(394): CodeIgniter\Database\BaseBuilder->insert()
+#5 C:\xampp\htdocs\eskate\system\BaseModel.php(840): CodeIgniter\Model->doInsert(Array)
+#6 C:\xampp\htdocs\eskate\system\Model.php(802): CodeIgniter\BaseModel->insert(Array, true)
+#7 C:\xampp\htdocs\eskate\app\Controllers\PaypalController.php(49): CodeIgniter\Model->insert(Array)
+#8 C:\xampp\htdocs\eskate\system\CodeIgniter.php(933): App\Controllers\PaypalController->simularPagoPayPal()
+#9 C:\xampp\htdocs\eskate\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\PaypalController))
+#10 C:\xampp\htdocs\eskate\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\xampp\htdocs\eskate\system\Boot.php(325): CodeIgniter\CodeIgniter->run()
+#12 C:\xampp\htdocs\eskate\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 C:\xampp\htdocs\eskate\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 {main}
+CRITICAL - 2025-03-18 16:19:31 --> ErrorException: Undefined property: App\Controllers\PaypalController::$Pago_model
+[Method: POST, Route: PaypalController/simularPagoPayPal]
+in APPPATH\Controllers\PaypalController.php on line 42.
+ 1 APPPATH\Controllers\PaypalController.php(42): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined property: App\\Controllers\\PaypalController::$Pago_model', 'C:\\xampp\\htdocs\\eskate\\app\\Controllers\\PaypalController.php', 42)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\PaypalController->simularPagoPayPal()
+ 3 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\PaypalController))
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-03-18 16:20:53 --> ErrorException: Undefined variable $email
+[Method: POST, Route: PaypalController/simularPagoPayPal]
+in APPPATH\Controllers\PaypalController.php on line 40.
+ 1 APPPATH\Controllers\PaypalController.php(40): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $email', 'C:\\xampp\\htdocs\\eskate\\app\\Controllers\\PaypalController.php', 40)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\PaypalController->simularPagoPayPal()
+ 3 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\PaypalController))
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
