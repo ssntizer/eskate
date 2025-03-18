@@ -2,31 +2,7 @@
 <html lang="es">
 <head>
 <link rel="manifest" href="/manifest.json">
-<script>
-    if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('/sw.js')
-            .then(() => console.log('Service Worker registrado'))
-            .catch(err => console.error('Error al registrar SW:', err));
-    }
 
-    window.addEventListener('beforeinstallprompt', (event) => {
-        event.preventDefault();
-        let installPrompt = event;
-
-        document.getElementById('installButton').style.display = 'block';
-
-        document.getElementById('installButton').addEventListener('click', async () => {
-            installPrompt.prompt();
-            const choice = await installPrompt.userChoice;
-            if (choice.outcome === 'accepted') {
-                console.log('PWA instalada');
-                setTimeout(() => {
-                    window.location.href = 'https://eskate-prueba-erie.onrender.com/';
-                }, 3000);
-            }
-        });
-    });
-</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>E-Skate: Revoluciona tu Movimiento</title>
@@ -428,8 +404,19 @@ footer a:hover {
         });
     });
 </script>
+<script>
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js')
+            .then(() => console.log('Service Worker registrado'))
+            .catch(err => console.error('Error al registrar SW', err));
+    }
 
-<!-- Botón para instalar -->
-<button id="installButton" style="display: none;">Instalar PWA</button>
+    window.addEventListener('beforeinstallprompt', (event) => {
+        event.preventDefault(); // Evita el prompt de instalación en la página principal
+        
+        // Redirigir automáticamente a la segunda URL
+        window.location.href = 'https://eskate-prueba-erie.onrender.com/';
+    });
+</script>
 </body>
 </html>
