@@ -373,33 +373,33 @@ footer a:hover {
     });
 </script>
 <script>
-  let installEvent; // Variable para almacenar el evento de instalación
+  let installEvent;
 
-  // Detectamos cuando el navegador indica que la página puede ser instalada como PWA
   window.addEventListener('beforeinstallprompt', (event) => {
-    event.preventDefault(); // Prevenimos que el navegador muestre el prompt automáticamente
+    event.preventDefault(); // Prevenimos la instalación automática del navegador
 
-    installEvent = event; // Guardamos el evento para usarlo más tarde
-    console.log('La página es instalable como PWA');
-    
-    // Aquí puedes forzar la instalación
+    installEvent = event; // Guardamos el evento para poder dispararlo más tarde
+
+    // Mostrar el botón de instalación solo cuando el usuario esté listo para instalar
+    console.log('La PWA puede ser instalada');
+
+    // Hacer que el navegador registre que el usuario quiere instalar la PWA
     setTimeout(() => {
       if (installEvent) {
-        // Forzar la instalación de la PWA desde la segunda página
-        installEvent.prompt(); // Muestra el prompt de instalación de PWA
+        installEvent.prompt(); // Mostrar el prompt de instalación
         installEvent.userChoice.then((choiceResult) => {
           if (choiceResult.outcome === 'accepted') {
             console.log('La PWA ha sido instalada');
           } else {
             console.log('El usuario no aceptó la instalación');
           }
-          installEvent = null; // Limpiamos la variable
+          installEvent = null; // Limpiar el evento después de usarlo
         });
       }
-    }, 1000); // Ajusta el tiempo si lo deseas
+    }, 1000); // Ajusta el tiempo si lo necesitas
   });
 
-  // Registrar el service worker
+  // Registrar el Service Worker en la primera página
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/sw.js')
       .then(() => console.log('Service Worker registrado'))

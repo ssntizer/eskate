@@ -7,5 +7,5 @@ self.addEventListener('install', (event) => {
   });
   
   self.addEventListener('fetch', (event) => {
-    // Aquí no necesitamos hacer nada, solo aseguramos que la app esté lista para ser instalada
+    // Aquí no necesitamos hacer nada específico, ya que no estamos manipulando la instalación directamente desde este SW
   });
