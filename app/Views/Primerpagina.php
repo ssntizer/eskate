@@ -406,17 +406,10 @@ footer a:hover {
 </script>
 <script>
     if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('/sw.js')
-            .then(() => console.log('Service Worker registrado'))
-            .catch(err => console.error('Error al registrar SW', err));
+        navigator.serviceWorker.register('https://eskate-prueba-erie.onrender.com/sw.js')
+            .then(() => console.log('Service Worker de la PWA registrado'))
+            .catch(err => console.error('Error al registrar SW de la PWA', err));
     }
-
-    window.addEventListener('beforeinstallprompt', (event) => {
-        event.preventDefault(); // Evita el prompt de instalación en la página principal
-        
-        // Redirigir automáticamente a la segunda URL
-        window.location.href = 'https://eskate-prueba-erie.onrender.com/';
-    });
 </script>
 </body>
 </html>
