@@ -6,24 +6,19 @@ self.addEventListener('activate', (event) => {
     event.waitUntil(self.clients.claim());
 });
 
-// Interceptar solicitudes y redirigir la PWA instalada a la segunda rama
 self.addEventListener('fetch', (event) => {
-    const url = new URL(event.request.url);
-    const nuevaRamaURL = 'https://eskate-prueba-erie.onrender.com/';
-
-    // Verifica si es una navegación dentro de la PWA instalada
+    const segundaRamaURL = 'https://eskate-prueba-erie.onrender.com/';
+    
     event.respondWith(
-        caches.match(event.request).then((cachedResponse) => {
-            if (cachedResponse) {
-                return cachedResponse;
+        (async () => {
+            const clientList = await self.clients.matchAll();
+            const isPWA = clientList.length > 0; // Si hay clientes, es una PWA
+            
+            if (isPWA && event.request.mode === 'navigate') {
+                return Response.redirect(segundaRamaURL);
             }
-
-            // Si es la pantalla de inicio de la PWA, forzar la redirección
-            if (url.origin === self.location.origin && (url.pathname === '/' || url.pathname.startsWith('/index.html'))) {
-                return Response.redirect(nuevaRamaURL);
-            }
-
+            
             return fetch(event.request);
-        })
+        })()
     );
 });

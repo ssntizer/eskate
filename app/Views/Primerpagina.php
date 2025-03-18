@@ -6,8 +6,26 @@
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('/sw.js')
             .then(() => console.log('Service Worker registrado'))
-            .catch(err => console.error('Error al registrar SW', err));
+            .catch(err => console.error('Error al registrar SW:', err));
     }
+
+    window.addEventListener('beforeinstallprompt', (event) => {
+        event.preventDefault();
+        let installPrompt = event;
+
+        document.getElementById('installButton').style.display = 'block';
+
+        document.getElementById('installButton').addEventListener('click', async () => {
+            installPrompt.prompt();
+            const choice = await installPrompt.userChoice;
+            if (choice.outcome === 'accepted') {
+                console.log('PWA instalada');
+                setTimeout(() => {
+                    window.location.href = 'https://eskate-prueba-erie.onrender.com/';
+                }, 3000);
+            }
+        });
+    });
 </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
