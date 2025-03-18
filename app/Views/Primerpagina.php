@@ -373,43 +373,39 @@ footer a:hover {
     });
 </script>
 <script>
-    let deferredPrompt;
+  let installEvent; // Variable para almacenar el evento de instalación
 
-    // Esperar el evento de instalación
-    window.addEventListener('beforeinstallprompt', (event) => {
-        // Prevenir la instalación automática
-        event.preventDefault();
+  // Detectamos cuando el navegador indica que la página puede ser instalada como PWA
+  window.addEventListener('beforeinstallprompt', (event) => {
+    event.preventDefault(); // Prevenimos que el navegador muestre el prompt automáticamente
 
-        // Guardamos el evento
-        deferredPrompt = event;
-
-        // Mostramos un botón personalizado para instalar
-        const installButton = document.getElementById('installButton');
-        installButton.style.display = 'block'; // Mostrar el botón
-
-        // Cuando el usuario haga clic en el botón de instalación, se dispara el evento
-        installButton.addEventListener('click', () => {
-            // Redirigir al cliente a la segunda rama para la instalación
-            if (deferredPrompt) {
-                deferredPrompt.prompt();  // Muestra el cuadro de instalación
-                deferredPrompt.userChoice.then((choiceResult) => {
-                    if (choiceResult.outcome === 'accepted') {
-                        console.log('Usuario aceptó la instalación');
-                    } else {
-                        console.log('Usuario rechazó la instalación');
-                    }
-                    deferredPrompt = null; // Reseteamos el evento
-                });
-            }
+    installEvent = event; // Guardamos el evento para usarlo más tarde
+    console.log('La página es instalable como PWA');
+    
+    // Aquí puedes forzar la instalación
+    setTimeout(() => {
+      if (installEvent) {
+        // Forzar la instalación de la PWA desde la segunda página
+        installEvent.prompt(); // Muestra el prompt de instalación de PWA
+        installEvent.userChoice.then((choiceResult) => {
+          if (choiceResult.outcome === 'accepted') {
+            console.log('La PWA ha sido instalada');
+          } else {
+            console.log('El usuario no aceptó la instalación');
+          }
+          installEvent = null; // Limpiamos la variable
         });
-    });
+      }
+    }, 1000); // Ajusta el tiempo si lo deseas
+  });
+
+  // Registrar el service worker
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js')
+      .then(() => console.log('Service Worker registrado'))
+      .catch(err => console.error('Error al registrar SW', err));
+  }
 </script>
-<script>
-    if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('https://eskate-prueba-erie.onrender.com/sw.js')
-            .then(() => console.log('Service Worker de la PWA registrado'))
-            .catch(err => console.error('Error al registrar SW de la PWA', err));
-    }
-</script>
+
 </body>
 </html>
