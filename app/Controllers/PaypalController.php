@@ -74,37 +74,45 @@ class PaypalController extends Controller
     }
 
     public function ejecutarPago()
-    {
-        $paymentId = $this->request->getGet('paymentId');
-        $payerId = $this->request->getGet('PayerID');
+{
+    $paymentId = $this->request->getGet('paymentId');
+    $payerId = $this->request->getGet('PayerID');
+    $email = $this->request->getGet('email');
+    $addressId = $this->request->getGet('address_id');
 
-        if (!$paymentId || !$payerId) {
-            return json_encode(['status' => 'error', 'message' => 'Pago no autorizado']);
-        }
+    if (!$paymentId || !$payerId) {
+        log_message('error', 'Payment ID or Payer ID missing');
+        return json_encode(['status' => 'error', 'message' => 'Pago no autorizado']);
+    }
 
+    try {
         $payment = Payment::get($paymentId, $this->apiContext);
         $execution = new PaymentExecution();
         $execution->setPayerId($payerId);
 
-        try {
-            $result = $payment->execute($execution, $this->apiContext);
-            if ($result->getState() === 'approved') {
-                // Aquí guardamos la compra en la base de datos
-                $data = [
-                    'user_id' => session()->get('user_id'),
-                    'email' => $this->request->getGet('email'),
-                    'address_id' => $this->request->getGet('direccion_id'),
-                    'monto' => $result->getTransactions()[0]->getAmount()->getTotal(),
-                    'metodo_pago' => 'paypal',
-                    'status' => 'pagado',
-                    'paypal_order_id' => $paymentId
-                ];
-                $this->compraModel->registrarCompra($data);
-                return json_encode(['status' => 'success', 'message' => 'Pago aprobado']);
-            }
-            return json_encode(['status' => 'error', 'message' => 'Pago no aprobado']);
-        } catch (Exception $e) {
-            return json_encode(['status' => 'error', 'message' => $e->getMessage()]);
+        $result = $payment->execute($execution, $this->apiContext);
+
+        if ($result->getState() === 'approved') {
+            // Procesa la compra aquí...
+            $data = [
+                'user_id' => session()->get('user_id'),
+                'email' => $email,
+                'address_id' => $addressId,
+                'monto' => $result->getTransactions()[0]->getAmount()->getTotal(),
+                'metodo_pago' => 'paypal',
+                'status' => 'pagado',
+                'paypal_order_id' => $paymentId
+            ];
+            $this->compraModel->registrarCompra($data);
+            return json_encode(['status' => 'success', 'message' => 'Pago aprobado']);
         }
+
+        log_message('error', 'Pago no aprobado: ' . $paymentId);
+        return json_encode(['status' => 'error', 'message' => 'Pago no aprobado']);
+    } catch (Exception $e) {
+        log_message('error', 'Error en la ejecución del pago: ' . $e->getMessage());
+        return json_encode(['status' => 'error', 'message' => $e->getMessage()]);
     }
+}
+
 }
