@@ -29,7 +29,7 @@
         "predis/predis": "^1.1 || ^2.0"
     },
     "suggest": {
-        "ext-curl": "If you use CURLRequest class",
+        "ext-curl": "*",
         "ext-dom": "If you use TestResponse",
         "ext-exif": "If you run Image class tests",
         "ext-fileinfo": "Improves mime type detection for files",
