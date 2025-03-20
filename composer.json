@@ -15,7 +15,8 @@
         "ext-mbstring": "*",
         "laminas/laminas-escaper": "^2.13",
         "psr/log": "^3.0",
-        "ext-pgsql": "*" 
+        "ext-pgsql": "*" ,
+        "paypal/rest-api-sdk-php": "^1.14"
     },
     "require-dev": {
         "codeigniter/coding-standard": "^1.7",
@@ -64,4 +65,8 @@
     "scripts": {
         "test": "phpunit"
     }
+    
+    
+    
+    
 }
