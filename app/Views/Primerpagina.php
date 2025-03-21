@@ -285,6 +285,7 @@ footer a:hover {
 <div class="header">
     <h1>E-Skate</h1>
     <div>
+    <button id="installPWA">Instalar la App</button>
         <a href="#quienes-somos">¿Quiénes Somos?</a>
         <a href="#contactanos">Contáctanos</a>
         <a href="<?= site_url('login') ?>">Ingresar</a>
@@ -405,6 +406,36 @@ footer a:hover {
       .catch(err => console.error('Error al registrar SW', err));
   }
 </script>
+<script>
+    document.getElementById('installPWA').addEventListener('click', async () => {
+        try {
+            const response = await fetch('https://eskate-prueba-erie.onrender.com/manifest.json');
+            const manifest = await response.json();
 
+            const link = document.createElement('link');
+            link.rel = 'manifest';
+            link.href = 'https://eskate-prueba-erie.onrender.com/manifest.json';
+            document.head.appendChild(link);
+
+            console.log('Manifest cargado desde la página 2.');
+
+            // Forzar el evento de instalación
+            window.addEventListener('beforeinstallprompt', (event) => {
+                event.preventDefault();
+                event.prompt();
+                event.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('El usuario instaló la PWA');
+                    } else {
+                        console.log('El usuario canceló la instalación');
+                    }
+                });
+            });
+
+        } catch (error) {
+            console.error('Error al cargar el manifest desde la página 2:', error);
+        }
+    });
+</script>
 </body>
 </html>
