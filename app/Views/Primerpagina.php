@@ -276,16 +276,31 @@ footer a:hover {
         font-size: 0.9rem;
         padding: 8px 15px;
     }
+    #InstallButton {
+    background-color: #ffcc00;
+    color: #333;
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    border-radius: 50px;
+    border: none;
+    transition: all 0.3s ease;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+}
+
+#InstallButton:hover {
+    background-color: #ffb700;
+    transform: scale(1.05);
+}
 }
 </style>
-    </style>
 </head>
 <body>
 
 <div class="header">
     <h1>E-Skate</h1>
     <div>
-    <button id="installPWA">Instalar la App</button>
+    <button id="installButton" style="display: none;">Instalar la App</button>
         <a href="#quienes-somos">¿Quiénes Somos?</a>
         <a href="#contactanos">Contáctanos</a>
         <a href="<?= site_url('login') ?>">Ingresar</a>
@@ -405,6 +420,33 @@ footer a:hover {
       .then(() => console.log('Service Worker registrado'))
       .catch(err => console.error('Error al registrar SW', err));
   }
+</script>
+<script>
+  let deferredPrompt;
+  const installButton = document.getElementById('installButton');
+
+  // Detecta si la PWA es instalable
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault(); // Previene la aparición del mensaje de instalación por defecto
+    deferredPrompt = e; // Guarda el evento para dispararlo cuando el usuario haga clic en el botón
+
+    // Muestra el botón de instalación
+    installButton.style.display = 'block';
+
+    // Agrega un listener para el botón
+    installButton.addEventListener('click', () => {
+      installButton.style.display = 'none'; // Esconde el botón
+      deferredPrompt.prompt(); // Muestra el diálogo de instalación
+      deferredPrompt.userChoice.then((choiceResult) => {
+        if (choiceResult.outcome === 'accepted') {
+          console.log('El usuario ha instalado la app');
+        } else {
+          console.log('El usuario rechazó la instalación');
+        }
+        deferredPrompt = null;
+      });
+    });
+  });
 </script>
 </body>
 </html>
