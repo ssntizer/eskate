@@ -1,16 +1,12 @@
-<IfModule mod_headers.c>
-    Header set Access-Control-Allow-Origin "*"
-</IfModule>
-
 <IfModule mod_rewrite.c>
     RewriteEngine On
     RewriteBase /
 
-    # Permitir acceso directo al manifest.json e iconos
+    # Permitir que el manifest.json y los iconos sean accesibles directamente
     RewriteRule ^manifest.json$ - [L]
     RewriteRule ^icons/ - [L]
 
-    # Redirigir todo lo demás a index.php
+    # Reescribir otras URLs a index.php
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteRule ^(.*)$ index.php/$1 [L]
