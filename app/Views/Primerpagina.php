@@ -374,14 +374,16 @@ footer a:hover {
     });
 </script>
 <script>
-  document.getElementById('installButton').addEventListener('click', function () {
-    // Aquí solicitamos al navegador que instale la PWA de la página 2 sin redirigir al usuario
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.ready.then(function(registration) {
-        registration.active.postMessage({ action: 'install' }); // Enviar mensaje al SW para activar la instalación
-      });
-    }
-  });
+  // Verificar si el navegador soporta Service Workers
+  if ('serviceWorker' in navigator) {
+    document.getElementById('installButton').addEventListener('click', function () {
+      // Solicitar al navegador la instalación de la PWA
+      if (navigator.serviceWorker.controller) {
+        navigator.serviceWorker.controller.postMessage({ action: 'install' });
+        console.log("PWA de la página 2 instalada.");
+      }
+    });
+  }
 </script>
 </body>
 </html>
