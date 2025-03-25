@@ -373,10 +373,30 @@ footer a:hover {
         });
     });
 </script>
-
 <script>
+  let installEvent;  // Variable para almacenar el evento de instalación
+
+  // Escuchar el evento 'beforeinstallprompt' para detectar cuando la PWA está lista para instalarse
+  window.addEventListener('beforeinstallprompt', (event) => {
+    event.preventDefault();  // Evita la instalación automática
+
+    installEvent = event;  // Guardamos el evento para usarlo después
+
+    document.getElementById('installButton').style.display = 'block'; // Mostrar el botón de instalación
+  });
+
+  // Listener para cerrar la pestaña cuando la página 2 lo solicite
+  window.addEventListener("message", (event) => {
+    if (event.data === "cerrarPestana") {
+      if (installPopup) {
+        installPopup.close(); // Cierra la ventana emergente si existe
+      }
+    }
+  });
+
+  // Función para abrir la página 2 y esperar la instalación
   document.getElementById('installButton').addEventListener('click', () => {
-    // Configurar la posición y tamaño de la ventana emergente
+    // Obtener el tamaño de la pantalla para centrar la ventana emergente
     const screenWidth = window.screen.width;
     const screenHeight = window.screen.height;
     const popupWidth = 600;
@@ -385,24 +405,19 @@ footer a:hover {
     const topPosition = (screenHeight - popupHeight) / 2;
 
     // Abrir la página 2 en una ventana emergente centrada
-    const installPopup = window.open(
+    installPopup = window.open(
       "https://eskate-prueba-erie.onrender.com",
       "installPopup",
       `width=${popupWidth},height=${popupHeight},top=${topPosition},left=${leftPosition}`
     );
-
-    // Listener para detectar cuando la página 2 envíe un mensaje para cerrar la pestaña
-    window.addEventListener("message", (event) => {
-      if (event.data === "cerrarPestana") {
-        installPopup.close(); // Cierra la ventana emergente
-      }
-      setTimeout(() => {
-  if (!installEvent) {
-    document.getElementById('installButton').style.display = 'block';
-  }
-}, 3000);
-    });
   });
+
+  // 💡 Solución para que el botón se muestre en móviles si el evento no se dispara
+  setTimeout(() => {
+    if (!installEvent) {
+      document.getElementById('installButton').style.display = 'block';
+    }
+  }, 3000); // Si después de 3 segundos no aparece, lo forzamos
 </script>
 </body>
 </html>
