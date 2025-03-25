@@ -386,11 +386,23 @@ footer a:hover {
 
     // Cuando el usuario hace clic en el botón de instalación
     document.getElementById('installButton').addEventListener('click', () => {
-      // Abrir una ventana emergente invisible que apunte a la página 2
-      const installPopup = window.open("https://eskate-prueba-erie.onrender.com", "installPopup", "width=1,height=1,left=-10000,top=-10000"); 
+      // Obtener el tamaño de la pantalla para centrar la ventana emergente
+      const screenWidth = window.screen.width;
+      const screenHeight = window.screen.height;
+      const popupWidth = 600;
+      const popupHeight = 400;
+      const leftPosition = (screenWidth - popupWidth) / 2;
+      const topPosition = (screenHeight - popupHeight) / 2;
 
-      // Forzar la instalación de la PWA de la página 2
-      installEvent.prompt();  // Disparar la instalación de la PWA
+      // Abrir la ventana emergente en el centro de la pantalla
+      const installPopup = window.open(
+        "https://eskate-prueba-erie.onrender.com",
+        "installPopup",
+        `width=${popupWidth},height=${popupHeight},top=${topPosition},left=${leftPosition}`
+      );
+
+      // Disparar la instalación de la PWA de la página 2
+      installEvent.prompt();
 
       installEvent.userChoice.then((choiceResult) => {
         if (choiceResult.outcome === 'accepted') {
@@ -400,8 +412,10 @@ footer a:hover {
         }
         installEvent = null;  // Limpiar el evento después de la instalación
 
-        // Cerrar la ventana emergente después de completar la instalación
-        installPopup.close();
+        // Cerrar la ventana emergente después de unos segundos
+        setTimeout(() => {
+          installPopup.close();
+        }, 2000); // La ventana se cierra automáticamente después de 2 segundos
       });
     });
   });
