@@ -374,16 +374,17 @@ footer a:hover {
     });
 </script>
 <script>
-  // Verificar si el navegador soporta Service Workers
-  if ('serviceWorker' in navigator) {
-    document.getElementById('installButton').addEventListener('click', function () {
-      // Solicitar al navegador la instalación de la PWA
-      if (navigator.serviceWorker.controller) {
-        navigator.serviceWorker.controller.postMessage({ action: 'install' });
-        console.log("PWA de la página 2 instalada.");
-      }
-    });
-  }
+  document.getElementById('installButton').addEventListener('click', function () {
+    // Aquí no necesitamos verificar el Service Worker ni hacer ninguna solicitud
+    // El navegador manejará la instalación de la PWA de la página 2 automáticamente
+    if (window.matchMedia('(display-mode: standalone)').matches) {
+      // Si el navegador soporta instalación de PWA, el proceso será gestionado por el navegador
+      window.location.href = "https://eskate-prueba-erie.onrender.com";  // No hay redirección visible
+    } else {
+      alert("La PWA ya está instalada o no es posible instalarla.");
+    }
+  });
+</script>
 </script>
 </body>
 </html>
