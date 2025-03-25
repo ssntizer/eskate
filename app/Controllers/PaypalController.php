@@ -14,7 +14,7 @@ use PayPal\Api\RedirectUrls;
 use Exception;
 
 // Asegúrate de incluir el autoloader de Composer
-require_once APPPATH . 'vendor/autoload.php';
+require_once FCPATH . '../vendor/autoload.php';
 
 class PaypalController extends Controller
 {

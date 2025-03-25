@@ -1,7 +1,9 @@
-  services:
+services:
   - type: web
     name: eskate
     env: php
-    buildCommand: "composer install"
+    buildCommand: |
+      composer install --no-dev --prefer-dist --optimize-autoloader
+      composer dump-autoload -o
     startCommand: "php -S 0.0.0.0:8080 -t public"
     plan: free
