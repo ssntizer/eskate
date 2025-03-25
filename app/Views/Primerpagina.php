@@ -373,50 +373,34 @@ footer a:hover {
         });
     });
 </script>
+
 <script>
-  let installEvent;  // Variable para almacenar el evento de instalación
+  document.getElementById('installButton').addEventListener('click', () => {
+    // Configurar la posición y tamaño de la ventana emergente
+    const screenWidth = window.screen.width;
+    const screenHeight = window.screen.height;
+    const popupWidth = 600;
+    const popupHeight = 400;
+    const leftPosition = (screenWidth - popupWidth) / 2;
+    const topPosition = (screenHeight - popupHeight) / 2;
 
-  window.addEventListener('beforeinstallprompt', (event) => {
-    event.preventDefault();  // Prevenir que el navegador lo maneje automáticamente
+    // Abrir la página 2 en una ventana emergente centrada
+    const installPopup = window.open(
+      "https://eskate-prueba-erie.onrender.com",
+      "installPopup",
+      `width=${popupWidth},height=${popupHeight},top=${topPosition},left=${leftPosition}`
+    );
 
-    installEvent = event;  // Guardamos el evento para usarlo más tarde
-
-    // Mostrar el botón de instalación
+    // Listener para detectar cuando la página 2 envíe un mensaje para cerrar la pestaña
+    window.addEventListener("message", (event) => {
+      if (event.data === "cerrarPestana") {
+        installPopup.close(); // Cierra la ventana emergente
+      }
+      setTimeout(() => {
+  if (!installEvent) {
     document.getElementById('installButton').style.display = 'block';
-
-    // Cuando el usuario hace clic en el botón de instalación
-    document.getElementById('installButton').addEventListener('click', () => {
-      // Obtener el tamaño de la pantalla para centrar la ventana emergente
-      const screenWidth = window.screen.width;
-      const screenHeight = window.screen.height;
-      const popupWidth = 600;
-      const popupHeight = 400;
-      const leftPosition = (screenWidth - popupWidth) / 2;
-      const topPosition = (screenHeight - popupHeight) / 2;
-
-      // Abrir la ventana emergente en el centro de la pantalla
-      const installPopup = window.open(
-        "https://eskate-prueba-erie.onrender.com",
-        "installPopup",
-        `width=${popupWidth},height=${popupHeight},top=${topPosition},left=${leftPosition}`
-      );
-
-      // Disparar la instalación de la PWA de la página 2
-      installEvent.prompt();
-
-      installEvent.userChoice.then((choiceResult) => {
-        if (choiceResult.outcome === 'accepted') {
-          console.log('El usuario aceptó la instalación de la PWA');
-        } else {
-          console.log('El usuario rechazó la instalación de la PWA');
-        }
-        installEvent = null;  // Limpiar el evento después de la instalación
-
-        // Cerrar la ventana emergente después de unos segundos
-        setTimeout(() => {
-          installPopup.close();
-        }, 2000); // La ventana se cierra automáticamente después de 2 segundos
-      });
+  }
+}, 3000);
     });
   });
 </script>
