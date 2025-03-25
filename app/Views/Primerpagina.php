@@ -285,27 +285,6 @@ footer a:hover {
         font-size: 0.9rem;
         padding: 8px 15px;
     }
-    #installButton {
-    display: none; /* Oculto por defecto */
-    background-color: #ffcc00;
-    color: #333;
-    padding: 15px 30px;
-    font-size: 1.2rem;
-    border-radius: 50px;
-    border: none;
-    transition: all 0.3s ease;
-    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
-    cursor: pointer;
-}
-
-#installButton:hover {
-    background-color: #ffb700;
-    transform: scale(1.05);
-}
-
-#installButton:active {
-    transform: scale(0.98);
-}
 }
 </style>
     </style>
@@ -315,7 +294,7 @@ footer a:hover {
 <div class="header">
     <h1>E-Skate</h1>
     <div>
-    <button id="installButton" class="btn-install">Instalar PWA</button>
+    <button id="installButton" class="btn-main">Instalar PWA</button>
         <a href="#quienes-somos">¿Quiénes Somos?</a>
         <a href="#contactanos">Contáctanos</a>
         <a href="<?= site_url('login') ?>">Ingresar</a>
