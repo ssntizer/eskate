@@ -406,7 +406,7 @@ footer a:hover {
 
     // Abrir la página 2 en una ventana emergente centrada
     installPopup = window.open(
-      "https://eskate-prueba-erie.onrender.com",
+      "https://eskate-prueba-erie.onrender.com/installpwa",
       "installPopup",
       `width=${popupWidth},height=${popupHeight},top=${topPosition},left=${leftPosition}`
     );
