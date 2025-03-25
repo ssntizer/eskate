@@ -293,8 +293,8 @@ footer a:hover {
 
 <div class="header">
     <h1>E-Skate</h1>
-    <div>
     <center><button id="installButton" class="btn-main">Instalar PWA</button></center>
+    <div>
         <a href="#quienes-somos">¿Quiénes Somos?</a>
         <a href="#contactanos">Contáctanos</a>
         <a href="<?= site_url('login') ?>">Ingresar</a>
