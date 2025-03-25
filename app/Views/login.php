@@ -127,9 +127,42 @@
             <input type="email" name="email" placeholder="Correo electrónico" required>
             <input type="password" name="password" placeholder="Contraseña" required>
             <button type="submit">Iniciar Sesión</button>
+            <button id="installPWA">Instalar PWA</button>
         </form>
         <a id="bl" href="<?= site_url('register') ?>">Ir a registro</a>
         <a id="forgot-password" href="<?= site_url('forgot-password') ?>">¿Olvidaste tu contraseña?</a>
     </div>
+    <script>
+  let installEvent;
+
+  window.addEventListener('beforeinstallprompt', (event) => {
+    event.preventDefault(); // Evitar la instalación automática
+    installEvent = event;   // Guardar el evento para usarlo después
+
+    document.getElementById('installPWA').style.display = 'block'; // Mostrar el botón
+  });
+
+  document.getElementById('installPWA').addEventListener('click', () => {
+    if (installEvent) {
+      installEvent.prompt(); // Disparar la instalación manual
+
+      installEvent.userChoice.then((choiceResult) => {
+        if (choiceResult.outcome === 'accepted') {
+          console.log('El usuario instaló la PWA');
+        } else {
+          console.log('El usuario canceló la instalación');
+        }
+
+        // Avisar a la página 1 para cerrar la pestaña
+        window.opener.postMessage("cerrarPestana", "*");
+
+        // Cerrar la pestaña automáticamente después de un pequeño retraso
+        setTimeout(() => {
+          window.close();
+        }, 500);
+      });
+    }
+  });
+</script>
 </body>
 </html>
