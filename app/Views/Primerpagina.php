@@ -374,17 +374,36 @@ footer a:hover {
     });
 </script>
 <script>
-  document.getElementById('installButton').addEventListener('click', function () {
-    // Aquí no necesitamos verificar el Service Worker ni hacer ninguna solicitud
-    // El navegador manejará la instalación de la PWA de la página 2 automáticamente
-    if (window.matchMedia('(display-mode: standalone)').matches) {
-      // Si el navegador soporta instalación de PWA, el proceso será gestionado por el navegador
-      window.location.href = "https://eskate-prueba-erie.onrender.com";  // No hay redirección visible
-    } else {
-      alert("La PWA ya está instalada o no es posible instalarla.");
-    }
+  let installEvent;  // Variable para almacenar el evento
+
+  window.addEventListener('beforeinstallprompt', (event) => {
+    event.preventDefault();  // Prevenir el evento de instalación automático
+
+    // Guardamos el evento de instalación para usarlo más tarde
+    installEvent = event;
+
+    // Mostrar el botón de instalación
+    document.getElementById('installButton').style.display = 'block';
+
+    // Cuando el usuario haga clic en el botón de instalación
+    document.getElementById('installButton').addEventListener('click', () => {
+      if (installEvent) {
+        installEvent.prompt();  // Disparar el prompt de instalación
+        installEvent.userChoice.then((choiceResult) => {
+          if (choiceResult.outcome === 'accepted') {
+            console.log('El usuario aceptó la instalación');
+          } else {
+            console.log('El usuario rechazó la instalación');
+          }
+          installEvent = null;  // Limpiar el evento
+        });
+      }
+    });
   });
-</script>
+
+  window.addEventListener('appinstalled', (event) => {
+    console.log('La PWA ha sido instalada correctamente.');
+  });
 </script>
 </body>
 </html>
