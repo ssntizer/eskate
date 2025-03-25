@@ -1,7 +1,14 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <link rel="manifest" href="/manifest.json">
+<link rel="manifest" href="/manifest.json">
+<script>
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js')
+            .then(() => console.log('Service Worker registrado'))
+            .catch(err => console.error('Error al registrar SW', err));
+    }
+</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>E-Skate: Revoluciona tu Movimiento</title>
@@ -276,31 +283,15 @@ footer a:hover {
         font-size: 0.9rem;
         padding: 8px 15px;
     }
-    #InstallButton {
-    background-color: #ffcc00;
-    color: #333;
-    padding: 15px 30px;
-    font-size: 1.2rem;
-    border-radius: 50px;
-    border: none;
-    transition: all 0.3s ease;
-    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
-    cursor: pointer;
-}
-
-#InstallButton:hover {
-    background-color: #ffb700;
-    transform: scale(1.05);
-}
 }
 </style>
+    </style>
 </head>
 <body>
 
 <div class="header">
     <h1>E-Skate</h1>
     <div>
-    <button id="installButton" style="display: none;">Instalar la App</button>
         <a href="#quienes-somos">¿Quiénes Somos?</a>
         <a href="#contactanos">Contáctanos</a>
         <a href="<?= site_url('login') ?>">Ingresar</a>
@@ -387,66 +378,6 @@ footer a:hover {
         });
     });
 </script>
-<script>
-  let installEvent;
 
-  window.addEventListener('beforeinstallprompt', (event) => {
-    event.preventDefault(); // Prevenimos la instalación automática del navegador
-
-    installEvent = event; // Guardamos el evento para poder dispararlo más tarde
-
-    // Mostrar el botón de instalación solo cuando el usuario esté listo para instalar
-    console.log('La PWA puede ser instalada');
-
-    // Hacer que el navegador registre que el usuario quiere instalar la PWA
-    setTimeout(() => {
-      if (installEvent) {
-        installEvent.prompt(); // Mostrar el prompt de instalación
-        installEvent.userChoice.then((choiceResult) => {
-          if (choiceResult.outcome === 'accepted') {
-            console.log('La PWA ha sido instalada');
-          } else {
-            console.log('El usuario no aceptó la instalación');
-          }
-          installEvent = null; // Limpiar el evento después de usarlo
-        });
-      }
-    }, 1000); // Ajusta el tiempo si lo necesitas
-  });
-
-  // Registrar el Service Worker en la primera página
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/sw.js')
-      .then(() => console.log('Service Worker registrado'))
-      .catch(err => console.error('Error al registrar SW', err));
-  }
-</script>
-<script>
-  let deferredPrompt;
-  const installButton = document.getElementById('installButton');
-
-  // Detecta si la PWA es instalable
-  window.addEventListener('beforeinstallprompt', (e) => {
-    e.preventDefault(); // Previene la aparición del mensaje de instalación por defecto
-    deferredPrompt = e; // Guarda el evento para dispararlo cuando el usuario haga clic en el botón
-
-    // Muestra el botón de instalación
-    installButton.style.display = 'block';
-
-    // Agrega un listener para el botón
-    installButton.addEventListener('click', () => {
-      installButton.style.display = 'none'; // Esconde el botón
-      deferredPrompt.prompt(); // Muestra el diálogo de instalación
-      deferredPrompt.userChoice.then((choiceResult) => {
-        if (choiceResult.outcome === 'accepted') {
-          console.log('El usuario ha instalado la app');
-        } else {
-          console.log('El usuario rechazó la instalación');
-        }
-        deferredPrompt = null;
-      });
-    });
-  });
-</script>
 </body>
 </html>
