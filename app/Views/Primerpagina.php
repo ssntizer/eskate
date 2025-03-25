@@ -34,7 +34,15 @@ body {
     left: 0;
     z-index: 1000; /* Asegura que esté siempre sobre el contenido */
 }
-
+.installButton {
+    background-color: #ffcc00;
+    color: #333;
+    padding: 15px 30px;
+    font-size: 1rem;
+    border-radius: 50px;
+    border: none;
+    transition: all 0.3s ease;
+}
 .header h1 {
     color: #ffcc00;
     margin: 0;
