@@ -514,4 +514,7 @@ public function eskate512()
                           ->setHeader('Cache-Control', 'public, max-age=3600')
                           ->download(FCPATH . 'icons/eskate512x512.png', null);
 }
+public function instalarpwa(){
+    return view ('instalarpwa');
+}
 }
