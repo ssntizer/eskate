@@ -374,33 +374,37 @@ footer a:hover {
     });
 </script>
 <script>
-  let installEvent;  // Variable para almacenar el evento
+  let installEvent;  // Variable para almacenar el evento de instalación
 
+  // Esperamos a que el navegador esté listo para instalar la PWA
   window.addEventListener('beforeinstallprompt', (event) => {
-    event.preventDefault();  // Prevenir el evento de instalación automático
+    event.preventDefault();  // Prevenir la instalación automática
 
-    // Guardamos el evento de instalación para usarlo más tarde
+    // Guardamos el evento para usarlo cuando el usuario haga clic en el botón
     installEvent = event;
 
     // Mostrar el botón de instalación
     document.getElementById('installButton').style.display = 'block';
 
-    // Cuando el usuario haga clic en el botón de instalación
+    // Cuando el usuario hace clic en el botón de instalación
     document.getElementById('installButton').addEventListener('click', () => {
       if (installEvent) {
-        installEvent.prompt();  // Disparar el prompt de instalación
+        // Disparar la instalación de la PWA manualmente
+        installEvent.prompt();
+        
         installEvent.userChoice.then((choiceResult) => {
           if (choiceResult.outcome === 'accepted') {
-            console.log('El usuario aceptó la instalación');
+            console.log('El usuario aceptó la instalación de la PWA');
           } else {
-            console.log('El usuario rechazó la instalación');
+            console.log('El usuario rechazó la instalación de la PWA');
           }
-          installEvent = null;  // Limpiar el evento
+          installEvent = null;  // Limpiar el evento después de la instalación
         });
       }
     });
   });
 
+  // Si la PWA ya fue instalada, manejamos el evento appinstalled
   window.addEventListener('appinstalled', (event) => {
     console.log('La PWA ha sido instalada correctamente.');
   });
