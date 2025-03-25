@@ -20,62 +20,69 @@ class PaypalController extends Controller
 
     public function __construct()
     {
-        $this->compraModel = new CompraModel();
-        $this->apiContext = new ApiContext(
-            new OAuthTokenCredential(
-                'AdGS2GrGBbZXq41yYDW2A-0dVD5avVuWiQO-XQDVAOxMepuO0HmkCL6kFfwIbLLjIc0gT9tB3KmIL0hJ',  // Reemplaza con tus credenciales de PayPal Sandbox
-                'ENwZmSdEKvlXWlybPNngQbhf1KZhN9S_1bVV3lfJbtTFV1oc0waa3RxmYjImQaeeafjMKQe48pbJM07A'
-            )
-        );
-        $this->apiContext->setConfig([
-            'mode' => 'sandbox',
-            'log.LogEnabled' => true,
-            'log.FileName' => '../PayPal.log',
-            'log.LogLevel' => 'DEBUG',
-            'cache.enabled' => true,
-        ]);
+        try {
+            $this->compraModel = new CompraModel();
+            $this->apiContext = new ApiContext(
+                new OAuthTokenCredential(
+                    'AdGS2GrGBbZXq41yYDW2A-0dVD5avVuWiQO-XQDVAOxMepuO0HmkCL6kFfwIbLLjIc0gT9tB3KmIL0hJ',  // Reemplaza con tus credenciales de PayPal Sandbox
+                    'ENwZmSdEKvlXWlybPNngQbhf1KZhN9S_1bVV3lfJbtTFV1oc0waa3RxmYjImQaeeafjMKQe48pbJM07A'
+                )
+            );
+            $this->apiContext->setConfig([
+                'mode' => 'sandbox',
+                'log.LogEnabled' => true,
+                'log.FileName' => '../PayPal.log',
+                'log.LogLevel' => 'DEBUG',
+                'cache.enabled' => true,
+            ]);
+        } catch (Exception $e) {
+            log_message('error', 'Error en la inicialización de PayPal: ' . $e->getMessage());
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Error al inicializar PayPal',
+                'debug_info' => $e->getMessage()
+            ]);
+            exit;
+        }
     }
 
     public function crearPagoPayPal()
     {
-        $usuario_id = session()->get('user_id');
-        if (!$usuario_id) {
-            return json_encode(['status' => 'error', 'message' => 'Usuario no autenticado']);
-        }
-
-        $monto = $this->request->getPost('monto');
-        $direccion_id = $this->request->getPost('direccion');
-        $email = $this->request->getPost('email');
-
-        // Crear objeto Payer
-        $payer = new Payer();
-        $payer->setPaymentMethod('paypal');
-
-        // Crear objeto Amount
-        $amount = new Amount();
-        $amount->setCurrency('USD')->setTotal($monto);
-
-        // Crear objeto Transaction
-        $transaction = new Transaction();
-        $transaction->setAmount($amount)->setDescription("Pago de pedido");
-
-        // Crear las URLs de retorno y cancelación
-        $redirectUrls = new RedirectUrls();
-        $redirectUrls->setReturnUrl(site_url('PaypalController/ejecutarPago'))
-                     ->setCancelUrl(site_url('paypal/cancelarPago'));
-
-        // Crear el objeto Payment
-        $payment = new Payment();
-        $payment->setIntent('sale')
-                ->setPayer($payer)
-                ->setTransactions([$transaction])
-                ->setRedirectUrls($redirectUrls);
-
         try {
-            // Crear el pago
+            $usuario_id = session()->get('user_id');
+            if (!$usuario_id) {
+                throw new Exception('Usuario no autenticado');
+            }
+
+            $monto = $this->request->getPost('monto');
+            $direccion_id = $this->request->getPost('direccion');
+            $email = $this->request->getPost('email');
+
+            if (!$monto || !$direccion_id || !$email) {
+                throw new Exception('Faltan datos obligatorios');
+            }
+
+            $payer = new Payer();
+            $payer->setPaymentMethod('paypal');
+
+            $amount = new Amount();
+            $amount->setCurrency('USD')->setTotal($monto);
+
+            $transaction = new Transaction();
+            $transaction->setAmount($amount)->setDescription("Pago de pedido");
+
+            $redirectUrls = new RedirectUrls();
+            $redirectUrls->setReturnUrl(site_url('PaypalController/ejecutarPago'))
+                        ->setCancelUrl(site_url('paypal/cancelarPago'));
+
+            $payment = new Payment();
+            $payment->setIntent('sale')
+                    ->setPayer($payer)
+                    ->setTransactions([$transaction])
+                    ->setRedirectUrls($redirectUrls);
+
             $payment->create($this->apiContext);
 
-            // Devolver la URL de aprobación de PayPal
             return json_encode([
                 'status' => 'success', 
                 'redirect_url' => $payment->getApprovalLink(),
@@ -86,7 +93,7 @@ class PaypalController extends Controller
                 ]
             ]);
         } catch (Exception $e) {
-            // Mostrar la excepción directamente en la respuesta
+            log_message('error', 'Error al crear el pago: ' . $e->getMessage());
             return json_encode([
                 'status' => 'error', 
                 'message' => 'Error al crear el pago. Por favor, inténtelo de nuevo más tarde.',
@@ -100,66 +107,48 @@ class PaypalController extends Controller
 
     public function ejecutarPago()
     {
-        $paymentId = $this->request->getGet('paymentId');
-        $payerId = $this->request->getGet('PayerID');
-        $email = $this->request->getGet('email');
-        $addressId = $this->request->getGet('address_id');
-
-        if (!$paymentId || !$payerId) {
-            return json_encode([
-                'status' => 'error', 
-                'message' => 'Pago no autorizado',
-                'debug_info' => [
-                    'payment_id' => $paymentId,
-                    'payer_id' => $payerId,
-                ]
-            ]);
-        }
-
         try {
-            // Obtener el pago desde PayPal
+            $paymentId = $this->request->getGet('paymentId');
+            $payerId = $this->request->getGet('PayerID');
+            $email = $this->request->getGet('email');
+            $addressId = $this->request->getGet('address_id');
+
+            if (!$paymentId || !$payerId) {
+                throw new Exception('Pago no autorizado');
+            }
+
             $payment = Payment::get($paymentId, $this->apiContext);
 
-            // Crear objeto PaymentExecution
             $execution = new PaymentExecution();
             $execution->setPayerId($payerId);
 
-            // Ejecutar el pago
             $result = $payment->execute($execution, $this->apiContext);
 
-            // Verificar si el pago fue aprobado
-            if ($result->getState() === 'approved') {
-                // Procesa la compra
-                $data = [
-                    'user_id' => session()->get('user_id'),
-                    'email' => $email,
-                    'address_id' => $addressId,
-                    'monto' => $result->getTransactions()[0]->getAmount()->getTotal(),
-                    'metodo_pago' => 'paypal',
-                    'status' => 'pagado',
-                    'paypal_order_id' => $paymentId
-                ];
-                $this->compraModel->registrarCompra($data);
-                return json_encode([
-                    'status' => 'success', 
-                    'message' => 'Pago aprobado',
-                    'debug_info' => [
-                        'payment_state' => $result->getState(),
-                        'transaction_amount' => $result->getTransactions()[0]->getAmount()->getTotal(),
-                    ]
-                ]);
+            if ($result->getState() !== 'approved') {
+                throw new Exception('Pago no aprobado');
             }
 
+            $data = [
+                'user_id' => session()->get('user_id'),
+                'email' => $email,
+                'address_id' => $addressId,
+                'monto' => $result->getTransactions()[0]->getAmount()->getTotal(),
+                'metodo_pago' => 'paypal',
+                'status' => 'pagado',
+                'paypal_order_id' => $paymentId
+            ];
+            $this->compraModel->registrarCompra($data);
+
             return json_encode([
-                'status' => 'error', 
-                'message' => 'Pago no aprobado',
+                'status' => 'success', 
+                'message' => 'Pago aprobado',
                 'debug_info' => [
                     'payment_state' => $result->getState(),
-                    'payment_id' => $paymentId
+                    'transaction_amount' => $result->getTransactions()[0]->getAmount()->getTotal(),
                 ]
             ]);
         } catch (Exception $e) {
-            // Mostrar la excepción directamente en la respuesta
+            log_message('error', 'Error al ejecutar el pago: ' . $e->getMessage());
             return json_encode([
                 'status' => 'error', 
                 'message' => 'Ocurrió un error al procesar el pago.',
