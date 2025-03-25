@@ -2,13 +2,6 @@
 <html lang="es">
 <head>
 <link rel="manifest" href="/manifest.json">
-<script>
-    if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('/sw.js')
-            .then(() => console.log('Service Worker registrado'))
-            .catch(err => console.error('Error al registrar SW', err));
-    }
-</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>E-Skate: Revoluciona tu Movimiento</title>
@@ -292,6 +285,7 @@ footer a:hover {
 <div class="header">
     <h1>E-Skate</h1>
     <div>
+    <button id="installButton">Instalar PWA</button>
         <a href="#quienes-somos">¿Quiénes Somos?</a>
         <a href="#contactanos">Contáctanos</a>
         <a href="<?= site_url('login') ?>">Ingresar</a>
@@ -378,6 +372,15 @@ footer a:hover {
         });
     });
 </script>
-
+<script>
+  document.getElementById('installButton').addEventListener('click', function () {
+    // Activar el proceso de instalación desde la página 2, pero sin cambiar la URL
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.ready.then(function(registration) {
+        registration.active.postMessage({ action: 'install' }); // Enviar el mensaje para activar la instalación
+      });
+    }
+  });
+</script>
 </body>
 </html>
