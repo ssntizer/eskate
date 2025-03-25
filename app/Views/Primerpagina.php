@@ -286,6 +286,7 @@ footer a:hover {
 <div class="header">
     <h1>E-Skate</h1>
     <div>
+    <button id="installButton">Instalar PWA</button>
         <a href="#quienes-somos">¿Quiénes Somos?</a>
         <a href="#contactanos">Contáctanos</a>
         <a href="<?= site_url('login') ?>">Ingresar</a>
@@ -372,6 +373,15 @@ footer a:hover {
         });
     });
 </script>
-
+<script>
+  document.getElementById('installButton').addEventListener('click', function () {
+    // Aquí solicitamos al navegador que instale la PWA de la página 2 sin redirigir al usuario
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.ready.then(function(registration) {
+        registration.active.postMessage({ action: 'install' }); // Enviar mensaje al SW para activar la instalación
+      });
+    }
+  });
+</script>
 </body>
 </html>
