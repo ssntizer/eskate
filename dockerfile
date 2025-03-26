@@ -18,8 +18,8 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 # Copia el contenido de tu proyecto al contenedor
 COPY . /var/www/html
 
-# Cambia los permisos del directorio writable y vendor
-RUN chown -R www-data:www-data /var/www/html/writable /var/www/html/vendor
+# Cambia los permisos del directorio writable
+RUN chown -R www-data:www-data /var/www/html/writable
 
 # Configura Apache para apuntar al directorio public
 RUN echo "DocumentRoot /var/www/html/public" > /etc/apache2/sites-available/000-default.conf
@@ -30,6 +30,7 @@ RUN a2enmod rewrite
 # Forzar la instalación de Composer y regenerar autoload
 RUN rm -rf /var/www/html/vendor /var/www/html/composer.lock \
     && composer install --no-dev --prefer-dist --optimize-autoloader \
+    && chown -R www-data:www-data /var/www/html/vendor \
     && composer dump-autoload -o
 
 # Expon el puerto 80 para el servidor web
