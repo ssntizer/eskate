@@ -31,9 +31,12 @@ RUN composer install --ignore-platform-reqs --no-dev --prefer-dist --optimize-au
 # Verificar si el archivo composer.lock está presente
 RUN ls -lah /var/www/html/composer.lock
 
-# Cambiar permisos
-RUN chown -R www-data:www-data /var/www/html/vendor
-RUN chmod -R 777 /var/www/html/vendor
+# Cambiar permisos de los directorios importantes
+RUN chown -R www-data:www-data /var/www/html \
+    && chmod -R 775 /var/www/html/writable \
+    && chmod -R 775 /var/www/html/writable/cache \
+    && chmod -R 775 /var/www/html/vendor \
+    && chmod -R 777 /var/www/html/public
 
 # Configurar Apache
 RUN echo "DocumentRoot /var/www/html/public" > /etc/apache2/sites-available/000-default.conf
