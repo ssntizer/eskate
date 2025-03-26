@@ -307,7 +307,7 @@ footer a:hover {
         <h1>Revoluciona tu Movimiento</h1>
         <p>Explora el futuro del transporte con nuestras innovadoras e-skates.</p>
         <a href="<?= site_url('login') ?>" class="btn btn-main">Inicia Sesión para Monitorear tu Skate</a> <!-- Enlace a la página de login -->
-        <center><button id="installButton" class="btn-main">Instalar PWA</button></center>
+        <br><center><button id="installButton" class="btn-main">Instalar PWA</button></center></br>
     </div>
 </section>
 
