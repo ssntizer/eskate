@@ -9,32 +9,26 @@
         "source": "https://github.com/codeigniter4/CodeIgniter4",
         "slack": "https://codeigniterchat.slack.com"
     },
-    
-        "require": {
-            "php": "^8.1",
-            "ext-intl": "*",
-            "ext-mbstring": "*",
-            "laminas/laminas-escaper": "^2.13",
-            "psr/log": "^3.0",
-            "ext-pgsql": "*",
-            "paypal/rest-api-sdk-php": "^1.14"
-        },
-        "replace": {
-            "psr/log": "1.1.4"
-        },
-        "require-dev": {
-            "codeigniter/coding-standard": "^1.7",
-            "fakerphp/faker": "^1.9",
-            "friendsofphp/php-cs-fixer": "^3.47.1",
-            "kint-php/kint": "^5.0.4",
-            "mikey179/vfsstream": "^1.6",
-            "nexusphp/cs-config": "^3.6",
-            "phpunit/phpunit": "^10.5.16",
-            "predis/predis": "^1.1 || ^2.0"
-        }
-    
-    ,
-    "suggest": {    
+    "require": {
+        "php": "^8.1",
+        "ext-intl": "*",
+        "ext-mbstring": "*",
+        "laminas/laminas-escaper": "^2.13",
+        "psr/log": "^3.0",
+        "ext-pgsql": "*",
+        "guzzlehttp/guzzle": "^7.0"
+    },
+    "require-dev": {
+        "codeigniter/coding-standard": "^1.7",
+        "fakerphp/faker": "^1.9",
+        "friendsofphp/php-cs-fixer": "^3.47.1",
+        "kint-php/kint": "^5.0.4",
+        "mikey179/vfsstream": "^1.6",
+        "nexusphp/cs-config": "^3.6",
+        "phpunit/phpunit": "^10.5.16",
+        "predis/predis": "^1.1 || ^2.0"
+    },
+    "suggest": {
         "ext-curl": "*",
         "ext-dom": "If you use TestResponse",
         "ext-exif": "If you run Image class tests",
