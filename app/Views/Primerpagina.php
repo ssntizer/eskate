@@ -48,6 +48,7 @@ body {
     margin: 0;
     font-size: 1.5rem;
     font-family:"Baskervville SC", static;
+    margin-top: 5px;
 }
 
 .header a {
@@ -307,7 +308,7 @@ footer a:hover {
         <h1>Revoluciona tu Movimiento</h1>
         <p>Explora el futuro del transporte con nuestras innovadoras e-skates.</p>
         <a href="<?= site_url('login') ?>" class="btn btn-main">Inicia Sesión para Monitorear tu Skate</a> <!-- Enlace a la página de login -->
-        <br><center><button id="installButton" class="btn-main">Instalar PWA</button></center></br>
+        <center><button id="installButton" class="btn-main">Instalar PWA</button></center>
     </div>
 </section>
 

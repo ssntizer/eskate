@@ -1,7 +1,7 @@
 # Usa una imagen base de PHP 8.1 con Apache
 FROM php:8.1-apache
 
-# Instala las dependencias necesarias para MySQL, oniguruma, cURL, y Composer
+# Instala las dependencias necesarias
 RUN apt-get update && apt-get install -y \
     libicu-dev \
     libmariadb-dev \
@@ -18,20 +18,24 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 # Copia el contenido de tu proyecto al contenedor
 COPY . /var/www/html
 
-# Cambia los permisos del directorio writable
-RUN chown -R www-data:www-data /var/www/html/writable
+# Cambia a la carpeta del proyecto
+WORKDIR /var/www/html
+
+# Establece los permisos correctos antes de instalar Composer
+RUN chown -R www-data:www-data /var/www/html
+
+# Instala las dependencias de Composer de forma segura
+USER www-data
+RUN composer install --no-dev --prefer-dist --optimize-autoloader
+
+# Vuelve al usuario root para continuar con la configuración
+USER root
 
 # Configura Apache para apuntar al directorio public
 RUN echo "DocumentRoot /var/www/html/public" > /etc/apache2/sites-available/000-default.conf
 
 # Habilita mod_rewrite para URLs amigables
 RUN a2enmod rewrite
-
-# Forzar la instalación de Composer y regenerar autoload
-RUN rm -rf /var/www/html/vendor /var/www/html/composer.lock \
-    && composer install --no-dev --prefer-dist --optimize-autoloader \
-    && chown -R www-data:www-data /var/www/html/vendor \
-    && composer dump-autoload -o
 
 # Expon el puerto 80 para el servidor web
 EXPOSE 80
