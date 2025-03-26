@@ -27,11 +27,13 @@ class PaypalController extends Controller
     private function getAccessToken()
     {
         try {
+            // Aumentamos el tiempo de espera (timeout)
             $response = $this->client->post('https://api.sandbox.paypal.com/v1/oauth2/token', [
                 'auth' => [$this->clientId, $this->clientSecret],
                 'form_params' => [
                     'grant_type' => 'client_credentials',
-                ]
+                ],
+                'timeout' => 30,  // Aumentamos el timeout a 30 segundos
             ]);
 
             $data = json_decode($response->getBody(), true);
@@ -56,7 +58,7 @@ class PaypalController extends Controller
         $email = $this->request->getPost('email');
 
         try {
-            // Solicitar el pago a la API de PayPal
+            // Aumentamos el timeout en la solicitud de pago
             $response = $this->client->post('https://api.sandbox.paypal.com/v1/payments/payment', [
                 'headers' => [
                     'Authorization' => 'Bearer ' . $this->accessToken,
@@ -80,7 +82,8 @@ class PaypalController extends Controller
                         'return_url' => site_url('PaypalController/ejecutarPago'),
                         'cancel_url' => site_url('paypal/cancelarPago')
                     ]
-                ]
+                ],
+                'timeout' => 30,  // Aumentamos el timeout a 30 segundos
             ]);
 
             $data = json_decode($response->getBody(), true);
@@ -134,7 +137,7 @@ class PaypalController extends Controller
         }
 
         try {
-            // Ejecutar el pago
+            // Aumentamos el timeout en la solicitud de ejecución del pago
             $response = $this->client->post("https://api.sandbox.paypal.com/v1/payments/payment/{$paymentId}/execute", [
                 'headers' => [
                     'Authorization' => 'Bearer ' . $this->accessToken,
@@ -142,7 +145,8 @@ class PaypalController extends Controller
                 ],
                 'json' => [
                     'payer_id' => $payerId
-                ]
+                ],
+                'timeout' => 30,  // Aumentamos el timeout a 30 segundos
             ]);
 
             $data = json_decode($response->getBody(), true);
