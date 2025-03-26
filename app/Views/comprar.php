@@ -178,7 +178,7 @@
                 return actions.order.create({
                     purchase_units: [{
                         amount: {
-                            value: '100.00'  // Este es un valor de ejemplo. Puedes cambiarlo según lo que el usuario esté comprando.
+                            value: '100.00'  // Este es un valor de ejemplo. Cambia este valor según lo que el usuario esté comprando.
                         }
                     }]
                 });
