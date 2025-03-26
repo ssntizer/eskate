@@ -21,11 +21,15 @@ RUN composer --version
 # Copiar los archivos del proyecto
 COPY . /var/www/html
 
-# Verificar que composer.json existe
+# Verificar que composer.json existe y está en el lugar correcto
 RUN ls -lah /var/www/html/
+RUN cat /var/www/html/composer.json
 
 # Instalar dependencias de Composer con más verbosidad
 RUN composer install --ignore-platform-reqs --no-dev --prefer-dist --optimize-autoloader --verbose || cat /var/www/html/composer.lock
+
+# Verificar si el archivo composer.lock está presente
+RUN ls -lah /var/www/html/composer.lock
 
 # Cambiar permisos
 RUN chown -R www-data:www-data /var/www/html/vendor
