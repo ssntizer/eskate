@@ -37,6 +37,8 @@ class PaypalController extends Controller
             $data = json_decode($response->getBody(), true);
             return $data['access_token'];
         } catch (Exception $e) {
+            echo "<pre>Error al obtener token de acceso:</pre>";
+            echo "<pre>" . $e->getMessage() . "</pre>";
             return json_encode(['status' => 'error', 'message' => 'Error al obtener token de acceso.', 'debug_info' => $e->getMessage()]);
         }
     }
@@ -83,7 +85,7 @@ class PaypalController extends Controller
 
             $data = json_decode($response->getBody(), true);
 
-            // Buscar la URL de aprobación y devolverla
+            // Verificar si se generó correctamente la URL de aprobación
             $approvalLink = null;
             foreach ($data['links'] as $link) {
                 if ($link['rel'] == 'approval_url') {
@@ -91,6 +93,10 @@ class PaypalController extends Controller
                     break;
                 }
             }
+
+            // Muestra la respuesta para depuración
+            echo "<pre>Respuesta PayPal:</pre>";
+            echo "<pre>" . print_r($data, true) . "</pre>";
 
             return json_encode([
                 'status' => 'success',
@@ -101,6 +107,8 @@ class PaypalController extends Controller
                 ]
             ]);
         } catch (Exception $e) {
+            echo "<pre>Error al crear el pago:</pre>";
+            echo "<pre>" . $e->getMessage() . "</pre>";
             return json_encode([
                 'status' => 'error',
                 'message' => 'Error al crear el pago. Por favor, inténtelo de nuevo más tarde.',
@@ -118,6 +126,7 @@ class PaypalController extends Controller
         $addressId = $this->request->getGet('address_id');
 
         if (!$paymentId || !$payerId) {
+            echo "<pre>Faltan parámetros necesarios para ejecutar el pago</pre>";
             return json_encode([
                 'status' => 'error',
                 'message' => 'Pago no autorizado',
@@ -137,6 +146,10 @@ class PaypalController extends Controller
             ]);
 
             $data = json_decode($response->getBody(), true);
+
+            // Muestra la respuesta para depuración
+            echo "<pre>Respuesta de ejecución de pago:</pre>";
+            echo "<pre>" . print_r($data, true) . "</pre>";
 
             // Verificar si el pago fue aprobado
             if ($data['state'] === 'approved') {
@@ -163,6 +176,8 @@ class PaypalController extends Controller
                 'message' => 'Pago no aprobado',
             ]);
         } catch (Exception $e) {
+            echo "<pre>Error al ejecutar el pago:</pre>";
+            echo "<pre>" . $e->getMessage() . "</pre>";
             return json_encode([
                 'status' => 'error',
                 'message' => 'Ocurrió un error al procesar el pago.',

@@ -97,6 +97,7 @@ body {
     border: none;
     transition: all 0.3s ease;
     box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3); /* Sombra suave */
+    margin-top: 5px;
 }
 
 .btn-main:hover {
