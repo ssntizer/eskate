@@ -3,14 +3,9 @@ namespace App\Controllers;
 
 use App\Models\CompraModel;
 use CodeIgniter\Controller;
+use CodeIgniter\HTTP\CURLRequest;
+use Config\Services;
 use Exception;
-
-// Verificar si GuzzleHttp está disponible
-if (!class_exists('GuzzleHttp\Client')) {
-    die("GuzzleHTTP no está instalado. Ejecuta: composer require guzzlehttp/guzzle");
-}
-
-use GuzzleHttp\Client;
 
 class PaypalController extends Controller
 {
@@ -22,34 +17,31 @@ class PaypalController extends Controller
     public function __construct()
     {
         $this->compraModel = new CompraModel();
+        
+        // Configuración desde variables de entorno (recomendado)
         $this->clientId = getenv('PAYPAL_CLIENT_ID') ?: 'AdGS2GrGBbZXq41yYDW2A-0dVD5avVuWiQO-XQDVAOxMepuO0HmkCL6kFfwIbLLjIc0gT9tB3KmIL0hJ';
         $this->clientSecret = getenv('PAYPAL_CLIENT_SECRET') ?: 'ENwZmSdEKvlXWlybPNngQbhf1KZhN9S_1bVV3lfJbtTFV1oc0waa3RxmYjImQaeeafjMKQe48pbJM07A';
         
-        // Configuración robusta del cliente HTTP
-        $this->client = new Client([
-            'base_uri' => 'https://api.sandbox.paypal.com',
-            'timeout' => 30.0,
-            'http_errors' => false,
+        // Configurar el cliente HTTP de CodeIgniter
+        $this->client = Services::curlrequest([
+            'baseURI' => 'https://api.sandbox.paypal.com',
+            'timeout' => 30,
             'headers' => [
                 'Accept' => 'application/json',
-                'Content-Type' => 'application/json'
+                'Accept-Language' => 'en_US'
             ]
         ]);
     }
 
     /**
-     * Obtiene un nuevo token de acceso de PayPal
+     * Obtiene el token de acceso de PayPal
      */
     private function getAccessToken()
     {
         try {
-            $response = $this->client->post('https://api.sandbox.paypal.com/v1/oauth2/token', [
+            $response = $this->client->post('/v1/oauth2/token', [
                 'auth' => [$this->clientId, $this->clientSecret],
-                'form_params' => ['grant_type' => 'client_credentials'],
-                'headers' => [
-                    'Accept' => 'application/json',
-                    'Accept-Language' => 'en_US'
-                ]
+                'form_params' => ['grant_type' => 'client_credentials']
             ]);
 
             $data = json_decode($response->getBody(), true);
@@ -109,12 +101,12 @@ class PaypalController extends Controller
 
         try {
             // Crear pago en PayPal
-            $response = $this->client->post('https://api.sandbox.paypal.com/v1/payments/payment', [
+            $response = $this->client->post('/v1/payments/payment', [
                 'headers' => [
                     'Authorization' => 'Bearer ' . $accessToken,
                     'Content-Type' => 'application/json',
                 ],
-                'json' => [
+                'body' => json_encode([
                     'intent' => 'sale',
                     'payer' => ['payment_method' => 'paypal'],
                     'transactions' => [[
@@ -129,7 +121,7 @@ class PaypalController extends Controller
                         'return_url' => site_url('PaypalController/ejecutarPago') . '?email=' . urlencode($email) . '&address_id=' . $direccion_id,
                         'cancel_url' => site_url('paypal/cancelarPago')
                     ]
-                ]
+                ])
             ]);
 
             $data = json_decode($response->getBody(), true);
@@ -206,13 +198,13 @@ class PaypalController extends Controller
         try {
             // Ejecutar el pago en PayPal
             $response = $this->client->post(
-                "https://api.sandbox.paypal.com/v1/payments/payment/{$paymentId}/execute",
+                "/v1/payments/payment/{$paymentId}/execute",
                 [
                     'headers' => [
                         'Authorization' => 'Bearer ' . $accessToken,
                         'Content-Type' => 'application/json',
                     ],
-                    'json' => ['payer_id' => $payerId]
+                    'body' => json_encode(['payer_id' => $payerId])
                 ]
             );
 
