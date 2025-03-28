@@ -20,7 +20,7 @@ class PayPalController extends Controller
         $client = Services::curlrequest();
         
         try {
-            $response = $client->post('https://api-m.sandbox.paypal.com/v1/oauth2/token', [
+            $response = $client->post('https://api-m.sandbox.paypal.com/v2/checkout/orders/', [
                 'auth' => [$this->clientId, $this->clientSecret],
                 'form_params' => ['grant_type' => 'client_credentials'],
                 'headers' => [
@@ -40,93 +40,72 @@ class PayPalController extends Controller
 
     public function createOrder()
     {
-        try {
-            $input = json_decode(file_get_contents('php://input'), true);
-            $amount = $input['amount'] ?? '10.00';
+        $input = $this->request->getJSON();
+        $amount = $input->amount ?? "10.00"; // Monto por defecto si no se envía
 
-            $accessToken = $this->getAccessToken();
-            if (!$accessToken) {
-                return $this->response
-                    ->setStatusCode(500)
-                    ->setJSON(['error' => 'Failed to get access token']);
-            }
-
-            $client = Services::curlrequest();
-            $response = $client->post('https://api-m.sandbox.paypal.com/v2/checkout/orders', [
-                'headers' => [
-                    'Authorization' => 'Bearer '.$accessToken,
-                    'Content-Type' => 'application/json',
-                    'Prefer' => 'return=representation'
-                ],
-                'json' => [
-                    'intent' => 'CAPTURE',
-                    'purchase_units' => [[
-                        'amount' => [
-                            'currency_code' => 'USD',
-                            'value' => $amount
-                        ]
-                    ]]
-                ],
-                'http_errors' => false
-            ]);
-
-            return $this->response
-                ->setStatusCode($response->getStatusCode())
-                ->setJSON(json_decode($response->getBody(), true));
-
-        } catch (\Exception $e) {
-            log_message('error', 'Create Order Error: '.$e->getMessage());
-            return $this->response
-                ->setStatusCode(500)
-                ->setJSON(['error' => $e->getMessage()]);
+        $accessToken = $this->getAccessToken();
+        if (!$accessToken) {
+            return $this->response->setJSON(["error" => "No se pudo obtener el token"])->setStatusCode(500);
         }
+
+        $url = "https://api-m.sandbox.paypal.com/v2/checkout/orders";
+        $body = json_encode([
+            "intent" => "CAPTURE",
+            "purchase_units" => [
+                [
+                    "amount" => [
+                        "currency_code" => "USD",
+                        "value" => $amount
+                    ]
+                ]
+            ]
+        ]);
+
+        $options = [
+            "http" => [
+                "header" => "Authorization: Bearer $accessToken\r\n" .
+                            "Content-Type: application/json\r\n",
+                "method" => "POST",
+                "content" => $body
+            ]
+        ];
+        $context = stream_context_create($options);
+        $result = file_get_contents($url, false, $context);
+
+        return $this->response->setJSON(json_decode($result, true));
     }
 
+    // Capturar el pago
     public function captureOrder()
     {
-        try {
-            $input = json_decode(file_get_contents('php://input'), true);
-            $orderID = $input['orderID'] ?? null;
+        $input = $this->request->getJSON();
+        $orderID = $input->orderID ?? null;
 
-            if (!$orderID) {
-                return $this->response
-                    ->setStatusCode(400)
-                    ->setJSON(['error' => 'Order ID is required']);
-            }
-
-            $accessToken = $this->getAccessToken();
-            if (!$accessToken) {
-                return $this->response
-                    ->setStatusCode(500)
-                    ->setJSON(['error' => 'Failed to get access token']);
-            }
-
-            $client = Services::curlrequest();
-            $response = $client->post(
-                "https://api-m.sandbox.paypal.com/v2/checkout/orders/{$orderID}/capture",
-                [
-                    'headers' => [
-                        'Authorization' => 'Bearer '.$accessToken,
-                        'Content-Type' => 'application/json'
-                    ],
-                    'http_errors' => false
-                ]
-            );
-
-            $responseData = json_decode($response->getBody(), true);
-
-            // Registrar la compra en tu base de datos aquí
-            // $this->registrarCompra($responseData);
-
-            return $this->response
-                ->setStatusCode($response->getStatusCode())
-                ->setJSON($responseData);
-
-        } catch (\Exception $e) {
-            log_message('error', 'Capture Order Error: '.$e->getMessage());
-            return $this->response
-                ->setStatusCode(500)
-                ->setJSON(['error' => $e->getMessage()]);
+        if (!$orderID) {
+            return $this->response->setJSON(["error" => "No se recibió un Order ID"])->setStatusCode(400);
         }
+
+        $accessToken = $this->getAccessToken();
+        if (!$accessToken) {
+            return $this->response->setJSON(["error" => "No se pudo obtener el token"])->setStatusCode(500);
+        }
+
+        $url = "https://api-m.sandbox.paypal.com/v2/checkout/orders/$orderID/capture";
+        $options = [
+            "http" => [
+                "header" => "Authorization: Bearer $accessToken\r\n" .
+                            "Content-Type: application/json\r\n",
+                "method" => "POST"
+            ]
+        ];
+        $context = stream_context_create($options);
+        $result = file_get_contents($url, false, $context);
+        $resultData = json_decode($result, true);
+        $email = $resultData['payer']['email_address'];
+
+        \Config\Services::sendEmail($email,'¡Gracias por comprar IRConnect!',"<h1>Su compra ha sido cargada en nuestro sistema
+        <br><br>Cuando reciba el producto, ya podrá disfrutar de todas las funciones de IRConnect</h1>");
+
+        return $this->response->setJSON(json_decode($result, true));
     }
 }

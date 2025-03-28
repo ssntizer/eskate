@@ -183,76 +183,37 @@
 
         // Renderizar el botón de PayPal
         paypal.Buttons({
-    createOrder: function() {
-        return fetch('<?= site_url("paypal/createOrder") ?>', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                amount: '100.00' // Reemplaza con el monto real
+        createOrder: function(data, actions) {
+            return fetch("<?= base_url('paypal/createOrder') ?>", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    amount: "59.99" // Monto de la transacción
+                }),
             })
-        })
-        .then(function(res) {
-            if (!res.ok) {
-                return res.json().then(err => { throw err; });
-            }
-            return res.json();
-        })
-        .then(function(data) {
-            if (data.error) {
-                throw new Error(data.error);
-            }
-            return data.id;
-        });
-    },
-    onApprove: function(data) {
-        return fetch('<?= site_url("paypal/captureOrder") ?>', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                orderID: data.orderID
+            .then(response => response.json())
+            .then(order => order.id);
+        },
+
+        onApprove: function(data, actions) {
+            return fetch("<?= base_url('paypal/captureOrder') ?>", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    orderID: data.orderID
+                }),
             })
-        })
-        .then(function(res) {
-            if (!res.ok) {
-                return res.json().then(err => { throw err; });
-            }
-            return res.json();
-        })
-        .then(function(details) {
-            // Mostrar mensaje de éxito
-            $('#transactionResult').html(`
-                <div class="alert alert-success">
-                    <h4>¡Pago completado con éxito!</h4>
-                    <p>ID: ${details.id}</p>
-                    <p>Estado: ${details.status}</p>
-                </div>
-            `).show();
-        })
-        .catch(function(err) {
-            console.error('Error:', err);
-            $('#transactionResult').html(`
-                <div class="alert alert-danger">
-                    <h4>Error en el pago</h4>
-                    <p>${err.message || 'Error al procesar el pago'}</p>
-                </div>
-            `).show();
-        });
-    },
-    onError: function(err) {
-        console.error('PayPal Error:', err);
-        $('#transactionResult').html(`
-            <div class="alert alert-danger">
-                <h4>Error con PayPal</h4>
-                <p>${err.message || 'Ocurrió un error con PayPal'}</p>
-            </div>
-        `).show();
-    }
-}).render('#paypal-button-container');
-    });
-    </script>
+            .then(response => response.json())
+            .then(order => {
+                alert("Pago realizado con éxito. Muchas gracias! En instantes le llegará un mail a la dirección ingresada para la compra. " );
+            })
+            .catch(error => console.error("Error al capturar el pago:", error));
+        }
+    }).render("#paypal-button-container");})
+</script>
 </body>
 </html>
