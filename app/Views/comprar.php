@@ -184,7 +184,7 @@
         // Renderizar el botón de PayPal
         paypal.Buttons({
         createOrder: function(data, actions) {
-            return fetch("<?= base_url('index.php/paypal/createOrder') ?>", {
+            return fetch("<?= base_url('/index.php/paypal/createOrder') ?>", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -198,7 +198,7 @@
         },
 
         onApprove: function(data, actions) {
-            return fetch("<?= base_url('index.php/paypal/captureOrder') ?>", {
+            return fetch("<?= base_url('/index.php/paypal/captureOrder') ?>", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
