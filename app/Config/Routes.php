@@ -33,6 +33,10 @@ $routes->get('/manifest.json', 'AuthController::manifest');
 $routes->get('/icons/eskate192x192.png', 'AuthController::eskate192');
 $routes->get('/icons/eskate512x512.png', 'AuthController::eskate512');
 $routes->get('paypal/crearPago', 'PaypalController::crearPagoPayPal');
-$routes->get('PaypalController/ejecutarPago', 'PaypalController::ejecutarPago');
+$routes->get('paypal/ejecutarPago', 'PaypalController::ejecutarPago');
+$routes->get('compra/completada', 'CompraController::completada');
+$routes->get('compra/error', 'CompraController::error');
 $routes->get('paypal/cancelarPago', 'PaypalController::cancelarPago'); // Si deseas manejar la cancelación de un pago
+$routes->get('compra/completada', 'PaypalController::showSuccessPage');
+$routes->get('compra/error', 'PaypalController::showErrorPage');
 
