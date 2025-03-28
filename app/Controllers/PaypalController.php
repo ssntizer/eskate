@@ -75,10 +75,7 @@ class PayPalController extends Controller
         $input = $this->request->getJSON();
         $orderID = $input->orderID ?? null;
 
-        if (!$orderID) {
-            return $this->response->setJSON(["error" => "No se recibió un Order ID"])->setStatusCode(400);
-        }
-
+      
         $accessToken = $this->getAccessToken();
         if (!$accessToken) {
             return $this->response->setJSON(["error" => "No se pudo obtener el token"])->setStatusCode(500);
