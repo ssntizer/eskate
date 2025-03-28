@@ -107,21 +107,30 @@
         .register-form a#bl:hover {
             color: #00e5ff;
         }
+
+        #transactionResult {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .success-message {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .error-message {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
     </style>
 </head>
 <body>
     <div class="register-form">
-        <?php if (session()->getFlashdata('error')): ?>
-            <div class="error">
-                <?= session()->getFlashdata('error') ?>
-            </div>
-        <?php elseif (session()->getFlashdata('success')): ?>
-            <div class="success">
-                <?= session()->getFlashdata('success') ?>
-            </div>
-        <?php endif; ?>
-
         <h2>Compra Segura</h2>
+
+        <div id="transactionResult"></div>
 
         <select id="paymentMethod" name="payment_method" required>
             <option value="tarjeta" selected>Pagar con Tarjeta</option>
@@ -175,41 +184,59 @@
         // Renderizar el botón de PayPal
         paypal.Buttons({
             createOrder: function(data, actions) {
-                return actions.order.create({
-                    purchase_units: [{
-                        amount: {
-                            value: '100.00'  // Este es un valor de ejemplo. Cambia este valor según lo que el usuario esté comprando.
-                        }
-                    }]
+                // Obtener el monto real de tu sistema (aquí es un ejemplo)
+                const amount = '100.00'; // Reemplaza con el monto real de la compra
+                
+                return fetch('<?= site_url("paypal/createOrder") ?>', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        amount: amount
+                    })
+                }).then(function(res) {
+                    return res.json();
+                }).then(function(data) {
+                    return data.id; // Retorna el ID de la orden
                 });
             },
             onApprove: function(data, actions) {
-                return actions.order.capture().then(function(details) {
-                    // Enviar los detalles del pago al servidor para procesarlo
-                    $.ajax({
-                        url: "<?= site_url('PaypalController/ejecutarPago') ?>",  // Llamada al controlador para ejecutar el pago
-                        type: "GET",
-                        data: {
-                            paymentId: data.orderID,
-                            PayerID: data.payerID,
-                            email: $("input[name='email']").val(),
-                            address_id: $("select[name='address_id']").val()
-                        },
-                        dataType: "json",
-                        success: function(response) {
-                            alert(response.message);
-                            if (response.status === "success") {
-                                window.location.href = "<?= site_url('') ?>";  // Redirigir a la página principal si el pago es exitoso
-                            }
-                        },
-                        error: function(xhr) {
-                            console.error(xhr.responseText);
-                            alert("Hubo un error en la conexión con el servidor.");
-                        }
-                    });
+                return fetch('<?= site_url("paypal/captureOrder") ?>', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        orderID: data.orderID
+                    })
+                }).then(function(res) {
+                    return res.json();
+                }).then(function(details) {
+                    // Mostrar mensaje de éxito en la misma página
+                    const resultDiv = $("#transactionResult");
+                    resultDiv.removeClass('error-message').addClass('success-message');
+                    resultDiv.html(`
+                        <h4>¡Pago completado con éxito!</h4>
+                        <p>ID de transacción: ${details.id}</p>
+                        <p>Monto: ${details.purchase_units[0].amount.value} USD</p>
+                        <p>Se ha enviado un correo de confirmación a ${details.payer.email_address}</p>
+                    `).show();
+                    
+                    // Ocultar el botón de PayPal después del pago exitoso
+                    $("#paypal-button-container").hide();
                 });
+            },
+            onError: function(err) {
+                // Mostrar mensaje de error
+                const resultDiv = $("#transactionResult");
+                resultDiv.removeClass('success-message').addClass('error-message');
+                resultDiv.html(`
+                    <h4>Error en el pago</h4>
+                    <p>${err.message || 'Ocurrió un error al procesar el pago'}</p>
+                `).show();
             }
-        }).render('#paypal-button-container');  // Renderiza el botón de PayPal
+        }).render('#paypal-button-container');
     });
     </script>
 </body>

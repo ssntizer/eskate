@@ -1,161 +1,127 @@
-<?php
+<?php 
 namespace App\Controllers;
 
-use App\Models\CompraModel;
 use CodeIgniter\Controller;
 use Config\Services;
 use Exception;
 
-class PaypalController extends Controller
+class PayPalController extends Controller
 {
-    protected $compraModel;
-    protected $clientId;
-    protected $clientSecret;
+    private $clientId;
+    private $clientSecret;
 
     public function __construct()
     {
-        $this->compraModel = new CompraModel();
         $this->clientId = getenv('PAYPAL_CLIENT_ID');
         $this->clientSecret = getenv('PAYPAL_CLIENT_SECRET');
-        
-        // Verificación explícita de credenciales
-        if (empty($this->clientId) || empty($this->clientSecret)) {
-            die('Credenciales de PayPal no configuradas. Verifica tu archivo .env');
-        }
     }
 
-    protected function getHttpClient()
+    private function getAccessToken()
     {
-        return Services::curlrequest([
-            'base_uri' => 'https://api.sandbox.paypal.com',
-            'timeout' => 60,  // Aumentado a 60 segundos para Render
-            'verify' => false, // Crucial para Render
-            'http_errors' => false,
-            'debug' => true,   // Habilita debug para registrar la comunicación
-            'headers' => [
-                'Accept' => 'application/json',
-                'Accept-Language' => 'en_US',
-                'Cache-Control' => 'no-cache'
+        $context = stream_context_create([
+            "http" => [
+                "header" => "Authorization: Basic " . base64_encode("{$this->clientId}:{$this->clientSecret}\r\n") .
+                            "Content-Type: application/x-www-form-urlencoded\r\n",
+                "method" => "POST",
+                "content" => "grant_type=client_credentials"
             ]
         ]);
+
+        $response = file_get_contents('https://api-m.sandbox.paypal.com/v1/oauth2/token', false, $context);
+        return json_decode($response)->access_token ?? null;
     }
 
-    public function ejecutarPago()
+    public function createOrder()
     {
         try {
-            // 1. Verificación básica de parámetros
-            $paymentId = $this->request->getGet('paymentId');
-            $payerId = $this->request->getGet('PayerID');
-            
-            if (empty($paymentId) || empty($payerId)) {
-                throw new Exception('Parámetros paymentId o PayerID faltantes');
-            }
+            $input = json_decode(file_get_contents('php://input'), true);
+            $amount = $input['amount'] ?? '10.00';
 
-            // 2. Obtener token con reintentos
-            $accessToken = $this->getAccessTokenWithRetry();
-            if (!$accessToken) {
-                throw new Exception('No se pudo obtener token de acceso de PayPal');
-            }
+            $accessToken = $this->getAccessToken();
+            if (!$accessToken) throw new Exception('Error de autenticación');
 
-            // 3. Preparar solicitud
-            $client = $this->getHttpClient();
-            $response = $client->post("/v1/payments/payment/{$paymentId}/execute", [
-                'headers' => [
-                    'Authorization' => 'Bearer '.$accessToken,
-                    'Content-Type' => 'application/json',
-                    'PayPal-Request-Id' => uniqid()
-                ],
-                'body' => json_encode(['payer_id' => $payerId])
-            ]);
-
-            // 4. Procesar respuesta
-            $statusCode = $response->getStatusCode();
-            $body = $response->getBody();
-            $data = json_decode($body, true);
-
-            log_message('info', "Respuesta PayPal - Status: {$statusCode}, Body: {$body}");
-
-            if ($statusCode !== 200) {
-                throw new Exception("Error en API PayPal. Código: {$statusCode}");
-            }
-
-            if (!isset($data['state']) || $data['state'] !== 'approved') {
-                throw new Exception('El pago no fue aprobado por PayPal');
-            }
-
-            // 5. Registrar compra
-            $this->registrarCompra($data, $paymentId, $payerId);
-
-            // 6. Redirigir a éxito
-            return $this->mostrarVistaCompletada($data);
-
-        } catch (Exception $e) {
-            log_message('error', "Error en ejecutarPago: {$e->getMessage()}");
-            return $this->mostrarVistaError($e->getMessage());
-        }
-    }
-
-    protected function getAccessTokenWithRetry($maxRetries = 3)
-    {
-        $retry = 0;
-        while ($retry < $maxRetries) {
-            try {
-                $client = $this->getHttpClient();
-                $response = $client->post('/v1/oauth2/token', [
-                    'auth' => [$this->clientId, $this->clientSecret],
-                    'form_params' => ['grant_type' => 'client_credentials']
-                ]);
-
-                $data = json_decode($response->getBody(), true);
-                return $data['access_token'] ?? null;
-
-            } catch (Exception $e) {
-                log_message('warning', "Intento {$retry} - Error token: {$e->getMessage()}");
-                $retry++;
-                sleep(1); // Espera 1 segundo entre reintentos
-            }
-        }
-        return null;
-    }
-
-    protected function registrarCompra($data, $paymentId, $payerId)
-    {
-        try {
-            $compraData = [
-                'user_id' => session()->get('user_id') ?? 0,
-                'monto' => $data['transactions'][0]['amount']['total'] ?? 0,
-                'metodo_pago' => 'paypal',
-                'status' => 'completado',
-                'paypal_order_id' => $paymentId,
-                'paypal_payer_id' => $payerId,
-                'fecha_creacion' => date('Y-m-d H:i:s'),
-                'paypal_response' => json_encode($data)
+            $data = [
+                "intent" => "CAPTURE",
+                "purchase_units" => [
+                    [
+                        "amount" => [
+                            "currency_code" => "USD",
+                            "value" => $amount
+                        ]
+                    ]
+                ]
             ];
 
-            if (!$this->compraModel->registrarCompra($compraData)) {
-                log_message('error', 'Error al guardar en BD: '.print_r($compraData, true));
-            }
+            $context = stream_context_create([
+                "http" => [
+                    "header" => "Authorization: Bearer $accessToken\r\n" .
+                                "Content-Type: application/json\r\n",
+                    "method" => "POST",
+                    "content" => json_encode($data)
+                ]
+            ]);
+
+            $response = file_get_contents('https://api-m.sandbox.paypal.com/v2/checkout/orders', false, $context);
+            return $this->response->setJSON(json_decode($response, true));
+
         } catch (Exception $e) {
-            log_message('error', "Error al registrar compra: {$e->getMessage()}");
+            return $this->response->setJSON([
+                "error" => $e->getMessage()
+            ])->setStatusCode(500);
         }
     }
 
-    protected function mostrarVistaCompletada($data)
+    public function captureOrder()
     {
-        $viewData = [
-            'success' => 'Pago completado exitosamente',
-            'transaction_id' => $data['id'] ?? '',
-            'amount' => $data['transactions'][0]['amount']['total'] ?? '0.00',
-            'currency' => $data['transactions'][0]['amount']['currency'] ?? 'USD'
-        ];
+        try {
+            $input = json_decode(file_get_contents('php://input'), true);
+            $orderID = $input['orderID'] ?? null;
 
-        return view('completada', $viewData);
+            if (!$orderID) throw new Exception('Order ID requerido');
+
+            $accessToken = $this->getAccessToken();
+            if (!$accessToken) throw new Exception('Error de autenticación');
+
+            $context = stream_context_create([
+                "http" => [
+                    "header" => "Authorization: Bearer $accessToken\r\n" .
+                                "Content-Type: application/json\r\n",
+                    "method" => "POST"
+                ]
+            ]);
+
+            $response = file_get_contents("https://api-m.sandbox.paypal.com/v2/checkout/orders/{$orderID}/capture", false, $context);
+            $result = json_decode($response, true);
+
+            // Enviar email
+            if (isset($result['payer']['email_address'])) {
+                $this->sendConfirmationEmail(
+                    $result['payer']['email_address'],
+                    $result['purchase_units'][0]['amount']['value']
+                );
+            }
+
+            return $this->response->setJSON($result);
+
+        } catch (Exception $e) {
+            return $this->response->setJSON([
+                "error" => $e->getMessage()
+            ])->setStatusCode(500);
+        }
     }
 
-    protected function mostrarVistaError($message)
+    private function sendConfirmationEmail($email, $amount)
     {
-        return view('error_compra', [
-            'error' => $message ?? 'Ocurrió un error desconocido'
-        ]);
+        $mail = \Config\Services::email();
+        
+        $mail->setTo($email);
+        $mail->setSubject('Confirmación de compra');
+        $mail->setMessage("
+            <h1>¡Gracias por tu compra!</h1>
+            <p>Monto: $amount USD</p>
+            <p>Tu pedido está siendo procesado.</p>
+        ");
+        
+        $mail->send();
     }
 }

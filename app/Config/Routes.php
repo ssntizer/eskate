@@ -32,11 +32,5 @@ $routes->get('/obtener-localidades/(:num)', 'AuthController::obtenerLocalidadesP
 $routes->get('/manifest.json', 'AuthController::manifest');
 $routes->get('/icons/eskate192x192.png', 'AuthController::eskate192');
 $routes->get('/icons/eskate512x512.png', 'AuthController::eskate512');
-$routes->get('paypal/crearPago', 'PaypalController::crearPagoPayPal');
-// Permite ambas versiones
-$routes->get('PaypalController/ejecutarPago', 'PaypalController::ejecutarPago');
-$routes->get('paypal/ejecutarPago', 'PaypalController::ejecutarPago');
-$routes->get('compra/completada', 'PaypalController::mostrarVistaCompletada');
-$routes->get('compra/error', 'PaypalController::mostrarVistaError');
-$routes->get('paypal/cancelarPago', 'PaypalController::cancelarPago'); // Si deseas manejar la cancelación de un pago
-
+$routes->post('paypal/createOrder', 'PayPalController::createOrder');
+$routes->post('paypal/captureOrder', 'PayPalController::captureOrder');
