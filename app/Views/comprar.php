@@ -130,56 +130,12 @@
     <div class="register-form">
         <h2>Compra Segura</h2>
 
-        <div id="transactionResult"></div>
-
-        <select id="paymentMethod" name="payment_method" required>
-            <option value="tarjeta" selected>Pagar con Tarjeta</option>
-            <option value="paypal">Pagar con PayPal</option>
-        </select>
-
-        <form id="purchaseForm" method="post" action="<?= site_url('processPurchase') ?>">
-            <input type="hidden" name="user_id" value="<?= session('user_id') ?>">
-            <input type="email" name="email" placeholder="Correo Electrónico" value="<?= old('email') ?>" required>
-
-            <!-- Campos para tarjeta de crédito -->
-            <div id="tarjetaFields">
-                <input type="text" name="card_number" placeholder="Número de Tarjeta" maxlength="16" pattern="\d{16}" required>
-                <input type="text" name="cardholder_name" placeholder="Nombre en la Tarjeta" required>
-                <input type="text" name="expiration_date" placeholder="Fecha de Expiración (MM/AA)" pattern="\d{2}/\d{2}" required>
-                <input type="password" name="security_code" placeholder="Código de Seguridad (CVV)" maxlength="3" pattern="\d{3}" required>
-            </div>
-
-            <!-- Dirección de envío -->
-            <select name="address_id" required>
-                <option value="" disabled selected>Seleccione su dirección</option>
-                <?php foreach ($userAddresses as $address): ?>
-                    <option value="<?= $address['ID_direccion'] ?>">
-                        <?= $address['calle'] ?> (<?= $address['numero'] ?>), <?= $address['localidad_nombre'] ?>, <?= $address['provincia_nombre'] ?>
-                    </option>
-                <?php endforeach; ?>
-            </select>
-
-            <button type="submit" class="btn-tarjeta">Pagar con Tarjeta</button>
-        </form>
-
+        
         <!-- Contenedor para el botón de PayPal -->
         <div id="paypal-button-container" style="display: none;"></div>
     </div>
 
     <script>
-document.addEventListener("DOMContentLoaded", function () {
-    // Mostrar y ocultar los campos según el método de pago
-    document.getElementById("paymentMethod").addEventListener("change", function () {
-        if (this.value === "paypal") {
-            document.getElementById("tarjetaFields").style.display = "none";
-            document.getElementById("purchaseForm").querySelector("button").style.display = "none";
-            document.getElementById("paypal-button-container").style.display = "block";
-        } else {
-            document.getElementById("tarjetaFields").style.display = "block";
-            document.getElementById("purchaseForm").querySelector("button").style.display = "block";
-            document.getElementById("paypal-button-container").style.display = "none";
-        }
-    });
 
     // Renderizar el botón de PayPal
     paypal.Buttons({
@@ -206,7 +162,7 @@ document.addEventListener("DOMContentLoaded", function () {
             .catch(error => console.error("Error al capturar el pago:", error));
         }
     }).render("#paypal-button-container");
-});
+;
 </script>
 </body>
 </html>
