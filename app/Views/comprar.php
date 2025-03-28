@@ -198,7 +198,7 @@
         },
 
         onApprove: function(data, actions) {
-            return fetch("<?= base_url('paypal/captureOrder') ?>", {
+            return fetch("https://eskate.onrender.com/paypal/createOrder') ?>", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
