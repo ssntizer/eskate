@@ -130,9 +130,8 @@
     <div class="register-form">
         <h2>Compra Segura</h2>
 
-        
         <!-- Contenedor para el botón de PayPal -->
-        <div id="paypal-button-container" style="display: none;"></div>
+        <div id="paypal-button-container"></div>
     </div>
 
     <script>
