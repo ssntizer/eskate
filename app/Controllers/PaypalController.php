@@ -6,14 +6,9 @@ use Config\Services;
 
 class PayPalController extends Controller
 {
-    private $clientId;
-    private $clientSecret;
+    private $clientId = "AdGS2GrGBbZXq41yYDW2A-0dVD5avVuWiQO-XQDVAOxMepuO0HmkCL6kFfwIbLLjIc0gT9tB3KmIL0hJ";
+    private $clientSecret ="ENwZmSdEKvlXWlybPNngQbhf1KZhN9S_1bVV3lfJbtTFV1oc0waa3RxmYjImQaeeafjMKQe48pbJM07A"; 
 
-    public function __construct()
-    {
-        $this->clientId = getenv('PAYPAL_CLIENT_ID');
-        $this->clientSecret = getenv('PAYPAL_CLIENT_SECRET');
-    }
 
     private function getAccessToken()
     {
