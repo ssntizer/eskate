@@ -183,60 +183,75 @@
 
         // Renderizar el botón de PayPal
         paypal.Buttons({
-            createOrder: function(data, actions) {
-                // Obtener el monto real de tu sistema (aquí es un ejemplo)
-                const amount = '100.00'; // Reemplaza con el monto real de la compra
-                
-                return fetch('<?= site_url("paypal/createOrder") ?>', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        amount: amount
-                    })
-                }).then(function(res) {
-                    return res.json();
-                }).then(function(data) {
-                    return data.id; // Retorna el ID de la orden
-                });
+    createOrder: function() {
+        return fetch('<?= site_url("paypal/createOrder") ?>', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
             },
-            onApprove: function(data, actions) {
-                return fetch('<?= site_url("paypal/captureOrder") ?>', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        orderID: data.orderID
-                    })
-                }).then(function(res) {
-                    return res.json();
-                }).then(function(details) {
-                    // Mostrar mensaje de éxito en la misma página
-                    const resultDiv = $("#transactionResult");
-                    resultDiv.removeClass('error-message').addClass('success-message');
-                    resultDiv.html(`
-                        <h4>¡Pago completado con éxito!</h4>
-                        <p>ID de transacción: ${details.id}</p>
-                        <p>Monto: ${details.purchase_units[0].amount.value} USD</p>
-                        <p>Se ha enviado un correo de confirmación a ${details.payer.email_address}</p>
-                    `).show();
-                    
-                    // Ocultar el botón de PayPal después del pago exitoso
-                    $("#paypal-button-container").hide();
-                });
-            },
-            onError: function(err) {
-                // Mostrar mensaje de error
-                const resultDiv = $("#transactionResult");
-                resultDiv.removeClass('success-message').addClass('error-message');
-                resultDiv.html(`
-                    <h4>Error en el pago</h4>
-                    <p>${err.message || 'Ocurrió un error al procesar el pago'}</p>
-                `).show();
+            body: JSON.stringify({
+                amount: '100.00' // Reemplaza con el monto real
+            })
+        })
+        .then(function(res) {
+            if (!res.ok) {
+                return res.json().then(err => { throw err; });
             }
-        }).render('#paypal-button-container');
+            return res.json();
+        })
+        .then(function(data) {
+            if (data.error) {
+                throw new Error(data.error);
+            }
+            return data.id;
+        });
+    },
+    onApprove: function(data) {
+        return fetch('<?= site_url("paypal/captureOrder") ?>', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                orderID: data.orderID
+            })
+        })
+        .then(function(res) {
+            if (!res.ok) {
+                return res.json().then(err => { throw err; });
+            }
+            return res.json();
+        })
+        .then(function(details) {
+            // Mostrar mensaje de éxito
+            $('#transactionResult').html(`
+                <div class="alert alert-success">
+                    <h4>¡Pago completado con éxito!</h4>
+                    <p>ID: ${details.id}</p>
+                    <p>Estado: ${details.status}</p>
+                </div>
+            `).show();
+        })
+        .catch(function(err) {
+            console.error('Error:', err);
+            $('#transactionResult').html(`
+                <div class="alert alert-danger">
+                    <h4>Error en el pago</h4>
+                    <p>${err.message || 'Error al procesar el pago'}</p>
+                </div>
+            `).show();
+        });
+    },
+    onError: function(err) {
+        console.error('PayPal Error:', err);
+        $('#transactionResult').html(`
+            <div class="alert alert-danger">
+                <h4>Error con PayPal</h4>
+                <p>${err.message || 'Ocurrió un error con PayPal'}</p>
+            </div>
+        `).show();
+    }
+}).render('#paypal-button-container');
     });
     </script>
 </body>

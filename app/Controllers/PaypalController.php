@@ -3,7 +3,6 @@ namespace App\Controllers;
 
 use CodeIgniter\Controller;
 use Config\Services;
-use Exception;
 
 class PayPalController extends Controller
 {
@@ -18,17 +17,25 @@ class PayPalController extends Controller
 
     private function getAccessToken()
     {
-        $context = stream_context_create([
-            "http" => [
-                "header" => "Authorization: Basic " . base64_encode("{$this->clientId}:{$this->clientSecret}\r\n") .
-                            "Content-Type: application/x-www-form-urlencoded\r\n",
-                "method" => "POST",
-                "content" => "grant_type=client_credentials"
-            ]
-        ]);
+        $client = Services::curlrequest();
+        
+        try {
+            $response = $client->post('https://api-m.sandbox.paypal.com/v1/oauth2/token', [
+                'auth' => [$this->clientId, $this->clientSecret],
+                'form_params' => ['grant_type' => 'client_credentials'],
+                'headers' => [
+                    'Accept' => 'application/json',
+                    'Accept-Language' => 'en_US'
+                ]
+            ]);
 
-        $response = file_get_contents('https://api-m.sandbox.paypal.com/v1/oauth2/token', false, $context);
-        return json_decode($response)->access_token ?? null;
+            $data = json_decode($response->getBody(), true);
+            return $data['access_token'] ?? null;
+
+        } catch (\Exception $e) {
+            log_message('error', 'PayPal Token Error: '.$e->getMessage());
+            return null;
+        }
     }
 
     public function createOrder()
@@ -38,36 +45,40 @@ class PayPalController extends Controller
             $amount = $input['amount'] ?? '10.00';
 
             $accessToken = $this->getAccessToken();
-            if (!$accessToken) throw new Exception('Error de autenticación');
+            if (!$accessToken) {
+                return $this->response
+                    ->setStatusCode(500)
+                    ->setJSON(['error' => 'Failed to get access token']);
+            }
 
-            $data = [
-                "intent" => "CAPTURE",
-                "purchase_units" => [
-                    [
-                        "amount" => [
-                            "currency_code" => "USD",
-                            "value" => $amount
+            $client = Services::curlrequest();
+            $response = $client->post('https://api-m.sandbox.paypal.com/v2/checkout/orders', [
+                'headers' => [
+                    'Authorization' => 'Bearer '.$accessToken,
+                    'Content-Type' => 'application/json',
+                    'Prefer' => 'return=representation'
+                ],
+                'json' => [
+                    'intent' => 'CAPTURE',
+                    'purchase_units' => [[
+                        'amount' => [
+                            'currency_code' => 'USD',
+                            'value' => $amount
                         ]
-                    ]
-                ]
-            ];
-
-            $context = stream_context_create([
-                "http" => [
-                    "header" => "Authorization: Bearer $accessToken\r\n" .
-                                "Content-Type: application/json\r\n",
-                    "method" => "POST",
-                    "content" => json_encode($data)
-                ]
+                    ]]
+                ],
+                'http_errors' => false
             ]);
 
-            $response = file_get_contents('https://api-m.sandbox.paypal.com/v2/checkout/orders', false, $context);
-            return $this->response->setJSON(json_decode($response, true));
+            return $this->response
+                ->setStatusCode($response->getStatusCode())
+                ->setJSON(json_decode($response->getBody(), true));
 
-        } catch (Exception $e) {
-            return $this->response->setJSON([
-                "error" => $e->getMessage()
-            ])->setStatusCode(500);
+        } catch (\Exception $e) {
+            log_message('error', 'Create Order Error: '.$e->getMessage());
+            return $this->response
+                ->setStatusCode(500)
+                ->setJSON(['error' => $e->getMessage()]);
         }
     }
 
@@ -77,51 +88,45 @@ class PayPalController extends Controller
             $input = json_decode(file_get_contents('php://input'), true);
             $orderID = $input['orderID'] ?? null;
 
-            if (!$orderID) throw new Exception('Order ID requerido');
-
-            $accessToken = $this->getAccessToken();
-            if (!$accessToken) throw new Exception('Error de autenticación');
-
-            $context = stream_context_create([
-                "http" => [
-                    "header" => "Authorization: Bearer $accessToken\r\n" .
-                                "Content-Type: application/json\r\n",
-                    "method" => "POST"
-                ]
-            ]);
-
-            $response = file_get_contents("https://api-m.sandbox.paypal.com/v2/checkout/orders/{$orderID}/capture", false, $context);
-            $result = json_decode($response, true);
-
-            // Enviar email
-            if (isset($result['payer']['email_address'])) {
-                $this->sendConfirmationEmail(
-                    $result['payer']['email_address'],
-                    $result['purchase_units'][0]['amount']['value']
-                );
+            if (!$orderID) {
+                return $this->response
+                    ->setStatusCode(400)
+                    ->setJSON(['error' => 'Order ID is required']);
             }
 
-            return $this->response->setJSON($result);
+            $accessToken = $this->getAccessToken();
+            if (!$accessToken) {
+                return $this->response
+                    ->setStatusCode(500)
+                    ->setJSON(['error' => 'Failed to get access token']);
+            }
 
-        } catch (Exception $e) {
-            return $this->response->setJSON([
-                "error" => $e->getMessage()
-            ])->setStatusCode(500);
+            $client = Services::curlrequest();
+            $response = $client->post(
+                "https://api-m.sandbox.paypal.com/v2/checkout/orders/{$orderID}/capture",
+                [
+                    'headers' => [
+                        'Authorization' => 'Bearer '.$accessToken,
+                        'Content-Type' => 'application/json'
+                    ],
+                    'http_errors' => false
+                ]
+            );
+
+            $responseData = json_decode($response->getBody(), true);
+
+            // Registrar la compra en tu base de datos aquí
+            // $this->registrarCompra($responseData);
+
+            return $this->response
+                ->setStatusCode($response->getStatusCode())
+                ->setJSON($responseData);
+
+        } catch (\Exception $e) {
+            log_message('error', 'Capture Order Error: '.$e->getMessage());
+            return $this->response
+                ->setStatusCode(500)
+                ->setJSON(['error' => $e->getMessage()]);
         }
-    }
-
-    private function sendConfirmationEmail($email, $amount)
-    {
-        $mail = \Config\Services::email();
-        
-        $mail->setTo($email);
-        $mail->setSubject('Confirmación de compra');
-        $mail->setMessage("
-            <h1>¡Gracias por tu compra!</h1>
-            <p>Monto: $amount USD</p>
-            <p>Tu pedido está siendo procesado.</p>
-        ");
-        
-        $mail->send();
     }
 }
