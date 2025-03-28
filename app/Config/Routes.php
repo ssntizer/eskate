@@ -37,6 +37,4 @@ $routes->get('paypal/ejecutarPago', 'PaypalController::ejecutarPago');
 $routes->get('compra/completada', 'CompraController::completada');
 $routes->get('compra/error', 'CompraController::error');
 $routes->get('paypal/cancelarPago', 'PaypalController::cancelarPago'); // Si deseas manejar la cancelación de un pago
-$routes->get('compra/completada', 'PaypalController::showSuccessPage');
-$routes->get('compra/error', 'PaypalController::showErrorPage');
 
