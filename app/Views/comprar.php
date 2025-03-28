@@ -167,53 +167,46 @@
     </div>
 
     <script>
-    $(document).ready(function() {
-        // Mostrar u ocultar los campos según el método de pago seleccionado
-        $("#paymentMethod").change(function() {
-            if ($(this).val() === "paypal") {
-                $("#tarjetaFields").hide();
-                $("#purchaseForm button").hide();
-                $("#paypal-button-container").show();
-            } else {
-                $("#tarjetaFields").show();
-                $("#purchaseForm button").show();
-                $("#paypal-button-container").hide();
-            }
-        });
+document.addEventListener("DOMContentLoaded", function () {
+    // Mostrar y ocultar los campos según el método de pago
+    document.getElementById("paymentMethod").addEventListener("change", function () {
+        if (this.value === "paypal") {
+            document.getElementById("tarjetaFields").style.display = "none";
+            document.getElementById("purchaseForm").querySelector("button").style.display = "none";
+            document.getElementById("paypal-button-container").style.display = "block";
+        } else {
+            document.getElementById("tarjetaFields").style.display = "block";
+            document.getElementById("purchaseForm").querySelector("button").style.display = "block";
+            document.getElementById("paypal-button-container").style.display = "none";
+        }
+    });
 
-        // Renderizar el botón de PayPal
-        paypal.Buttons({
-        createOrder: function(data, actions) {
-            return fetch("<?= base_url('/index.php/paypal/createOrder') ?>", {
+    // Renderizar el botón de PayPal
+    paypal.Buttons({
+        createOrder: function (data, actions) {
+            return fetch("<?= base_url('paypal/createOrder') ?>", {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    amount: "59.99" // Monto de la transacción
-                }),
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ amount: "59.99" }) 
             })
             .then(response => response.json())
             .then(order => order.id);
         },
 
-        onApprove: function(data, actions) {
-            return fetch("<?= base_url('/index.php/paypal/captureOrder') ?>", {
+        onApprove: function (data, actions) {
+            return fetch("<?= base_url('paypal/captureOrder') ?>", {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    orderID: data.orderID
-                }),
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ orderID: data.orderID })
             })
             .then(response => response.json())
             .then(order => {
-                alert("Pago realizado con éxito. Muchas gracias! En instantes le llegará un mail a la dirección ingresada para la compra. " );
+                alert("Pago realizado con éxito. Muchas gracias! En instantes le llegará un mail.");
             })
             .catch(error => console.error("Error al capturar el pago:", error));
         }
-    }).render("#paypal-button-container");})
+    }).render("#paypal-button-container");
+});
 </script>
 </body>
 </html>

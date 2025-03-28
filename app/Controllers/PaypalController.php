@@ -20,23 +20,27 @@ class PayPalController extends Controller
         $url = "https://api-m.sandbox.paypal.com/v1/oauth2/token";
         $credentials = base64_encode("$this->clientId:$this->clientSecret");
 
-        $options = [
-            "http" => [
-                "header" => "Authorization: Basic $credentials\r\n" .
-                            "Content-Type: application/x-www-form-urlencoded\r\n",
-                "method" => "POST",
-                "content" => "grant_type=client_credentials"
-            ]
+        $headers = [
+            "Authorization: Basic $credentials",
+            "Content-Type: application/x-www-form-urlencoded"
         ];
-        $context = stream_context_create($options);
-        $result = file_get_contents($url, false, $context);
-        return json_decode($result, true)["access_token"] ?? null;
+
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, "grant_type=client_credentials");
+        $response = curl_exec($ch);
+        curl_close($ch);
+
+        $result = json_decode($response, true);
+        return $result['access_token'] ?? null;
     }
 
     public function createOrder()
     {
         $input = $this->request->getJSON();
-        $amount = $input->amount ?? "10.00"; // Monto por defecto si no se envía
+        $amount = $input->amount ?? "10.00";
 
         $accessToken = $this->getAccessToken();
         if (!$accessToken) {
@@ -56,21 +60,22 @@ class PayPalController extends Controller
             ]
         ]);
 
-        $options = [
-            "http" => [
-                "header" => "Authorization: Bearer $accessToken\r\n" .
-                            "Content-Type: application/json\r\n",
-                "method" => "POST",
-                "content" => $body
-            ]
+        $headers = [
+            "Authorization: Bearer $accessToken",
+            "Content-Type: application/json"
         ];
-        $context = stream_context_create($options);
-        $result = file_get_contents($url, false, $context);
 
-        return $this->response->setJSON(json_decode($result, true));
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $body);
+        $response = curl_exec($ch);
+        curl_close($ch);
+
+        return $this->response->setJSON(json_decode($response, true));
     }
 
-    // Capturar el pago
     public function captureOrder()
     {
         $input = $this->request->getJSON();
@@ -86,21 +91,33 @@ class PayPalController extends Controller
         }
 
         $url = "https://api-m.sandbox.paypal.com/v2/checkout/orders/$orderID/capture";
-        $options = [
-            "http" => [
-                "header" => "Authorization: Bearer $accessToken\r\n" .
-                            "Content-Type: application/json\r\n",
-                "method" => "POST"
-            ]
+        $headers = [
+            "Authorization: Bearer $accessToken",
+            "Content-Type: application/json"
         ];
-        $context = stream_context_create($options);
-        $result = file_get_contents($url, false, $context);
-        $resultData = json_decode($result, true);
-        $email = $resultData['payer']['email_address'];
 
-        \Config\Services::sendEmail($email,'¡Gracias por comprar IRConnect!',"<h1>Su compra ha sido cargada en nuestro sistema
-        <br><br>Cuando reciba el producto, ya podrá disfrutar de todas las funciones de IRConnect</h1>");
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POST, true);
+        $response = curl_exec($ch);
+        curl_close($ch);
 
-        return $this->response->setJSON(json_decode($result, true));
+        $resultData = json_decode($response, true);
+
+        // Enviar correo al comprador
+        if (isset($resultData['payer']['email_address'])) {
+            $email = $resultData['payer']['email_address'];
+
+            \Config\Services::sendEmail(
+                $email,
+                '¡Gracias por comprar IRConnect!',
+                "<h1>Su compra ha sido cargada en nuestro sistema</h1>
+                <br><br>
+                Cuando reciba el producto, ya podrá disfrutar de todas las funciones de IRConnect."
+            );
+        }
+
+        return $this->response->setJSON($resultData);
     }
 }
