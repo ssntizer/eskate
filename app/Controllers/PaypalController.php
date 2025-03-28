@@ -17,25 +17,20 @@ class PayPalController extends Controller
 
     private function getAccessToken()
     {
-        $client = Services::curlrequest();
-        
-        try {
-            $response = $client->post('https://api-m.sandbox.paypal.com/v2/checkout/orders/', [
-                'auth' => [$this->clientId, $this->clientSecret],
-                'form_params' => ['grant_type' => 'client_credentials'],
-                'headers' => [
-                    'Accept' => 'application/json',
-                    'Accept-Language' => 'en_US'
-                ]
-            ]);
+        $url = "https://api-m.sandbox.paypal.com/v1/oauth2/token";
+        $credentials = base64_encode("$this->clientId:$this->clientSecret");
 
-            $data = json_decode($response->getBody(), true);
-            return $data['access_token'] ?? null;
-
-        } catch (\Exception $e) {
-            log_message('error', 'PayPal Token Error: '.$e->getMessage());
-            return null;
-        }
+        $options = [
+            "http" => [
+                "header" => "Authorization: Basic $credentials\r\n" .
+                            "Content-Type: application/x-www-form-urlencoded\r\n",
+                "method" => "POST",
+                "content" => "grant_type=client_credentials"
+            ]
+        ];
+        $context = stream_context_create($options);
+        $result = file_get_contents($url, false, $context);
+        return json_decode($result, true)["access_token"] ?? null;
     }
 
     public function createOrder()
