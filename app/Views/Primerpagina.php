@@ -44,7 +44,7 @@ body {
     transition: all 0.3s ease;
 }
 .header h1 {
-    color: #ffcc00;
+    color: #ffffff;
     margin: 0;
     font-size: 1.5rem;
     font-family:"Baskervville SC", static;
