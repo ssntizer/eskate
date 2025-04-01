@@ -36,7 +36,7 @@ body {
 }
 
 .header h1 {
-    color: #ffcc00;
+    color: #ffffff;
     margin: 0;
     font-size: 1.5rem;
 }
