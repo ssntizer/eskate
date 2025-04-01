@@ -55,35 +55,45 @@ class AuthController extends BaseController
     }
 }
 
-    public function loginUser()
-    {
-        $userModel = new UserModel();
+public function loginUser()
+{
+    $userModel = new UserModel();
 
-        $email = $this->request->getPost('email');
-        $password = $this->request->getPost('password');
+    $email = $this->request->getPost('email');
+    $password = $this->request->getPost('password');
 
-        $user = $userModel->where('email', $email)->first();
+    $user = $userModel->where('email', $email)->first();
 
-        if ($user) {
-            log_message('debug', 'User found: ' . print_r($user, true));
+    if ($user) {
+        log_message('debug', 'User found: ' . print_r($user, true));
 
-            if (password_verify($password, $user['password'])) {
-                log_message('debug', 'Password verified successfully.');
-                session()->set([
-                    'username' => $user['username'],
-                    'user_id' => $user['id'],
-                    'logged_in' => true,
-                ]);
-                return redirect()->to('/list-skates');
-            } else {
-                log_message('debug', 'Password verification failed.');
-                return redirect()->back()->with('error', 'Contraseña incorrecta');
+        if (password_verify($password, $user['password'])) {
+            log_message('debug', 'Password verified successfully.');
+            session()->set([
+                'username' => $user['username'],
+                'user_id' => $user['id'],
+                'logged_in' => true,
+            ]);
+
+            // Verificar si hay una redirección guardada
+            $redirect = session()->get('redirect_after_login');
+            session()->remove('redirect_after_login'); // Eliminar la variable de sesión
+
+            if ($redirect) {
+                return redirect()->to($redirect); // Redirigir a la página guardada
             }
+
+            return redirect()->to('/list-skates'); // Redirigir por defecto si no hay redirección guardada
         } else {
-            log_message('debug', 'User not found with email: ' . $email);
-            return redirect()->back()->with('error', 'Usuario no encontrado');
+            log_message('debug', 'Password verification failed.');
+            return redirect()->back()->with('error', 'Contraseña incorrecta');
         }
+    } else {
+        log_message('debug', 'User not found with email: ' . $email);
+        return redirect()->back()->with('error', 'Usuario no encontrado');
     }
+}
+
 
     public function logout()
     {
@@ -357,6 +367,8 @@ public function comprar()
 {
     // Verificar que el usuario está logueado
     if (!session()->has('user_id')) {
+        // Guardar la URL de redirección en sesión antes de enviar al login
+        session()->set('redirect_after_login', 'comprar');
         return redirect()->to('login');  // Si no está logueado, redirigir al login
     }
 
@@ -389,6 +401,7 @@ public function comprar()
     // Pasar las direcciones a la vista
     return view('comprar', ['userAddresses' => $userAddresses]);
 }
+
 
 public function guardar()
 {
