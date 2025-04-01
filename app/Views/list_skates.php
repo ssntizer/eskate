@@ -167,8 +167,10 @@
 
 <div class="header">
     <h1>Lista de Skates</h1>
-    <a href="<?= site_url('/') ?>" class="btn btn-light">Inicio</a>
-    <a href="<?= site_url('logout') ?>" class="btn btn-light">Cerrar sesión</a>
+    <div class="ml-auto">
+        <a href="<?= site_url('/') ?>" class="btn btn-light">Inicio</a>
+        <a href="<?= site_url('logout') ?>" class="btn btn-light">Cerrar sesión</a>
+    </div>
 </div>
 
 <div class="container">
