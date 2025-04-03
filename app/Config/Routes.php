@@ -33,3 +33,4 @@ $routes->get('/manifest.json', 'AuthController::manifest');
 $routes->get('/icons/eskate192x192.png', 'AuthController::eskate192');
 $routes->get('/icons/eskate512x512.png', 'AuthController::eskate512');
 $routes->get('/instalarpwa', 'AuthController::instalarpwa');
+$routes->get('trayectoria', 'AuthController::trayectoria');
