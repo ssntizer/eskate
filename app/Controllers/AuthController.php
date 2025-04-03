@@ -21,6 +21,11 @@ class AuthController extends BaseController
         return view('register');
     }
 
+    public function trayectoria()
+    {
+        return view('trayectoria.php');
+    }
+
     public function registerUser()
     {
         $userModel = new UserModel();

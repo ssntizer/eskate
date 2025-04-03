@@ -32,6 +32,7 @@ $routes->get('/obtener-localidades/(:num)', 'AuthController::obtenerLocalidadesP
 $routes->get('comprar', 'CompraController::index'); // Página de compra
 $routes->post('processPurchase', 'CompraController::procesarCompra'); // Procesar compra con tarjeta
 $routes->post('PaypalController/simularPagoPayPal', 'PaypalController::simularPagoPayPal'); // Pago con PayPal
+$routes->get('trayectoria', 'AuthController::trayectoria');
 
 
 
