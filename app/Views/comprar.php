@@ -135,93 +135,85 @@
     </div>
 
     <script>
-    // Renderizar el botón de PayPal
+document.addEventListener('DOMContentLoaded', function() {
     paypal.Buttons({
         style: {
-            layout: 'vertical',
-            color: 'gold',
             shape: 'rect',
+            color: 'gold',
+            layout: 'vertical',
             label: 'paypal'
         },
         
         createOrder: function(data, actions) {
-            return fetch("<?= base_url('paypal/createOrder') ?>", {
-                method: "POST",
-                headers: { 
-                    "Content-Type": "application/json",
-                    "X-Requested-With": "XMLHttpRequest"
+            return fetch('/paypal/create-order', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ 
-                    amount: "59.99",
-                    description: "Compra en IRConnect" // Opcional: agregar más datos
-                }) 
-            })
-            .then(response => {
-                if (!response.ok) {
-                    return response.json().then(err => { throw err; });
-                }
-                return response.json();
-            })
-            .then(data => {
-                if (!data.id) {
-                    throw new Error("No se recibió un ID de orden válido");
-                }
-                return data.id;
-            })
-            .catch(error => {
-                console.error("Error al crear la orden:", error);
-                alert("Error al procesar el pago. Por favor intente nuevamente.");
-                throw error; // Esto detiene el flujo de PayPal
-            });
-        },
-
-        onApprove: function(data, actions) {
-            return fetch("<?= base_url('paypal/captureOrder') ?>", {
-                method: "POST",
-                headers: { 
-                    "Content-Type": "application/json",
-                    "X-Requested-With": "XMLHttpRequest"
-                },
-                body: JSON.stringify({ 
-                    orderID: data.orderID 
+                body: JSON.stringify({
+                    amount: '10.00', // Puedes cambiar esto dinámicamente
+                    currency: 'USD'
                 })
             })
-            .then(response => {
+            .then(function(response) {
                 if (!response.ok) {
-                    return response.json().then(err => { throw err; });
+                    throw new Error('Error creating PayPal order');
                 }
                 return response.json();
             })
-            .then(orderData => {
-                // Verificar si el pago fue aprobado
-                if (orderData.status === "COMPLETED") {
-                    // Redirigir o mostrar mensaje de éxito
-                    alert("¡Pago completado con éxito! Recibirá un correo de confirmación.");
-                    
-                    // Opcional: redirigir a página de éxito
-                    // window.location.href = "<?= base_url('gracias') ?>";
-                } else {
-                    throw new Error("El estado del pago no es COMPLETED");
+            .then(function(orderData) {
+                if (!orderData.id) {
+                    throw new Error('Invalid order ID from PayPal');
+                }
+                return orderData.id;
+            })
+            .catch(function(error) {
+                console.error('Error:', error);
+                alert('Error al crear la orden de PayPal. Por favor intenta nuevamente.');
+            });
+        },
+        
+        onApprove: function(data, actions) {
+            return fetch(`/paypal/capture-order/${data.orderID}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
                 }
             })
-            .catch(error => {
-                console.error("Error al capturar el pago:", error);
-                alert("Ocurrió un error al procesar su pago: " + (error.message || "Por favor intente nuevamente."));
+            .then(function(response) {
+                if (!response.ok) {
+                    throw new Error('Error capturing PayPal payment');
+                }
+                return response.json();
+            })
+            .then(function(orderData) {
+                // Redirigir a página de éxito o mostrar mensaje
+                console.log('Capture result', orderData);
+                
+                // Verificar si el pago fue exitoso
+                if (orderData.status === 'COMPLETED') {
+                    window.location.href = '/paypal/success';
+                } else {
+                    alert('El pago no se completó correctamente.');
+                }
+            })
+            .catch(function(error) {
+                console.error('Error:', error);
+                alert('Error al procesar el pago. Por favor intenta nuevamente.');
             });
         },
         
         onError: function(err) {
-            console.error("Error en el flujo de PayPal:", err);
-            alert("Ocurrió un error con PayPal. Por favor intente nuevamente o elija otro método de pago.");
+            console.error('PayPal Error:', err);
+            alert('Ocurrió un error con PayPal. Por favor intenta nuevamente.');
         },
         
         onCancel: function(data) {
-            // El usuario canceló el pago
-            console.log("Pago cancelado por el usuario:", data);
-            // Puedes mostrar un mensaje opcional aquí
+            console.log('Payment cancelled:', data);
+            window.location.href = '/paypal/cancel';
         }
-        
-    }).render("#paypal-button-container");
+    }).render('#paypal-button-container');
+});
 </script>
 
 </body>
