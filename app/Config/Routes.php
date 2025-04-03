@@ -5,7 +5,7 @@ use CodeIgniter\Router\RouteCollection;
 /**
  * @var RouteCollection $routes
  */
-$routes->get('/', 'AuthController::primerpag');
+$routes->get('/', 'AuthController::login');
 $routes->get('/login', 'AuthController::login');
 $routes->post('/loginUser', 'AuthController::loginUser');
 $routes->get('/register', 'AuthController::register');
@@ -29,7 +29,7 @@ $routes->get('comprar', 'AuthController::comprar');
 $routes->get('nuevadireccion', 'AuthController::guardar');
 $routes->post('/direccion/guardarNueva', 'AuthController::guardarNueva');
 $routes->get('/obtener-localidades/(:num)', 'AuthController::obtenerLocalidadesPorProvincia/$1');
-$routes->get('comprar', 'CompraController::index'); // Página de compra
-$routes->post('processPurchase', 'CompraController::procesarCompra'); // Procesar compra con tarjeta
-$routes->post('PaypalController/simularPagoPayPal', 'PaypalController::simularPagoPayPal'); // Pago con PayPal
-$routes->get('trayectoria', 'AuthController::trayectoria');
+$routes->get('/manifest.json', 'AuthController::manifest');
+$routes->get('/icons/eskate192x192.png', 'AuthController::eskate192');
+$routes->get('/icons/eskate512x512.png', 'AuthController::eskate512');
+$routes->get('/instalarpwa', 'AuthController::instalarpwa');
