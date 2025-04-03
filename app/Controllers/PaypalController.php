@@ -10,205 +10,91 @@ class PayPalController extends Controller
     private $clientSecret = "ENwZmSdEKvlXWlybPNngQbhf1KZhN9S_1bVV3lfJbtTFV1oc0waa3RxmYjImQaeeafjMKQe48pbJM07A";
     private $environment = "sandbox";
 
-    private function getApiBaseUrl()
-    {
-        return $this->environment === 'sandbox' 
-            ? 'https://api-m.sandbox.paypal.com' 
-            : 'https://api-m.paypal.com';
-    }
-
-    private function getAccessToken()
-    {
-        $url = $this->getApiBaseUrl() . "/v1/oauth2/token";
-        $credentials = base64_encode("$this->clientId:$this->clientSecret");
-    
-        $ch = curl_init($url);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, [
-            "Authorization: Basic $credentials",
-            "Content-Type: application/x-www-form-urlencoded"
-        ]);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, "grant_type=client_credentials");
-        
-        $response = curl_exec($ch);
-        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        curl_close($ch);
-    
-        if ($httpCode !== 200) {
-            log_message('error', 'PayPal Token Error: ' . $response);
-            return null;
-        }
-    
-        $result = json_decode($response, true);
-        return $result['access_token'] ?? null;
-    }
-
     public function createOrder()
     {
-        try {
-            $input = $this->request->getJSON();
-            if (!$input) {
-                throw new \Exception("Invalid input data");
-            }
-    
-            $amount = $input->amount ?? "10.00";
-            
-            // Validación del monto
-            if (!is_numeric($amount)) {
-                return $this->response->setJSON([
-                    'error' => 'Invalid amount',
-                    'message' => 'Amount must be a numeric value'
-                ])->setStatusCode(400);
-            }
-    
-            $accessToken = $this->getAccessToken();
-            if (!$accessToken) {
-                throw new \Exception("Failed to get PayPal access token");
-            }
-    
-            $url = $this->getApiBaseUrl() . "/v2/checkout/orders";
-            $body = [
-                "intent" => "CAPTURE",
-                "purchase_units" => [
-                    [
-                        "amount" => [
-                            "currency_code" => "USD",
-                            "value" => $amount
-                        ]
+        $input = $this->request->getJSON();
+        $amount = $input->amount ?? "10.00"; // Monto por defecto si no se envía
+
+        $accessToken = $this->getAccessToken();
+        if (!$accessToken) {
+            return $this->response->setJSON(["error" => "No se pudo obtener el token"])->setStatusCode(500);
+        }
+
+        $url = "https://api-m.sandbox.paypal.com/v2/checkout/orders";
+        $body = json_encode([
+            "intent" => "CAPTURE",
+            "purchase_units" => [
+                [
+                    "amount" => [
+                        "currency_code" => "USD",
+                        "value" => $amount
                     ]
                 ]
-            ];
-    
-            $ch = curl_init($url);
-            curl_setopt($ch, CURLOPT_HTTPHEADER, [
-                "Authorization: Bearer $accessToken",
-                "Content-Type: application/json",
-                "Accept: application/json"
-            ]);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($ch, CURLOPT_POST, true);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($body));
-            
-            $response = curl_exec($ch);
-            $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-            curl_close($ch);
-    
-            $result = json_decode($response, true);
-            
-            if ($httpCode !== 200 && $httpCode !== 201) {
-                log_message('error', 'PayPal API Error: ' . print_r($result, true));
-                return $this->response->setJSON([
-                    'error' => 'PayPal API Error',
-                    'details' => $result
-                ])->setStatusCode($httpCode);
-            }
-    
-            // Asegúrate de devolver el ID de la orden en el formato correcto
-            return $this->response->setJSON([
-                'id' => $result['id'],
-                'status' => $result['status'],
-                'links' => $result['links']
-            ]);
-    
-        } catch (\Exception $e) {
-            log_message('error', 'PayPal CreateOrder Exception: ' . $e->getMessage());
-            return $this->response->setJSON([
-                'error' => 'Internal Server Error',
-                'message' => $e->getMessage()
-            ])->setStatusCode(500);
-        }
+            ]
+        ]);
+
+        $options = [
+            "http" => [
+                "header" => "Authorization: Bearer $accessToken\r\n" .
+                            "Content-Type: application/json\r\n",
+                "method" => "POST",
+                "content" => $body
+            ]
+        ];
+        $context = stream_context_create($options);
+        $result = file_get_contents($url, false, $context);
+
+        return $this->response->setJSON(json_decode($result, true));
     }
 
-    public function captureOrder($orderID = null)
+    // Capturar el pago
+    public function captureOrder()
     {
-        if (!$orderID) {
-            $input = $this->request->getJSON();
-            $orderID = $input->orderID ?? $this->request->getVar('orderID');
-        }
+        $input = $this->request->getJSON();
+        $orderID = $input->orderID ?? null;
 
         if (!$orderID) {
-            return $this->response->setJSON([
-                'error' => 'Missing order ID',
-                'message' => 'Order ID is required'
-            ])->setStatusCode(400);
+            return $this->response->setJSON(["error" => "No se recibió un Order ID"])->setStatusCode(400);
         }
 
         $accessToken = $this->getAccessToken();
         if (!$accessToken) {
-            return $this->response->setJSON([
-                'error' => 'Authentication failed',
-                'message' => 'Could not get PayPal access token'
-            ])->setStatusCode(500);
+            return $this->response->setJSON(["error" => "No se pudo obtener el token"])->setStatusCode(500);
         }
 
-        $url = $this->getApiBaseUrl() . "/v2/checkout/orders/$orderID/capture";
-        
-        $ch = curl_init($url);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, [
-            "Authorization: Bearer $accessToken",
-            "Content-Type: application/json"
-        ]);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_POST, true);
-        
-        $response = curl_exec($ch);
-        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        curl_close($ch);
+        $url = "https://api-m.sandbox.paypal.com/v2/checkout/orders/$orderID/capture";
+        $options = [
+            "http" => [
+                "header" => "Authorization: Bearer $accessToken\r\n" .
+                            "Content-Type: application/json\r\n",
+                "method" => "POST"
+            ]
+        ];
+        $context = stream_context_create($options);
+        $result = file_get_contents($url, false, $context);
+        $resultData = json_decode($result, true);
+        $email = $resultData['payer']['email_address'];
 
-        $resultData = json_decode($response, true);
-        
-        if ($httpCode !== 200 && $httpCode !== 201) {
-            log_message('error', 'PayPal Capture Error: ' . $response);
-            return $this->response->setJSON($resultData)
-                                 ->setStatusCode($httpCode);
-        }
+        \Config\Services::sendEmail($email,'¡Gracias por comprar IRConnect!',"<h1>Su compra ha sido cargada en nuestro sistema
+        <br><br>Cuando reciba el producto, ya podrá disfrutar de todas las funciones de IRConnect</h1>");
 
-        // Enviar email si existe dirección
-        if (isset($resultData['payer']['email_address'])) {
-            $email = $resultData['payer']['email_address'];
-            $this->sendConfirmationEmail($email, $orderID);
-        }
-
-        return $this->response->setJSON([
-            'status' => 'success',
-            'data' => $resultData
-        ]);
+        return $this->response->setJSON(json_decode($result, true));
     }
-
-    private function sendConfirmationEmail($email, $orderID)
+    private function getAccessToken()
     {
-        try {
-            $emailService = Services::email();
-            
-            $emailService->setTo($email);
-            $emailService->setFrom('no-reply@irconnect.com', 'IRConnect');
-            $emailService->setSubject('¡Gracias por comprar IRConnect!');
-            $emailService->setMessage("
-                <h1>Su compra ha sido cargada en nuestro sistema</h1>
-                <p>Número de orden: $orderID</p>
-                <p>Cuando reciba el producto, ya podrá disfrutar de todas las funciones de IRConnect</p>
-            ");
-            
-            $emailService->send();
-        } catch (\Exception $e) {
-            log_message('error', 'Email sending failed: ' . $e->getMessage());
-        }
-    }
+        $url = "https://api-m.sandbox.paypal.com/v1/oauth2/token";
+        $credentials = base64_encode("$this->clientId:$this->clientSecret");
 
-    public function success()
-    {
-        return $this->response->setJSON([
-            'status' => 'success',
-            'message' => 'Payment completed successfully'
-        ]);
-    }
-
-    public function cancel()
-    {
-        return $this->response->setJSON([
-            'status' => 'cancelled',
-            'message' => 'Payment was cancelled'
-        ]);
+        $options = [
+            "http" => [
+                "header" => "Authorization: Basic $credentials\r\n" .
+                            "Content-Type: application/x-www-form-urlencoded\r\n",
+                "method" => "POST",
+                "content" => "grant_type=client_credentials"
+            ]
+        ];
+        $context = stream_context_create($options);
+        $result = file_get_contents($url, false, $context);
+        return json_decode($result, true)["access_token"] ?? null;
     }
 }

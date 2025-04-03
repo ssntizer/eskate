@@ -135,69 +135,38 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
     paypal.Buttons({
         createOrder: function(data, actions) {
-            return fetch('/paypal/create-order', {
-                method: 'POST',
+            return fetch("<?= base_url('paypal/createOrder') ?>", {
+                method: "POST",
                 headers: {
-                    'Content-Type': 'application/json',
+                    "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    amount: '10.00' // Cambia esto según tu producto
-                })
+                    amount: "59.99" // Monto de la transacción
+                }),
             })
-            .then(function(response) {
-                if (!response.ok) {
-                    return response.json().then(err => { throw err; });
-                }
-                return response.json();
-            })
-            .then(function(orderData) {
-                if (!orderData.id) {
-                    throw new Error('No order ID received from server');
-                }
-                return orderData.id; // Esto es lo que PayPal espera
-            })
-            .catch(function(error) {
-                console.error('Error:', error);
-                alert('Error creating order: ' + (error.message || 'Unknown error'));
-                throw error; // Esto hace que PayPal muestre su mensaje de error
-            });
+            .then(response => response.json())
+            .then(order => order.id);
         },
-        
+
         onApprove: function(data, actions) {
-            return fetch('/paypal/capture-order/' + data.orderID, {
-                method: 'POST',
+            return fetch("<?= base_url('paypal/captureOrder') ?>", {
+                method: "POST",
                 headers: {
-                    'Content-Type': 'application/json',
-                }
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    orderID: data.orderID
+                }),
             })
-            .then(function(response) {
-                if (!response.ok) {
-                    return response.json().then(err => { throw err; });
-                }
-                return response.json();
+            .then(response => response.json())
+            .then(order => {
+                alert("Pago realizado con éxito. Muchas gracias! En instantes le llegará un mail a la dirección ingresada para la compra. " );
             })
-            .then(function(orderData) {
-                console.log('Capture result', orderData);
-                alert('Transaction completed by ' + 
-                    (orderData.payer.name.given_name || 'the buyer'));
-                // Aquí puedes redirigir o actualizar tu UI
-            })
-            .catch(function(error) {
-                console.error('Error:', error);
-                alert('Error capturing payment: ' + 
-                    (error.message || 'Unknown error'));
-            });
-        },
-        
-        onError: function(err) {
-            console.error('PayPal Error:', err);
-            alert('An error occurred with PayPal. Please try again.');
+            .catch(error => console.error("Error al capturar el pago:", error));
         }
-    }).render('#paypal-button-container');
-});
+    }).render("#paypal-button-container");
 </script>
 
 </body>

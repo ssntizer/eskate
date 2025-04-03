@@ -33,10 +33,5 @@ $routes->get('/manifest.json', 'AuthController::manifest');
 $routes->get('/icons/eskate192x192.png', 'AuthController::eskate192');
 $routes->get('/icons/eskate512x512.png', 'AuthController::eskate512');
 
-$routes->group('paypal', function($routes) {
-    $routes->post('create-order', 'PayPalController::createOrder');
-    $routes->post('capture-order', 'PayPalController::captureOrder');
-    $routes->post('capture-order/(:alphanum)', 'PayPalController::captureOrder/$1');
-    $routes->get('success', 'PayPalController::success');
-    $routes->get('cancel', 'PayPalController::cancel');
-});
+$routes->post("paypal/createOrder", "Home::createOrder");
+$routes->post("paypal/captureOrder", "Home::captureOrder");
