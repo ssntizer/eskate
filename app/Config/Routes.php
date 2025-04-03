@@ -29,9 +29,7 @@ $routes->get('comprar', 'AuthController::comprar');
 $routes->get('nuevadireccion', 'AuthController::guardar');
 $routes->post('/direccion/guardarNueva', 'AuthController::guardarNueva');
 $routes->get('/obtener-localidades/(:num)', 'AuthController::obtenerLocalidadesPorProvincia/$1');
-$routes->get('/manifest.json', 'AuthController::manifest');
-$routes->get('/icons/eskate192x192.png', 'AuthController::eskate192');
-$routes->get('/icons/eskate512x512.png', 'AuthController::eskate512');
-
-$routes->post("paypal/createOrder", "PaypalController::createOrder");
-$routes->post("paypal/captureOrder", "PaypalController::captureOrder");
+$routes->get('comprar', 'CompraController::index'); // Página de compra
+$routes->post('processPurchase', 'CompraController::procesarCompra'); // Procesar compra con tarjeta
+$routes->post('PaypalController/simularPagoPayPal', 'PaypalController::simularPagoPayPal'); // Pago con PayPal
+$routes->get('trayectoria', 'AuthController::trayectoria');
