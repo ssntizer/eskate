@@ -1,11 +1,12 @@
-
 <?php
 // Conectar a la base de datos
 $db = \Config\Database::connect();
-$codigo = 'YYYYY1';
+
+// Obtener el código desde la URL
+$codigo = $_GET['codigo']; // Usa el código de la URL o un valor por defecto
 
 // Obtener los datos del recorrido
-$query = $db->query("SELECT longitud, latitud FROM skate_tracking WHERE codigo = '$codigo' ORDER BY timestamp ASC");
+$query = $db->query("SELECT longitud, latitud FROM skate_tracking WHERE codigo = ?", [$codigo]);
 $waypoints = [];
 
 foreach ($query->getResultArray() as $row) {

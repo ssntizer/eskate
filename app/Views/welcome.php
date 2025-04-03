@@ -144,7 +144,7 @@
 </div>
 <br>
 <center><div>
-<a href="<?= site_url('trayectoria') ?>" class="btn btn-light">Ver trayectoria</a>
+<a href="<?= site_url('trayectoria?codigo=' . $skate['codigo']) ?>" class="btn btn-light">Ver trayectoria</a>
     </div></center>
 <footer>
     <p>&copy; 2025 E-skate - Diseñado para la acción - <a href="mailto:eskatevz@gmail.com">Contáctanos</a></p>
