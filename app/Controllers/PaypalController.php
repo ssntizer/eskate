@@ -46,57 +46,78 @@ class PayPalController extends Controller
 
     public function createOrder()
     {
-        $input = $this->request->getJSON();
-        $amount = $input->amount ?? "10.00";
-        $currency = $input->currency ?? "USD";
-
-        if (!is_numeric($amount)) {
+        try {
+            $input = $this->request->getJSON();
+            if (!$input) {
+                throw new \Exception("Invalid input data");
+            }
+    
+            $amount = $input->amount ?? "10.00";
+            
+            // Validación del monto
+            if (!is_numeric($amount)) {
+                return $this->response->setJSON([
+                    'error' => 'Invalid amount',
+                    'message' => 'Amount must be a numeric value'
+                ])->setStatusCode(400);
+            }
+    
+            $accessToken = $this->getAccessToken();
+            if (!$accessToken) {
+                throw new \Exception("Failed to get PayPal access token");
+            }
+    
+            $url = $this->getApiBaseUrl() . "/v2/checkout/orders";
+            $body = [
+                "intent" => "CAPTURE",
+                "purchase_units" => [
+                    [
+                        "amount" => [
+                            "currency_code" => "USD",
+                            "value" => $amount
+                        ]
+                    ]
+                ]
+            ];
+    
+            $ch = curl_init($url);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, [
+                "Authorization: Bearer $accessToken",
+                "Content-Type: application/json",
+                "Accept: application/json"
+            ]);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($body));
+            
+            $response = curl_exec($ch);
+            $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            curl_close($ch);
+    
+            $result = json_decode($response, true);
+            
+            if ($httpCode !== 200 && $httpCode !== 201) {
+                log_message('error', 'PayPal API Error: ' . print_r($result, true));
+                return $this->response->setJSON([
+                    'error' => 'PayPal API Error',
+                    'details' => $result
+                ])->setStatusCode($httpCode);
+            }
+    
+            // Asegúrate de devolver el ID de la orden en el formato correcto
             return $this->response->setJSON([
-                'error' => 'Invalid amount',
-                'message' => 'Amount must be a number'
-            ])->setStatusCode(400);
-        }
-
-        $accessToken = $this->getAccessToken();
-        if (!$accessToken) {
+                'id' => $result['id'],
+                'status' => $result['status'],
+                'links' => $result['links']
+            ]);
+    
+        } catch (\Exception $e) {
+            log_message('error', 'PayPal CreateOrder Exception: ' . $e->getMessage());
             return $this->response->setJSON([
-                'error' => 'Authentication failed',
-                'message' => 'Could not get PayPal access token'
+                'error' => 'Internal Server Error',
+                'message' => $e->getMessage()
             ])->setStatusCode(500);
         }
-
-        $url = $this->getApiBaseUrl() . "/v2/checkout/orders";
-        $body = [
-            "intent" => "CAPTURE",
-            "purchase_units" => [[
-                "amount" => [
-                    "currency_code" => $currency,
-                    "value" => $amount
-                ]
-            ]]
-        ];
-
-        $ch = curl_init($url);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, [
-            "Authorization: Bearer $accessToken",
-            "Content-Type: application/json",
-            "Accept: application/json"
-        ]);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($body));
-        
-        $response = curl_exec($ch);
-        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        curl_close($ch);
-
-        if ($httpCode !== 200 && $httpCode !== 201) {
-            log_message('error', 'PayPal CreateOrder Error: ' . $response);
-            return $this->response->setJSON(json_decode($response, true))
-                                 ->setStatusCode($httpCode);
-        }
-
-        return $this->response->setJSON(json_decode($response, true));
     }
 
     public function captureOrder($orderID = null)
