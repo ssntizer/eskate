@@ -135,85 +135,46 @@
     </div>
 
     <script>
-document.addEventListener('DOMContentLoaded', function() {
-    paypal.Buttons({
-        style: {
-            shape: 'rect',
-            color: 'gold',
-            layout: 'vertical',
-            label: 'paypal'
-        },
-        
-        createOrder: function(data, actions) {
-            return fetch('/paypal/create-order', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    amount: '10.00', // Puedes cambiar esto dinámicamente
-                    currency: 'USD'
-                })
+paypal.Buttons({
+    createOrder: function(data, actions) {
+        return fetch('/paypal/create-order', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                amount: '10.00' // Cambia esto según tu producto
             })
-            .then(function(response) {
-                if (!response.ok) {
-                    throw new Error('Error creating PayPal order');
-                }
-                return response.json();
-            })
-            .then(function(orderData) {
-                if (!orderData.id) {
-                    throw new Error('Invalid order ID from PayPal');
-                }
-                return orderData.id;
-            })
-            .catch(function(error) {
-                console.error('Error:', error);
-                alert('Error al crear la orden de PayPal. Por favor intenta nuevamente.');
-            });
-        },
-        
-        onApprove: function(data, actions) {
-            return fetch(`/paypal/capture-order/${data.orderID}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                }
-            })
-            .then(function(response) {
-                if (!response.ok) {
-                    throw new Error('Error capturing PayPal payment');
-                }
-                return response.json();
-            })
-            .then(function(orderData) {
-                // Redirigir a página de éxito o mostrar mensaje
-                console.log('Capture result', orderData);
-                
-                // Verificar si el pago fue exitoso
-                if (orderData.status === 'COMPLETED') {
-                    window.location.href = '/paypal/success';
-                } else {
-                    alert('El pago no se completó correctamente.');
-                }
-            })
-            .catch(function(error) {
-                console.error('Error:', error);
-                alert('Error al procesar el pago. Por favor intenta nuevamente.');
-            });
-        },
-        
-        onError: function(err) {
-            console.error('PayPal Error:', err);
-            alert('Ocurrió un error con PayPal. Por favor intenta nuevamente.');
-        },
-        
-        onCancel: function(data) {
-            console.log('Payment cancelled:', data);
-            window.location.href = '/paypal/cancel';
-        }
-    }).render('#paypal-button-container');
-});
+        })
+        .then(res => res.json())
+        .then(order => order.id)
+        .catch(err => {
+            console.error('Create order error:', err);
+            alert('Error creating order');
+        });
+    },
+    
+    onApprove: function(data, actions) {
+        return fetch(`/paypal/capture-order/${data.orderID}`, {
+            method: 'POST'
+        })
+        .then(res => res.json())
+        .then(details => {
+            alert('Transaction completed by ' + (details.payer.name.given_name || 'the buyer'));
+            // Aquí puedes redirigir o actualizar tu UI
+            console.log('Capture result', details);
+        })
+        .catch(err => {
+            console.error('Capture error:', err);
+            alert('Error capturing payment');
+        });
+    },
+    
+    onError: function(err) {
+        console.error('PayPal error:', err);
+        alert('An error occurred with PayPal');
+    }
+}).render('#paypal-button-container');
 </script>
 
 </body>
