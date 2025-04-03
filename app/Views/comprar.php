@@ -135,33 +135,94 @@
     </div>
 
     <script>
-
     // Renderizar el botón de PayPal
     paypal.Buttons({
-        createOrder: function (data, actions) {
+        style: {
+            layout: 'vertical',
+            color: 'gold',
+            shape: 'rect',
+            label: 'paypal'
+        },
+        
+        createOrder: function(data, actions) {
             return fetch("<?= base_url('paypal/createOrder') ?>", {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ amount: "59.99" }) 
+                headers: { 
+                    "Content-Type": "application/json",
+                    "X-Requested-With": "XMLHttpRequest"
+                },
+                body: JSON.stringify({ 
+                    amount: "59.99",
+                    description: "Compra en IRConnect" // Opcional: agregar más datos
+                }) 
             })
-            .then(response => response.json())
-            .then(order => order.id);
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(err => { throw err; });
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (!data.id) {
+                    throw new Error("No se recibió un ID de orden válido");
+                }
+                return data.id;
+            })
+            .catch(error => {
+                console.error("Error al crear la orden:", error);
+                alert("Error al procesar el pago. Por favor intente nuevamente.");
+                throw error; // Esto detiene el flujo de PayPal
+            });
         },
 
-        onApprove: function (data, actions) {
+        onApprove: function(data, actions) {
             return fetch("<?= base_url('paypal/captureOrder') ?>", {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ orderID: data.orderID })
+                headers: { 
+                    "Content-Type": "application/json",
+                    "X-Requested-With": "XMLHttpRequest"
+                },
+                body: JSON.stringify({ 
+                    orderID: data.orderID 
+                })
             })
-            .then(response => response.json())
-            .then(order => {
-                alert("Pago realizado con éxito. Muchas gracias! En instantes le llegará un mail.");
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(err => { throw err; });
+                }
+                return response.json();
             })
-            .catch(error => console.error("Error al capturar el pago:", error));
+            .then(orderData => {
+                // Verificar si el pago fue aprobado
+                if (orderData.status === "COMPLETED") {
+                    // Redirigir o mostrar mensaje de éxito
+                    alert("¡Pago completado con éxito! Recibirá un correo de confirmación.");
+                    
+                    // Opcional: redirigir a página de éxito
+                    // window.location.href = "<?= base_url('gracias') ?>";
+                } else {
+                    throw new Error("El estado del pago no es COMPLETED");
+                }
+            })
+            .catch(error => {
+                console.error("Error al capturar el pago:", error);
+                alert("Ocurrió un error al procesar su pago: " + (error.message || "Por favor intente nuevamente."));
+            });
+        },
+        
+        onError: function(err) {
+            console.error("Error en el flujo de PayPal:", err);
+            alert("Ocurrió un error con PayPal. Por favor intente nuevamente o elija otro método de pago.");
+        },
+        
+        onCancel: function(data) {
+            // El usuario canceló el pago
+            console.log("Pago cancelado por el usuario:", data);
+            // Puedes mostrar un mensaje opcional aquí
         }
+        
     }).render("#paypal-button-container");
-;
 </script>
+
 </body>
 </html>
