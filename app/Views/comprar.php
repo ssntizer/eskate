@@ -28,7 +28,7 @@
             max-width: 400px;
             padding: 40px;
             border-radius: 15px;
-            background: linear-gradient(145deg, #006f99, #008dc2);
+            background: linear-gradient(145deg,rgb(33, 40, 42), #008dc2);
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
             text-align: center;
             color: #fff;
