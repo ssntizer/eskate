@@ -372,15 +372,17 @@ public function enviarmail()
 }
 public function comprar()
 {
+    $session = session();
+    
     // Verificar que el usuario está logueado
-    if (!session()->has('user_id')) {
+    if (!$session->get('logged_in')) {
         // Guardar la URL de redirección en sesión antes de enviar al login
-        session()->set('redirect_after_login', 'comprar');
-        return redirect()->to('login');  // Si no está logueado, redirigir al login
+        $session->set('redirect_url', current_url());
+        return redirect()->to('/login')->with('error', 'Debes iniciar sesión para realizar una compra');
     }
 
     // Obtener el ID del usuario
-    $userId = session()->get('user_id');
+    $userId = $session->get('user_id');
     
     // Obtener las direcciones asociadas a este usuario
     $direccionModel = new DireccionModel();
@@ -388,7 +390,7 @@ public function comprar()
     
     // Verificar si hay direcciones
     if (empty($userAddresses)) {
-        session()->setFlashdata('error', 'No tienes direcciones registradas.');
+        $session->setFlashdata('error', 'No tienes direcciones registradas.');
         return redirect()->to('nuevadireccion');  // Redirigir a la página de registrar nueva dirección
     }
 
@@ -408,7 +410,6 @@ public function comprar()
     // Pasar las direcciones a la vista
     return view('comprar', ['userAddresses' => $userAddresses]);
 }
-
 
 public function guardar()
 {
