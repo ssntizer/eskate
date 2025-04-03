@@ -1,16 +1,21 @@
+
+
 <?php 
 namespace App\Controllers;
 
-use App\Models\skatemodel;
+use App\Models\SkateModel;
+use App\Models\SkateTrackingModel;
 use CodeIgniter\RESTful\ResourceController;
 
 class SkateController extends ResourceController
 {
     protected $skateModel;
+    protected $skateTrackingModel;
 
     public function __construct()
     {
         $this->skateModel = new SkateModel();
+        $this->skateTrackingModel = new SkateTrackingModel();
     }
 
     // Función para recibir datos desde la ESP32 y actualizar los registros
@@ -25,44 +30,47 @@ class SkateController extends ResourceController
         }
     
         // Extraer los datos del JSON
-        $codigo = $json->codigo;
-        $velocidad = $json->velocidad ?? null; // Permitir que sea nulo
-        $bateria = $json->bateria ?? null;     // Permitir que sea nulo
-        $temperatura = $json->temperatura ?? null; // Permitir que sea nulo
-        $longitud = $json->longitud;           // Nuevo
-        $latitud = $json->latitud;             // Nuevo
-        $hora = $json->hora;                   // Nuevo
-    
+        $codigo = $json->codigo ?? null;
+        $velocidad = $json->velocidad ?? null;
+        $bateria = $json->bateria ?? null;
+        $temperatura = $json->temperatura ?? null;
+        $longitud = $json->longitud ?? null;
+        $latitud = $json->latitud ?? null;
+        $hora = $json->hora ?? null;
+
         log_message('debug', 'Datos recibidos: codigo=' . $codigo . ', velocidad=' . $velocidad . ', bateria=' . $bateria . ', temperatura=' . $temperatura . ', longitud=' . $longitud . ', latitud=' . $latitud . ', hora=' . $hora);
     
-        // Verificar si se recibió el código
-        if (!$codigo) {
-            return $this->fail('Faltan datos necesarios: el código es obligatorio.');
+        // Verificar si se recibió el código y la ubicación
+        if (!$codigo || !$longitud || !$latitud) {
+            return $this->fail('Faltan datos necesarios: código, longitud y latitud son obligatorios.');
         }
     
         // Verificar si el código de skate existe
-        $skate = $this->skateModel->getSkateByCode($codigo);
+        $skate = $this->skateModel->where('codigo', $codigo)->first();
     
         if (!$skate) {
             return $this->failNotFound('Skate no encontrado.');
         }
     
-        // Preparar datos para la actualización
+        // Actualizar la tabla skate con la última ubicación y datos generales
         $updateData = [
             'velocidad' => $velocidad,
             'bateria' => $bateria,
             'temperatura' => $temperatura,
             'longitud' => $longitud,
             'latitud' => $latitud,
-            'hora' => $hora,  // Usar la hora recibida
+            'hora' => $hora
         ];
     
-        // Actualizar la tabla skate usando el campo "codigo"
-        if ($this->skateModel->where('codigo', $codigo)->set($updateData)->update()) {
-            return $this->respond(['message' => 'Datos actualizados correctamente.'], 200);
-        } else {
-            return $this->fail('No se pudieron actualizar los datos del skate.');
-        }
+        $this->skateModel->where('codigo', $codigo)->set($updateData)->update();
+
+        // Insertar la nueva ubicación en skate_tracking
+        $this->skateTrackingModel->insert([
+            'codigo' => $codigo,
+            'longitud' => $longitud,
+            'latitud' => $latitud
+        ]);
+
+        return $this->respond(['message' => 'Datos guardados correctamente.'], 200);
     }
 }
-

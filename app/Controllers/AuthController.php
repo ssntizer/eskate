@@ -1,3 +1,4 @@
+
 <?php
 namespace App\Controllers;
 
@@ -19,6 +20,11 @@ class AuthController extends BaseController
     public function register()
     {
         return view('register');
+    }
+
+    public function trayectoria()
+    {
+        return view('trayectoria.php');
     }
 
     public function registerUser()
@@ -88,7 +94,7 @@ class AuthController extends BaseController
     public function logout()
     {
         session()->destroy();
-        return redirect()->to('/');
+        return redirect()->to('/primerpagina');
     }
 
     public function listSkates()
@@ -491,30 +497,5 @@ public function obtenerLocalidadesPorProvincia($provinciaId)
         return $this->response->setStatusCode(404, 'No se encontraron localidades');
     }
 }
-public function manifest()
-{
-    // Enviar el archivo manifest.json
-    return $this->response->setHeader('Content-Type', 'application/json')
-                          ->setHeader('Cache-Control', 'public, max-age=3600')
-                          ->download(FCPATH . 'manifest.json', null);
-}
 
-public function eskate192()
-{
-    // Enviar el archivo eskate192x192.png
-    return $this->response->setHeader('Content-Type', 'image/png')
-                          ->setHeader('Cache-Control', 'public, max-age=3600')
-                          ->download(FCPATH . 'icons/eskate192x192.png', null);
-}
-
-public function eskate512()
-{
-    // Enviar el archivo eskate512x512.png
-    return $this->response->setHeader('Content-Type', 'image/png')
-                          ->setHeader('Cache-Control', 'public, max-age=3600')
-                          ->download(FCPATH . 'icons/eskate512x512.png', null);
-}
-public function instalarpwa(){
-    return view ('instalarpwa');
-}
 }
