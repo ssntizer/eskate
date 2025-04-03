@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -140,9 +142,12 @@
         </div>
     </div>
 </div>
-
+<br>
+<center><div>
+<a href="<?= site_url('trayectoria') ?>" class="btn btn-light">Ver trayectoria</a>
+    </div></center>
 <footer>
-    <p>&copy; 2024 E-skate - Diseñado para la acción - <a href="mailto:eskatevz@gmail.com">Contáctanos</a></p>
+    <p>&copy; 2025 E-skate - Diseñado para la acción - <a href="mailto:eskatevz@gmail.com">Contáctanos</a></p>
 </footer>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
@@ -151,5 +156,4 @@
 
 </body>
 </html>
-
 
