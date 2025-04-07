@@ -2,11 +2,11 @@
 <html lang="es">
 <head>
 <link rel="manifest" href="/manifest.json">
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>E-Skate: Revoluciona tu Movimiento</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Baskervville&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <style>
        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
 
@@ -18,9 +18,10 @@ body {
     font-family: 'Montserrat', sans-serif;
     margin: 0;
     padding: 0;
+    padding-top: 70px; /* Espacio para el header fijo */
 }
 
-/* Header */
+/* Header mejorado */
 .header {
     background-color: #005f87; /* Color de fondo del encabezado */
     padding: 15px;
@@ -33,270 +34,507 @@ body {
     top: 0;
     left: 0;
     z-index: 1000; /* Asegura que esté siempre sobre el contenido */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
-.installButton {
-    background-color: #ffcc00;
-    color: #333;
-    padding: 15px 30px;
-    font-size: 1rem;
-    border-radius: 50px;
-    border: none;
-    transition: all 0.3s ease;
-}
+
 .header h1 {
     color: #ffffff;
     margin: 0;
-    font-size: 1.5rem;
-    font-family:"Baskervville SC", static;
-    margin-top: 5px;
+    font-size: 1.8rem;
+    font-family: 'Baskervville', serif;
+    font-weight: bold;
+    letter-spacing: 1px;
 }
 
-.header a {
-    color: #ffcc00;
+.nav-links {
+    display: flex;
+    gap: 25px;
+}
+
+.nav-links a {
+    color: #ffffff;
     text-decoration: none;
-    margin-left: 20px;
-    font-size: 1.2rem;
-    transition: color 0.3s ease;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    padding: 8px 15px;
+    border-radius: 30px;
+    position: relative;
+    font-weight: 500;
 }
 
-.header a:hover {
-    color: #ffb700;
+.nav-links a:hover {
+    color: #ffcc00;
+    background-color: rgba(255, 204, 0, 0.1);
 }
 
-/* Sección Hero */
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #ffcc00;
+    transition: width 0.3s ease;
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+/* Efecto de gradiente en el título principal */
+.gradient-text {
+    background: linear-gradient(90deg, #ffffff 0%, #ffffff 50%, #ffcc00 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    background-size: 200% auto;
+    animation: gradient 3s ease infinite;
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% center;
+    }
+    50% {
+        background-position: 100% center;
+    }
+    100% {
+        background-position: 0% center;
+    }
+}
+
+/* Sección Hero mejorada */
 .hero {
-    background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('https://example.com/hero-image.jpg'); /* Imagen con superposición */
+    background: linear-gradient(135deg, rgba(0, 113, 156, 0.9) 0%, rgba(0, 95, 135, 0.9) 100%), 
+                url('https://images.unsplash.com/photo-1576435728678-68d0fbf94e91?ixlib=rb-1.2.1&auto=format&fit=crop&w=1352&q=80');
     background-size: cover;
     background-position: center;
-    height: 100vh;
+    height: calc(100vh - 70px);
     display: flex;
     justify-content: center;
     align-items: center;
     color: #fff;
     text-align: center;
-    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2); /* Sombra */
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(0,95,135,0.5) 100%);
+}
+
+.hero .container {
+    position: relative;
+    z-index: 1;
 }
 
 .hero h1 {
-    font-size: 4rem;
+    font-size: 4.5rem;
     font-weight: 700;
-    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5); /* Sombra en el texto */
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .hero p {
     font-size: 1.5rem;
-    margin-bottom: 30px;
+    margin-bottom: 40px;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
 }
 
+/* Botones mejorados */
 .btn-main {
     background-color: #ffcc00;
     color: #333;
-    padding: 15px 30px;
+    padding: 15px 35px;
     font-size: 1.2rem;
     border-radius: 50px;
     border: none;
-    transition: all 0.3s ease;
-    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3); /* Sombra suave */
-    margin-top: 5px;
+    transition: all 0.4s ease;
+    box-shadow: 0 4px 15px rgba(255, 204, 0, 0.3);
+    font-weight: 600;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.btn-main::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    background-color: #ffb700;
+    transition: width 0.4s ease;
+    z-index: -1;
+    border-radius: 50px;
 }
 
 .btn-main:hover {
-    background-color: #ffb700;
-    transform: scale(1.05); /* Efecto de hover dinámico */
+    color: #333;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(255, 204, 0, 0.4);
 }
 
-/* Sección de características (Features) */
-.features {
-    padding: 50px 0;
-    background-color: #00719c; /* Mismo color que el fondo */
+.btn-main:hover::before {
+    width: 100%;
 }
 
-.features h2 {
-    text-align: center;
-    margin-bottom: 50px;
-    color: #ffcc00; /* Color llamativo */
-    font-size: 2.5rem;
+#installButton {
+    margin-top: 20px;
+    display: none; /* Oculto inicialmente hasta que se active el evento PWA */
 }
-
-.features .feature {
-    text-align: center;
-    margin-bottom: 30px;
-    color: white;
-}
-
-.features .feature img {
-    width: 120px;
-    margin-bottom: 20px;
-    border-radius: 50%; /* Imágenes redondeadas */
-}
-
-
-.models .feature img {
-    width: 100% !important; /* Hace que las imágenes se ajusten al tamaño del contenedor */
-    height: auto !important; /* Altura automática para mantener la proporción de la imagen */
-    max-height: 400px !important; /* Altura máxima para las imágenes (ajusta este valor según sea necesario) */
-    object-fit: cover !important; /* Ajusta la imagen sin distorsión */
-    border: 3px solid #004b6b !important; /* Borde azul oscuro */
-    border-radius: 15px !important; /* Bordes redondeados */
-    margin-bottom: 20px !important; /* Separación entre imagen y texto */
-}
-
-/* 
-Para cambiar el tamaño de las imágenes, ajusta el valor de 'max-height'.
-Por ejemplo, puedes aumentar o disminuir 'max-height: 400px;' según lo que necesites.
-*/
 
 /* Sección ¿Quiénes Somos? */
 .quienes-somos {
-    padding: 50px 0;
-    background-color: #005f87; /* Color de fondo */
+    padding: 80px 0;
+    background-color: #005f87;
     background-image: url('https://www.transparenttextures.com/patterns/asfalt-dark.png');
+    position: relative;
+}
+
+.quienes-somos::before {
+    content: '';
+    position: absolute;
+    top: -20px;
+    left: 0;
+    width: 100%;
+    height: 40px;
+    background: linear-gradient(to bottom, rgba(0, 113, 156, 0.3), transparent);
 }
 
 .quienes-somos h2 {
     text-align: center;
-    margin-bottom: 30px;
-    color: #ffcc00; /* Color llamativo */
-    font-size: 2.5rem;
+    margin-bottom: 40px;
+    color: #ffcc00;
+    font-size: 2.8rem;
+    position: relative;
+    display: inline-block;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.quienes-somos h2::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, transparent 0%, #ffcc00 50%, transparent 100%);
 }
 
 .quienes-somos p {
     text-align: center;
     font-size: 1.2rem;
-    margin: 0 20px;
+    margin: 0 auto 20px;
     color: white;
+    max-width: 800px;
+    line-height: 1.8;
 }
 
-/* Formulario de contacto */
+/* Sección de Modelos mejorada */
+.models {
+    padding: 80px 0;
+    background-color: #00719c;
+    position: relative;
+}
+
+.models::before {
+    content: '';
+    position: absolute;
+    top: -20px;
+    left: 0;
+    width: 100%;
+    height: 40px;
+    background: linear-gradient(to bottom, rgba(0, 95, 135, 0.3), transparent);
+}
+
+.models h2 {
+    text-align: center;
+    margin-bottom: 50px;
+    color: #ffcc00;
+    font-size: 2.8rem;
+    position: relative;
+}
+
+.models h2::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 150px;
+    height: 3px;
+    background: linear-gradient(90deg, transparent 0%, #ffcc00 50%, transparent 100%);
+}
+
+.feature {
+    text-align: center;
+    margin-bottom: 30px;
+    padding: 25px;
+    border-radius: 15px;
+    transition: all 0.3s ease;
+    background-color: rgba(0, 75, 107, 0.3);
+}
+
+.feature:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    background-color: rgba(0, 75, 107, 0.5);
+}
+
+.feature h4 {
+    margin: 20px 0 10px;
+    color: #ffcc00;
+    font-size: 1.5rem;
+}
+
+.feature p {
+    color: #ffffff;
+    margin-bottom: 20px;
+}
+
+.feature img {
+    width: 100%;
+    height: auto;
+    max-height: 250px;
+    object-fit: cover;
+    border: 3px solid #004b6b;
+    border-radius: 15px;
+    transition: all 0.3s ease;
+}
+
+.feature:hover img {
+    transform: scale(1.05);
+    border-color: #ffcc00;
+}
+
+/* Formulario de contacto mejorado */
 .contact-form {
-    background-color: #005f87; /* Color más oscuro */
-    padding: 50px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2); /* Sombra */
-    margin-top: 50px;
+    background-color: #005f87;
+    padding: 60px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    margin: 80px auto;
+    max-width: 800px;
+    position: relative;
+    overflow: hidden;
+}
+
+.contact-form::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(90deg, #ffcc00, #ffb700);
 }
 
 .contact-form h3 {
     color: #ffcc00;
     margin-bottom: 30px;
+    font-size: 2.2rem;
+    text-align: center;
 }
 
-.contact-form input, .contact-form textarea {
+.contact-form input,
+.contact-form textarea {
     width: 100%;
-    padding: 10px;
-    margin-bottom: 20px;
-    border-radius: 5px;
-    border: none;
+    padding: 15px;
+    margin-bottom: 25px;
+    border-radius: 8px;
+    border: 2px solid #004b6b;
+    background-color: rgba(255, 255, 255, 0.9);
+    transition: all 0.3s ease;
+    font-size: 1rem;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+    outline: none;
+    border-color: #ffcc00;
+    box-shadow: 0 0 0 3px rgba(255, 204, 0, 0.3);
 }
 
 .contact-form button {
     background-color: #ffcc00;
     color: #333;
-    padding: 15px 30px;
-    font-size: 1rem;
+    padding: 15px 40px;
+    font-size: 1.1rem;
     border-radius: 50px;
     border: none;
-    transition: all 0.3s ease;
+    transition: all 0.4s ease;
+    display: block;
+    margin: 0 auto;
+    font-weight: 600;
+    cursor: pointer;
 }
 
 .contact-form button:hover {
     background-color: #ffb700;
-    transform: scale(1.05);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(255, 204, 0, 0.4);
 }
 
-/* Footer */
+/* Footer mejorado */
 footer {
     background-color: #004b6b;
     color: #fff;
-    padding: 30px 0;
+    padding: 40px 0 20px;
     text-align: center;
+    position: relative;
+}
+
+footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(90deg, #ffcc00, #ffb700);
 }
 
 footer p {
-    margin: 0;
-    font-size: 0.9rem;
+    margin: 0 0 15px;
+    font-size: 1rem;
 }
 
 footer a {
     color: #ffcc00;
     text-decoration: none;
-    transition: color 0.3s ease;
+    transition: all 0.3s ease;
+    font-weight: 500;
 }
 
 footer a:hover {
     color: #ffb700;
+    text-decoration: underline;
+}
+
+.social-links {
+    margin: 20px 0;
+}
+
+.social-links a {
+    display: inline-block;
+    margin: 0 10px;
+    font-size: 1.5rem;
+    color: #ffffff;
+    transition: all 0.3s ease;
+}
+
+.social-links a:hover {
+    color: #ffcc00;
+    transform: translateY(-3px);
 }
 
 /* Media Queries */
-@media (max-width: 768px) {
-    .header h1 {
-        font-size: 1.2rem;
+@media (max-width: 992px) {
+    .hero h1 {
+        font-size: 3.5rem;
     }
+    
+    .models .feature {
+        margin-bottom: 40px;
+    }
+}
 
-    .header a {
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        padding: 15px 0;
+    }
+    
+    .header h1 {
+        margin-bottom: 15px;
+        font-size: 1.8rem;
+    }
+    
+    .nav-links {
+        gap: 15px;
+    }
+    
+    .nav-links a {
+        padding: 6px 12px;
         font-size: 1rem;
     }
-
+    
     .hero h1 {
-        font-size: 2.5rem;
+        font-size: 2.8rem;
     }
-
+    
     .hero p {
         font-size: 1.2rem;
+        max-width: 90%;
     }
-
+    
     .btn-main {
+        padding: 12px 25px;
         font-size: 1rem;
-        padding: 10px 20px;
     }
-
-    .features h2, .quienes-somos h2 {
-        font-size: 2rem;
+    
+    .quienes-somos h2,
+    .models h2 {
+        font-size: 2.2rem;
     }
-
+    
     .quienes-somos p {
-        font-size: 1rem;
+        font-size: 1.1rem;
+        max-width: 90%;
+    }
+    
+    .contact-form {
+        padding: 40px;
     }
 }
 
 @media (max-width: 576px) {
     .hero h1 {
-        font-size: 2rem;
+        font-size: 2.2rem;
     }
-
+    
     .hero p {
         font-size: 1rem;
     }
-
-    .features h2 {
+    
+    .quienes-somos h2,
+    .models h2 {
         font-size: 1.8rem;
     }
-
-    .features .feature img {
-        width: 100px;
+    
+    .contact-form {
+        padding: 30px 20px;
     }
-
-    .contact-form h3 {
-        font-size: 1.5rem;
+    
+    .contact-form input,
+    .contact-form textarea {
+        padding: 12px;
     }
-
-    .contact-form input, .contact-form textarea {
-        font-size: 0.9rem;
-    }
-
-    .btn-main {
-        font-size: 0.9rem;
-        padding: 8px 15px;
+    
+    .feature {
+        padding: 20px 15px;
     }
 }
-</style>
     </style>
 </head>
 <body>
 
 <div class="header">
     <h1>E-Skate</h1>
-    <div>
+    <div class="nav-links">
         <a href="#quienes-somos">¿Quiénes Somos?</a>
         <a href="#contactanos">Contáctanos</a>
         <a href="<?= site_url('login') ?>">Ingresar</a>
@@ -306,13 +544,12 @@ footer a:hover {
 <!-- Sección Hero -->
 <section class="hero">
     <div class="container">
-        <h1>Revoluciona tu Movimiento</h1>
+        <h1 class="gradient-text">Revoluciona tu Movimiento</h1>
         <p>Explora el futuro del transporte con nuestras innovadoras e-skates.</p>
-        <a href="<?= site_url('login') ?>" class="btn btn-main">Inicia Sesión para Monitorear tu Skate</a> <!-- Enlace a la página de login -->
-        <center><button id="installButton" class="btn-main">Instalar PWA</button></center>
+        <a href="<?= site_url('login') ?>" class="btn btn-main">Inicia Sesión para Monitorear tu Skate</a>
+        <button id="installButton" class="btn-main">Instalar PWA</button>
     </div>
 </section>
-
 
 <!-- Sección ¿Quiénes Somos? -->
 <section id="quienes-somos" class="quienes-somos">
@@ -327,30 +564,30 @@ footer a:hover {
 <!-- Sección de Modelos -->
 <section class="models">
     <div class="container">
-        <h2 class="text-center">Nuestros Modelos</h2> <!-- Título centrado -->
+        <h2>Nuestros Modelos</h2>
         <div class="row">
             <div class="col-md-4 feature">
                 <img src="https://imgs.search.brave.com/tps24H47-2oaLseYhRphCnOSszeFXtoK-3EaI9JezrA/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9za2F0/ZXNlbGVjdHJpY29z/LmNvbS93cC1jb250/ZW50L3VwbG9hZHMv/MjAyMS8wNi9tZWVw/by1taW5pMi1zY2Fs/ZWQuanBlZw" alt="Modelo 1">
                 <h4>Modelo E-Skate 1</h4>
                 <p>Precio: $299</p>
                 <a href="<?= base_url('/index.php/skate/detail/1') ?>" class="btn btn-main">Comprar</a>
-
             </div>
             <div class="col-md-4 feature">
                 <img src="https://imgs.search.brave.com/qH8RsQ019QLQkGLFWZExzsnL4kvsrQ_GwfP-ckTx5pI/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL0kv/NTF1a3dQK3F5b1Mu/anBn" alt="Modelo 2">
                 <h4>Modelo E-Skate 2</h4>
                 <p>Precio: $599</p>
-                <a href="<?= base_url('/index.php/skate/detail/2') ?>" class="btn btn-main">Comprar</a> <!-- Botón de compra -->
+                <a href="<?= base_url('/index.php/skate/detail/2') ?>" class="btn btn-main">Comprar</a>
             </div>
             <div class="col-md-4 feature">
                 <img src="https://imgs.search.brave.com/4hfX1Aw6h9uwaa7HX6i2vtgTdUT3mvVz1GoT5ojtQQE/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL0kv/NDFNMnd5YTMzMEwu/anBn" alt="Modelo 3">
                 <h4>Modelo E-Skate 3</h4>
                 <p>Precio: $699</p>
-                <a href="<?= base_url('/index.php/skate/detail/3') ?>" class="btn btn-main">Comprar</a> <!-- Botón de compra -->
+                <a href="<?= base_url('/index.php/skate/detail/3') ?>" class="btn btn-main">Comprar</a>
             </div>
         </div>
     </div>
 </section>
+
 <!-- Formulario de contacto -->
 <section id="contactanos" class="contact-form container">
     <h3>Contáctanos</h3>
@@ -370,6 +607,20 @@ footer a:hover {
         <button type="submit">Enviar</button>
     </form>
 </section>
+
+<footer>
+    <div class="container">
+        <div class="social-links">
+            <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+        </div>
+        <p>&copy; 2023 E-Skate. Todos los derechos reservados.</p>
+        <p><a href="#">Política de Privacidad</a> | <a href="#">Términos de Servicio</a></p>
+    </div>
+</footer>
+
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 <script>
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
@@ -385,29 +636,24 @@ footer a:hover {
     });
 </script>
 <script>
-  let installEvent;  // Variable para almacenar el evento de instalación
+  let installEvent;
+  let installPopup;
 
-  // Escuchar el evento 'beforeinstallprompt' para detectar cuando la PWA está lista para instalarse
   window.addEventListener('beforeinstallprompt', (event) => {
-    event.preventDefault();  // Evita la instalación automática
-
-    installEvent = event;  // Guardamos el evento para usarlo después
-
-    document.getElementById('installButton').style.display = 'block'; // Mostrar el botón de instalación
+    event.preventDefault();
+    installEvent = event;
+    document.getElementById('installButton').style.display = 'inline-block';
   });
 
-  // Listener para cerrar la pestaña cuando la página 2 lo solicite
   window.addEventListener("message", (event) => {
     if (event.data === "cerrarPestana") {
       if (installPopup) {
-        installPopup.close(); // Cierra la ventana emergente si existe
+        installPopup.close();
       }
     }
   });
 
-  // Función para abrir la página 2 y esperar la instalación
   document.getElementById('installButton').addEventListener('click', () => {
-    // Obtener el tamaño de la pantalla para centrar la ventana emergente
     const screenWidth = window.screen.width;
     const screenHeight = window.screen.height;
     const popupWidth = 600;
@@ -415,7 +661,6 @@ footer a:hover {
     const leftPosition = (screenWidth - popupWidth) / 2;
     const topPosition = (screenHeight - popupHeight) / 2;
 
-    // Abrir la página 2 en una ventana emergente centrada
     installPopup = window.open(
       "https://eskate-prueba-erie.onrender.com/index.php/instalarpwa",
       "installPopup",
@@ -423,12 +668,11 @@ footer a:hover {
     );
   });
 
-  // 💡 Solución para que el botón se muestre en móviles si el evento no se dispara
   setTimeout(() => {
     if (!installEvent) {
-      document.getElementById('installButton').style.display = 'block';
+      document.getElementById('installButton').style.display = 'inline-block';
     }
-  }, 3000); // Si después de 3 segundos no aparece, lo forzamos
+  }, 3000);
 </script>
 </body>
 </html>
