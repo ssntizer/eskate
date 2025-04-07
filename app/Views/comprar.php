@@ -1,176 +1,263 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Comprar</title>
+    <title>Compra | E-Skate</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Baskervville&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Permanent+Marker&display=swap');
-
         body {
             background-color: #00719c;
-            color: #ffffff;
-            font-family: "Baskervville SC", serif;
             background-image: url('https://www.transparenttextures.com/patterns/asfalt-dark.png');
+            color: #ffffff;
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
         }
 
-        .register-form {
+        .purchase-form {
             width: 90%;
-            max-width: 400px;
-            padding: 40px;
+            max-width: 500px;
+            padding: 40px 30px;
+            background-color: #005f87;
+            background-image: url('https://www.transparenttextures.com/patterns/asfalt-dark.png');
             border-radius: 15px;
-            background: linear-gradient(145deg, #006f99, #008dc2);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-            text-align: center;
-            color: #fff;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border: 1px solid #004b6b;
+            position: relative;
+            overflow: hidden;
         }
 
-        .register-form h2 {
-            margin-bottom: 20px;
-            font-size: 2rem;
-        }
-
-        .register-form input,
-        .register-form select {
+        .purchase-form::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
-            height: 50px;
+            height: 5px;
+            background: linear-gradient(90deg, #ffcc00, #ffb700);
+        }
+
+        .purchase-form h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #ffcc00;
+            font-size: 2rem;
+            font-family: 'Baskervville', serif;
+            position: relative;
+        }
+
+        .purchase-form h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent 0%, #ffcc00 50%, transparent 100%);
+        }
+
+        .input-container {
+            width: 100%;
             margin-bottom: 20px;
-            padding: 10px;
-            border: none;
-            border-radius: 10px;
-            font-size: 1.2rem;
+        }
+
+        .purchase-form input,
+        .purchase-form select {
+            width: 100%;
+            padding: 15px 20px;
+            border-radius: 8px;
+            border: 2px solid #004b6b;
+            background-color: rgba(255, 255, 255, 0.9);
+            transition: all 0.3s ease;
+            font-size: 1rem;
             color: #333;
         }
 
-        .register-form input:focus,
-        .register-form select:focus {
-            border-color: #00e5ff;
+        .purchase-form input:focus,
+        .purchase-form select:focus {
             outline: none;
-            box-shadow: 0 0 8px rgba(0, 229, 255, 0.5);
+            border-color: #ffcc00;
+            box-shadow: 0 0 0 3px rgba(255, 204, 0, 0.3);
         }
 
-        .register-form button {
+        .payment-method {
+            margin-bottom: 25px;
+        }
+
+        .payment-method select {
             width: 100%;
-            height: 50px;
+            padding: 15px;
+            font-size: 1.1rem;
+        }
+
+        .btn-payment {
+            width: 100%;
+            padding: 15px;
+            font-size: 1.1rem;
+            border-radius: 50px;
             border: none;
-            border-radius: 10px;
-            font-size: 18px;
+            transition: all 0.4s ease;
             font-weight: 600;
             cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            margin-bottom: 15px;
         }
 
-        .register-form .btn-tarjeta {
-            background-color: #ff6600;
-            color: white;
+        .btn-payment::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            transition: width 0.4s ease;
+            z-index: -1;
+            border-radius: 50px;
         }
 
-        .register-form .btn-tarjeta:hover {
-            background-color: #e65c00;
-            transform: scale(1.05);
+        .btn-card {
+            background-color: #ffcc00;
+            color: #333;
         }
 
-        .register-form .btn-paypal {
+        .btn-card::before {
+            background-color: #ffb700;
+        }
+
+        .btn-paypal {
             background-color: #003087;
             color: white;
-            margin-top: 10px;
         }
 
-        .register-form .btn-paypal:hover {
+        .btn-paypal::before {
             background-color: #001f5b;
-            transform: scale(1.05);
         }
 
-        .error,
-        .success {
-            font-size: 14px;
-            margin-bottom: 20px;
-            text-align: left;
+        .btn-payment:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-payment:hover::before {
+            width: 100%;
+        }
+
+        .purchase-links {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .purchase-links a {
+            color: #ffcc00;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            display: block;
+            margin: 12px 0;
+        }
+
+        .purchase-links a:hover {
+            color: #ffb700;
+            text-decoration: underline;
         }
 
         .error {
-            color: #e74c3c;
+            color: #ff6b6b;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            text-align: center;
         }
 
         .success {
-            color: #2ecc71;
+            color: #6bff6b;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            text-align: center;
         }
 
-        .register-form a {
-            display: block;
-            margin-top: 15px;
-            text-decoration: none;
-            font-size: 16px;
-            font-weight: 600;
-            color: #fff;
-            transition: color 0.3s ease;
-        }
-
-        .register-form a:hover {
-            color: #00e5ff;
+        @media (max-width: 576px) {
+            .purchase-form {
+                padding: 30px 20px;
+            }
+            
+            .purchase-form h2 {
+                font-size: 1.8rem;
+            }
         }
     </style>
 </head>
 
 <body>
-    <div class="register-form">
+    <div class="purchase-form">
         <?php if (session()->getFlashdata('error')): ?>
-            <div class="error">
-                <?= session()->getFlashdata('error') ?>
-            </div>
+            <div class="error"><?= session()->getFlashdata('error') ?></div>
         <?php elseif (session()->getFlashdata('success')): ?>
-            <div class="success">
-                <?= session()->getFlashdata('success') ?>
-            </div>
+            <div class="success"><?= session()->getFlashdata('success') ?></div>
         <?php endif; ?>
 
         <h2>Compra Segura</h2>
 
-        <select id="paymentMethod" name="payment_method" required>
-            <option value="tarjeta" selected>Pagar con Tarjeta</option>
-            <option value="paypal">Pagar con PayPal</option>
-        </select>
+        <div class="payment-method">
+            <select id="paymentMethod" name="payment_method" required>
+                <option value="tarjeta" selected>Pagar con Tarjeta</option>
+                <option value="paypal">Pagar con PayPal</option>
+            </select>
+        </div>
 
         <form id="purchaseForm" method="post" action="<?= site_url('processPurchase') ?>">
-            
-            <!-- Siempre visible: campo de email -->
-            <input type="email" name="email" placeholder="Correo Electrónico" value="<?= old('email') ?>" required>
-
-            <div id="tarjetaFields">
-                <input type="text" name="card_number" placeholder="Número de Tarjeta" maxlength="16" pattern="\d{16}" required>
-                <input type="text" name="cardholder_name" placeholder="Nombre en la Tarjeta" required>
-                <input type="text" name="expiration_date" placeholder="Fecha de Expiración (MM/AA)" pattern="\d{2}/\d{2}" required>
-                <input type="password" name="security_code" placeholder="Código de Seguridad (CVV)" maxlength="3" pattern="\d{3}" required>
+            <div class="input-container">
+                <input type="email" name="email" placeholder="Correo Electrónico" value="<?= old('email') ?>" required>
             </div>
 
-            <select name="address_id" required>
-                <option value="" disabled selected>Seleccione su dirección</option>
-                <?php if (!empty($userAddresses)): ?>
-                    <?php foreach ($userAddresses as $address): ?>
-                        <option value="<?= $address['ID_direccion'] ?>">
-                            <?= $address['calle'] ?> (<?= $address['numero'] ?>), <?= $address['localidad_nombre'] ?>, <?= $address['provincia_nombre'] ?>
-                        </option>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <option value="" disabled>No tienes direcciones registradas</option>
-                <?php endif; ?>
-            </select>
+            <div id="tarjetaFields">
+                <div class="input-container">
+                    <input type="text" name="card_number" placeholder="Número de Tarjeta" maxlength="16" pattern="\d{16}" required>
+                </div>
+                <div class="input-container">
+                    <input type="text" name="cardholder_name" placeholder="Nombre en la Tarjeta" required>
+                </div>
+                <div class="input-container">
+                    <input type="text" name="expiration_date" placeholder="Fecha de Expiración (MM/AA)" pattern="\d{2}/\d{2}" required>
+                </div>
+                <div class="input-container">
+                    <input type="password" name="security_code" placeholder="Código de Seguridad (CVV)" maxlength="3" pattern="\d{3}" required>
+                </div>
+            </div>
 
-            <button type="submit" class="btn-tarjeta">Pagar con Tarjeta</button>
+            <div class="input-container">
+                <select name="address_id" required>
+                    <option value="" disabled selected>Seleccione su dirección</option>
+                    <?php if (!empty($userAddresses)): ?>
+                        <?php foreach ($userAddresses as $address): ?>
+                            <option value="<?= $address['ID_direccion'] ?>">
+                                <?= $address['calle'] ?> (<?= $address['numero'] ?>), <?= $address['localidad_nombre'] ?>, <?= $address['provincia_nombre'] ?>
+                            </option>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <option value="" disabled>No tienes direcciones registradas</option>
+                    <?php endif; ?>
+                </select>
+            </div>
+
+            <button type="submit" class="btn-payment btn-card">Pagar con Tarjeta</button>
         </form>
 
-        <button id="paypalButton" class="btn-paypal" style="display: none;">Pagar con PayPal</button>
+        <button id="paypalButton" class="btn-payment btn-paypal" style="display: none;">Pagar con PayPal</button>
 
-        <a href="<?= site_url('nuevadireccion') ?>">Registrar nueva dirección</a>
-        <a href="<?= site_url('/') ?>">Volver al inicio</a>
+        <div class="purchase-links">
+            <a href="<?= site_url('nuevadireccion') ?>">Registrar nueva dirección</a>
+            <a href="<?= site_url('/') ?>">Volver al inicio</a>
+        </div>
     </div>
 
     <script>
@@ -180,7 +267,7 @@
                 $("#tarjetaFields").hide();
                 $("#purchaseForm button").hide();
                 $("#paypalButton").show();
-                $("input[name='email']").parent().show(); // Asegurar que el campo email se mantenga visible
+                $("input[name='email']").parent().show();
             } else {
                 $("#tarjetaFields").show();
                 $("#purchaseForm button").show();
@@ -205,7 +292,6 @@
                 url: "<?= site_url('PaypalController/simularPagoPayPal') ?>",
                 type: "POST",
                 data: {
-                   
                     monto: 100, // Simulación
                     email: email,
                     direccion: address_id
@@ -224,8 +310,6 @@
             });
         });
     });
-</script>
-
+    </script>
 </body>
-
 </html>
