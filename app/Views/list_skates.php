@@ -279,16 +279,17 @@
         }
 
         /* Footer - Eliminada la línea amarilla superior */
-        /* Footer */
         footer {
             background-color: #004b6b;
             color: #fff;
             padding: 20px 0;
             text-align: center;
-            position: relative;
+            position: fixed;
+            bottom: 0;
             width: 100%;
+            border-top: 3px solid #005f87;
         }
-        
+
         footer p {
             margin: 0;
             font-size: 0.9rem;
@@ -304,6 +305,7 @@
             color: #ffb700;
             text-decoration: underline;
         }
+
         /* Responsive */
         @media (max-width: 768px) {
             .header h1 {
