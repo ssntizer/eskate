@@ -120,8 +120,6 @@ body {
     overflow: hidden;
 }
 
-
-
 .hero::before {
     content: '';
     position: absolute;
@@ -399,7 +397,6 @@ footer {
     position: relative;
 }
 
-
 footer p {
     margin: 0 0 15px;
     font-size: 1rem;
@@ -458,6 +455,8 @@ footer a:hover {
     
     .nav-links {
         gap: 15px;
+        flex-wrap: wrap;
+        justify-content: center;
     }
     
     .nav-links a {
@@ -529,6 +528,7 @@ footer a:hover {
     <h1>E-Skate</h1>
     <div class="nav-links">
         <a href="#quienes-somos">¿Quiénes Somos?</a>
+        <a href="#nuestros-productos">Nuestros Productos</a>
         <a href="#contactanos">Contáctanos</a>
         <a href="<?= site_url('login') ?>">Ingresar</a>
     </div>
@@ -555,7 +555,7 @@ footer a:hover {
 </section>
 
 <!-- Sección de Modelos -->
-<section class="models">
+<section id="nuestros-productos" class="models">
     <div class="container">
         <h2>Nuestros Modelos</h2>
         <div class="row">
