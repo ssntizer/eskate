@@ -106,8 +106,8 @@ body {
 
 /* Sección Hero mejorada */
 .hero {
-    background: linear-gradient(135deg, rgba(0, 113, 156, 0.9) 0%, rgba(0, 95, 135, 0.9) 100%), 
-                url('https://images.unsplash.com/photo-1576435728678-68d0fbf94e91?ixlib=rb-1.2.1&auto=format&fit=crop&w=1352&q=80');
+    background: linear-gradient(135deg, rgba(0, 113, 156, 0.5) 0%, rgba(0, 95, 135, 0.9) 100%), 
+            url('https://www.wee-bot.com/cdn/shop/articles/617e33f8383a8184cc190092c765e1f1-722852.png?v=1734950608');
     background-size: cover;
     background-position: center;
     height: calc(100vh - 70px);
@@ -119,6 +119,8 @@ body {
     position: relative;
     overflow: hidden;
 }
+
+
 
 .hero::before {
     content: '';
@@ -397,15 +399,6 @@ footer {
     position: relative;
 }
 
-footer::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 5px;
-    background: linear-gradient(90deg, #ffcc00, #ffb700);
-}
 
 footer p {
     margin: 0 0 15px;
