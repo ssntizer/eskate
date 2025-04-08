@@ -362,7 +362,7 @@
 <div class="header">
     <h1>Lista de Skates</h1>
     <div class="header-buttons">
-        <a href="<?= site_url('/') ?>">Inicio</a>
+       
         <a href="<?= site_url('logout') ?>">Cerrar sesión</a>
     </div>
 </div>
