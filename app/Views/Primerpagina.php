@@ -41,7 +41,7 @@ body {
     color: #ffffff;
     margin: 0;
     font-size: 1.8rem;
-    font-family: 'Baskervville', serif;
+    font-family: "Quicksand", sans-serif;
     font-weight: bold;
     letter-spacing: 1px;
 }

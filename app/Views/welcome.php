@@ -40,7 +40,7 @@
             color: #ffffff;
             margin: 0;
             font-size: 1.5rem;
-            font-family: 'Baskervville', serif;
+            font-family: "Quicksand", sans-serif;
             font-weight: bold;
             letter-spacing: 1px;
         }
