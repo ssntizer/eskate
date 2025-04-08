@@ -278,18 +278,16 @@
             border-top: 1px solid #004b6b;
         }
 
-        /* Footer - Eliminada la línea amarilla superior */
+        /* Footer */
         footer {
             background-color: #004b6b;
             color: #fff;
             padding: 20px 0;
             text-align: center;
-            position: fixed;
-            bottom: 0;
+            position: relative;
             width: 100%;
-            border-top: 3px solid #005f87;
         }
-
+        
         footer p {
             margin: 0;
             font-size: 0.9rem;
@@ -467,7 +465,7 @@
 </div>
 
 <footer>
-    <p>&copy; 2024 E-skate - Diseñado para la acción - <a href="mailto:eskatevz@gmail.com">Contáctanos</a></p>
+    <p>&copy; 2025 E-skate - Diseñado para la acción - <a href="mailto:eskatevz@gmail.com">Contáctanos</a></p>
 </footer>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
