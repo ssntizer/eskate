@@ -1,193 +1,229 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registrar Dirección</title>
+    <title>Registrar Dirección | E-Skate</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Baskervville&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Permanent+Marker&display=swap');
-
         body {
-            background-color: #00719c; /* Color de fondo */
-            color: #ffffff; /* Color del texto */
-            font-family: "Baskervville SC", serif; /* Fuente del texto */
-            background-image: url('https://www.transparenttextures.com/patterns/asfalt-dark.png'); /* Textura de fondo */
+            background-color: #00719c;
+            background-image: url('https://www.transparenttextures.com/patterns/asfalt-dark.png');
+            color: #ffffff;
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh; /* Altura completa de la ventana */
-            margin: 0;
         }
 
-        .register-form {
-            width: 90%; /* Ancho del formulario adaptativo */
-            max-width: 400px; /* Ancho máximo del formulario */
-            padding: 40px; /* Espaciado interno */
-            border-radius: 15px; /* Bordes redondeados */
-            background: linear-gradient(145deg, #006f99, #008dc2); /* Degradado de fondo */
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Sombra */
-            text-align: center; /* Alinear texto al centro */
-            color: #fff; /* Color del texto */
+        .address-form {
+            width: 90%;
+            max-width: 500px;
+            padding: 40px 30px;
+            background-color: #005f87;
+            background-image: url('https://www.transparenttextures.com/patterns/asfalt-dark.png');
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border: 1px solid #004b6b;
+            position: relative;
+            overflow: hidden;
         }
 
-        .register-form h2 {
-            margin-bottom: 20px; /* Margen inferior */
-            font-family: "Baskervville SC", static; /* Fuente del título */
-            font-size: 2rem; /* Tamaño de fuente */
+        .address-form::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #ffcc00, #ffb700);
         }
 
-        .register-form input[type="number"],
-        .register-form input[type="text"],
-        .register-form input[type="email"],
-        .register-form input[type="password"],
-        .register-form input[list] {
-            width: 100%; /* Ancho completo */
-            height: 50px; /* Altura del campo */
-            margin-bottom: 20px; /* Margen inferior */
-            padding: 10px; /* Espaciado interno */
-            border: none; /* Sin borde */
-            border-radius: 10px; /* Bordes redondeados */
-            font-size: 1.2rem; /* Tamaño de fuente */
-            color: #333; /* Color del texto en los campos */
-            -webkit-appearance: none; /* Desactivar estilos predeterminados del navegador */
-            -moz-appearance: none; /* Desactivar estilos predeterminados del navegador */
-            appearance: none; /* Desactivar estilos predeterminados del navegador */
-            background-color: #ffffff; /* Fondo blanco para los select */
+        .address-form h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #ffcc00;
+            font-size: 2rem;
+            font-family: 'Baskervville', serif;
+            position: relative;
         }
 
-        .register-form input[type="number"]:focus,
-        .register-form input[type="text"]:focus,
-        .register-form input[type="email"]:focus,
-        .register-form input[type="password"]:focus,
-        .register-form input[list]:focus {
-            border-color: #00e5ff; /* Color del borde al enfocar */
-            outline: none; /* Sin contorno */
-            box-shadow: 0 0 8px rgba(0, 229, 255, 0.5); /* Sombra al enfocar */
+        .address-form h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent 0%, #ffcc00 50%, transparent 100%);
         }
 
-        .register-form button[type="submit"] {
-            width: 100%; /* Ancho completo */
-            height: 50px; /* Altura del botón */
-            border: none; /* Sin borde */
-            border-radius: 10px; /* Bordes redondeados */
-            background-color: #ff6600; /* Color de fondo */
-            color: white; /* Color del texto */
-            font-size: 18px; /* Tamaño de fuente */
-            font-weight: 600; /* Peso de fuente */
-            cursor: pointer; /* Cursor de puntero */
-            transition: background-color 0.3s ease, transform 0.2s; /* Transiciones suaves */
+        .input-container {
+            width: 100%;
+            margin-bottom: 20px;
         }
 
-        .register-form button[type="submit"]:hover {
-            background-color: #e65c00; /* Color de fondo al pasar el mouse */
-            transform: scale(1.05); /* Escala al pasar el mouse */
+        .address-form label {
+            display: block;
+            margin-bottom: 8px;
+            color: #ffffff;
+            font-weight: 500;
         }
 
-        .register-form button[type="submit"]:active {
-            transform: scale(0.98); /* Escala al hacer clic */
+        .address-form input[type="text"],
+        .address-form input[type="number"],
+        .address-form input[list] {
+            width: 100%;
+            padding: 15px 20px;
+            border-radius: 8px;
+            border: 2px solid #004b6b;
+            background-color: rgba(255, 255, 255, 0.9);
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            color: #333;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
         }
 
-        .error,
-        .success {
-            font-size: 14px; /* Tamaño de fuente */
-            margin-bottom: 20px; /* Margen inferior */
-            text-align: left; /* Alinear texto a la izquierda */
+        .address-form input[type="text"]:focus,
+        .address-form input[type="number"]:focus,
+        .address-form input[list]:focus {
+            outline: none;
+            border-color: #ffcc00;
+            box-shadow: 0 0 0 3px rgba(255, 204, 0, 0.3);
+        }
+
+        .address-form button[type="submit"] {
+            background-color: #ffcc00;
+            color: #333;
+            padding: 15px;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            border: none;
+            transition: all 0.4s ease;
+            width: 100%;
+            font-weight: 600;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .address-form button[type="submit"]::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background-color: #ffb700;
+            transition: width 0.4s ease;
+            z-index: -1;
+            border-radius: 50px;
+        }
+
+        .address-form button[type="submit"]:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 204, 0, 0.4);
+        }
+
+        .address-form button[type="submit"]:hover::before {
+            width: 100%;
         }
 
         .error {
-            color: #e74c3c; /* Color del texto de error */
+            color: #ff6b6b;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            text-align: center;
         }
 
         .success {
-            color: #2ecc71; /* Color del texto de éxito */
+            color: #6bff6b;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            text-align: center;
         }
 
-        .register-form a#bl {
-            display: block; /* Mostrar como bloque */
-            margin-top: 15px; /* Margen superior */
-            text-decoration: none; /* Sin subrayado */
-            font-size: 16px; /* Tamaño de fuente */
-            font-weight: 600; /* Peso de fuente */
-            color: #fff; /* Color del texto */
-            transition: color 0.3s ease; /* Transición suave del color */
-        }
-
-        .register-form a#bl:hover {
-            color: #00e5ff; /* Color al pasar el mouse */
+        @media (max-width: 576px) {
+            .address-form {
+                padding: 30px 20px;
+            }
+            
+            .address-form h2 {
+                font-size: 1.8rem;
+            }
         }
     </style>
 </head>
 
 <body>
-    <div class="register-form">
+    <div class="address-form">
         <?php if (session()->getFlashdata('error')): ?>
-            <div class="error">
-                <?= session()->getFlashdata('error') ?>
-            </div>
+            <div class="error"><?= session()->getFlashdata('error') ?></div>
         <?php elseif (session()->getFlashdata('success')): ?>
-            <div class="success">
-                <?= session()->getFlashdata('success') ?>
-            </div>
+            <div class="success"><?= session()->getFlashdata('success') ?></div>
         <?php endif; ?>
 
         <h2>Agregar Dirección</h2>
 
         <form id="registrationForm" method="post" action="<?= site_url('direccion/guardarNueva') ?>">
+            <div class="input-container">
+                <label for="calle">Calle</label>
+                <input type="text" id="calle" name="calle" placeholder="Nombre de la calle" value="<?= old('calle') ?>" required>
+            </div>
 
-            <!-- Campo Calle -->
-            <input type="text" name="calle" placeholder="Calle" value="<?= old('calle') ?>" required>
+            <div class="input-container">
+                <label for="numero">Número</label>
+                <input type="number" id="numero" name="numero" placeholder="Número" value="<?= old('numero') ?>" required>
+            </div>
 
+            <div class="input-container">
+                <label for="provinciaInput">Provincia</label>
+                <input list="provinciasList" id="provinciaInput" name="provincia" placeholder="Seleccionar provincia" value="<?= old('provincia') ?>" required>
+                <datalist id="provinciasList">
+                    <?php foreach ($provincias as $provincia): ?>
+                        <option value="<?= $provincia['provincia'] ?>" data-id="<?= $provincia['id'] ?>"></option>
+                    <?php endforeach; ?>
+                </datalist>
+            </div>
 
-            <!-- Campo Número -->
-            <input type="number" name="numero" placeholder="Número" value="<?= old('numero') ?>" required>
-
-            <!-- Campo Provincia -->
-            <input list="provinciasList" id="provinciaInput" name="provincia" placeholder="Seleccionar provincia" value="<?= old('provincia') ?>" required>
-            <datalist id="provinciasList">
-                <?php foreach ($provincias as $provincia): ?>
-                    <option value="<?= $provincia['provincia'] ?>" data-id="<?= $provincia['id'] ?>"></option>
-                <?php endforeach; ?>
-            </datalist>
-
-            <!-- Campo Localidad -->
-            <input list="localidadesList" id="localidadInput" name="localidad" placeholder="Seleccionar localidad" value="<?= old('localidad') ?>" required>
-            <datalist id="localidadesList">
-                <!-- Las localidades se llenarán dinámicamente con JavaScript -->
-            </datalist>
-
-            <!-- Botón para guardar la dirección -->
+            <div class="input-container">
+                <label for="localidadInput">Localidad</label>
+                <input list="localidadesList" id="localidadInput" name="localidad" placeholder="Seleccionar localidad" value="<?= old('localidad') ?>" required>
+                <datalist id="localidadesList">
+                    <!-- Las localidades se llenarán dinámicamente con JavaScript -->
+                </datalist>
+            </div>
 
             <button type="submit">Guardar Dirección</button>
-
         </form>
     </div>
 
     <script>
-        // Cuando se elige una provincia, actualizamos las localidades
         document.getElementById('provinciaInput').addEventListener('change', function() {
-            var provinciaValue = this.value;  // Obtener el valor de la provincia seleccionada
-
-            // Buscar el ID de la provincia desde el datalist
+            var provinciaValue = this.value;
             var provinciaOption = document.querySelector(`#provinciasList option[value="${provinciaValue}"]`);
             
             if (provinciaOption) {
                 var provinciaId = provinciaOption.getAttribute('data-id');
                 
                 if (provinciaId) {
-                    // Realizar una solicitud AJAX para obtener las localidades de la provincia seleccionada
-                    fetch(`http://localhost/eskate/public/index.php/obtener-localidades/${provinciaId}`)
+                    fetch(`<?= site_url('obtener-localidades') ?>/${provinciaId}`)
                         .then(response => response.json())
                         .then(data => {
                             const localidadInput = document.getElementById('localidadesList');
-                            localidadInput.innerHTML = '';  // Limpiar las opciones anteriores
+                            localidadInput.innerHTML = '';
 
-                            // Si no se reciben localidades, mostrar un mensaje
                             if (data.error) {
                                 console.error(data.error);
                             } else {
-                                // Agregar las nuevas opciones de localidad al datalist
                                 data.forEach(localidad => {
                                     let option = document.createElement('option');
                                     option.value = localidad.localidad;
@@ -203,5 +239,4 @@
         });
     </script>
 </body>
-
 </html>
