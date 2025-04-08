@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista de Skates | E-Skate</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
+</style>
     <link href="https://fonts.googleapis.com/css2?family=Baskervville&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -38,7 +41,7 @@
             color: #ffffff;
             margin: 0;
             font-size: 1.8rem;
-            font-family: 'Baskervville', serif;
+            font-family: "Quicksand", sans-serif;
             font-weight: bold;
             letter-spacing: 1px;
         }
