@@ -274,9 +274,7 @@
             box-shadow: 0 0 0 3px rgba(255, 204, 0, 0.3);
         }
 
-        .modal-footer {
-            border-top: 1px solid #004b6b;
-        }
+        
 
         /* Footer - Eliminada la línea amarilla superior */
         footer {
@@ -284,12 +282,10 @@
             color: #fff;
             padding: 20px 0;
             text-align: center;
-            position: fixed;
-            bottom: 0;
+            position: relative;
             width: 100%;
-            border-top: 3px solid #005f87;
         }
-
+        
         footer p {
             margin: 0;
             font-size: 0.9rem;
