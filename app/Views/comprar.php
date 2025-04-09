@@ -235,25 +235,11 @@ body {
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <div class="header">
-        <h1>E-Skate</h1>
-        <div class="nav-links">
-            <a href="<?= site_url('login') ?>">Ingresar</a>
-            <a href="<?= site_url('primerpagina') ?>">Volver atrás</a>
-        </div>
-    </div>
-
-    <div class="purchase-container">
+    <div class="register-form">
         <h2>Compra Segura</h2>
-        
+
         <!-- Contenedor para el botón de PayPal -->
         <div id="paypal-button-container"></div>
-        
-        <!-- Mensaje de resultado de transacción -->
-        <div id="transactionResult" class="success-message" style="display: none;"></div>
-        
-        <a href="<?= site_url('primerpagina') ?>" class="back-link">Volver a la tienda</a>
     </div>
 
     <script>
@@ -284,20 +270,12 @@ body {
             })
             .then(response => response.json())
             .then(order => {
-                const resultDiv = document.getElementById('transactionResult');
-                resultDiv.style.display = 'block';
-                resultDiv.textContent = "Pago realizado con éxito. Muchas gracias! En instantes le llegará un mail a la dirección ingresada para la compra.";
-                resultDiv.className = 'success-message';
+                alert("Pago realizado con éxito. Muchas gracias! En instantes le llegará un mail a la dirección ingresada para la compra. " );
             })
-            .catch(error => {
-                const resultDiv = document.getElementById('transactionResult');
-                resultDiv.style.display = 'block';
-                resultDiv.textContent = "Error al procesar el pago. Por favor intente nuevamente.";
-                resultDiv.className = 'error-message';
-                console.error("Error al capturar el pago:", error);
-            });
+            .catch(error => console.error("Error al capturar el pago:", error));
         }
     }).render("#paypal-button-container");
-    </script>
+</script>
+
 </body>
 </html>
