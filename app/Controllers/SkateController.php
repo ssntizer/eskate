@@ -1,7 +1,7 @@
 <?php 
 namespace App\Controllers;
 
-use App\Models\SkateModel;
+use App\Models\skateModel;
 use App\Models\SkateTrackingModel;
 use CodeIgniter\RESTful\ResourceController;
 
@@ -12,7 +12,7 @@ class SkateController extends ResourceController
 
     public function __construct()
     {
-        $this->skateModel = new SkateModel();
+        $this->skateModel = new skateModel();
         $this->skateTrackingModel = new SkateTrackingModel();
     }
 
