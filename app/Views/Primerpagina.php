@@ -549,7 +549,7 @@ footer a:hover {
     <div class="container">
         <h2>¿Quiénes Somos?</h2>
         <p>En E-Skate, somos una empresa dedicada a desarrollar tu transporte del futuro. Creamos e-skates, patinetas eléctricas recién traídas del futuro, que transforman la manera en que te desplazas.</p>
-        <p>Con nuestra tecnología avanzada y diseño innovador, buscamos ofrecerte la mejor experiencia de movilidad, combinando velocidad, durabilidad y conectividad inteligente.</p>
+        <p>Con nuestra tecnología avanzada y diseño innovador, buscamos ofrecerte la mejor experiencia de movilidad, combinando velocidad, durabilidad y conectividad inteligente, pero sobre todo proporcionarte un medio de transporte muy seguro</p>
         <p>Únete a la revolución del transporte y descubre cómo podemos hacer tu vida más fácil y emocionante con nuestros productos de última generación.</p>
     </div>
 </section>
