@@ -34,6 +34,7 @@ class Filters extends BaseFilters
         'forcehttps'    => ForceHTTPS::class,
         'pagecache'     => PageCache::class,
         'performance'   => PerformanceMetrics::class,
+        'auth' => \App\Filters\AuthFilter::class,
     ];
 
     /**
@@ -103,5 +104,26 @@ class Filters extends BaseFilters
      *
      * @var array<string, array<string, list<string>>>
      */
-    public array $filters = [];
+    public $filters = [
+        'auth' => [
+            'before' => [
+                '/list-skates',
+                '/profile',
+                '/comprar',
+                '/view-skate/*',
+                '/logout',
+                '/add-skate',
+                '/unlink-skate/*',
+                '/skate/detail/*',
+                '/update-skate-apodo',
+                '/deleteapodo/*',
+                '/nuevadireccion',
+                '/direccion/guardarNueva',
+                '/obtener-localidades/*',
+                '/paypal/createOrder',
+                '/paypal/captureOrder',
+                '/update-profile'
+            ]
+        ]
+    ];
 }
