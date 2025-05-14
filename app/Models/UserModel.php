@@ -68,4 +68,17 @@ class UserModel extends Model
 
         return false; // Contraseña incorrecta
     }
+
+    // Actualiza los datos del usuario
+    public function updateUser($userId, array $data)
+    {
+        // Si se incluye una nueva contraseña, la hasheamos
+        if (isset($data['password'])) {
+            $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
+        }
+
+        return $this->where('id', $userId)
+                    ->set($data)
+                    ->update();
+    }
 }

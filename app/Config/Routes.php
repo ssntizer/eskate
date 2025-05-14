@@ -32,3 +32,5 @@ $routes->get('/obtener-localidades/(:num)', 'AuthController::obtenerLocalidadesP
 $routes->post("paypal/createOrder", "PaypalController::createOrder");
 $routes->post("paypal/captureOrder", "PaypalController::captureOrder");
 $routes->get('trayectoria', 'AuthController::trayectoria');
+$routes->get('/profile', 'AuthController::profile');
+$routes->post('/update-profile', 'AuthController::updateUserProfile');
