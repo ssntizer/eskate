@@ -17,7 +17,7 @@ $routes->get('passwordreset/reset/(:any)', 'PasswordResetController::reset/$1');
 $routes->post('passwordreset/update', 'PasswordResetController::updatePassword');
 $routes->get('/primerpagina', 'AuthController::primerpag');
 $routes->post('enviarmail', 'AuthController::enviarmail');
-$routes->get('trayectoria', 'AuthController::trayectoria');
+
 
 // Grupo de rutas protegidas (requieren autenticación)
 $routes->group('', ['filter' => 'auth'], function($routes) {
@@ -38,6 +38,7 @@ $routes->group('', ['filter' => 'auth'], function($routes) {
     $routes->post("paypal/captureOrder", "PaypalController::captureOrder");
     $routes->get('/profile', 'AuthController::profile');
     $routes->post('/update-profile', 'AuthController::updateUserProfile');
+    $routes->get('trayectoria', 'AuthController::trayectoria');
 });
 
 // Rutas del SkateController (si necesitan autenticación, deberías moverlas al grupo)

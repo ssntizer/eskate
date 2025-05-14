@@ -122,7 +122,8 @@ class Filters extends BaseFilters
                 '/obtener-localidades/*',
                 '/paypal/createOrder',
                 '/paypal/captureOrder',
-                '/update-profile'
+                '/update-profile',
+                '/trayectoria'
             ]
         ]
     ];
