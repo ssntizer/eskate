@@ -567,10 +567,22 @@ public function updateUserProfile()
         $emailToken = bin2hex(random_bytes(16));
         $emailExpiration = date('Y-m-d H:i:s', strtotime('+1 hour'));
         if ($userModel->setEmailResetToken($currentUser['email'], $emailToken, $emailExpiration)) {
-            $session->set('pending_email_token', $emailToken);
-            $session->set('pending_new_email', $newEmail);
-            $messages[] = 'Se ha enviado un enlace de confirmación a tu nuevo correo electrónico.';
-            $updated = true;
+            $confirmLink = site_url('profile/confirm-email/' . $emailToken);
+            $subject = 'Confirma tu nuevo correo electrónico';
+            $message = "Hola {$currentUser['username']},<br><br>"
+                     . "Has solicitado cambiar tu correo electrónico a {$newEmail}.<br>"
+                     . "Por favor haz clic en el siguiente enlace para confirmar el cambio:<br>"
+                     . "<a href='{$confirmLink}'>{$confirmLink}</a><br><br>"
+                     . "Si no solicitaste este cambio, por favor ignora este mensaje.";
+
+            if (\Config\Services::sendEmail($currentUser['email'], $subject, $message)) {
+                $session->set('pending_email_token', $emailToken);
+                $session->set('pending_new_email', $newEmail);
+                $messages[] = 'Se ha enviado un enlace de confirmación a tu nuevo correo electrónico.';
+                $updated = true;
+            } else {
+                $errors[] = 'Error al enviar el correo de confirmación para el cambio de email.';
+            }
         } else {
             $errors[] = 'Error al guardar el token de restablecimiento de email.';
         }
@@ -581,10 +593,22 @@ public function updateUserProfile()
         $passwordToken = bin2hex(random_bytes(16));
         $passwordExpiration = date('Y-m-d H:i:s', strtotime('+1 hour'));
         if ($userModel->setPasswordResetToken($currentUser['email'], $passwordToken, $passwordExpiration)) {
-            $session->set('pending_password_token', $passwordToken);
-            $session->set('pending_new_password', password_hash($newPassword, PASSWORD_DEFAULT));
-            $messages[] = 'Se ha enviado un enlace de confirmación para cambiar tu contraseña.';
-            $updated = true;
+            $confirmLink = site_url('profile/confirm-password/' . $passwordToken);
+            $subject = 'Confirma el cambio de tu contraseña';
+            $message = "Hola {$currentUser['username']},<br><br>"
+                     . "Has solicitado cambiar tu contraseña.<br>"
+                     . "Por favor haz clic en el siguiente enlace para confirmar el cambio:<br>"
+                     . "<a href='{$confirmLink}'>{$confirmLink}</a><br><br>"
+                     . "Si no solicitaste este cambio, por favor cambia tu contraseña inmediatamente.";
+
+            if (\Config\Services::sendEmail($currentUser['email'], $subject, $message)) {
+                $session->set('pending_password_token', $passwordToken);
+                $session->set('pending_new_password', password_hash($newPassword, PASSWORD_DEFAULT));
+                $messages[] = 'Se ha enviado un enlace de confirmación para cambiar tu contraseña.';
+                $updated = true;
+            } else {
+                $errors[] = 'Error al enviar el correo de confirmación para el cambio de contraseña.';
+            }
         } else {
             $errors[] = 'Error al guardar el token de restablecimiento de contraseña.';
         }
