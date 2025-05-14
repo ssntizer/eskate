@@ -1,18 +1,15 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <link rel="manifest" href="/manifest.json">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mi Perfil - E-Skate</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
-    <style 
-    contenteditable
-    style="display: block";>
+    <style>
        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Quicksand:wght@500;700&display=swap');
 
-/* Estilos generales - Copiados de tu código */
+/* Estilos generales */
 body {
     background-color: #00719c; /* Fondo de la página */
     background-image: url('https://www.transparenttextures.com/patterns/asfalt-dark.png');
@@ -21,9 +18,12 @@ body {
     margin: 0;
     padding: 0;
     padding-top: 70px; /* Espacio para el header fijo */
+    min-height: 100vh; /* Asegura que el body ocupe al menos toda la altura de la vista */
+    display: flex; /* Habilita Flexbox */
+    flex-direction: column; /* Apila los elementos hijos verticalmente */
 }
 
-/* Header mejorado - Copiado de tu código */
+/* Header mejorado */
 .header {
     background-color: #005f87; /* Color de fondo del encabezado */
     padding: 15px;
@@ -46,6 +46,13 @@ body {
     font-family: "Quicksand", sans-serif;
     font-weight: bold;
     letter-spacing: 1px;
+}
+
+/* Contenedor flexible para nav y botón de perfil */
+.header-right {
+    display: flex;
+    align-items: center; /* Alinea verticalmente los elementos */
+    gap: 25px; /* Espacio entre nav-links y profile-button */
 }
 
 .nav-links {
@@ -82,6 +89,30 @@ body {
 
 .nav-links a:hover::after {
     width: 100%;
+}
+
+/* Estilo para el nuevo botón de perfil */
+.profile-button {
+    display: flex; /* Permite centrar el icono */
+    align-items: center;
+    justify-content: center;
+    background-color: #ffcc00; /* Color de fondo amarillo */
+    color: #333; /* Color del icono oscuro */
+    width: 40px; /* Ancho fijo para hacerlo redondo */
+    height: 40px; /* Alto fijo para hacerlo redondo */
+    border-radius: 50%; /* Lo hace redondo */
+    text-decoration: none; /* Quita el subrayado */
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Sombra sutil */
+    font-size: 1.2rem; /* Tamaño del icono */
+    flex-shrink: 0; /* Evita que se encoja en pantallas pequeñas */
+}
+
+.profile-button:hover {
+    background-color: #ffb700; /* Amarillo más oscuro al pasar el ratón */
+    color: #333;
+    transform: scale(1.1); /* Efecto de escala */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 /* Estilos específicos para el Perfil */
@@ -146,6 +177,11 @@ body {
     font-size: 1rem;
     color: #333; /* Color del texto dentro del input */
 }
+ .profile-container input[type="text"]::placeholder,
+ .profile-container input[type="email"]::placeholder,
+ .profile-container input[type="password"]::placeholder {
+     color: #666; /* Color del placeholder */
+ }
 
 .profile-container input[type="text"]:focus,
 .profile-container input[type="email"]:focus,
@@ -210,6 +246,9 @@ body {
     color: #004085;
     background-color: #cce5ff;
     border-color: #b8daff;
+    color: #155724; /* Color para éxito */
+    background-color: #d4edda;
+    border-color: #c3e6cb;
 }
 
 .alert-danger-custom {
@@ -217,21 +256,38 @@ body {
     background-color: #f8d7da;
     border-color: #f5c6cb;
 }
+.alert-warning-custom {
+     color: #856404;
+     background-color: #fff3cd;
+     border-color: #ffeeba;
+}
+
+/* Estilos para errores de validación individuales */
+.text-danger-custom {
+    color: #f8d7da; /* Usar un color que contraste con el fondo */
+    background-color: #721c24; /* Fondo para el texto de error */
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin-top: 5px;
+    display: block; /* Cada error en su línea */
+    font-size: 0.9rem;
+}
 
 
-/* Footer mejorado - Copiado de tu código */
+/* Footer - Ajustado para ser sticky */
 footer {
     background-color: #004b6b;
     color: #fff;
-    padding: 40px 0 20px;
+    padding: 20px 0;
     text-align: center;
-    position: relative;
-    /* Añade espacio si el contenido es corto y el footer se pega mucho */
-    margin-top: 50px;
+    width: 100%;
+    border-top: 3px solid #005f87;
+    margin-top: auto; /* Esto empuja el footer hacia abajo en un flex container */
+    flex-shrink: 0; /* Evita que el footer se encoja */
 }
 
 footer p {
-    margin: 0 0 15px;
+    margin: 0;
     font-size: 1rem;
 }
 
@@ -264,29 +320,45 @@ footer a:hover {
     transform: translateY(-3px);
 }
 
-/* Media Queries - Adaptadas del código principal */
+/* Media Queries */
+@media (max-width: 992px) {
+    /* Reglas si es necesario */
+}
+
 @media (max-width: 768px) {
     .header {
         flex-direction: column;
         padding: 15px 0;
+         gap: 10px; /* Espacio al apilar elementos del header */
     }
-    
+
     .header h1 {
         margin-bottom: 15px;
         font-size: 1.8rem;
     }
-    
+
+     .header-right {
+        flex-direction: column; /* Apila nav-links y profile-button */
+        gap: 10px; /* Espacio entre elementos apilados */
+        width: 100%; /* Ocupa todo el ancho */
+        align-items: center; /* Centra los elementos apilados */
+    }
+
     .nav-links {
         gap: 15px;
         flex-wrap: wrap;
         justify-content: center;
     }
-    
+
     .nav-links a {
         padding: 6px 12px;
         font-size: 1rem;
     }
-    
+
+    .profile-button {
+        margin-top: 5px; /* Espacio adicional si está apilado */
+    }
+
     .profile-container {
         padding: 30px; /* Ajusta el padding en pantallas pequeñas */
         margin: 50px auto; /* Ajusta el margen */
@@ -305,77 +377,137 @@ footer a:hover {
     }
 
     .profile-container button[type="submit"] {
-        padding: 12px 30px; /* Ajusta el padding del botón */
+        padding: 12px 30px;
         font-size: 1rem;
     }
+
 }
 
 @media (max-width: 576px) {
-     .profile-container {
+     .header-right {
+         gap: 5px; /* Reduce el espacio si se apilan mucho */
+     }
+     .nav-links {
+         gap: 10px; /* Reduce el espacio entre links */
+     }
+    .profile-container {
         padding: 20px; /* Ajusta el padding */
     }
 
      .profile-container h2 {
         font-size: 1.5rem;
     }
-}
 
+    .profile-container input[type="text"],
+    .profile-container input[type="email"],
+    .profile-container input[type="password"] {
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+
+     .profile-container button[type="submit"] {
+         padding: 10px 25px;
+         font-size: 0.9rem;
+     }
+
+      .profile-button {
+         width: 35px; /* Un poco más pequeño en pantallas muy pequeñas */
+         height: 35px;
+         font-size: 1rem;
+     }
+}
     </style>
 </head>
 <body>
+<script src="https://kit.fontawesome.com/releases/v6.5.1/js/all.js" crossorigin="anonymous"></script>
 
 <div class="header">
-    <h1><a href="<?= site_url('/') ?>" style="text-decoration: none; color: inherit;">E-Skate</a></h1> 
-    <div class="nav-links">
-        <a href="<?= site_url('/') ?>#quienes-somos">¿Quiénes Somos?</a>
-        <a href="<?= site_url('/') ?>#nuestros-productos">Nuestros Productos</a>
-        <a href="<?= site_url('/') ?>#contactanos">Contáctanos</a>
+    <h1><a href="<?= site_url('/') ?>" style="text-decoration: none; color: inherit;">E-Skate</a></h1>
+    <div class="header-right">
+        <div class="nav-links">
+                <a href="<?= site_url('/') ?>">Inicio</a> <a href="<?= site_url('list-skates') ?>">Mis Skates</a>
+                <a href="<?= site_url('logout') ?>">Salir</a>
+        </div>
         <?php if(session()->get('logged_in')): ?>
-            <a href="<?= site_url('list-skates') ?>">Mis Skates</a>
-            <a href="<?= site_url('logout') ?>">Salir</a>
-        <?php else: ?>
-             <a href="<?= site_url('login') ?>">Ingresar</a>
+            <a href="<?= site_url('profile') ?>" class="profile-button" aria-label="Mi Perfil">
+                <i class="fas fa-user"></i> </a>
         <?php endif; ?>
     </div>
 </div>
 
-<div class="container">
-    <div class="profile-container">
-        <h2>Mi Perfil</h2>
+<div class="main-content-wrapper">
+    <div class="container">
+        <div class="profile-container">
+            <h2>Mi Perfil</h2>
 
-        <?php if (session()->getFlashdata('success')): ?>
-            <div class="alert alert-success-custom" role="alert">
-                <?= session()->getFlashdata('success') ?>
-            </div>
-        <?php endif; ?>
-        <?php if (session()->getFlashdata('error')): ?>
-            <div class="alert alert-danger-custom" role="alert">
-                <?= session()->getFlashdata('error') ?>
-            </div>
-        <?php endif; ?>
+            <?php if (session()->getFlashdata('success')): ?>
+                <div class="alert alert-success-custom" role="alert">
+                    <?= session()->getFlashdata('success') ?>
+                </div>
+            <?php endif; ?>
+            <?php if (session()->getFlashdata('error')): ?>
+                <div class="alert alert-danger-custom" role="alert">
+                    <?= session()->getFlashdata('error') ?>
+                </div>
+            <?php endif; ?>
+             <?php if (session()->getFlashdata('message')): ?>
+                <div class="alert alert-warning-custom" role="alert">
+                    <?= session()->getFlashdata('message') ?>
+                </div>
+            <?php endif; ?>
 
-        <form action="<?= site_url('update-profile') ?>" method="post">
-            <div class="form-group">
-                <label for="username">Nombre de Usuario:</label>
-                <input type="text" id="username" name="username" value="<?= $user['username'] ?? '' ?>" required>
-            </div>
 
-            <div class="form-group">
-                <label for="email">Correo Electrónico:</label>
-                 <input type="email" id="email" name="email" value="<?= $user['email'] ?? '' ?>" required>
-            </div>
+            <form action="<?= site_url('update-profile') ?>" method="post">
+                <?= csrf_field() ?>
 
-            <div class="form-group">
-                <label for="password">Nueva Contraseña (dejar en blanco para no cambiar):</label>
-                <input type="password" id="password" name="password" placeholder="Ingresa nueva contraseña">
+                <div class="form-group">
+                    <label for="username">Nombre de Usuario:</label>
+                    <input type="text" id="username" name="username" value="<?= old('username', $user['username'] ?? '') ?>" required>
+                     <?php if (session()->getFlashdata('errors') && isset(session()->getFlashdata('errors')['username'])): ?>
+                        <div class="text-danger-custom">
+                            <?= session()->getFlashdata('errors')['username'] ?>
+                        </div>
+                    <?php endif; ?>
                 </div>
 
-            <button type="submit">Actualizar Perfil</button>
-        </form>
-    </div>
-</div>
+                <div class="form-group">
+                    <label for="email">Correo Electrónico:</label>
+                     <input type="email" id="email" name="email" value="<?= old('email', $user['email'] ?? '') ?>" required>
+                     <?php if (session()->getFlashdata('errors') && isset(session()->getFlashdata('errors')['email'])): ?>
+                        <div class="text-danger-custom">
+                            <?= session()->getFlashdata('errors')['email'] ?>
+                        </div>
+                    <?php endif; ?>
+                </div>
 
-<footer>
+                 <h4>Cambiar Contraseña (opcional)</h4>
+                  <p>Para cambiar tu contraseña, debes ingresar tu contraseña actual.</p>
+
+                 <div class="form-group">
+                    <label for="current_password">Contraseña Actual:</label>
+                    <input type="password" id="current_password" name="current_password" placeholder="Ingresa tu contraseña actual">
+                     <?php if (session()->getFlashdata('errors') && isset(session()->getFlashdata('errors')['current_password'])): ?>
+                        <div class="text-danger-custom">
+                            <?= session()->getFlashdata('errors')['current_password'] ?>
+                        </div>
+                    <?php endif; ?>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Nueva Contraseña:</label>
+                    <input type="password" id="password" name="password" placeholder="Ingresa tu nueva contraseña">
+                     <?php if (session()->getFlashdata('errors') && isset(session()->getFlashdata('errors')['password'])): ?>
+                        <div class="text-danger-custom">
+                            <?= session()->getFlashdata('errors')['password'] ?>
+                        </div>
+                    <?php endif; ?>
+                </div>
+
+                 <button type="submit">Actualizar Perfil</button>
+            </form>
+        </div>
+    </div>
+</div> <footer>
     <div class="container">
         <div class="social-links">
              <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
@@ -387,7 +519,6 @@ footer a:hover {
     </div>
 </footer>
 
-<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 <script>
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
@@ -403,6 +534,7 @@ footer a:hover {
             } else {
                 // Si el enlace es a una sección de otra página (como en el header)
                 // Redirige y luego intenta hacer scroll (puede requerir lógica adicional al cargar la página)
+                // Nota: Esta lógica puede no ser perfecta para todas las situaciones.
                 window.location.href = '<?= site_url('/') ?>' + targetId;
             }
         });
@@ -415,7 +547,6 @@ footer a:hover {
   window.addEventListener('beforeinstallprompt', (event) => {
     event.preventDefault();
     installEvent = event;
-    // Solo muestra el botón si está en la página principal o donde decidas
     // document.getElementById('installButton').style.display = 'inline-block'; // Este botón no está en esta vista, se puede quitar o adaptar
   });
 
@@ -427,6 +558,8 @@ footer a:hover {
     }
   });
 
+  // Los listeners y timeout relacionados con el botón de instalación PWA se pueden quitar
+  // si no hay botón de instalación en esta página.
 </script>
 </body>
 </html>

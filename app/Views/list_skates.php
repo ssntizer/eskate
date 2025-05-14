@@ -18,7 +18,9 @@
             margin: 0;
             padding: 0;
             padding-top: 70px;
-            min-height: 100vh;
+            min-height: 100vh; /* Asegura que el body ocupe al menos toda la altura de la vista */
+            display: flex; /* Habilita Flexbox */
+            flex-direction: column; /* Apila los elementos hijos verticalmente */
         }
 
         /* Header */
@@ -122,11 +124,19 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         }
 
-        /* Contenedor principal */
+        /* Contenedor principal del contenido */
+         .main-content-wrapper {
+             flex-grow: 1; /* Permite que este contenedor ocupe el espacio restante */
+             /* No necesita margin-top aquí si el padding-top del body ya lo maneja */
+         }
+
+
+        /* Contenedor de Bootstrap */
         .container {
-            margin-top: 40px;
-            padding-bottom: 60px;
+            margin-top: 40px; /* Espacio debajo del header fijo */
+            padding-bottom: 60px; /* Espacio antes del footer */
         }
+
 
         /* Tarjetas de skates - Eliminada la línea amarilla superior */
         .skate-item {
@@ -309,7 +319,13 @@
             transition: all 0.3s ease;
             font-size: 1rem;
             margin-bottom: 15px;
+            color: #333; /* Color del texto dentro del input */
         }
+
+         .modal-body input::placeholder {
+             color: #666; /* Color del placeholder */
+         }
+
 
         .modal-body input:focus {
             outline: none;
@@ -321,19 +337,16 @@
             border-top: 1px solid #004b6b;
         }
 
-        /* Footer - Eliminada la línea amarilla superior */
+        /* Footer - Ajustado para ser sticky */
         footer {
             background-color: #004b6b;
             color: #fff;
             padding: 20px 0;
             text-align: center;
-            /* Si el contenido es más largo que la pantalla, quita fixed */
-            /* position: fixed; */
-            bottom: 0;
             width: 100%;
             border-top: 3px solid #005f87;
-            /* Asegúrate de que no se superponga con el contenido principal */
-            margin-top: 30px;
+            margin-top: auto; /* Esto empuja el footer hacia abajo en un flex container */
+            flex-shrink: 0; /* Evita que el footer se encoja */
         }
 
         footer p {
@@ -449,7 +462,8 @@
     </style>
 </head>
 <body>
-<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/releases/v6.5.1/js/all.js" crossorigin="anonymous"></script>
+
 
 <div class="header">
     <h1><a href="<?= site_url('/') ?>" style="text-decoration: none; color: inherit;">Lista de Skates</a></h1>
@@ -471,110 +485,55 @@
     </div>
 </div>
 
-<div class="container">
-    <?php if (session()->getFlashdata('error')): ?>
-        <div class="alert alert-danger">
-            <?= session()->getFlashdata('error') ?>
-        </div>
-    <?php endif; ?>
+<div class="main-content-wrapper">
+    <div class="container">
+        <?php if (session()->getFlashdata('error')): ?>
+            <div class="alert alert-danger">
+                <?= session()->getFlashdata('error') ?>
+            </div>
+        <?php endif; ?>
 
-    <?php if (session()->getFlashdata('message')): ?>
-        <div class="alert alert-success">
-            <?= session()->getFlashdata('message') ?>
-        </div>
-    <?php endif; ?>
+        <?php if (session()->getFlashdata('message')): ?>
+            <div class="alert alert-success">
+                <?= session()->getFlashdata('message') ?>
+            </div>
+        <?php endif; ?>
 
-    <?php if (!empty($skates)): ?>
-        <div class="row">
-            <?php foreach ($skates as $skate): ?>
-                <div class="col-md-4 mb-4 col-sm-6 col-12">
-                    <div class="skate-item" onclick="window.location.href='<?= site_url('view-skate/' . esc($skate['codigo'])) ?>'">
-                        <h3><strong><?= !empty($skate['apodo']) ? esc($skate['apodo']) : esc($skate['codigo']) ?></strong></h3>
-                        <h5>Código del skate: <?= esc($skate['codigo']) ?></h5>
-                        <p>Batería: <?= esc($skate['bateria']) ?>%</p>
-                        <p>Velocidad: <?= esc($skate['velocidad']) ?> km/h</p>
-                        <form action="<?= site_url('unlink-skate/' . esc($skate['codigo'])) ?>" method="POST">
-                             <?= csrf_field() ?>
-                            <button type="submit" class="btn btn-danger">Borrar Skate</button>
-                        </form>
-                        <?php if(!empty($skate['apodo'])): ?>
-                            <form action="<?= site_url('deleteapodo/' . esc($skate['codigo'])) ?>" method="POST">
+        <?php if (!empty($skates)): ?>
+            <div class="row">
+                <?php foreach ($skates as $skate): ?>
+                    <div class="col-md-4 mb-4 col-sm-6 col-12">
+                        <div class="skate-item" onclick="window.location.href='<?= site_url('view-skate/' . esc($skate['codigo'])) ?>'">
+                            <h3><strong><?= !empty($skate['apodo']) ? esc($skate['apodo']) : esc($skate['codigo']) ?></strong></h3>
+                            <h5>Código del skate: <?= esc($skate['codigo']) ?></h5>
+                            <p>Batería: <?= esc($skate['bateria']) ?>%</p>
+                            <p>Velocidad: <?= esc($skate['velocidad']) ?> km/h</p>
+                            <form action="<?= site_url('unlink-skate/' . esc($skate['codigo'])) ?>" method="POST" onsubmit="return confirm('¿Estás seguro de que quieres desvincular este skate?');">
                                  <?= csrf_field() ?>
-                                <button type="submit" class="btn btn-danger">Borrar Apodo</button>
+                                <button type="submit" class="btn btn-danger">Borrar Skate</button>
                             </form>
-                         <?php endif; ?>
+                            <?php if(!empty($skate['apodo'])): ?>
+                                <form action="<?= site_url('deleteapodo/' . esc($skate['codigo'])) ?>" method="POST" onsubmit="return confirm('¿Estás seguro de que quieres borrar el apodo de este skate?');">
+                                     <?= csrf_field() ?>
+                                    <button type="submit" class="btn btn-danger">Borrar Apodo</button>
+                                </form>
+                             <?php endif; ?>
+                        </div>
                     </div>
-                </div>
-            <?php endforeach; ?>
-        </div>
-    <?php else: ?>
-        <div class="alert alert-info">
-            Este usuario no tiene skates
-        </div>
-    <?php endif; ?>
-
-    <button class="btn btn-main" data-toggle="modal" data-target="#addSkateModal">Agregar Skate</button>
-     <?php if (!empty($skates)): ?>
-        <button class="btn btn-main" data-toggle="modal" data-target="#apodoSkateModal">Cambiar Apodo</button>
-    <?php endif; ?>
-</div>
-
-<div class="modal fade" id="addSkateModal" tabindex="-1" role="dialog" aria-labelledby="addSkateModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="addSkateModalLabel">Vincular un skate</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <?php endforeach; ?>
             </div>
-            <form action="<?= site_url('add-skate') ?>" method="POST">
-                 <?= csrf_field() ?>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="codigo">Código del Skate</label>
-                        <input type="text" class="form-control" id="codigo" name="codigo" required>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-main">Guardar Skate</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="apodoSkateModal" tabindex="-1" role="dialog" aria-labelledby="apodoSkateModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="addSkateModalLabel">Cambiar apodo</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+        <?php else: ?>
+            <div class="alert alert-info">
+                Este usuario no tiene skates
             </div>
-            <form action="<?= site_url('update-skate-apodo') ?>" method="POST"> <?= csrf_field() ?>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="codigo_apodo">Código del Skate</label>
-                        <input type="text" class="form-control" id="codigo_apodo" name="codigo" required>
-                    </div>
-                     <div class="form-group">
-                        <label for="apodo">Nuevo Apodo</label>
-                        <input type="text" class="form-control" id="apodo" name="apodo" required>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-main">Guardar cambios</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
+        <?php endif; ?>
 
-<footer>
+        <button class="btn btn-main" data-toggle="modal" data-target="#addSkateModal">Agregar Skate</button>
+         <?php if (!empty($skates)): ?>
+            <button class="btn btn-main" data-toggle="modal" data-target="#apodoSkateModal">Cambiar Apodo</button>
+        <?php endif; ?>
+    </div>
+</div> <footer>
     <p>&copy; 2025 E-skate - Diseñado para la acción - <a href="mailto:eskatevz@gmail.com">Contáctanos</a></p>
 </footer>
 
@@ -583,3 +542,4 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 </body>
+</html>
