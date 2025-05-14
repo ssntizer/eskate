@@ -39,6 +39,8 @@ $routes->group('', ['filter' => 'auth'], function($routes) {
     $routes->get('/profile', 'AuthController::profile');
     $routes->post('/update-profile', 'AuthController::updateUserProfile');
     $routes->get('trayectoria', 'AuthController::trayectoria');
+    $routes->get('profile/confirm-email/(:any)', 'AuthController::confirmEmail/$1');
+    $routes->get('profile/confirm-password/(:any)', 'AuthController::confirmPassword/$1');
 });
 
 // Rutas del SkateController (si necesitan autenticación, deberías moverlas al grupo)
