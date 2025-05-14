@@ -528,10 +528,7 @@ public function updateUserProfile()
     }
 
     // Obtener datos del formulario
-    $data = [
-        'username' => $this->request->getPost('username')
-    ];
-
+    $username = $this->request->getPost('username');
     $newEmail = $this->request->getPost('email');
     $newPassword = $this->request->getPost('new_password');
     $currentPassword = $this->request->getPost('current_password');
@@ -540,6 +537,9 @@ public function updateUserProfile()
     if (!$userModel->verifyPassword($currentUser['email'], $currentPassword)) {
         return redirect()->back()->with('error', 'La contraseña actual es incorrecta');
     }
+
+    // Bandera para saber si hay cambios pendientes
+    $changesPending = false;
 
     // Procesar cambio de email
     if ($newEmail && $newEmail !== $currentUser['email']) {
@@ -553,7 +553,7 @@ public function updateUserProfile()
         $token = bin2hex(random_bytes(16));
         $expiration = date('Y-m-d H:i:s', strtotime('+1 hour'));
         
-        // Guardar token temporalmente (puedes usar una tabla temporal o campo en users)
+        // Guardar token temporalmente
         $userModel->setPasswordResetToken($currentUser['email'], $token, $expiration);
 
         // Enviar email de confirmación
@@ -565,10 +565,10 @@ public function updateUserProfile()
                  . "<a href='{$confirmLink}'>{$confirmLink}</a><br><br>"
                  . "Si no solicitaste este cambio, por favor ignora este mensaje.";
 
-        if (\Config\Services::sendEmail($currentUser['email'], $subject, $message)) {
+        if (\Config\Services::email()->sendEmail($currentUser['email'], $subject, $message)) {
             // Guardar el nuevo email pendiente de confirmación
             $session->set('pending_email', $newEmail);
-            return redirect()->to('/profile')->with('message', 'Se ha enviado un enlace de confirmación a tu correo actual.');
+            $changesPending = true;
         } else {
             return redirect()->back()->with('error', 'Error al enviar el correo de confirmación');
         }
@@ -592,25 +592,47 @@ public function updateUserProfile()
                  . "<a href='{$confirmLink}'>{$confirmLink}</a><br><br>"
                  . "Si no solicitaste este cambio, por favor cambia tu contraseña inmediatamente.";
 
-        if (\Config\Services::sendEmail($currentUser['email'], $subject, $message)) {
+        if (\Config\Services::email()->sendEmail($currentUser['email'], $subject, $message)) {
             // Guardar la nueva contraseña pendiente de confirmación (hasheada)
             $session->set('pending_password', password_hash($newPassword, PASSWORD_DEFAULT));
-            return redirect()->to('/profile')->with('message', 'Se ha enviado un enlace de confirmación para cambiar tu contraseña.');
+            $changesPending = true;
         } else {
             return redirect()->back()->with('error', 'Error al enviar el correo de confirmación');
         }
     }
 
-    // Si solo cambió el username
-    try {
-        if ($userModel->updateUser($userId, $data)) {
-            $session->set('username', $data['username']);
-            return redirect()->to('/profile')->with('success', 'Nombre de usuario actualizado correctamente');
+    // Procesar cambio de username (si hay cambio)
+    if ($username && $username !== $currentUser['username']) {
+        try {
+            $userModel->update($userId, ['username' => $username]);
+            $session->set('username', $username);
+            
+            // Si no hay otros cambios pendientes, mostrar mensaje de éxito
+            if (!$changesPending) {
+                return redirect()->to('/profile')->with('success', 'Nombre de usuario actualizado correctamente');
+            }
+        } catch (\Exception $e) {
+            log_message('error', 'Error al actualizar nombre de usuario: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Ocurrió un error al actualizar el nombre de usuario');
         }
-    } catch (\Exception $e) {
-        log_message('error', 'Error al actualizar perfil: ' . $e->getMessage());
-        return redirect()->back()->with('error', 'Ocurrió un error al actualizar el perfil');
     }
+
+    // Si hay cambios pendientes de confirmación (email o password)
+    if ($changesPending) {
+        $message = '';
+        
+        if ($session->get('pending_email')) {
+            $message = 'Se ha enviado un enlace de confirmación a tu correo actual.';
+        }
+        if ($session->get('pending_password')) {
+            $message .= ($message ? ' ' : '') . 'Se ha enviado un enlace de confirmación para cambiar tu contraseña.';
+        }
+        
+        return redirect()->to('/profile')->with('message', $message);
+    }
+
+    // Si no hubo ningún cambio
+    return redirect()->to('/profile')->with('info', 'No se realizaron cambios');
 }
 
 public function confirmEmail($token)
