@@ -46,10 +46,18 @@
             letter-spacing: 1px;
         }
 
+        /* Contenedor flexible para botones de header y botón de perfil */
+        .header-right {
+            display: flex;
+            align-items: center; /* Alinea verticalmente los elementos */
+            gap: 20px; /* Espacio entre header-buttons y profile-button */
+        }
+
+
         /* Botones del header */
         .header-buttons {
             display: flex;
-            gap: 15px;
+            gap: 15px; /* Espacio entre los botones dentro de este grupo */
         }
 
         .header-buttons a {
@@ -64,6 +72,7 @@
             position: relative;
             overflow: hidden;
             z-index: 1;
+            display: inline-block; /* Asegura que el padding y width/height funcionen */
         }
 
         .header-buttons a::before {
@@ -87,6 +96,30 @@
 
         .header-buttons a:hover::before {
             width: 100%;
+        }
+
+        /* Estilo para el botón de perfil */
+        .profile-button {
+            display: flex; /* Permite centrar el icono */
+            align-items: center;
+            justify-content: center;
+            background-color: #ffcc00; /* Color de fondo amarillo */
+            color: #333; /* Color del icono oscuro */
+            width: 40px; /* Ancho fijo para hacerlo redondo */
+            height: 40px; /* Alto fijo para hacerlo redondo */
+            border-radius: 50%; /* Lo hace redondo */
+            text-decoration: none; /* Quita el subrayado */
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Sombra sutil */
+            font-size: 1.2rem; /* Tamaño del icono */
+            flex-shrink: 0; /* Evita que se encoja en pantallas pequeñas */
+        }
+
+        .profile-button:hover {
+            background-color: #ffb700; /* Amarillo más oscuro al pasar el ratón */
+            color: #333;
+            transform: scale(1.1); /* Efecto de escala */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         }
 
         /* Contenedor principal */
@@ -125,13 +158,21 @@
             font-family: 'Baskervville', serif;
         }
 
-        .skate-item h5, 
+        .skate-item h5,
         .skate-item p {
             margin-bottom: 10px;
             font-size: 1.1rem;
         }
 
         /* Botones dentro de las tarjetas */
+        .skate-item form {
+             margin-top: 10px; /* Espacio entre formularios si hay varios */
+             margin-bottom: 5px; /* Espacio debajo del formulario */
+        }
+         .skate-item form:last-child {
+             margin-bottom: 0; /* No margin bottom en el último formulario */
+         }
+
         .skate-item .btn-danger {
             background-color: #ff0033;
             border: none;
@@ -139,8 +180,7 @@
             padding: 10px 20px;
             font-weight: 600;
             transition: all 0.3s ease;
-            width: 100%;
-            margin-top: 10px;
+            width: 100%; /* Ocupa todo el ancho disponible */
             position: relative;
             overflow: hidden;
             z-index: 1;
@@ -287,10 +327,13 @@
             color: #fff;
             padding: 20px 0;
             text-align: center;
-            position: fixed;
+            /* Si el contenido es más largo que la pantalla, quita fixed */
+            /* position: fixed; */
             bottom: 0;
             width: 100%;
             border-top: 3px solid #005f87;
+            /* Asegúrate de que no se superponga con el contenido principal */
+            margin-top: 30px;
         }
 
         footer p {
@@ -314,25 +357,35 @@
             .header h1 {
                 font-size: 1.5rem;
             }
-            
+
+             .header-right {
+                gap: 10px; /* Reduce el espacio entre botones y perfil en tablet */
+            }
+
             .header-buttons a {
                 padding: 6px 15px;
                 font-size: 0.9rem;
             }
-            
+
+            .profile-button {
+                width: 35px; /* Ligeramente más pequeño */
+                height: 35px;
+                font-size: 1rem;
+            }
+
             .skate-item {
                 padding: 20px 15px;
             }
-            
+
             .skate-item h3 {
                 font-size: 1.3rem;
             }
-            
-            .skate-item h5, 
+
+            .skate-item h5,
             .skate-item p {
                 font-size: 1rem;
             }
-            
+
             .btn-main {
                 padding: 10px 20px;
                 font-size: 1rem;
@@ -345,35 +398,80 @@
             .header {
                 flex-direction: column;
                 padding: 10px;
+                gap: 10px; /* Espacio al apilar elementos del header */
             }
-            
+
             .header h1 {
-                margin-bottom: 10px;
+                margin-bottom: 5px; /* Ajusta el margen */
             }
-            
+
+             .header-right {
+                 flex-direction: column; /* Apila los botones y el botón de perfil */
+                 width: 100%; /* Ocupa todo el ancho */
+                 gap: 10px; /* Espacio entre los elementos apilados */
+                 align-items: center; /* Centra los elementos apilados */
+             }
+
             .header-buttons {
                 width: 100%;
-                justify-content: space-around;
+                justify-content: space-around; /* Distribuye los botones internos */
+                gap: 5px; /* Reduce el espacio entre botones apilados si se envuelven */
             }
-            
-            .container {
-                padding-bottom: 80px;
+
+            .skate-item {
+                padding: 15px;
             }
+
+            .skate-item h3 {
+                 font-size: 1.2rem;
+            }
+
+            .skate-item h5,
+            .skate-item p {
+                font-size: 0.9rem;
+            }
+
+             .btn-main {
+                width: auto; /* Permite que los botones se ajusten al contenido */
+                display: inline-block; /* Asegura que se muestren en línea */
+                margin-right: 5px; /* Reduce el margen */
+                margin-bottom: 5px; /* Reduce el margen */
+                font-size: 0.9rem;
+                padding: 8px 15px;
+             }
+
+             .profile-button {
+                width: 30px; /* Aún más pequeño */
+                height: 30px;
+                font-size: 0.9rem;
+             }
         }
     </style>
 </head>
 <body>
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 
 <div class="header">
-    <h1>Lista de Skates</h1>
-    <div class="header-buttons">
-        <a href="<?= site_url('/') ?>">Inicio</a>
-        <a href="<?= site_url('logout') ?>">Cerrar sesión</a>
+    <h1><a href="<?= site_url('/') ?>" style="text-decoration: none; color: inherit;">Lista de Skates</a></h1>
+
+    <div class="header-right">
+        <div class="header-buttons">
+            <?php if(session()->get('logged_in')): ?>
+                 <a href="<?= site_url('/') ?>">Inicio</a>
+                 <a href="<?= site_url('logout') ?>">Cerrar sesión</a>
+             <?php else: ?>
+                 <a href="<?= site_url('login') ?>">Ingresar</a>
+             <?php endif; ?>
+        </div>
+
+        <?php if(session()->get('logged_in')): ?>
+            <a href="<?= site_url('profile') ?>" class="profile-button" aria-label="Mi Perfil">
+                <i class="fas fa-user"></i> </a>
+        <?php endif; ?>
     </div>
 </div>
 
 <div class="container">
-    <!-- Mostrar mensajes de error y éxito -->
     <?php if (session()->getFlashdata('error')): ?>
         <div class="alert alert-danger">
             <?= session()->getFlashdata('error') ?>
@@ -396,11 +494,15 @@
                         <p>Batería: <?= esc($skate['bateria']) ?>%</p>
                         <p>Velocidad: <?= esc($skate['velocidad']) ?> km/h</p>
                         <form action="<?= site_url('unlink-skate/' . esc($skate['codigo'])) ?>" method="POST">
+                             <?= csrf_field() ?>
                             <button type="submit" class="btn btn-danger">Borrar Skate</button>
                         </form>
-                        <form action="<?= site_url('deleteapodo/' . esc($skate['codigo'])) ?>" method="POST">
-                            <button type="submit" class="btn btn-danger">Borrar Apodo</button>
-                        </form>
+                        <?php if(!empty($skate['apodo'])): ?>
+                            <form action="<?= site_url('deleteapodo/' . esc($skate['codigo'])) ?>" method="POST">
+                                 <?= csrf_field() ?>
+                                <button type="submit" class="btn btn-danger">Borrar Apodo</button>
+                            </form>
+                         <?php endif; ?>
                     </div>
                 </div>
             <?php endforeach; ?>
@@ -412,10 +514,11 @@
     <?php endif; ?>
 
     <button class="btn btn-main" data-toggle="modal" data-target="#addSkateModal">Agregar Skate</button>
-    <button class="btn btn-main" data-toggle="modal" data-target="#apodoSkateModal">Cambiar Apodo</button>
+     <?php if (!empty($skates)): ?>
+        <button class="btn btn-main" data-toggle="modal" data-target="#apodoSkateModal">Cambiar Apodo</button>
+    <?php endif; ?>
 </div>
 
-<!-- Modal para agregar skate -->
 <div class="modal fade" id="addSkateModal" tabindex="-1" role="dialog" aria-labelledby="addSkateModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -426,6 +529,7 @@
                 </button>
             </div>
             <form action="<?= site_url('add-skate') ?>" method="POST">
+                 <?= csrf_field() ?>
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="codigo">Código del Skate</label>
@@ -441,7 +545,6 @@
     </div>
 </div>
 
-<!-- Modal para cambiar apodo -->
 <div class="modal fade" id="apodoSkateModal" tabindex="-1" role="dialog" aria-labelledby="apodoSkateModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -451,12 +554,14 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="<?= site_url('update-skate-apodo/') ?>" method="POST">
+            <form action="<?= site_url('update-skate-apodo') ?>" method="POST"> <?= csrf_field() ?>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="codigo">Código del Skate</label>
-                        <input type="text" class="form-control" id="codigo" name="codigo" required>
-                        <label for="apodo">Apodo deseado</label>
+                        <label for="codigo_apodo">Código del Skate</label>
+                        <input type="text" class="form-control" id="codigo_apodo" name="codigo" required>
+                    </div>
+                     <div class="form-group">
+                        <label for="apodo">Nuevo Apodo</label>
                         <input type="text" class="form-control" id="apodo" name="apodo" required>
                     </div>
                 </div>
@@ -478,4 +583,3 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 </body>
-</html>
