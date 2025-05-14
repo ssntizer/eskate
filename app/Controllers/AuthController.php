@@ -565,7 +565,7 @@ public function updateUserProfile()
                  . "<a href='{$confirmLink}'>{$confirmLink}</a><br><br>"
                  . "Si no solicitaste este cambio, por favor ignora este mensaje.";
 
-        if (\Config\Services::email()->sendEmail($currentUser['email'], $subject, $message)) {
+        if (\Config\Services::sendEmail($currentUser['email'], $subject, $message)) {
             // Guardar el nuevo email pendiente de confirmación
             $session->set('pending_email', $newEmail);
             $changesPending = true;
@@ -592,7 +592,7 @@ public function updateUserProfile()
                  . "<a href='{$confirmLink}'>{$confirmLink}</a><br><br>"
                  . "Si no solicitaste este cambio, por favor cambia tu contraseña inmediatamente.";
 
-        if (\Config\Services::email()->sendEmail($currentUser['email'], $subject, $message)) {
+        if (\Config\Services::sendEmail($currentUser['email'], $subject, $message)) {
             // Guardar la nueva contraseña pendiente de confirmación (hasheada)
             $session->set('pending_password', password_hash($newPassword, PASSWORD_DEFAULT));
             $changesPending = true;
