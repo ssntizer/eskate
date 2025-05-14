@@ -157,6 +157,11 @@ body {
     background: linear-gradient(90deg, transparent 0%, #ffcc00 50%, transparent 100%);
 }
 
+.profile-container .form-group {
+    margin-bottom: 20px;
+    position: relative;
+}
+
 .profile-container .form-group label {
     color: #ffffff; /* Color de la etiqueta */
     font-weight: bold;
@@ -169,19 +174,28 @@ body {
 .profile-container input[type="password"] {
     width: 100%;
     padding: 12px; /* Ajusta el padding */
-    margin-bottom: 20px; /* Espacio entre campos */
+    margin-bottom: 5px; /* Espacio entre campos */
     border-radius: 8px;
     border: 2px solid #004b6b;
     background-color: rgba(255, 255, 255, 0.9); /* Fondo del input */
     transition: all 0.3s ease;
     font-size: 1rem;
     color: #333; /* Color del texto dentro del input */
+    padding-right: 120px; /* Espacio para el botón */
 }
- .profile-container input[type="text"]::placeholder,
- .profile-container input[type="email"]::placeholder,
- .profile-container input[type="password"]::placeholder {
-     color: #666; /* Color del placeholder */
- }
+
+.profile-container input[type="text"]:disabled,
+.profile-container input[type="email"]:disabled,
+.profile-container input[type="password"]:disabled {
+    background-color: rgba(255, 255, 255, 0.7);
+    cursor: not-allowed;
+}
+
+.profile-container input[type="text"]::placeholder,
+.profile-container input[type="email"]::placeholder,
+.profile-container input[type="password"]::placeholder {
+    color: #666; /* Color del placeholder */
+}
 
 .profile-container input[type="text"]:focus,
 .profile-container input[type="email"]:focus,
@@ -189,6 +203,27 @@ body {
     outline: none;
     border-color: #ffcc00;
     box-shadow: 0 0 0 3px rgba(255, 204, 0, 0.3); /* Sombra al enfocar */
+}
+
+/* Botón de Cambiar */
+.change-btn {
+    position: absolute;
+    right: 0;
+    top: 30px;
+    background-color: #ffcc00;
+    color: #333;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 0 8px 8px 0;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    height: 46px;
+    width: 100px;
+}
+
+.change-btn:hover {
+    background-color: #ffb700;
 }
 
 /* Botón de Actualizar - Usa los estilos del botón principal */
@@ -273,6 +308,11 @@ body {
     font-size: 0.9rem;
 }
 
+.password-section {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
 
 /* Footer - Ajustado para ser sticky */
 footer {
@@ -381,6 +421,12 @@ footer a:hover {
         font-size: 1rem;
     }
 
+    .change-btn {
+        top: 28px;
+        height: 42px;
+        width: 90px;
+        font-size: 0.9rem;
+    }
 }
 
 @media (max-width: 576px) {
@@ -415,6 +461,13 @@ footer a:hover {
          height: 35px;
          font-size: 1rem;
      }
+     
+     .change-btn {
+        top: 26px;
+        height: 38px;
+        width: 80px;
+        font-size: 0.8rem;
+    }
 }
     </style>
 </head>
@@ -462,7 +515,8 @@ footer a:hover {
 
                 <div class="form-group">
                     <label for="username">Nombre de Usuario:</label>
-                    <input type="text" id="username" name="username" value="<?= old('username', $user['username'] ?? '') ?>" required>
+                    <input type="text" id="username" name="username" value="<?= old('username', $user['username'] ?? '') ?>" disabled required>
+                    <button type="button" class="change-btn" onclick="enableField('username')">Cambiar</button>
                      <?php if (session()->getFlashdata('errors') && isset(session()->getFlashdata('errors')['username'])): ?>
                         <div class="text-danger-custom">
                             <?= session()->getFlashdata('errors')['username'] ?>
@@ -472,7 +526,8 @@ footer a:hover {
 
                 <div class="form-group">
                     <label for="email">Correo Electrónico:</label>
-                     <input type="email" id="email" name="email" value="<?= old('email', $user['email'] ?? '') ?>" required>
+                     <input type="email" id="email" name="email" value="<?= old('email', $user['email'] ?? '') ?>" disabled required>
+                     <button type="button" class="change-btn" onclick="enableField('email')">Cambiar</button>
                      <?php if (session()->getFlashdata('errors') && isset(session()->getFlashdata('errors')['email'])): ?>
                         <div class="text-danger-custom">
                             <?= session()->getFlashdata('errors')['email'] ?>
@@ -480,28 +535,30 @@ footer a:hover {
                     <?php endif; ?>
                 </div>
 
-                 <h4>Cambiar Contraseña (opcional)</h4>
-                  <p>Para cambiar tu contraseña, debes ingresar tu contraseña actual.</p>
+                 <div class="password-section">
+                     <h4>Cambiar Contraseña</h4>
+                     <p>Para cambiar tu contraseña, debes ingresar tu contraseña actual.</p>
 
-                 <div class="form-group">
-                    <label for="current_password">Contraseña Actual:</label>
-                    <input type="password" id="current_password" name="current_password" placeholder="Ingresa tu contraseña actual">
-                     <?php if (session()->getFlashdata('errors') && isset(session()->getFlashdata('errors')['current_password'])): ?>
-                        <div class="text-danger-custom">
-                            <?= session()->getFlashdata('errors')['current_password'] ?>
-                        </div>
-                    <?php endif; ?>
-                </div>
+                     <div class="form-group">
+                        <label for="current_password">Contraseña Actual:</label>
+                        <input type="password" id="current_password" name="current_password" placeholder="Ingresa tu contraseña actual">
+                         <?php if (session()->getFlashdata('errors') && isset(session()->getFlashdata('errors')['current_password'])): ?>
+                            <div class="text-danger-custom">
+                                <?= session()->getFlashdata('errors')['current_password'] ?>
+                            </div>
+                        <?php endif; ?>
+                    </div>
 
-                <div class="form-group">
-                    <label for="password">Nueva Contraseña:</label>
-                    <input type="password" id="password" name="password" placeholder="Ingresa tu nueva contraseña">
-                     <?php if (session()->getFlashdata('errors') && isset(session()->getFlashdata('errors')['password'])): ?>
-                        <div class="text-danger-custom">
-                            <?= session()->getFlashdata('errors')['password'] ?>
-                        </div>
-                    <?php endif; ?>
-                </div>
+                    <div class="form-group">
+                        <label for="password">Nueva Contraseña:</label>
+                        <input type="password" id="password" name="password" placeholder="Ingresa tu nueva contraseña">
+                         <?php if (session()->getFlashdata('errors') && isset(session()->getFlashdata('errors')['password'])): ?>
+                            <div class="text-danger-custom">
+                                <?= session()->getFlashdata('errors')['password'] ?>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                 </div>
 
                  <button type="submit">Actualizar Perfil</button>
             </form>
@@ -509,15 +566,18 @@ footer a:hover {
     </div>
 </div> <footer>
     <div class="container">
-        <div class="social-links">
-             <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
-            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-        </div>
         <p>&copy; <?= date('Y') ?> E-Skate. Todos los derechos reservados.</p>
         <p><a href="#">Política de Privacidad</a> | <a href="#">Términos de Servicio</a></p>
     </div>
 </footer>
+
+<script>
+    function enableField(fieldId) {
+        const field = document.getElementById(fieldId);
+        field.disabled = false;
+        field.focus();
+    }
+</script>
 
 <script>
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
