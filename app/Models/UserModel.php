@@ -81,4 +81,25 @@ class UserModel extends Model
                     ->set($data)
                     ->update();
     }
+    public function setEmailResetToken(string $email, ?string $token = null, ?string $expire = null): bool
+    {
+        return $this->where('email', $email)
+                    ->update(['email_reset_token' => $token, 'email_reset_expire' => $expire]);
+    }
+
+    public function verifyEmailToken(string $token)
+    {
+        return $this->where('email_reset_token', $token)
+                    ->where('email_reset_expire >', date('Y-m-d H:i:s'))
+                    ->first();
+    }
+
+    
+
+    public function verifyPasswordToken(string $token)
+    {
+        return $this->where('password_reset_token', $token)
+                    ->where('password_reset_expire >', date('Y-m-d H:i:s'))
+                    ->first();
+    }
 }

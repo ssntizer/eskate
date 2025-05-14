@@ -546,11 +546,11 @@ public function updateUserProfile()
             return redirect()->back()->withInput()->with('error', 'El correo electrónico ya está en uso por otro usuario');
         }
 
-        $token = bin2hex(random_bytes(16));
-        $expiration = date('Y-m-d H:i:s', strtotime('+1 hour'));
-        $userModel->setPasswordResetToken($currentUser['email'], $token, $expiration);
+        $emailToken = bin2hex(random_bytes(16));
+        $emailExpiration = date('Y-m-d H:i:s', strtotime('+1 hour'));
+        $userModel->setEmailResetToken($currentUser['email'], $emailToken, $emailExpiration);
 
-        $confirmLink = site_url('profile/confirm-email/' . $token);
+        $confirmLink = site_url('profile/confirm-email/' . $emailToken);
         $subject = 'Confirma tu nuevo correo electrónico';
         $message = "Hola {$currentUser['username']},<br><br>"
                  . "Has solicitado cambiar tu correo electrónico a {$newEmail}.<br>"
@@ -559,7 +559,8 @@ public function updateUserProfile()
                  . "Si no solicitaste este cambio, por favor ignora este mensaje.";
 
         if (\Config\Services::sendEmail($currentUser['email'], $subject, $message)) {
-            $session->set('pending_email', $newEmail);
+            $session->set('pending_email_token', $emailToken);
+            $session->set('pending_new_email', $newEmail);
             $messages[] = 'Se ha enviado un enlace de confirmación a tu correo actual.';
             $changesPending = true;
         } else {
@@ -569,11 +570,11 @@ public function updateUserProfile()
 
     // Procesar cambio de contraseña
     if ($newPassword) {
-        $token = bin2hex(random_bytes(16));
-        $expiration = date('Y-m-d H:i:s', strtotime('+1 hour'));
-        $userModel->setPasswordResetToken($currentUser['email'], $token, $expiration);
+        $passwordToken = bin2hex(random_bytes(16));
+        $passwordExpiration = date('Y-m-d H:i:s', strtotime('+1 hour'));
+        $userModel->setPasswordResetToken($currentUser['email'], $passwordToken, $passwordExpiration);
 
-        $confirmLink = site_url('profile/confirm-password/' . $token);
+        $confirmLink = site_url('profile/confirm-password/' . $passwordToken);
         $subject = 'Confirma el cambio de tu contraseña';
         $message = "Hola {$currentUser['username']},<br><br>"
                  . "Has solicitado cambiar tu contraseña.<br>"
@@ -582,7 +583,8 @@ public function updateUserProfile()
                  . "Si no solicitaste este cambio, por favor cambia tu contraseña inmediatamente.";
 
         if (\Config\Services::sendEmail($currentUser['email'], $subject, $message)) {
-            $session->set('pending_password', password_hash($newPassword, PASSWORD_DEFAULT));
+            $session->set('pending_password_token', $passwordToken);
+            $session->set('pending_new_password', password_hash($newPassword, PASSWORD_DEFAULT));
             $messages[] = 'Se ha enviado un enlace de confirmación para cambiar tu contraseña.';
             $changesPending = true;
         } else {
@@ -595,7 +597,7 @@ public function updateUserProfile()
         try {
             $userModel->update($userId, ['username' => $username]);
             $session->set('username', $username);
-            if (!$changesPending && empty($errors)) {
+            if (!$changesPending && empty($errors) && empty($messages)) {
                 return redirect()->to('/profile')->with('success', 'Nombre de usuario actualizado correctamente');
             }
         } catch (\Exception $e) {
@@ -614,52 +616,41 @@ public function updateUserProfile()
 
     return redirect()->to('/profile');
 }
-
 public function confirmEmail($token)
 {
     $session = session();
     $userModel = new UserModel();
-    
-    $user = $userModel->verifyToken($token);
-    $newEmail = $session->get('pending_email');
+
+    $user = $userModel->verifyEmailToken($token);
+    $newEmail = $session->get('pending_new_email');
 
     if ($user && $newEmail) {
-        // Actualizar el email
-        $userModel->update($user['id'], ['email' => $newEmail]);
-        
-        // Limpiar datos temporales
-        $session->remove('pending_email');
-        $userModel->setPasswordResetToken($user['email'], null, null);
-        
-        // Actualizar sesión
+        $userModel->update($user['id'], ['email' => $newEmail, 'email_reset_token' => null, 'email_reset_expire' => null]);
         $session->set('email', $newEmail);
-        
+        $session->remove('pending_new_email');
+        $session->remove('pending_email_token');
         return redirect()->to('/profile')->with('success', 'Correo electrónico actualizado correctamente');
     }
-    
-    return redirect()->to('/profile')->with('error', 'Token inválido o expirado');
+
+    return redirect()->to('/profile')->with('error', 'Token de correo electrónico inválido o expirado');
 }
 
 public function confirmPassword($token)
 {
     $session = session();
     $userModel = new UserModel();
-    
-    $user = $userModel->verifyToken($token);
-    $newPassword = $session->get('pending_password');
+
+    $user = $userModel->verifyPasswordToken($token);
+    $newPassword = $session->get('pending_new_password');
 
     if ($user && $newPassword) {
-        // Actualizar la contraseña
-        $userModel->update($user['id'], ['password' => $newPassword]);
-        
-        // Limpiar datos temporales
-        $session->remove('pending_password');
-        $userModel->setPasswordResetToken($user['email'], null, null);
-        
+        $userModel->update($user['id'], ['password' => $newPassword, 'password_reset_token' => null, 'password_reset_expire' => null]);
+        $session->remove('pending_new_password');
+        $session->remove('pending_password_token');
         return redirect()->to('/profile')->with('success', 'Contraseña actualizada correctamente');
     }
-    
-    return redirect()->to('/profile')->with('error', 'Token inválido o expirado');
+
+    return redirect()->to('/profile')->with('error', 'Token de contraseña inválido o expirado');
 }
 public function profile()
 {
