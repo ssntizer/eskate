@@ -625,7 +625,7 @@ public function updateUserProfile()
             $message = 'Se ha enviado un enlace de confirmación a tu correo actual.';
         }
         if ($session->get('pending_password')) {
-            $message .= ($message ? ' ' : '') . 'Se ha enviado un enlace de confirmación para cambiar tu contraseña.';
+            $message = 'Se ha enviado un enlace de confirmación para cambiar tu contraseña.';
         }
         
         return redirect()->to('/profile')->with('message', $message);
