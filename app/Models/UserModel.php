@@ -81,11 +81,11 @@ class UserModel extends Model
                     ->set($data)
                     ->update();
     }
-    public function setEmailResetToken(string $email, ?string $token = null, ?string $expire = null): bool
-    {
-        return $this->where('email', $email)
-                    ->update(['email_reset_token' => $token, 'email_reset_expire' => $expire]);
-    }
+    public function setEmailResetToken(int $userId, ?string $token = null, ?string $expire = null): bool
+{
+    return $this->where('id', $userId)
+                ->update(['email_reset_token' => $token, 'email_reset_expire' => $expire]);
+}
 
     public function verifyEmailToken(string $token)
     {
