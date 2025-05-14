@@ -551,7 +551,7 @@ footer a:hover {
 
                     <div class="form-group">
                         <label for="password">Nueva Contraseña:</label>
-                        <input type="password" id="password" name="password" placeholder="Ingresa tu nueva contraseña">
+                        <input type="password" id="new_password" name="new_password" placeholder="Ingresa tu nueva contraseña">
                          <?php if (session()->getFlashdata('errors') && isset(session()->getFlashdata('errors')['password'])): ?>
                             <div class="text-danger-custom">
                                 <?= session()->getFlashdata('errors')['password'] ?>
