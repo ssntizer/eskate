@@ -566,11 +566,14 @@ public function updateUserProfile()
                 
                 $emailService->setTo($currentUser['email']);
                 $emailService->setSubject('Confirma tu nuevo correo electrónico');
-                $emailService->setMessage(view('emails/confirm_email', [
-                    'username' => $currentUser['username'],
-                    'newEmail' => $newEmail,
-                    'confirmLink' => $confirmLink
-                ]));
+                $emailService->setMessage("
+                    <h2>Confirmación de cambio de email</h2>
+                    <p>Hola {$currentUser['username']},</p>
+                    <p>Has solicitado cambiar tu correo electrónico a: {$newEmail}</p>
+                    <p>Por favor haz clic en el siguiente enlace para confirmar el cambio:</p>
+                    <p><a href='{$confirmLink}'>{$confirmLink}</a></p>
+                    <p>Si no solicitaste este cambio, por favor ignora este mensaje.</p>
+                ");
                 $emailService->setMailType('html');
 
                 if ($emailService->send()) {
@@ -597,10 +600,14 @@ public function updateUserProfile()
             
             $emailService->setTo($currentUser['email']);
             $emailService->setSubject('Confirma el cambio de tu contraseña');
-            $emailService->setMessage(view('emails/confirm_password', [
-                'username' => $currentUser['username'],
-                'confirmLink' => $confirmLink
-            ]));
+            $emailService->setMessage("
+                <h2>Confirmación de cambio de contraseña</h2>
+                <p>Hola {$currentUser['username']},</p>
+                <p>Has solicitado cambiar tu contraseña.</p>
+                <p>Por favor haz clic en el siguiente enlace para confirmar el cambio:</p>
+                <p><a href='{$confirmLink}'>{$confirmLink}</a></p>
+                <p>Si no solicitaste este cambio, por favor cambia tu contraseña inmediatamente.</p>
+            ");
             $emailService->setMailType('html');
 
             if ($emailService->send()) {
