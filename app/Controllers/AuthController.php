@@ -527,8 +527,8 @@ public function updateUserProfile()
     }
 
     if (!$currentUser) {
-        log_message('error', 'Error: Usuario no encontrado para ID ' . $userId);
-        return redirect()->back()->with('error', 'Error al actualizar el perfil. Usuario no encontrado.');
+        log_message('error', 'No se encontró usuario con ID: ' . $userId);
+        return redirect()->back()->with('error', 'Error al actualizar el perfil.');
     }
 
     $username = $this->request->getPost('username');
@@ -566,7 +566,11 @@ public function updateUserProfile()
 
         $emailToken = bin2hex(random_bytes(16));
         $emailExpiration = date('Y-m-d H:i:s', strtotime('+1 hour'));
-        if ($userModel->setEmailResetToken($currentUser['email'], $emailToken, $emailExpiration)) {
+
+        log_message('debug', 'Intentando establecer token de email para: ' . $currentUser['email']);
+        $setEmailResult = $userModel->setEmailResetToken($currentUser['email'], $emailToken, $emailExpiration);
+
+        if ($setEmailResult) {
             $confirmLink = site_url('profile/confirm-email/' . $emailToken);
             $subject = 'Confirma tu nuevo correo electrónico';
             $message = "Hola {$currentUser['username']},<br><br>"
@@ -592,7 +596,11 @@ public function updateUserProfile()
     if ($newPassword) {
         $passwordToken = bin2hex(random_bytes(16));
         $passwordExpiration = date('Y-m-d H:i:s', strtotime('+1 hour'));
-        if ($userModel->setPasswordResetToken($currentUser['email'], $passwordToken, $passwordExpiration)) {
+
+        log_message('debug', 'Intentando establecer token de contraseña para: ' . $currentUser['email']);
+        $setPasswordResult = $userModel->setPasswordResetToken($currentUser['email'], $passwordToken, $passwordExpiration);
+
+        if ($setPasswordResult) {
             $confirmLink = site_url('profile/confirm-password/' . $passwordToken);
             $subject = 'Confirma el cambio de tu contraseña';
             $message = "Hola {$currentUser['username']},<br><br>"
