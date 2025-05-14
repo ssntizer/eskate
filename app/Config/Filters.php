@@ -104,7 +104,7 @@ class Filters extends BaseFilters
      *
      * @var array<string, array<string, list<string>>>
      */
-    public $filters = [
+    public array $filters = [ // Cambia esto a array tipado
         'auth' => [
             'before' => [
                 '/list-skates',
