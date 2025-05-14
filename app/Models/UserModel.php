@@ -17,92 +17,78 @@ class UserModel extends Model
         }
 
         $data['data']['password'] = password_hash($data['data']['password'], PASSWORD_DEFAULT);
-
         return $data;
     }
 
-    // Encuentra al usuario por email
     public function findUserByEmail($email)
     {
         return $this->where('email', $email)->first();
     }
 
-    // Establece el token de restablecimiento de contraseña
     public function setPasswordResetToken($email, $token, $expiration)
     {
         return $this->where('email', $email)
-                    ->set('reset_token', $token)
-                    ->set('reset_expiration', $expiration)
-                    ->update();
+                   ->set([
+                       'reset_token' => $token,
+                       'reset_expiration' => $expiration
+                   ])
+                   ->update();
     }
 
-    // Verifica si el token es válido
     public function verifyToken($token)
     {
         return $this->where('reset_token', $token)
-                    ->where('reset_expiration >=', date('Y-m-d H:i:s'))
-                    ->first();
+                   ->where('reset_expiration >=', date('Y-m-d H:i:s'))
+                   ->first();
     }
 
-    // Restablece la contraseña con una nueva
     public function resetPassword($token, $newPassword)
-    { 
-        // Hashea la nueva contraseña
+    {
         $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
-
         return $this->where('reset_token', $token)
-                    ->set('password', $hashedPassword) // Almacena la contraseña hasheada
-                    ->set('reset_token', null)
-                    ->set('reset_expiration', null)
-                    ->update();
+                   ->set([
+                       'password' => $hashedPassword,
+                       'reset_token' => null,
+                       'reset_expiration' => null
+                   ])
+                   ->update();
     }
 
-    // Verifica la contraseña durante el login
     public function verifyPassword($email, $password)
     {
         $user = $this->findUserByEmail($email);
-        
-        if ($user && password_verify($password, $user['password'])) {
-            return true; // Contraseña correcta
-        }
-
-        return false; // Contraseña incorrecta
+        return ($user && password_verify($password, $user['password']));
     }
 
-    // Actualiza los datos del usuario
     public function updateUser($userId, array $data)
     {
-        // Si se incluye una nueva contraseña, la hasheamos
         if (isset($data['password'])) {
             $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
         }
-
-        return $this->where('id', $userId)
-                    ->set($data)
-                    ->update();
+        return $this->where('id', $userId)->set($data)->update();
     }
-    public function setEmailResetToken(int $userId, ?string $token = null, ?string $expire = null): bool
-{
-    $data = [
-        'email_reset_token' => $token,
-        'email_reset_expire' => $expire,
-    ];
-    return $this->where('id', $userId)->set($data)->update();
-}
 
-    public function verifyEmailToken(string $token)
+    public function setEmailResetToken($userId, $token, $expire)
+    {
+        return $this->where('id', $userId)
+                   ->set([
+                       'email_reset_token' => $token,
+                       'email_reset_expire' => $expire
+                   ])
+                   ->update();
+    }
+
+    public function verifyEmailToken($token)
     {
         return $this->where('email_reset_token', $token)
-                    ->where('email_reset_expire >', date('Y-m-d H:i:s'))
-                    ->first();
+                   ->where('email_reset_expire >', date('Y-m-d H:i:s'))
+                   ->first();
     }
 
-    
-
-    public function verifyPasswordToken(string $token)
+    public function verifyPasswordToken($token)
     {
-        return $this->where('password_reset_token', $token)
-                    ->where('password_reset_expire >', date('Y-m-d H:i:s'))
-                    ->first();
+        return $this->where('reset_token', $token)
+                   ->where('reset_expiration >', date('Y-m-d H:i:s'))
+                   ->first();
     }
 }

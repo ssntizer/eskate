@@ -522,13 +522,8 @@ public function updateUserProfile()
     $userId = $session->get('user_id');
     $currentUser = $userModel->find($userId);
 
-    if (!$session->get('logged_in')) {
+    if (!$session->get('logged_in') || !$currentUser) {
         return redirect()->to('/login')->with('error', 'Debes iniciar sesión para actualizar tu perfil');
-    }
-
-    if (!$currentUser) {
-        log_message('error', 'No se encontró usuario con ID: ' . $userId);
-        return redirect()->back()->with('error', 'Error al actualizar el perfil.');
     }
 
     $username = $this->request->getPost('username');
@@ -543,6 +538,7 @@ public function updateUserProfile()
     $messages = [];
     $errors = [];
     $updated = false;
+    $emailService = \Config\Services::email();
 
     // Procesar cambio de username
     if ($username && $username !== $currentUser['username']) {
@@ -552,108 +548,82 @@ public function updateUserProfile()
             $messages[] = 'Nombre de usuario actualizado correctamente.';
             $updated = true;
         } catch (\Exception $e) {
-            log_message('error', 'Error al actualizar nombre de usuario: ' . $e->getMessage());
-            $errors[] = 'Ocurrió un error al actualizar el nombre de usuario.';
+            log_message('error', 'Error al actualizar username: ' . $e->getMessage());
+            $errors[] = 'Error al actualizar nombre de usuario';
         }
     }
 
-    // Configurar el servicio de correo
-    $emailService = \Config\Services::email();
-
     // Procesar cambio de email
     if ($newEmail && $newEmail !== $currentUser['email']) {
-        $existingUser = $userModel->where('email', $newEmail)->first();
-        if ($existingUser && $existingUser['id'] != $userId) {
-            return redirect()->back()->withInput()->with('error', 'El correo electrónico ya está en uso por otro usuario');
-        }
-
-        $emailToken = bin2hex(random_bytes(16));
-        $emailExpiration = date('Y-m-d H:i:s', strtotime('+1 hour'));
-
-        log_message('debug', 'Intentando establecer token de email para ID: ' . $userId);
-        $setEmailResult = $userModel->setEmailResetToken($userId, $emailToken, $emailExpiration);
-
-        if ($setEmailResult) {
-            $confirmLink = site_url('profile/confirm-email/' . $emailToken);
-            
-            // Configurar el correo para cambio de email
-            $emailService->setTo($currentUser['email']);
-            $emailService->setSubject('Confirma tu nuevo correo electrónico');
-            $emailService->setMessage("
-                <h2>Confirmación de cambio de email</h2>
-                <p>Hola {$currentUser['username']},</p>
-                <p>Has solicitado cambiar tu correo electrónico a: {$newEmail}</p>
-                <p>Por favor haz clic en el siguiente enlace para confirmar el cambio:</p>
-                <p><a href='{$confirmLink}'>{$confirmLink}</a></p>
-                <p>Si no solicitaste este cambio, por favor ignora este mensaje.</p>
-            ");
-            $emailService->setMailType('html');
-
-            if ($emailService->send()) {
-                $session->set('pending_email_token', $emailToken);
-                $session->set('pending_new_email', $newEmail);
-                $messages[] = 'Se ha enviado un enlace de confirmación a tu correo actual.';
-                $updated = true;
-            } else {
-                $errors[] = 'Error al enviar el correo de confirmación para el cambio de email.';
-                log_message('error', 'Error al enviar correo: ' . $emailService->printDebugger(['headers']));
-            }
+        if ($userModel->where('email', $newEmail)->first()) {
+            $errors[] = 'El correo electrónico ya está en uso';
         } else {
-            $errors[] = 'Error al guardar el token de restablecimiento de email.';
+            $emailToken = bin2hex(random_bytes(16));
+            $emailExpire = date('Y-m-d H:i:s', strtotime('+1 hour'));
+
+            if ($userModel->setEmailResetToken($userId, $emailToken, $emailExpire)) {
+                $confirmLink = site_url('profile/confirm-email/' . $emailToken);
+                
+                $emailService->setTo($currentUser['email']);
+                $emailService->setSubject('Confirma tu nuevo correo electrónico');
+                $emailService->setMessage(view('emails/confirm_email', [
+                    'username' => $currentUser['username'],
+                    'newEmail' => $newEmail,
+                    'confirmLink' => $confirmLink
+                ]));
+                $emailService->setMailType('html');
+
+                if ($emailService->send()) {
+                    $session->set('pending_new_email', $newEmail);
+                    $messages[] = 'Se ha enviado un enlace de confirmación a tu correo actual.';
+                    $updated = true;
+                } else {
+                    $errors[] = 'Error al enviar correo de confirmación';
+                    log_message('error', $emailService->printDebugger(['headers']));
+                }
+            } else {
+                $errors[] = 'Error al generar token de confirmación';
+            }
         }
     }
 
     // Procesar cambio de contraseña
     if ($newPassword) {
         $passwordToken = bin2hex(random_bytes(16));
-        $passwordExpiration = date('Y-m-d H:i:s', strtotime('+1 hour'));
+        $passwordExpire = date('Y-m-d H:i:s', strtotime('+1 hour'));
 
-        log_message('debug', 'Intentando establecer token de contraseña para: ' . $currentUser['email']);
-        $setPasswordResult = $userModel->setPasswordResetToken($currentUser['email'], $passwordToken, $passwordExpiration);
-
-        if ($setPasswordResult) {
+        if ($userModel->setPasswordResetToken($currentUser['email'], $passwordToken, $passwordExpire)) {
             $confirmLink = site_url('profile/confirm-password/' . $passwordToken);
             
-            // Configurar el correo para cambio de contraseña
             $emailService->setTo($currentUser['email']);
             $emailService->setSubject('Confirma el cambio de tu contraseña');
-            $emailService->setMessage("
-                <h2>Confirmación de cambio de contraseña</h2>
-                <p>Hola {$currentUser['username']},</p>
-                <p>Has solicitado cambiar tu contraseña.</p>
-                <p>Por favor haz clic en el siguiente enlace para confirmar el cambio:</p>
-                <p><a href='{$confirmLink}'>{$confirmLink}</a></p>
-                <p>Si no solicitaste este cambio, por favor cambia tu contraseña inmediatamente.</p>
-            ");
+            $emailService->setMessage(view('emails/confirm_password', [
+                'username' => $currentUser['username'],
+                'confirmLink' => $confirmLink
+            ]));
             $emailService->setMailType('html');
 
             if ($emailService->send()) {
-                $session->set('pending_password_token', $passwordToken);
                 $session->set('pending_new_password', password_hash($newPassword, PASSWORD_DEFAULT));
                 $messages[] = 'Se ha enviado un enlace de confirmación para cambiar tu contraseña.';
                 $updated = true;
             } else {
-                $errors[] = 'Error al enviar el correo de confirmación para el cambio de contraseña.';
-                log_message('error', 'Error al enviar correo: ' . $emailService->printDebugger(['headers']));
+                $errors[] = 'Error al enviar correo de confirmación';
+                log_message('error', $emailService->printDebugger(['headers']));
             }
         } else {
-            $errors[] = 'Error al guardar el token de restablecimiento de contraseña.';
+            $errors[] = 'Error al generar token de confirmación';
         }
     }
 
-    if (!empty($messages)) {
-        $session->setFlashdata('message', implode('<br>', $messages));
-    }
+    // Manejar redirección con mensajes
     if (!empty($errors)) {
-        $session->setFlashdata('error', implode('<br>', $errors));
-    } elseif ($updated && empty($messages) && empty($errors)) {
-        $session->setFlashdata('success', 'Perfil actualizado correctamente.');
-    } elseif (!$updated && empty($errors)) {
-        $session->setFlashdata('info', 'No se realizaron cambios en el perfil.');
+        return redirect()->back()->withInput()->with('errors', $errors);
     }
-
-    return redirect()->to('/profile');
+    
+    return redirect()->to('/profile')->with('messages', $messages);
 }
+
 public function confirmEmail($token)
 {
     $session = session();
@@ -663,14 +633,17 @@ public function confirmEmail($token)
     $newEmail = $session->get('pending_new_email');
 
     if ($user && $newEmail) {
-        $userModel->update($user['id'], ['email' => $newEmail, 'email_reset_token' => null, 'email_reset_expire' => null]);
+        $userModel->update($user['id'], [
+            'email' => $newEmail,
+            'email_reset_token' => null,
+            'email_reset_expire' => null
+        ]);
         $session->set('email', $newEmail);
         $session->remove('pending_new_email');
-        $session->remove('pending_email_token');
         return redirect()->to('/profile')->with('success', 'Correo electrónico actualizado correctamente');
     }
 
-    return redirect()->to('/profile')->with('error', 'Token de correo electrónico inválido o expirado');
+    return redirect()->to('/profile')->with('error', 'Token inválido o expirado');
 }
 
 public function confirmPassword($token)
@@ -682,13 +655,16 @@ public function confirmPassword($token)
     $newPassword = $session->get('pending_new_password');
 
     if ($user && $newPassword) {
-        $userModel->update($user['id'], ['password' => $newPassword, 'password_reset_token' => null, 'password_reset_expire' => null]);
+        $userModel->update($user['id'], [
+            'password' => $newPassword,
+            'reset_token' => null,
+            'reset_expiration' => null
+        ]);
         $session->remove('pending_new_password');
-        $session->remove('pending_password_token');
         return redirect()->to('/profile')->with('success', 'Contraseña actualizada correctamente');
     }
 
-    return redirect()->to('/profile')->with('error', 'Token de contraseña inválido o expirado');
+    return redirect()->to('/profile')->with('error', 'Token inválido o expirado');
 }
 public function profile()
 {
