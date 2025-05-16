@@ -35,7 +35,7 @@ class AuthController extends BaseController
     $data = [
         'username' => $this->request->getPost('username'),
         'email' => $this->request->getPost('email'),
-        'password' => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT),
+        'password' => $this->request->getPost('password'),
         'is_active' => 0, // Cuenta inactiva hasta confirmación
         'created_at' => date('Y-m-d H:i:s')
     ];
