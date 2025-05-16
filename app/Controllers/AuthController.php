@@ -47,7 +47,7 @@ class AuthController extends BaseController
 
     // Generar token de verificación
     $verificationToken = bin2hex(random_bytes(16));
-    $verificationExpire = date('Y-m-d H:i:s', strtotime('+1 minute')); // ¡Expira en 1 minuto!
+    $verificationExpire = date('Y-m-d H:i:s', strtotime('+1 hour')); // ¡Expira en 1 minuto!
 
     // Guardar el nuevo usuario con token
     $data['verification_token'] = $verificationToken;
@@ -69,7 +69,7 @@ class AuthController extends BaseController
                 <h2>Bienvenido a nuestro sitio, {$data['username']}!</h2>
                 <p>Gracias por registrarte. Por favor verifica tu correo electrónico haciendo clic en el siguiente enlace:</p>
                 <p><a href='{$verifyLink}'>{$verifyLink}</a></p>
-                <p>Este enlace expirará en 1 minuto.</p>
+                <p>Este enlace expirará en 1 hora.</p>
                 <p>Si no te registraste en nuestro sitio, por favor ignora este mensaje.</p>
             ");
             $emailService->setMailType('html');
