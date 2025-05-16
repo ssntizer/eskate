@@ -8,7 +8,7 @@ class UserModel extends Model
 {
     protected $table = 'users';
     protected $primaryKey = 'id';
-    protected $allowedFields = ['username', 'email', 'password', 'email_reset_token', 'email_reset_expire', 'reset_token', 'reset_expiration', 'is_active', 'token']; // Agregamos 'is_active' y 'token'
+    protected $allowedFields = ['username', 'email', 'password', 'email_reset_token', 'email_reset_expire', 'reset_token', 'reset_expiration', 'is_active', 'token', 'verification_token', 'verification_expires', 'created_at']; // Asegúrate de que estos estén aquí
     protected $beforeInsert = ['hashPassword'];
 
     protected function hashPassword(array $data)
