@@ -535,28 +535,22 @@ public function updateUserProfile()
         return redirect()->back()->with('error', 'La contraseña actual es incorrecta');
     }
 
-    $successMessages = [];
-    $errorMessages = [];
-    $updated = false;
-
     // Procesar cambio de username
     if ($username && $username !== $currentUser['username']) {
         try {
             $userModel->update($userId, ['username' => $username]);
             $session->set('username', $username);
-            $successMessages[] = 'Nombre de usuario actualizado correctamente.';
-            $updated = true;
+            $session->setFlashdata('success', 'Nombre de usuario actualizado correctamente.');
         } catch (\Exception $e) {
             log_message('error', 'Error al actualizar username: ' . $e->getMessage());
-            $errorMessages[] = 'Error al actualizar nombre de usuario';
+            $session->setFlashdata('error', 'Error al actualizar nombre de usuario');
         }
     }
 
     // Procesar cambio de email
-    $emailSent = false;
     if ($newEmail && $newEmail !== $currentUser['email']) {
         if ($userModel->where('email', $newEmail)->first()) {
-            $errorMessages[] = 'El correo electrónico ya está en uso';
+            $session->setFlashdata('error', 'El correo electrónico ya está en uso');
         } else {
             $emailToken = bin2hex(random_bytes(16));
             $emailExpire = date('Y-m-d H:i:s', strtotime('+1 hour'));
@@ -565,7 +559,7 @@ public function updateUserProfile()
                 $confirmLink = site_url('profile/confirm-email/' . $emailToken);
                 
                 $emailService = \Config\Services::email();
-                $emailService->clear(); // Limpiar configuración previa
+                $emailService->clear();
                 
                 $emailService->setTo($currentUser['email']);
                 $emailService->setSubject('Confirma tu nuevo correo electrónico');
@@ -581,21 +575,18 @@ public function updateUserProfile()
 
                 if ($emailService->send()) {
                     $session->set('pending_new_email', $newEmail);
-                    $successMessages[] = 'Se ha enviado un enlace de confirmación a tu correo actual.';
-                    $updated = true;
-                    $emailSent = true;
+                    $session->setFlashdata('success', 'Se ha enviado un enlace de confirmación a tu correo actual.');
                 } else {
-                    $errorMessages[] = 'Error al enviar correo de confirmación de email';
+                    $session->setFlashdata('error', 'Error al enviar correo de confirmación de email');
                     log_message('error', $emailService->printDebugger(['headers']));
                 }
             } else {
-                $errorMessages[] = 'Error al generar token de confirmación de email';
+                $session->setFlashdata('error', 'Error al generar token de confirmación de email');
             }
         }
     }
 
     // Procesar cambio de contraseña
-    $passwordSent = false;
     if ($newPassword) {
         $passwordToken = bin2hex(random_bytes(16));
         $passwordExpire = date('Y-m-d H:i:s', strtotime('+1 hour'));
@@ -604,7 +595,7 @@ public function updateUserProfile()
             $confirmLink = site_url('profile/confirm-password/' . $passwordToken);
             
             $emailService = \Config\Services::email();
-            $emailService->clear(); // Limpiar configuración previa
+            $emailService->clear();
             
             $emailService->setTo($currentUser['email']);
             $emailService->setSubject('Confirma el cambio de tu contraseña');
@@ -620,26 +611,16 @@ public function updateUserProfile()
 
             if ($emailService->send()) {
                 $session->set('pending_new_password', password_hash($newPassword, PASSWORD_DEFAULT));
-                $successMessages[] = 'Se ha enviado un enlace de confirmación para cambiar tu contraseña.';
-                $updated = true;
-                $passwordSent = true;
+                $session->setFlashdata('success', 'Se ha enviado un enlace de confirmación para cambiar tu contraseña.');
             } else {
-                $errorMessages[] = 'Error al enviar correo de confirmación de contraseña';
+                $session->setFlashdata('error', 'Error al enviar correo de confirmación de contraseña');
                 log_message('error', $emailService->printDebugger(['headers']));
             }
         } else {
-            $errorMessages[] = 'Error al generar token de confirmación de contraseña';
+            $session->setFlashdata('error', 'Error al generar token de confirmación de contraseña');
         }
     }
 
-    // Manejar redirección con mensajes
-    if (!empty($errorMessages)) {
-        $session->setFlashdata('errors', $errorMessages);
-    }
-    if (!empty($successMessages)) {
-        $session->setFlashdata('success', $successMessages);
-    }
-    
     return redirect()->to('/profile');
 }
 
