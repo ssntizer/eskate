@@ -26,6 +26,7 @@ class AuthController extends BaseController
         return view('trayectoria.php');
     }
 
+
     public function registerUser()
 {
     $session = session();
@@ -177,7 +178,7 @@ class AuthController extends BaseController
     public function logout()
     {
         session()->destroy();
-        return redirect()->to('/primerpagina');
+        return redirect()->to('/');
     }
 
     public function listSkates()
@@ -768,3 +769,9 @@ public function eliminarUsuariosNoVerificadosCron()
 }
 
 }
+
+public function instalarpwa(){
+    return view ('instalarpwa');
+}
+}
+

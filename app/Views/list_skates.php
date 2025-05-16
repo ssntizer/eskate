@@ -5,11 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista de Skates | E-Skate</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Baskervville&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <style>
+
         @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Baskervville&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <style>
+
         body {
             background-color: #00719c;
             background-image: url('https://www.transparenttextures.com/patterns/asfalt-dark.png');
@@ -18,9 +21,11 @@
             margin: 0;
             padding: 0;
             padding-top: 70px;
+
             min-height: 100vh; /* Asegura que el body ocupe al menos toda la altura de la vista */
             display: flex; /* Habilita Flexbox */
             flex-direction: column; /* Apila los elementos hijos verticalmente */
+
         }
 
         /* Header */
@@ -46,6 +51,7 @@
             font-family: "Quicksand", sans-serif;
             font-weight: bold;
             letter-spacing: 1px;
+
         }
 
         /* Contenedor flexible para botones de header y botón de perfil */
@@ -215,6 +221,7 @@
             box-shadow: 0 4px 15px rgba(255, 0, 51, 0.4);
         }
 
+
         .skate-item .btn-danger:hover::before {
             width: 100%;
         }
@@ -266,6 +273,7 @@
             padding: 15px;
             margin-bottom: 20px;
             border: none;
+
         }
 
         .alert-danger {
@@ -350,6 +358,7 @@
             flex-shrink: 0; /* Evita que el footer se encoja */
         }
 
+
         footer p {
             margin: 0;
             font-size: 0.9rem;
@@ -372,9 +381,11 @@
                 font-size: 1.5rem;
             }
 
+
             .header-right {
                 gap: 10px; /* Reduce el espacio entre botones y perfil en tablet */
             }
+
 
             .header-buttons a {
                 padding: 6px 15px;
@@ -400,6 +411,7 @@
                 font-size: 1rem;
             }
 
+
             .btn-main {
                 padding: 10px 20px;
                 font-size: 1rem;
@@ -412,6 +424,7 @@
             .header {
                 flex-direction: column;
                 padding: 10px;
+
                 gap: 10px; /* Espacio al apilar elementos del header */
             }
 
@@ -458,12 +471,22 @@
                 width: 30px; /* Aún más pequeño */
                 height: 30px;
                 font-size: 0.9rem;
+
             }
         }
     </style>
 </head>
 <body>
 <script src="https://kit.fontawesome.com/releases/v6.5.1/js/all.js" crossorigin="anonymous"></script>
+
+
+<div class="header">
+    <h1>Lista de Skates</h1>
+    <div class="header-buttons">
+       
+        <a href="<?= site_url('logout') ?>">Cerrar sesión</a>
+    </div>
+</div>
 
 
 <div class="header">
@@ -478,6 +501,7 @@
                 <a href="<?= site_url('login') ?>">Ingresar</a>
             <?php endif; ?>
         </div>
+
 
         <?php if(session()->get('logged_in')): ?>
             <a href="<?= site_url('profile') ?>" class="profile-button" aria-label="Mi Perfil">
@@ -535,6 +559,7 @@
         <?php endif; ?>
     </div>
 </div>
+
 
 <div class="modal fade" id="addSkateModal" tabindex="-1" role="dialog" aria-labelledby="addSkateModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">

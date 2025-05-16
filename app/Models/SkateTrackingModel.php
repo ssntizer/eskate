@@ -1,3 +1,4 @@
+
 <?php
 namespace App\Models;
 
@@ -22,3 +23,4 @@ class SkateTrackingModel extends Model
         $db->query("DELETE FROM skate_tracking WHERE timestamp < NOW() - INTERVAL 2 DAY");
     }
 }
+

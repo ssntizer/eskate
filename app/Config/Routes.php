@@ -5,8 +5,9 @@ use CodeIgniter\Router\RouteCollection;
 /**
  * @var RouteCollection $routes
  */
-// Rutas públicas (sin autenticación)
-$routes->get('/', 'AuthController::primerpag');
+
+$routes->get('/', 'AuthController::login');
+
 $routes->get('/login', 'AuthController::login');
 $routes->post('/loginUser', 'AuthController::loginUser');
 $routes->get('/register', 'AuthController::register');
@@ -17,6 +18,7 @@ $routes->get('passwordreset/reset/(:any)', 'PasswordResetController::reset/$1');
 $routes->post('passwordreset/update', 'PasswordResetController::updatePassword');
 $routes->get('/primerpagina', 'AuthController::primerpag');
 $routes->post('enviarmail', 'AuthController::enviarmail');
+
 $routes->get('/cron/eliminar-no-verificados', 'AuthController::eliminarUsuariosNoVerificadosCron');
 $routes->get('auth/verify-email/(:segment)', 'AuthController::verifyEmail/$1');
 
@@ -47,3 +49,4 @@ $routes->group('', ['filter' => 'auth'], function($routes) {
 
 // Rutas del SkateController (si necesitan autenticación, deberías moverlas al grupo)
 $routes->post('/skate/update', 'SkateController::updateSkateData');
+
