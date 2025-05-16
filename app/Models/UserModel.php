@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 use CodeIgniter\Model;
@@ -7,7 +8,7 @@ class UserModel extends Model
 {
     protected $table = 'users';
     protected $primaryKey = 'id';
-    protected $allowedFields = ['username', 'email', 'password', 'email_reset_token', 'email_reset_expire', 'reset_token', 'reset_expiration'];
+    protected $allowedFields = ['username', 'email', 'password', 'email_reset_token', 'email_reset_expire', 'reset_token', 'reset_expiration', 'is_active', 'token']; // Agregamos 'is_active' y 'token'
     protected $beforeInsert = ['hashPassword'];
 
     protected function hashPassword(array $data)
@@ -28,30 +29,30 @@ class UserModel extends Model
     public function setPasswordResetToken($email, $token, $expiration)
     {
         return $this->where('email', $email)
-                   ->set([
-                       'reset_token' => $token,
-                       'reset_expiration' => $expiration
-                   ])
-                   ->update();
+                    ->set([
+                        'reset_token' => $token,
+                        'reset_expiration' => $expiration
+                    ])
+                    ->update();
     }
 
     public function verifyToken($token)
     {
         return $this->where('reset_token', $token)
-                   ->where('reset_expiration >=', date('Y-m-d H:i:s'))
-                   ->first();
+                    ->where('reset_expiration >=', date('Y-m-d H:i:s'))
+                    ->first();
     }
 
     public function resetPassword($token, $newPassword)
     {
         $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
         return $this->where('reset_token', $token)
-                   ->set([
-                       'password' => $hashedPassword,
-                       'reset_token' => null,
-                       'reset_expiration' => null
-                   ])
-                   ->update();
+                    ->set([
+                        'password' => $hashedPassword,
+                        'reset_token' => null,
+                        'reset_expiration' => null
+                    ])
+                    ->update();
     }
 
     public function verifyPassword($email, $password)
@@ -71,24 +72,34 @@ class UserModel extends Model
     public function setEmailResetToken($userId, $token, $expire)
     {
         return $this->where('id', $userId)
-                   ->set([
-                       'email_reset_token' => $token,
-                       'email_reset_expire' => $expire
-                   ])
-                   ->update();
+                    ->set([
+                        'email_reset_token' => $token,
+                        'email_reset_expire' => $expire
+                    ])
+                    ->update();
     }
 
     public function verifyEmailToken($token)
     {
         return $this->where('email_reset_token', $token)
-                   ->where('email_reset_expire >', date('Y-m-d H:i:s'))
-                   ->first();
+                    ->where('email_reset_expire >', date('Y-m-d H:i:s'))
+                    ->first();
     }
 
     public function verifyPasswordToken($token)
     {
         return $this->where('reset_token', $token)
-                   ->where('reset_expiration >', date('Y-m-d H:i:s'))
-                   ->first();
+                    ->where('reset_expiration >', date('Y-m-d H:i:s'))
+                    ->first();
+    }
+
+    public function emailExists(string $email): bool
+    {
+        return $this->where('email', $email)->countAllResults() > 0;
+    }
+
+    public function usernameExists(string $username): bool
+    {
+        return $this->where('username', $username)->countAllResults() > 0;
     }
 }

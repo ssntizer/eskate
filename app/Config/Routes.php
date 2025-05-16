@@ -17,6 +17,7 @@ $routes->get('passwordreset/reset/(:any)', 'PasswordResetController::reset/$1');
 $routes->post('passwordreset/update', 'PasswordResetController::updatePassword');
 $routes->get('/primerpagina', 'AuthController::primerpag');
 $routes->post('enviarmail', 'AuthController::enviarmail');
+$routes->get('/cron/eliminar-no-verificados', 'AuthController::eliminarUsuariosNoVerificadosCron');
 
 
 // Grupo de rutas protegidas (requieren autenticación)

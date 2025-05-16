@@ -7,7 +7,6 @@ use App\Models\DireccionModel;
 use App\Models\ProvinciaModel;
 use App\Models\LocalidadModel;
 
-
 class AuthController extends BaseController
 {
     protected $skateModel;
@@ -16,6 +15,7 @@ class AuthController extends BaseController
     {
         $this->skateModel = new SkateModel();
     }
+
     public function register()
     {
         return view('register');
@@ -27,25 +27,91 @@ class AuthController extends BaseController
     }
 
     public function registerUser()
-    {
-        $userModel = new UserModel();
-    
-        // Obtener datos del formulario
-        $data = [
-            'username' => $this->request->getPost('username'),
-            'email' => $this->request->getPost('email'),
-            'password' => $this->request->getPost('password') 
-        ];
-    
-        // Verificar si el email ya existe
-        if ($userModel->where('email', $data['email'])->first()) {
-            return redirect()->back()->with('error', 'El correo electrónico ya está registrado.')->withInput();
+{
+    $session = session();
+    $userModel = new UserModel();
+
+    // Obtener datos del formulario
+    $data = [
+        'username' => $this->request->getPost('username'),
+        'email' => $this->request->getPost('email'),
+        'password' => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT),
+        'is_active' => 0, // Cuenta inactiva hasta confirmación
+        'created_at' => date('Y-m-d H:i:s')
+    ];
+
+    // Verificar si el email ya existe
+    if ($userModel->where('email', $data['email'])->first()) {
+        return redirect()->back()->with('error', 'El correo electrónico ya está registrado.')->withInput();
+    }
+
+    // Generar token de verificación
+    $verificationToken = bin2hex(random_bytes(16));
+    $verificationExpire = date('Y-m-d H:i:s', strtotime('+1 minute')); // ¡Expira en 1 minuto!
+
+    // Guardar el nuevo usuario con token
+    $data['verification_token'] = $verificationToken;
+    $data['verification_expires'] = $verificationExpire;
+
+    try {
+        $userId = $userModel->insert($data);
+
+        if ($userId) {
+            // Enviar email de verificación
+            $verifyLink = site_url('auth/verify-email/' . $verificationToken);
+
+            $emailService = \Config\Services::email();
+            $emailService->clear();
+
+            $emailService->setTo($data['email']);
+            $emailService->setSubject('Verifica tu cuenta');
+            $emailService->setMessage("
+                <h2>Bienvenido a nuestro sitio, {$data['username']}!</h2>
+                <p>Gracias por registrarte. Por favor verifica tu correo electrónico haciendo clic en el siguiente enlace:</p>
+                <p><a href='{$verifyLink}'>{$verifyLink}</a></p>
+                <p>Este enlace expirará en 1 minuto.</p>
+                <p>Si no te registraste en nuestro sitio, por favor ignora este mensaje.</p>
+            ");
+            $emailService->setMailType('html');
+
+            if ($emailService->send()) {
+                return redirect()->to('/login')->with('success', 'Registro exitoso. Por favor verifica tu correo electrónico para activar tu cuenta.');
+            } else {
+                // Si falla el envío, eliminar el usuario creado
+                $userModel->delete($userId);
+                log_message('error', $emailService->printDebugger(['headers']));
+                return redirect()->back()->with('error', 'Error al enviar correo de verificación. Por favor intenta nuevamente.')->withInput();
+            }
         }
-    
-        // Guardar el nuevo usuario
-        $userModel->save($data);
-    
-        return redirect()->to('/login')->with('success', 'Registro exitoso');
+    } catch (\Exception $e) {
+        log_message('error', 'Error en registro: ' . $e->getMessage());
+        return redirect()->back()->with('error', 'Ocurrió un error durante el registro. Por favor intenta nuevamente.')->withInput();
+    }
+
+    return redirect()->back()->with('error', 'Ocurrió un error inesperado.')->withInput();
+}
+
+    public function verifyEmail($token)
+    {
+        $session = session();
+        $userModel = new UserModel();
+        
+        $user = $userModel->where('verification_token', $token)
+                         ->where('verification_expires >', date('Y-m-d H:i:s'))
+                         ->first();
+        
+        if (!$user) {
+            return redirect()->to('/login')->with('error', 'Token inválido o expirado.');
+        }
+        
+        // Activar cuenta
+        $userModel->update($user['id'], [
+            'is_active' => 1,
+            'verification_token' => null,
+            'verification_expires' => null
+        ]);
+        
+        return redirect()->to('/login')->with('success', 'Cuenta verificada correctamente. Ya puedes iniciar sesión.');
     }
 
     public function login()
@@ -54,55 +120,59 @@ class AuthController extends BaseController
 
         if ($session->get('logged_in')) {
             return redirect()->to('/list-skates');
-        }
-        else{
-        return view('login');
-    }
-}
-
-public function loginUser()
-{
-    $userModel = new UserModel();
-    $session = session();
-
-    $email = $this->request->getPost('email');
-    $password = $this->request->getPost('password');
-
-    $user = $userModel->where('email', $email)->first();
-
-    if ($user) {
-        log_message('debug', 'User found: ' . print_r($user, true));
-
-        if (password_verify($password, $user['password'])) {
-            log_message('debug', 'Password verified successfully.');
-            
-            // Configurar datos de sesión
-            $session->set([
-                'username' => $user['username'],
-                'user_id' => $user['id'],
-                'logged_in' => true,
-            ]);
-            
-            // Verificar si hay una URL de redirección guardada
-            $redirect_url = $session->get('redirect_url');
-            
-            if ($redirect_url) {
-                // Eliminar la URL de redirección de la sesión
-                $session->remove('redirect_url');
-                return redirect()->to($redirect_url);
-            }
-            
-            // Redirección por defecto
-            return redirect()->to('/list-skates');
         } else {
-            log_message('debug', 'Password verification failed.');
-            return redirect()->back()->with('error', 'Contraseña incorrecta');
+            return view('login');
         }
-    } else {
-        log_message('debug', 'User not found with email: ' . $email);
-        return redirect()->back()->with('error', 'Usuario no encontrado');
     }
-}
+
+    public function loginUser()
+    {
+        $userModel = new UserModel();
+        $session = session();
+
+        $email = $this->request->getPost('email');
+        $password = $this->request->getPost('password');
+
+        $user = $userModel->where('email', $email)->first();
+
+        if ($user) {
+            // Verificar si la cuenta está activa
+            if (!$user['is_active']) {
+                return redirect()->back()->with('error', 'Tu cuenta no está activada. Por favor verifica tu correo electrónico.');
+            }
+
+            log_message('debug', 'User found: ' . print_r($user, true));
+
+            if (password_verify($password, $user['password'])) {
+                log_message('debug', 'Password verified successfully.');
+                
+                // Configurar datos de sesión
+                $session->set([
+                    'username' => $user['username'],
+                    'user_id' => $user['id'],
+                    'logged_in' => true,
+                ]);
+                
+                // Verificar si hay una URL de redirección guardada
+                $redirect_url = $session->get('redirect_url');
+                
+                if ($redirect_url) {
+                    // Eliminar la URL de redirección de la sesión
+                    $session->remove('redirect_url');
+                    return redirect()->to($redirect_url);
+                }
+                
+                // Redirección por defecto
+                return redirect()->to('/list-skates');
+            } else {
+                log_message('debug', 'Password verification failed.');
+                return redirect()->back()->with('error', 'Contraseña incorrecta');
+            }
+        } else {
+            log_message('debug', 'User not found with email: ' . $email);
+            return redirect()->back()->with('error', 'Usuario no encontrado');
+        }
+    }
 
     public function logout()
     {
@@ -679,4 +749,22 @@ public function profile()
 
     return view('profile', ['user' => $user]);
 }
+public function eliminarUsuariosNoVerificadosCron()
+{
+    $userModel = new UserModel();
+    $cutoff = date('Y-m-d H:i:s');
+
+    $deletedUsers = $userModel->where('is_active', 0)
+                              ->where('verification_expires <', $cutoff)
+                              ->delete();
+
+    if ($deletedUsers) {
+        log_message('info', "Cron Job: Se eliminaron {$deletedUsers} cuentas no verificadas.");
+        echo "OK: Se eliminaron {$deletedUsers} cuentas.\n";
+    } else {
+        log_message('info', "Cron Job: No se encontraron cuentas no verificadas para eliminar.");
+        echo "OK: No se encontraron cuentas para eliminar.\n";
+    }
+}
+
 }
