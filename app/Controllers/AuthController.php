@@ -611,7 +611,7 @@ public function updateUserProfile()
 
             if ($emailService->send()) {
                 $session->set('pending_new_password', password_hash($newPassword, PASSWORD_DEFAULT));
-                $session->setFlashdata('success', 'Se ha enviado un enlace de confirmación para cambiar tu contraseña.');
+                $session->setFlashdata('success', 'Se ha enviado un enlace de confirmación a tu correo actual.');
             } else {
                 $session->setFlashdata('error', 'Error al enviar correo de confirmación de contraseña');
                 log_message('error', $emailService->printDebugger(['headers']));
