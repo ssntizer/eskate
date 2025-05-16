@@ -637,7 +637,7 @@ public function updateUserProfile()
         $session->setFlashdata('errors', $errorMessages);
     }
     if (!empty($successMessages)) {
-        $session->setFlashdata('successes', $successMessages);
+        $session->setFlashdata('success', $successMessages);
     }
     
     return redirect()->to('/profile');
