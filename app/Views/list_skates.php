@@ -6,8 +6,8 @@
     <title>Lista de Skates | E-Skate</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
-@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
-</style>
+        @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
+    </style>
     <link href="https://fonts.googleapis.com/css2?family=Baskervville&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -125,10 +125,10 @@
         }
 
         /* Contenedor principal del contenido */
-         .main-content-wrapper {
-             flex-grow: 1; /* Permite que este contenedor ocupe el espacio restante */
-             /* No necesita margin-top aquí si el padding-top del body ya lo maneja */
-         }
+        .main-content-wrapper {
+            flex-grow: 1; /* Permite que este contenedor ocupe el espacio restante */
+            /* No necesita margin-top aquí si el padding-top del body ya lo maneja */
+        }
 
 
         /* Contenedor de Bootstrap */
@@ -176,12 +176,13 @@
 
         /* Botones dentro de las tarjetas */
         .skate-item form {
-             margin-top: 10px; /* Espacio entre formularios si hay varios */
-             margin-bottom: 5px; /* Espacio debajo del formulario */
+            margin-top: 10px; /* Espacio entre formularios si hay varios */
+            margin-bottom: 5px; /* Espacio debajo del formulario */
         }
-         .skate-item form:last-child {
-             margin-bottom: 0; /* No margin bottom en el último formulario */
-         }
+
+        .skate-item form:last-child {
+            margin-bottom: 0; /* No margin bottom en el último formulario */
+        }
 
         .skate-item .btn-danger {
             background-color: #ff0033;
@@ -322,9 +323,9 @@
             color: #333; /* Color del texto dentro del input */
         }
 
-         .modal-body input::placeholder {
-             color: #666; /* Color del placeholder */
-         }
+        .modal-body input::placeholder {
+            color: #666; /* Color del placeholder */
+        }
 
 
         .modal-body input:focus {
@@ -371,7 +372,7 @@
                 font-size: 1.5rem;
             }
 
-             .header-right {
+            .header-right {
                 gap: 10px; /* Reduce el espacio entre botones y perfil en tablet */
             }
 
@@ -418,12 +419,12 @@
                 margin-bottom: 5px; /* Ajusta el margen */
             }
 
-             .header-right {
-                 flex-direction: column; /* Apila los botones y el botón de perfil */
-                 width: 100%; /* Ocupa todo el ancho */
-                 gap: 10px; /* Espacio entre los elementos apilados */
-                 align-items: center; /* Centra los elementos apilados */
-             }
+            .header-right {
+                flex-direction: column; /* Apila los botones y el botón de perfil */
+                width: 100%; /* Ocupa todo el ancho */
+                gap: 10px; /* Espacio entre los elementos apilados */
+                align-items: center; /* Centra los elementos apilados */
+            }
 
             .header-buttons {
                 width: 100%;
@@ -436,7 +437,7 @@
             }
 
             .skate-item h3 {
-                 font-size: 1.2rem;
+                font-size: 1.2rem;
             }
 
             .skate-item h5,
@@ -444,20 +445,20 @@
                 font-size: 0.9rem;
             }
 
-             .btn-main {
+            .btn-main {
                 width: auto; /* Permite que los botones se ajusten al contenido */
                 display: inline-block; /* Asegura que se muestren en línea */
                 margin-right: 5px; /* Reduce el margen */
                 margin-bottom: 5px; /* Reduce el margen */
                 font-size: 0.9rem;
                 padding: 8px 15px;
-             }
+            }
 
-             .profile-button {
+            .profile-button {
                 width: 30px; /* Aún más pequeño */
                 height: 30px;
                 font-size: 0.9rem;
-             }
+            }
         }
     </style>
 </head>
@@ -471,11 +472,11 @@
     <div class="header-right">
         <div class="header-buttons">
             <?php if(session()->get('logged_in')): ?>
-                 <a href="<?= site_url('/') ?>">Inicio</a>
-                 <a href="<?= site_url('logout') ?>">Cerrar sesión</a>
-             <?php else: ?>
-                 <a href="<?= site_url('login') ?>">Ingresar</a>
-             <?php endif; ?>
+                <a href="<?= site_url('/') ?>">Inicio</a>
+                <a href="<?= site_url('logout') ?>">Cerrar sesión</a>
+            <?php else: ?>
+                <a href="<?= site_url('login') ?>">Ingresar</a>
+            <?php endif; ?>
         </div>
 
         <?php if(session()->get('logged_in')): ?>
@@ -509,15 +510,15 @@
                             <p>Batería: <?= esc($skate['bateria']) ?>%</p>
                             <p>Velocidad: <?= esc($skate['velocidad']) ?> km/h</p>
                             <form action="<?= site_url('unlink-skate/' . esc($skate['codigo'])) ?>" method="POST" onsubmit="return confirm('¿Estás seguro de que quieres desvincular este skate?');">
-                                 <?= csrf_field() ?>
+                                <?= csrf_field() ?>
                                 <button type="submit" class="btn btn-danger">Borrar Skate</button>
                             </form>
                             <?php if(!empty($skate['apodo'])): ?>
                                 <form action="<?= site_url('deleteapodo/' . esc($skate['codigo'])) ?>" method="POST" onsubmit="return confirm('¿Estás seguro de que quieres borrar el apodo de este skate?');">
-                                     <?= csrf_field() ?>
+                                    <?= csrf_field() ?>
                                     <button type="submit" class="btn btn-danger">Borrar Apodo</button>
                                 </form>
-                             <?php endif; ?>
+                            <?php endif; ?>
                         </div>
                     </div>
                 <?php endforeach; ?>
@@ -529,11 +530,65 @@
         <?php endif; ?>
 
         <button class="btn btn-main" data-toggle="modal" data-target="#addSkateModal">Agregar Skate</button>
-         <?php if (!empty($skates)): ?>
+        <?php if (!empty($skates)): ?>
             <button class="btn btn-main" data-toggle="modal" data-target="#apodoSkateModal">Cambiar Apodo</button>
         <?php endif; ?>
     </div>
-</div> <footer>
+</div>
+
+<div class="modal fade" id="addSkateModal" tabindex="-1" role="dialog" aria-labelledby="addSkateModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addSkateModalLabel">Vincular un skate</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="<?= site_url('add-skate') ?>" method="POST">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="codigo">Código del Skate</label>
+                        <input type="text" class="form-control" id="codigo" name="codigo" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-main">Guardar Skate</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="apodoSkateModal" tabindex="-1" role="dialog" aria-labelledby="apodoSkateModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addSkateModalLabel">Cambiar apodo</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="<?= site_url('update-skate-apodo/') ?>" method="POST">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="codigo">Código del Skate</label>
+                        <input type="text" class="form-control" id="codigo" name="codigo" required>
+                        <label for="apodo">Apodo deseado</label>
+                        <input type="text" class="form-control" id="apodo" name="apodo" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-main">Guardar cambios</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<footer>
     <p>&copy; 2025 E-skate - Diseñado para la acción - <a href="mailto:eskatevz@gmail.com">Contáctanos</a></p>
 </footer>
 
