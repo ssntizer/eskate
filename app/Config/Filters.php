@@ -34,6 +34,8 @@ class Filters extends BaseFilters
         'forcehttps'    => ForceHTTPS::class,
         'pagecache'     => PageCache::class,
         'performance'   => PerformanceMetrics::class,
+        // ¡Aquí está el cambio clave! Agregamos el alias para el filtro 'auth'.
+        'auth'          => \App\Filters\AuthFilter::class, // Asegúrate de que esta ruta sea correcta
     ];
 
     /**
@@ -103,5 +105,9 @@ class Filters extends BaseFilters
      *
      * @var array<string, array<string, list<string>>>
      */
-    public array $filters = [];
+    public array $filters = [
+        // Mantuvimos esta sección vacía ya que estamos usando el filtro en las rutas directamente.
+        // Si en el futuro decides aplicar el filtro a patrones de URI específicos en lugar de grupos de rutas,
+        // entonces lo definirías aquí como lo tienes en tu web principal.
+    ];
 }
