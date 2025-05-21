@@ -40,6 +40,7 @@ $routes->group('', ['filter' => 'auth'], function($routes) {
     $routes->get('nuevadireccion', 'AuthController::guardar');
     $routes->post('/direccion/guardarNueva', 'AuthController::guardarNueva');
     $routes->get('/obtener-localidades/(:num)', 'AuthController::obtenerLocalidadesPorProvincia/$1');
+     $routes->get('trayectoria', 'AuthController::trayectoria');
     // Las rutas de PayPal también deben ser protegidas si solo usuarios logueados pueden comprar
     $routes->post("paypal/createOrder", "PaypalController::createOrder");
     $routes->post("paypal/captureOrder", "PaypalController::captureOrder");
