@@ -5,63 +5,70 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bienvenido</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <style>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Permanent+Marker&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Baskervville+SC&display=swap');
 
+        /* Ajuste para el área segura en dispositivos móviles */
         body {
-            background-color: #00719c;
-            color: #ffffff;
-            font-family: 'Montserrat', sans-serif;
-            background-image: url('https://example.com/skate-pattern.png'), url('https://www.transparenttextures.com/patterns/asfalt-dark.png');
+            background-color: #00719c; /* Color de fondo de la página */
+            color: #ffffff; /* Color del texto */
+            font-family: 'Montserrat', sans-serif; /* Usamos Montserrat como en la otra vista */
+            background-image: url('https://example.com/skate-pattern.png'), url('https://www.transparenttextures.com/patterns/asfalt-dark.png'); /* Textura ligera de asfalto */
             background-size: cover, auto;
             background-position: center;
             display: flex;
             flex-direction: column;
             min-height: 100vh;
             margin: 0;
+            /* Añade padding superior dinámicamente para evitar el notch/barra de estado */
             padding-top: env(safe-area-inset-top);
+            /* Para que el scroll se vea bien si hay padding */
             scroll-padding-top: env(safe-area-inset-top);
         }
 
         .header {
-            background-color: #005f87;
+            background-color: #005f87; /* Color de fondo del encabezado */
             padding: 15px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             border-bottom: 3px solid #004b6b;
-            position: sticky;
+            position: sticky; /* O 'fixed' si quieres que siempre esté visible al hacer scroll */
             top: 0;
             left: 0;
             right: 0;
-            z-index: 1001;
-            /* **MODIFICADO:** Ajustamos el padding-top del header. */
-            padding-top: calc(20px + env(safe-area-inset-top)); /* Reajustado a 20px */
-            padding-bottom: 20px; /* Asegura un buen espacio inferior en el header */
-            box-sizing: border-box;
+            z-index: 1001; /* El header se mantiene en este z-index para estar por encima del contenido principal */
+            /* Ajusta el padding superior del header si es fixed/sticky para no superponerse */
+            padding-top: calc(15px + env(safe-area-inset-top));
+            box-sizing: border-box; /* Asegura que el padding no añada ancho/alto total inesperado */
         }
 
         .header h1 {
             font-size: 1.5rem;
             font-family: "Baskervville SC", static;
             margin: 0;
-            line-height: 1.2;
+            /* text-align: center; Lo quitamos porque el menú lo desplaza a la izquierda */
         }
 
-        @media (max-width: 767.98px) {
-           
+        /* MEDIA QUERY para ajustar el título del header y su altura solo en pantallas pequeñas */
+        @media (max-width: 767.98px) { /* Bootstrap's 'md' breakpoint */
+            .header {
+                /* Aumentamos el padding inferior del header para hacerlo un poco más alto */
+                padding-bottom: 25px; /* Valor ajustado para que el título se vea mejor */
+            }
             .header h1 {
+                /* Ajustar el tamaño de fuente para que quepa mejor si es necesario */
                 font-size: 1.4rem;
-                margin-top: 0;
+                /* Aseguramos que el título no quede bajo el notch en móviles, si es necesario */
+                margin-top: env(safe-area-inset-top);
             }
         }
 
         .side-panel {
-            background-color: #008dc2;
+            background-color: #008dc2; /* Color de fondo del panel lateral */
             padding: 20px;
-            border-radius: 15px;
+            border-radius: 15px; /* Bordes redondeados */
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
             margin-bottom: 20px;
         }
@@ -72,12 +79,13 @@
         }
 
         .map-container {
-            width: 100%;
-            height: 300px;
-            border-radius: 15px;
-            overflow: hidden;
+            width: 100%; /* Ancho completo */
+            height: 300px; /* Altura del contenedor del mapa ajustado para móviles */
+            border-radius: 15px; /* Bordes redondeados */
+            overflow: hidden; /* Ocultar desbordamiento */
         }
 
+        /* Footer con estilo dinámico */
         footer {
             text-align: center;
             padding: 20px 0;
@@ -119,7 +127,7 @@
             }
         }
 
-        /* ESTILOS DEL MENÚ HAMBURGUESA PERSONALIZADO */
+        /* ESTILOS DEL MENÚ HAMBURGUESA PERSONALIZADO (copiados de list_skates.php) */
         .menu-icon {
             background-color: #005f87;
             color: white;
@@ -131,10 +139,9 @@
             justify-content: center;
             cursor: pointer;
             transition: background-color 0.3s, transform 0.3s;
-            z-index: 1002;
-            position: fixed;
-            /* **MODIFICADO:** Ajustamos la posición superior del icono. */
-            top: calc(20px + env(safe-area-inset-top)); /* Debe alinearse con el padding del header */
+            z-index: 1002; /* Mantener este alto para que el icono del menú sea clickeable */
+            position: fixed; /* Ojo: esto lo pondrá fijo en la ventana, no en el header si el header no es fijo */
+            top: calc(15px + env(safe-area-inset-top));
             right: 15px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
@@ -150,20 +157,19 @@
 
         .mobile-nav-overlay {
             position: fixed;
-            top: 0;
+            top: 0; /* Esto será ajustado por JavaScript */
             right: -100vw;
             width: min(75vw, 300px);
-            height: 100vh;
-            background-color: #005f87;
+            height: 100vh; /* Esto también se ajustará dinámicamente */
+            background-color: #005f87; /* Color de fondo azul oscuro */
             box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
             transition: right 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            z-index: 999;
+            z-index: 999; /* Z-index más bajo que el header (1001) */
             padding: 20px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             color: white;
-            padding-top: calc(20px + env(safe-area-inset-top));
         }
 
         .mobile-nav-overlay.is-open {
@@ -204,7 +210,7 @@
 
         .mobile-nav-overlay .top-links {
             margin-bottom: auto;
-            padding-top: 5px;
+            padding-top: 15px; /* Un poco de padding para separar del borde superior del menú */
         }
 
         .mobile-nav-overlay .bottom-links {
@@ -220,8 +226,7 @@
 </head>
 <body>
 
-<div class="header" id="mainHeader">
-    <h1>Bienvenido, <?= session()->get('username') ?>!</h1>
+<div class="header" id="mainHeader"> <h1>Bienvenido, <?= session()->get('username') ?>!</h1>
     <div class="menu-icon" id="menuIcon">
         <i class="material-icons">menu</i>
     </div>
@@ -232,13 +237,11 @@
         <ul class="mobile-nav-list">
             <li><a href="<?= site_url('/') ?>"><i class="material-icons">home</i> Inicio</a></li>
             <li><a href="<?= site_url('profile') ?>"><i class="material-icons">person</i> Perfil</a></li>
-            <li><a href="javascript:history.back()"><i class="material-icons">arrow_back</i> Volver atrás</a></li>
-        </ul>
+            <li><a href="javascript:history.back()"><i class="material-icons">arrow_back</i> Volver atrás</a></li> </ul>
     </div>
     <div class="bottom-links">
         <ul class="mobile-nav-list">
-            <li><a href="<?= site_url('logout') ?>"><i class="material-icons">exit_to_app</i> Cerrar sesión</a></li>
-        </ul>
+            <li><a href="<?= site_url('logout') ?>"><i class="material-icons">exit_to_app</i> Cerrar sesión</a></li> </ul>
     </div>
 </nav>
 
@@ -282,16 +285,19 @@
     document.addEventListener('DOMContentLoaded', function() {
         const menuIcon = document.getElementById('menuIcon');
         const mobileNavOverlay = document.getElementById('mobileNavOverlay');
-        const mainHeader = document.getElementById('mainHeader');
+        const mainHeader = document.getElementById('mainHeader'); // Obtenemos el header
         const navItems = mobileNavOverlay.querySelectorAll('.mobile-nav-list a');
 
+        // Función para ajustar la posición y altura del overlay
         function adjustOverlayPosition() {
             if (mainHeader && mobileNavOverlay) {
-                const headerHeight = mainHeader.offsetHeight;
-                mobileNavOverlay.style.height = `calc(100vh - ${headerHeight}px)`;
+                const headerHeight = mainHeader.offsetHeight; // Obtiene la altura total del header
+                mobileNavOverlay.style.top = `${headerHeight}px`; // Posiciona el overlay debajo del header
+                mobileNavOverlay.style.height = `calc(100vh - ${headerHeight}px)`; // Ajusta la altura del overlay
             }
         }
 
+        // Ejecutar al cargar y al redimensionar la ventana
         adjustOverlayPosition();
         window.addEventListener('resize', adjustOverlayPosition);
 
@@ -299,9 +305,12 @@
             menuIcon.addEventListener('click', () => {
                 const isOpen = mobileNavOverlay.classList.toggle('is-open');
                 document.body.classList.toggle('menu-active');
+
+                // Cambiar el ícono de hamburguesa a cruz y viceversa
                 menuIcon.querySelector('i').textContent = isOpen ? 'close' : 'menu';
             });
 
+            // Cerrar menú al hacer clic en un enlace del menú
             navItems.forEach(item => {
                 item.addEventListener('click', () => {
                     mobileNavOverlay.classList.remove('is-open');
@@ -310,6 +319,7 @@
                 });
             });
 
+            // Cerrar menú al hacer clic fuera del menú
             document.body.addEventListener('click', (event) => {
                 if (mobileNavOverlay.classList.contains('is-open') &&
                     !mobileNavOverlay.contains(event.target) &&

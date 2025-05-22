@@ -19,44 +19,49 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            /* Añade padding superior dinámicamente para evitar el notch/barra de estado */
             padding-top: env(safe-area-inset-top);
+            /* Para que el scroll se vea bien si hay padding */
             scroll-padding-top: env(safe-area-inset-top);
         }
 
         .header {
             background-color: #005f87;
-            padding: 15px; /* Padding base */
+            padding: 15px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             border-bottom: 3px solid #004b6b;
-            position: sticky;
+            position: sticky; /* O 'fixed' si quieres que siempre esté visible al hacer scroll */
             top: 0;
             left: 0;
             right: 0;
-            z-index: 1001;
-            /* **MODIFICADO:** Ajustamos el padding-top del header para que el título se vea bien. */
-            padding-top: calc(20px + env(safe-area-inset-top)); /* Reajustado a 20px */
-            padding-bottom: 20px; /* Asegura un buen espacio inferior en el header */
-            box-sizing: border-box;
-            /* min-height ya no es necesario si el padding es suficiente */
+            z-index: 1001; /* El header se mantiene en este z-index para estar por encima del contenido principal */
+            /* Ajusta el padding superior del header si es fixed/sticky para no superponerse */
+            padding-top: calc(15px + env(safe-area-inset-top));
+            box-sizing: border-box; /* Asegura que el padding no añada ancho/alto total inesperado */
         }
 
         .header h1 {
             font-size: 1.5rem;
             font-family: "Baskervville SC", static;
             margin: 0;
-            line-height: 1.2;
         }
 
         /* MEDIA QUERY para ajustar el título del header y su altura solo en pantallas pequeñas */
         @media (max-width: 767.98px) { /* Bootstrap's 'md' breakpoint */
-         
+            .header {
+                /* Aumentamos el padding inferior del header para hacerlo un poco más alto */
+                padding-bottom: 25px; /* Valor ajustado para que el título se vea mejor */
+            }
             .header h1 {
+                /* Ajustar el tamaño de fuente para que quepa mejor si es necesario */
                 font-size: 1.4rem;
-                margin-top: 0;
+                /* Aseguramos que el título no quede bajo el notch en móviles, si es necesario */
+                margin-top: env(safe-area-inset-top);
             }
         }
+
 
         .container {
             margin-top: 40px;
@@ -79,6 +84,7 @@
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
         }
 
+        /* LA LÍNEA 'content: url(...)' DE SHUTTERSTOCK HA SIDO ELIMINADA AQUÍ */
         .skate-item::before {
             position: absolute;
             top: -10px;
@@ -189,10 +195,9 @@
             justify-content: center;
             cursor: pointer;
             transition: background-color 0.3s, transform 0.3s;
-            z-index: 1002;
+            z-index: 1002; /* Mantener este alto para que el icono del menú sea clickeable */
             position: fixed;
-            /* **MODIFICADO:** Ajustamos la posición superior del icono para que quede dentro del header. */
-            top: calc(20px + env(safe-area-inset-top)); /* Debe alinearse con el padding del header */
+            top: calc(15px + env(safe-area-inset-top));
             right: 15px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
@@ -208,21 +213,20 @@
 
         .mobile-nav-overlay {
             position: fixed;
-            top: 0;
+            top: 0; /* Esto será ajustado por JavaScript */
             right: -100vw;
             width: min(75vw, 300px);
-            height: 100vh;
-            background-color: #005f87;
+            height: 100vh; /* Esto también se ajustará dinámicamente */
+            background-color: #005f87; /* Color de fondo azul oscuro */
             box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
             transition: right 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            z-index: 999;
+            z-index: 999; /* Z-index más bajo que el header (1001) */
             padding: 20px;
+            /* ELIMINAMOS padding-top: env(safe-area-inset-top); DE AQUÍ */
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             color: white;
-            /* Padding superior específico para el contenido del overlay. */
-            padding-top: calc(20px + env(safe-area-inset-top));
         }
 
         .mobile-nav-overlay.is-open {
@@ -263,7 +267,8 @@
 
         .mobile-nav-overlay .top-links {
             margin-bottom: auto;
-            padding-top: 5px;
+            /* Ajustar padding superior de los enlaces para que no estén pegados al borde superior del overlay */
+            padding-top: 15px; /* Un poco de padding para separar del borde superior del menú */
         }
 
         .mobile-nav-overlay .bottom-links {
@@ -279,8 +284,7 @@
 </head>
 <body>
 
-<div class="header" id="mainHeader">
-    <h1>Lista de Skates</h1>
+<div class="header" id="mainHeader"> <h1>Lista de Skates</h1>
     <div class="menu-icon" id="menuIcon">
         <i class="material-icons">menu</i>
     </div>
@@ -349,7 +353,7 @@
             <div class="modal-header">
                 <h5 class="modal-title" id="addSkateModalLabel">Vincular un skate</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
+                    <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <form action="<?= site_url('add-skate') ?>" method="POST">
@@ -374,7 +378,7 @@
             <div class="modal-header">
                 <h5 class="modal-title" id="addSkateModalLabel">Cambiar apodo</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
+                    <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <form action="<?= site_url('update-skate-apodo/') ?>" method="POST">
@@ -396,7 +400,7 @@
 </div>
 
 <footer>
-    <p>© 2024 E-skate - Diseñado para la acción - <a href="mailto:eskatevz@gmail.com">Contáctanos</a></p>
+    <p>&copy; 2024 E-skate - Diseñado para la acción - <a href="mailto:eskatevz@gmail.com">Contáctanos</a></p>
 </footer>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
@@ -407,18 +411,19 @@
     document.addEventListener('DOMContentLoaded', function() {
         const menuIcon = document.getElementById('menuIcon');
         const mobileNavOverlay = document.getElementById('mobileNavOverlay');
-        const mainHeader = document.getElementById('mainHeader');
+        const mainHeader = document.getElementById('mainHeader'); // Obtenemos el header
         const navItems = mobileNavOverlay.querySelectorAll('.mobile-nav-list a');
 
         // Función para ajustar la posición y altura del overlay
         function adjustOverlayPosition() {
             if (mainHeader && mobileNavOverlay) {
-                const headerHeight = mainHeader.offsetHeight;
-                // mobileNavOverlay.style.top = `${headerHeight}px`; // No es necesario si se usa padding-top en el overlay y top:0
+                const headerHeight = mainHeader.offsetHeight; // Obtiene la altura total del header
+                mobileNavOverlay.style.top = `${headerHeight}px`; // Posiciona el overlay debajo del header
                 mobileNavOverlay.style.height = `calc(100vh - ${headerHeight}px)`; // Ajusta la altura del overlay
             }
         }
 
+        // Ejecutar al cargar y al redimensionar la ventana
         adjustOverlayPosition();
         window.addEventListener('resize', adjustOverlayPosition);
 
@@ -426,9 +431,12 @@
             menuIcon.addEventListener('click', () => {
                 const isOpen = mobileNavOverlay.classList.toggle('is-open');
                 document.body.classList.toggle('menu-active');
+
+                // Cambiar el ícono de hamburguesa a cruz y viceversa
                 menuIcon.querySelector('i').textContent = isOpen ? 'close' : 'menu';
             });
 
+            // Cerrar menú al hacer clic en un enlace del menú
             navItems.forEach(item => {
                 item.addEventListener('click', () => {
                     mobileNavOverlay.classList.remove('is-open');
@@ -437,6 +445,7 @@
                 });
             });
 
+            // Cerrar menú al hacer clic fuera del menú
             document.body.addEventListener('click', (event) => {
                 if (mobileNavOverlay.classList.contains('is-open') &&
                     !mobileNavOverlay.contains(event.target) &&
