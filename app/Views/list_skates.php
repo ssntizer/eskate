@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>List of Skates</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Permanent+Marker&display=swap');
@@ -27,6 +26,8 @@
             justify-content: space-between;
             align-items: center;
             border-bottom: 3px solid #004b6b;
+            position: relative; /* Necesario para posicionar el botón de menú */
+            z-index: 1001; /* Asegura que esté por encima del overlay */
         }
 
         .header h1 {
@@ -57,12 +58,14 @@
         }
 
         .skate-item::before {
-            content: url('https://image.shutterstock.com/image-vector/skateboard-wheel-icon-logo-vector-260nw-1551613316.jpg');
+            content: url('https://image.shutterstock.com/image-vector/skateboard-wheel-icon-logo-vector-260nw-1551613316.jpg'); /* La imagen debe ser pequeña y tener un tamaño adecuado o usarse como background-image */
             position: absolute;
             top: -10px;
             right: -10px;
             opacity: 0.2;
-            width: 80px;
+            width: 80px; /* Ajusta el tamaño de la imagen si es necesario */
+            height: auto;
+            pointer-events: none; /* Asegura que la imagen no interfiera con los clics */
         }
 
         .skate-item h4 {
@@ -94,7 +97,6 @@
             border-color: #ff6600;
             border-radius: 50px;
             padding: 10px 20px;
-
         }
 
         .btn-primary:hover {
@@ -103,31 +105,30 @@
         }
 
         .btn-light {
-        background-color: #e6b800; /* Un amarillo más oscuro */
-        color: #005f87;
-        border-radius: 8px;
-        padding: 8px 16px; /* Mismo tamaño para ambos */
-        margin-bottom: 5px;
-    }
+            background-color: #e6b800; /* Un amarillo más oscuro */
+            color: #005f87;
+            border-radius: 8px;
+            padding: 8px 16px; /* Mismo tamaño para ambos */
+            margin-bottom: 5px;
+        }
 
-    .btn-light:hover {
-        background-color: #cc9900; /* Amarillo más oscuro en hover */
-        color: #004b6b;
-    }
+        .btn-light:hover {
+            background-color: #cc9900; /* Amarillo más oscuro en hover */
+            color: #004b6b;
+        }
 
-    .btn-danger {
-        background-color: #cc002a; /* Un rojo más oscuro */
-        border-color: #cc002a;
-        border-radius: 8px;
-        padding: 8px 16px; /* Tamaño uniforme */
-        margin-bottom: 5px;
-    }
+        .btn-danger {
+            background-color: #cc002a; /* Un rojo más oscuro */
+            border-color: #cc002a;
+            border-radius: 8px;
+            padding: 8px 16px; /* Tamaño uniforme */
+            margin-bottom: 5px;
+        }
 
-
-       .btn-danger:hover {
-        background-color: #990020; /* Rojo aún más oscuro en hover */
-        border-color: #990020;
-    }
+        .btn-danger:hover {
+            background-color: #990020; /* Rojo aún más oscuro en hover */
+            border-color: #990020;
+        }
 
         .alert {
             margin-top: 20px;
@@ -138,6 +139,7 @@
             text-align: center;
             padding: 20px 0;
             background-color: #005f87;
+            margin-top: auto; /* Empuja el footer hacia abajo */
         }
 
         footer p {
@@ -155,89 +157,128 @@
             color: #ffb700;
         }
 
-        @media (max-width: 768px) {
-            .skate-item {
-                padding: 15px; /* Espaciado interno reducido para pantallas más pequeñas */
-            }
-
-            .skate-item h4 {
-                font-size: 1.25rem; /* Tamaño de fuente ajustado para pantallas más pequeñas */
-            }
-
-            .skate-item p {
-                font-size: 1rem; /* Tamaño de fuente ajustado para pantallas más pequeñas */
-            }
-            /* Ajustes del menú lateral */
-
-.sidenav {
-    background-color:rgb(0, 80, 114); /* Color del fondo del menú */
-    width: 250px; /* Ancho del menú */
-    position: fixed;
-    top: 0;
-    right: -250px; /* Oculto fuera de la pantalla */
-    height: 100%;
-    transition: right 0.3s ease-in-out;
-    padding-top: 60px;
-}
-
-/* Asegurar que el menú se abra desde la derecha */
-.sidenav.open {
-    right: 0;
-}
-
-/* Color del texto en el menú */
-.sidenav a {
-    color: white;
-    padding: 15px;
-    display: block;
-    transition: background-color 0.3s;
-}
-
-/* Oscurecer los enlaces del menú al pasar el mouse */
-.sidenav a:hover {
-    background-color: #34495e;
-}
-
-/* Botón flotante para abrir el menú */
-.sidenav-trigger {
-    background-color:rgb(38, 130, 192);
-    color: white;
-    border-radius: 50%;
-    padding: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
- }
+        /* ESTILOS DEL MENÚ HAMBURGUESA PERSONALIZADO */
+        .menu-icon {
+            background-color: #005f87; /* Color de fondo del botón */
+            color: white;
+            border-radius: 50%;
+            width: 48px; /* Tamaño del botón */
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            z-index: 1002; /* Asegura que el botón esté por encima del overlay */
+            position: fixed; /* Lo fijamos para que no se mueva al hacer scroll */
+            top: 15px; /* Ajusta la posición vertical */
+            right: 15px; /* Ajusta la posición horizontal */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para que resalte */
+        }
         
+        .menu-icon:hover {
+            background-color: #004b6b;
+            transform: scale(1.05);
+        }
+
+        .menu-icon i {
+            font-size: 28px; /* Tamaño del ícono */
+        }
+
+        .mobile-nav-overlay {
+            position: fixed;
+            top: 0;
+            right: -100vw; /* Oculto completamente a la derecha */
+            width: min(75vw, 300px); /* Ancho: 75% del viewport o 300px máx. */
+            height: 100vh;
+            background-color: #005f87; /* Color de fondo azul oscuro */
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
+            transition: right 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Transición suave */
+            z-index: 1000; /* Debajo del botón de menú */
+            padding: 20px;
+            display: flex;
+            flex-direction: column; /* Para organizar el contenido verticalmente */
+            justify-content: space-between; /* Espacio entre Inicio y Cerrar Sesión */
+            color: white; /* Color del texto del menú */
+        }
+
+        .mobile-nav-overlay.is-open {
+            right: 0; /* Muestra el menú */
+        }
+
+        .mobile-nav-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .mobile-nav-list li {
+            margin-bottom: 10px;
+        }
+
+        .mobile-nav-list a {
+            display: block;
+            padding: 12px 15px;
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+            border-radius: 8px;
+            transition: background-color 0.3s, color 0.3s;
+            display: flex;
+            align-items: center;
+        }
+
+        .mobile-nav-list a:hover {
+            background-color: #00719c; /* Un azul más claro al pasar el mouse */
+            color: #ffcc00; /* Amarillo para el texto al pasar el mouse */
+        }
+
+        .mobile-nav-list a i.material-icons {
+            margin-right: 10px;
+            font-size: 1.4rem;
+        }
+
+        /* Ajustes específicos para el orden de los botones */
+        .mobile-nav-overlay .top-links {
+            margin-bottom: auto; /* Empuja el botón de abajo hacia el final */
+        }
+
+        .mobile-nav-overlay .bottom-links {
+            margin-top: auto; /* Asegura que este grupo esté abajo */
+            padding-top: 20px; /* Un poco de espacio antes de cerrar sesión */
+            border-top: 1px solid rgba(255, 255, 255, 0.1); /* Separador sutil */
+        }
+
+        /* Ocultar el scroll del body cuando el menú está abierto */
+        body.menu-active {
+            overflow: hidden;
+        }
     </style>
 </head>
 <body>
 
 <div class="header">
     <h1>Lista de Skates</h1>
-    <a href="#" data-target="mobile-demo" class="sidenav-trigger btn-floating pulse">
-                <i class="material-icons">menu</i>
-            </a>
-    <ul id="mobile-demo" class="sidenav">
-        <li><a href="<?= site_url('/') ?>">Inicio</a></li>
-        <li><a href="<?= site_url('logout') ?>">Cerrar sesión</a></li>
-    </ul>
-</header>
-
-<!-- Inicialización del menú con Materialize -->
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        var elems = document.querySelectorAll('.sidenav');
-        var instances = M.Sidenav.init(elems);
-    });
-</script>
+    <div class="menu-icon" id="menuIcon">
+        <i class="material-icons">menu</i>
+    </div>
 </div>
 
+<nav class="mobile-nav-overlay" id="mobileNavOverlay">
+    <div class="top-links">
+        <ul class="mobile-nav-list">
+            <li><a href="<?= site_url('/') ?>"><i class="material-icons">home</i> Inicio</a></li>
+            <li><a href="<?= site_url('alguna_otra_pagina') ?>"><i class="material-icons">info</i> Otra Página</a></li>
+        </ul>
+    </div>
+    <div class="bottom-links">
+        <ul class="mobile-nav-list">
+            <li><a href="<?= site_url('logout') ?>"><i class="material-icons">exit_to_app</i> Cerrar sesión</a></li>
+        </ul>
+    </div>
+</nav>
+
 <div class="container">
-    <!-- Mostrar mensajes de error y éxito -->
     <?php if (session()->getFlashdata('error')): ?>
         <div class="alert alert-danger">
             <?= session()->getFlashdata('error') ?>
@@ -280,7 +321,6 @@
 </div>
 
 
-<!-- Modal para agregar skate -->
 <div class="modal fade" id="addSkateModal" tabindex="-1" role="dialog" aria-labelledby="addSkateModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -305,7 +345,6 @@
         </div>
     </div>
 </div>
-<!-- Modal para cambiar apodo-->
 <div class="modal fade" id="apodoSkateModal" tabindex="-1" role="dialog" aria-labelledby="apodoSkateModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -340,7 +379,45 @@
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const menuIcon = document.getElementById('menuIcon');
+        const mobileNavOverlay = document.getElementById('mobileNavOverlay');
+        const navItems = mobileNavOverlay.querySelectorAll('.mobile-nav-list a'); // Selecciona todos los enlaces
+
+        if (menuIcon && mobileNavOverlay) {
+            menuIcon.addEventListener('click', () => {
+                const isOpen = mobileNavOverlay.classList.toggle('is-open');
+                document.body.classList.toggle('menu-active'); // Para ocultar el scroll del body
+
+                // Cambiar el ícono de hamburguesa a cruz y viceversa
+                menuIcon.querySelector('i').textContent = isOpen ? 'close' : 'menu';
+            });
+
+            // Cerrar menú al hacer clic en un enlace del menú
+            navItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    mobileNavOverlay.classList.remove('is-open');
+                    document.body.classList.remove('menu-active');
+                    menuIcon.querySelector('i').textContent = 'menu'; // Restablecer a hamburguesa
+                });
+            });
+
+            // Cerrar menú al hacer clic fuera del menú
+            document.body.addEventListener('click', (event) => {
+                // Si el menú está abierto Y el clic no es dentro del overlay Y el clic no es en el botón del menú
+                if (mobileNavOverlay.classList.contains('is-open') &&
+                    !mobileNavOverlay.contains(event.target) &&
+                    !menuIcon.contains(event.target)) {
+                    
+                    mobileNavOverlay.classList.remove('is-open');
+                    document.body.classList.remove('menu-active');
+                    menuIcon.querySelector('i').textContent = 'menu'; // Restablecer a hamburguesa
+                }
+            });
+        }
+    });
+</script>
 
 </body>
 </html>
