@@ -19,9 +19,7 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            /* Añade padding superior dinámicamente para evitar el notch/barra de estado */
             padding-top: env(safe-area-inset-top);
-            /* Para que el scroll se vea bien si hay padding */
             scroll-padding-top: env(safe-area-inset-top);
         }
 
@@ -37,25 +35,23 @@
             left: 0;
             right: 0;
             z-index: 1001;
-            /* **MODIFICADO:** Aumentamos el padding-top para el header. */
-            padding-top: calc(25px + env(safe-area-inset-top)); /* Aumentado de 15px a 25px */
+            /* **MODIFICADO:** Ajustamos el padding-top del header para que el título se vea bien. */
+            padding-top: calc(20px + env(safe-area-inset-top)); /* Reajustado a 20px */
+            padding-bottom: 20px; /* Asegura un buen espacio inferior en el header */
             box-sizing: border-box;
-            min-height: 70px; /* **NUEVO:** Altura mínima para asegurar espacio */
+            /* min-height ya no es necesario si el padding es suficiente */
         }
 
         .header h1 {
             font-size: 1.5rem;
             font-family: "Baskervville SC", static;
             margin: 0;
-            line-height: 1.2; /* Ligeramente aumentado el line-height para el texto */
+            line-height: 1.2;
         }
 
         /* MEDIA QUERY para ajustar el título del header y su altura solo en pantallas pequeñas */
         @media (max-width: 767.98px) { /* Bootstrap's 'md' breakpoint */
-            .header {
-                padding-bottom: 25px; /* Valor ajustado para que el título se vea mejor */
-                /* Ya no necesitamos ajustar padding-top aquí, se hace globalmente arriba */
-            }
+         
             .header h1 {
                 font-size: 1.4rem;
                 margin-top: 0;
@@ -195,8 +191,8 @@
             transition: background-color 0.3s, transform 0.3s;
             z-index: 1002;
             position: fixed;
-            /* **MODIFICADO:** Ajustamos la posición superior del icono para que se alinee con el nuevo padding del header. */
-            top: calc(20px + env(safe-area-inset-top)); /* Ajustado de 15px a 20px */
+            /* **MODIFICADO:** Ajustamos la posición superior del icono para que quede dentro del header. */
+            top: calc(20px + env(safe-area-inset-top)); /* Debe alinearse con el padding del header */
             right: 15px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
@@ -212,8 +208,7 @@
 
         .mobile-nav-overlay {
             position: fixed;
-            /* **MODIFICADO:** Ajustamos el padding-top del overlay para que su contenido inicie después del notch. */
-            top: 0; /* Mantenemos top: 0, el ajuste lo hará JS */
+            top: 0;
             right: -100vw;
             width: min(75vw, 300px);
             height: 100vh;
@@ -226,8 +221,8 @@
             flex-direction: column;
             justify-content: space-between;
             color: white;
-            /* **NUEVO:** Padding superior específico para el contenido del overlay. */
-            padding-top: calc(20px + env(safe-area-inset-top)); /* Asegura que los enlaces no invadan el notch */
+            /* Padding superior específico para el contenido del overlay. */
+            padding-top: calc(20px + env(safe-area-inset-top));
         }
 
         .mobile-nav-overlay.is-open {
@@ -268,8 +263,7 @@
 
         .mobile-nav-overlay .top-links {
             margin-bottom: auto;
-            /* El padding-top de aquí es menos crítico si el overlay ya tiene un padding-top adecuado */
-            padding-top: 5px; /* Reducimos ligeramente ya que el overlay ya tiene un padding general */
+            padding-top: 5px;
         }
 
         .mobile-nav-overlay .bottom-links {
@@ -285,7 +279,8 @@
 </head>
 <body>
 
-<div class="header" id="mainHeader"> <h1>Lista de Skates</h1>
+<div class="header" id="mainHeader">
+    <h1>Lista de Skates</h1>
     <div class="menu-icon" id="menuIcon">
         <i class="material-icons">menu</i>
     </div>
@@ -412,19 +407,18 @@
     document.addEventListener('DOMContentLoaded', function() {
         const menuIcon = document.getElementById('menuIcon');
         const mobileNavOverlay = document.getElementById('mobileNavOverlay');
-        const mainHeader = document.getElementById('mainHeader'); // Obtenemos el header
+        const mainHeader = document.getElementById('mainHeader');
         const navItems = mobileNavOverlay.querySelectorAll('.mobile-nav-list a');
 
         // Función para ajustar la posición y altura del overlay
         function adjustOverlayPosition() {
             if (mainHeader && mobileNavOverlay) {
-                const headerHeight = mainHeader.offsetHeight; // Obtiene la altura total del header
-                // mobileNavOverlay.style.top = `${headerHeight}px`; // Eliminamos este ajuste manual en JS
+                const headerHeight = mainHeader.offsetHeight;
+                // mobileNavOverlay.style.top = `${headerHeight}px`; // No es necesario si se usa padding-top en el overlay y top:0
                 mobileNavOverlay.style.height = `calc(100vh - ${headerHeight}px)`; // Ajusta la altura del overlay
             }
         }
 
-        // Ejecutar al cargar y al redimensionar la ventana
         adjustOverlayPosition();
         window.addEventListener('resize', adjustOverlayPosition);
 
@@ -432,12 +426,9 @@
             menuIcon.addEventListener('click', () => {
                 const isOpen = mobileNavOverlay.classList.toggle('is-open');
                 document.body.classList.toggle('menu-active');
-
-                // Cambiar el ícono de hamburguesa a cruz y viceversa
                 menuIcon.querySelector('i').textContent = isOpen ? 'close' : 'menu';
             });
 
-            // Cerrar menú al hacer clic en un enlace del menú
             navItems.forEach(item => {
                 item.addEventListener('click', () => {
                     mobileNavOverlay.classList.remove('is-open');
@@ -446,7 +437,6 @@
                 });
             });
 
-            // Cerrar menú al hacer clic fuera del menú
             document.body.addEventListener('click', (event) => {
                 if (mobileNavOverlay.classList.contains('is-open') &&
                     !mobileNavOverlay.contains(event.target) &&

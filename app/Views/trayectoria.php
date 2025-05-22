@@ -55,22 +55,22 @@ $waypointsJson = json_encode($waypoints);
             left: 0;
             right: 0;
             z-index: 1001;
-            /* **MODIFICADO:** Aumentamos el padding-top para el header. */
-            padding-top: calc(25px + env(safe-area-inset-top)); /* Aumentado de 15px a 25px */
+            /* **MODIFICADO:** Ajustamos el padding-top del header. */
+            padding-top: calc(20px + env(safe-area-inset-top)); /* Reajustado a 20px */
+            padding-bottom: 20px; /* Asegura un buen espacio inferior en el header */
             box-sizing: border-box;
-            min-height: 70px; /* **NUEVO:** Altura mínima para asegurar espacio */
         }
 
         .header h1 {
             font-size: 1.5rem;
             font-family: "Baskervville SC", static;
             margin: 0;
-            line-height: 1.2; /* Ligeramente aumentado el line-height para el texto */
+            line-height: 1.2;
         }
 
         @media (max-width: 767.98px) {
             .header {
-                padding-bottom: 25px;
+                /* padding-bottom ya lo ponemos en el header general */
             }
             .header h1 {
                 font-size: 1.4rem;
@@ -131,7 +131,7 @@ $waypointsJson = json_encode($waypoints);
             z-index: 1002;
             position: fixed;
             /* **MODIFICADO:** Ajustamos la posición superior del icono. */
-            top: calc(20px + env(safe-area-inset-top)); /* Ajustado de 15px a 20px */
+            top: calc(20px + env(safe-area-inset-top)); /* Debe alinearse con el padding del header */
             right: 15px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
@@ -147,7 +147,7 @@ $waypointsJson = json_encode($waypoints);
 
         .mobile-nav-overlay {
             position: fixed;
-            top: 0; /* Mantenemos top: 0, el ajuste lo hará JS */
+            top: 0;
             right: -100vw;
             width: min(75vw, 300px);
             height: 100vh;
@@ -160,8 +160,7 @@ $waypointsJson = json_encode($waypoints);
             flex-direction: column;
             justify-content: space-between;
             color: white;
-            /* **NUEVO:** Padding superior específico para el contenido del overlay. */
-            padding-top: calc(20px + env(safe-area-inset-top)); /* Asegura que los enlaces no invadan el notch */
+            padding-top: calc(20px + env(safe-area-inset-top));
         }
 
         .mobile-nav-overlay.is-open {
@@ -202,7 +201,7 @@ $waypointsJson = json_encode($waypoints);
 
         .mobile-nav-overlay .top-links {
             margin-bottom: auto;
-            padding-top: 5px; /* Reducimos ligeramente */
+            padding-top: 5px;
         }
 
         .mobile-nav-overlay .bottom-links {
@@ -285,7 +284,6 @@ $waypointsJson = json_encode($waypoints);
         function adjustOverlayPosition() {
             if (mainHeader && mobileNavOverlay) {
                 const headerHeight = mainHeader.offsetHeight;
-                // mobileNavOverlay.style.top = `${headerHeight}px`; // Eliminamos este ajuste manual en JS
                 mobileNavOverlay.style.height = `calc(100vh - ${headerHeight}px)`;
             }
         }
