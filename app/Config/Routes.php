@@ -37,6 +37,7 @@ $routes->group('', ['filter' => 'auth'], function($routes) {
     $routes->post('update-skate-apodo', 'AuthController::updateSkateApodo');
     $routes->post('/deleteapodo/(:any)', 'AuthController::deleteapodo/$1');
     $routes->get('comprar', 'AuthController::comprar');
+     $routes->get('profile', 'AuthController::profile');
     $routes->get('nuevadireccion', 'AuthController::guardar');
     $routes->post('/direccion/guardarNueva', 'AuthController::guardarNueva');
     $routes->get('/obtener-localidades/(:num)', 'AuthController::obtenerLocalidadesPorProvincia/$1');

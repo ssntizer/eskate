@@ -232,6 +232,10 @@ class AuthController extends BaseController
     {
         return view('forgot_password'); // Asegúrate de tener la vista de recuperación de contraseña
     }
+     public function profile()
+    {
+        return view('profile'); // Asegúrate de tener la vista de recuperación de contraseña
+    }
     public function trayectoria()
     {
         return view('trayectoria'); // Asegúrate de tener la vista de recuperación de contraseña
