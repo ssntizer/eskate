@@ -45,7 +45,7 @@ $waypointsJson = json_encode($waypoints);
 
         .header {
             background-color: #005f87;
-            padding: 15px; /* Padding base */
+            padding: 15px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -55,27 +55,26 @@ $waypointsJson = json_encode($waypoints);
             left: 0;
             right: 0;
             z-index: 1001;
-            /* **MODIFICADO/REVISADO:** Ajusta el padding superior del header. */
-            padding-top: calc(15px + env(safe-area-inset-top));
+            /* **MODIFICADO:** Aumentamos el padding-top para el header. */
+            padding-top: calc(25px + env(safe-area-inset-top)); /* Aumentado de 15px a 25px */
             box-sizing: border-box;
+            min-height: 70px; /* **NUEVO:** Altura mínima para asegurar espacio */
         }
 
         .header h1 {
             font-size: 1.5rem;
             font-family: "Baskervville SC", static;
-            margin: 0; /* **MODIFICADO/REVISADO:** Aseguramos que no haya margin por defecto aquí. */
-            line-height: 1; /* Aseguramos que el line-height no empuje el texto */
+            margin: 0;
+            line-height: 1.2; /* Ligeramente aumentado el line-height para el texto */
         }
 
-        /* MEDIA QUERY para ajustar el título del header y su altura solo en pantallas pequeñas */
         @media (max-width: 767.98px) {
             .header {
                 padding-bottom: 25px;
             }
             .header h1 {
                 font-size: 1.4rem;
-                /* Eliminamos el margin-top de aquí, ya que el padding-top del header lo maneja */
-                margin-top: 0; /* **MODIFICADO:** Aseguramos que no haya margin-top aquí. */
+                margin-top: 0;
             }
         }
 
@@ -131,7 +130,8 @@ $waypointsJson = json_encode($waypoints);
             transition: background-color 0.3s, transform 0.3s;
             z-index: 1002;
             position: fixed;
-            top: calc(15px + env(safe-area-inset-top));
+            /* **MODIFICADO:** Ajustamos la posición superior del icono. */
+            top: calc(20px + env(safe-area-inset-top)); /* Ajustado de 15px a 20px */
             right: 15px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
@@ -147,7 +147,7 @@ $waypointsJson = json_encode($waypoints);
 
         .mobile-nav-overlay {
             position: fixed;
-            top: 0;
+            top: 0; /* Mantenemos top: 0, el ajuste lo hará JS */
             right: -100vw;
             width: min(75vw, 300px);
             height: 100vh;
@@ -160,6 +160,8 @@ $waypointsJson = json_encode($waypoints);
             flex-direction: column;
             justify-content: space-between;
             color: white;
+            /* **NUEVO:** Padding superior específico para el contenido del overlay. */
+            padding-top: calc(20px + env(safe-area-inset-top)); /* Asegura que los enlaces no invadan el notch */
         }
 
         .mobile-nav-overlay.is-open {
@@ -200,7 +202,7 @@ $waypointsJson = json_encode($waypoints);
 
         .mobile-nav-overlay .top-links {
             margin-bottom: auto;
-            padding-top: 15px;
+            padding-top: 5px; /* Reducimos ligeramente */
         }
 
         .mobile-nav-overlay .bottom-links {
@@ -244,7 +246,7 @@ $waypointsJson = json_encode($waypoints);
 </div>
 
 <footer>
-    <p>&copy; 2025 E-skate - Diseñado para la acción - <a href="mailto:eskatevz@gmail.com">Contáctanos</a></p>
+    <p>© 2025 E-skate - Diseñado para la acción - <a href="mailto:eskatevz@gmail.com">Contáctanos</a></p>
 </footer>
 
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
@@ -283,7 +285,7 @@ $waypointsJson = json_encode($waypoints);
         function adjustOverlayPosition() {
             if (mainHeader && mobileNavOverlay) {
                 const headerHeight = mainHeader.offsetHeight;
-                mobileNavOverlay.style.top = `${headerHeight}px`;
+                // mobileNavOverlay.style.top = `${headerHeight}px`; // Eliminamos este ajuste manual en JS
                 mobileNavOverlay.style.height = `calc(100vh - ${headerHeight}px)`;
             }
         }

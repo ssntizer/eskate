@@ -37,27 +37,28 @@
             left: 0;
             right: 0;
             z-index: 1001;
-            /* **MODIFICADO/REVISADO:** Ajusta el padding superior del header. */
-            padding-top: calc(15px + env(safe-area-inset-top));
+            /* **MODIFICADO:** Aumentamos el padding-top para el header. */
+            padding-top: calc(25px + env(safe-area-inset-top)); /* Aumentado de 15px a 25px */
             box-sizing: border-box;
+            min-height: 70px; /* **NUEVO:** Altura mínima para asegurar espacio */
         }
 
         .header h1 {
             font-size: 1.5rem;
             font-family: "Baskervville SC", static;
-            margin: 0; /* **MODIFICADO/REVISADO:** Aseguramos que no haya margin por defecto aquí. */
-            line-height: 1; /* Aseguramos que el line-height no empuje el texto */
+            margin: 0;
+            line-height: 1.2; /* Ligeramente aumentado el line-height para el texto */
         }
 
         /* MEDIA QUERY para ajustar el título del header y su altura solo en pantallas pequeñas */
         @media (max-width: 767.98px) { /* Bootstrap's 'md' breakpoint */
             .header {
                 padding-bottom: 25px; /* Valor ajustado para que el título se vea mejor */
+                /* Ya no necesitamos ajustar padding-top aquí, se hace globalmente arriba */
             }
             .header h1 {
                 font-size: 1.4rem;
-                /* Eliminamos el margin-top de aquí, ya que el padding-top del header lo maneja */
-                margin-top: 0; /* **MODIFICADO:** Aseguramos que no haya margin-top aquí. */
+                margin-top: 0;
             }
         }
 
@@ -194,7 +195,8 @@
             transition: background-color 0.3s, transform 0.3s;
             z-index: 1002;
             position: fixed;
-            top: calc(15px + env(safe-area-inset-top));
+            /* **MODIFICADO:** Ajustamos la posición superior del icono para que se alinee con el nuevo padding del header. */
+            top: calc(20px + env(safe-area-inset-top)); /* Ajustado de 15px a 20px */
             right: 15px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
@@ -210,7 +212,8 @@
 
         .mobile-nav-overlay {
             position: fixed;
-            top: 0;
+            /* **MODIFICADO:** Ajustamos el padding-top del overlay para que su contenido inicie después del notch. */
+            top: 0; /* Mantenemos top: 0, el ajuste lo hará JS */
             right: -100vw;
             width: min(75vw, 300px);
             height: 100vh;
@@ -223,6 +226,8 @@
             flex-direction: column;
             justify-content: space-between;
             color: white;
+            /* **NUEVO:** Padding superior específico para el contenido del overlay. */
+            padding-top: calc(20px + env(safe-area-inset-top)); /* Asegura que los enlaces no invadan el notch */
         }
 
         .mobile-nav-overlay.is-open {
@@ -263,7 +268,8 @@
 
         .mobile-nav-overlay .top-links {
             margin-bottom: auto;
-            padding-top: 15px;
+            /* El padding-top de aquí es menos crítico si el overlay ya tiene un padding-top adecuado */
+            padding-top: 5px; /* Reducimos ligeramente ya que el overlay ya tiene un padding general */
         }
 
         .mobile-nav-overlay .bottom-links {
@@ -279,8 +285,7 @@
 </head>
 <body>
 
-<div class="header" id="mainHeader">
-    <h1>Lista de Skates</h1>
+<div class="header" id="mainHeader"> <h1>Lista de Skates</h1>
     <div class="menu-icon" id="menuIcon">
         <i class="material-icons">menu</i>
     </div>
@@ -349,7 +354,7 @@
             <div class="modal-header">
                 <h5 class="modal-title" id="addSkateModalLabel">Vincular un skate</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                    <span aria-hidden="true">×</span>
                 </button>
             </div>
             <form action="<?= site_url('add-skate') ?>" method="POST">
@@ -374,7 +379,7 @@
             <div class="modal-header">
                 <h5 class="modal-title" id="addSkateModalLabel">Cambiar apodo</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                    <span aria-hidden="true">×</span>
                 </button>
             </div>
             <form action="<?= site_url('update-skate-apodo/') ?>" method="POST">
@@ -396,7 +401,7 @@
 </div>
 
 <footer>
-    <p>&copy; 2024 E-skate - Diseñado para la acción - <a href="mailto:eskatevz@gmail.com">Contáctanos</a></p>
+    <p>© 2024 E-skate - Diseñado para la acción - <a href="mailto:eskatevz@gmail.com">Contáctanos</a></p>
 </footer>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
@@ -414,7 +419,7 @@
         function adjustOverlayPosition() {
             if (mainHeader && mobileNavOverlay) {
                 const headerHeight = mainHeader.offsetHeight; // Obtiene la altura total del header
-                mobileNavOverlay.style.top = `${headerHeight}px`; // Posiciona el overlay debajo del header
+                // mobileNavOverlay.style.top = `${headerHeight}px`; // Eliminamos este ajuste manual en JS
                 mobileNavOverlay.style.height = `calc(100vh - ${headerHeight}px)`; // Ajusta la altura del overlay
             }
         }
