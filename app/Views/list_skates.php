@@ -57,6 +57,8 @@
             .header h1 {
                 /* Ajustar el tamaño de fuente para que quepa mejor si es necesario */
                 font-size: 1.4rem; 
+                /* Aseguramos que el título no quede bajo el notch en móviles, si es necesario */
+                margin-top: env(safe-area-inset-top);
             }
         }
 
@@ -220,8 +222,8 @@
             transition: right 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); 
             z-index: 1000; 
             padding: 20px;
-            /* AJUSTE CLAVE AQUÍ: Reducimos un poco el padding superior para dar más espacio al primer elemento */
-            padding-top: calc(10px + env(safe-area-inset-top)); /* Antes era 20px, ahora 10px */
+            /* **SOLUCIÓN APLICADA AQUÍ:** Eliminar el padding fijo adicional para evitar el desplazamiento */
+            padding-top: env(safe-area-inset-top); /* Solo el área segura, sin 10px o 20px fijos */
             display: flex;
             flex-direction: column; 
             justify-content: space-between; 
