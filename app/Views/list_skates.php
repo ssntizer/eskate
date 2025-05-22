@@ -36,7 +36,7 @@
             top: 0;
             left: 0;
             right: 0;
-            z-index: 1001; /* El header se mantiene en este z-index */
+            z-index: 1001; /* El header se mantiene en este z-index para estar por encima del contenido principal */
             /* Ajusta el padding superior del header si es fixed/sticky para no superponerse */
             padding-top: calc(15px + env(safe-area-inset-top));
             box-sizing: border-box; /* Asegura que el padding no añada ancho/alto total inesperado */
@@ -195,7 +195,7 @@
             justify-content: center;
             cursor: pointer;
             transition: background-color 0.3s, transform 0.3s;
-            z-index: 1002;
+            z-index: 1002; /* Mantener este alto para que el icono del menú sea clickeable */
             position: fixed;
             top: calc(15px + env(safe-area-inset-top));
             right: 15px;
@@ -213,17 +213,16 @@
 
         .mobile-nav-overlay {
             position: fixed;
-            top: 0;
+            top: 0; /* Esto será ajustado por JavaScript */
             right: -100vw;
             width: min(75vw, 300px);
-            height: 100vh;
+            height: 100vh; /* Esto también se ajustará dinámicamente */
             background-color: #005f87; /* Color de fondo azul oscuro */
             box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
             transition: right 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            /* AUMENTAR Z-INDEX PARA QUE ESTÉ POR ENCIMA DEL HEADER */
-            z-index: 1002; /* Cambiado de 1000 a 1002 */
+            z-index: 999; /* Z-index más bajo que el header (1001) */
             padding: 20px;
-            padding-top: env(safe-area-inset-top);
+            /* ELIMINAMOS padding-top: env(safe-area-inset-top); DE AQUÍ */
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -268,6 +267,8 @@
 
         .mobile-nav-overlay .top-links {
             margin-bottom: auto;
+            /* Ajustar padding superior de los enlaces para que no estén pegados al borde superior del overlay */
+            padding-top: 15px; /* Un poco de padding para separar del borde superior del menú */
         }
 
         .mobile-nav-overlay .bottom-links {
@@ -283,8 +284,7 @@
 </head>
 <body>
 
-<div class="header">
-    <h1>Lista de Skates</h1>
+<div class="header" id="mainHeader"> <h1>Lista de Skates</h1>
     <div class="menu-icon" id="menuIcon">
         <i class="material-icons">menu</i>
     </div>
@@ -411,7 +411,21 @@
     document.addEventListener('DOMContentLoaded', function() {
         const menuIcon = document.getElementById('menuIcon');
         const mobileNavOverlay = document.getElementById('mobileNavOverlay');
+        const mainHeader = document.getElementById('mainHeader'); // Obtenemos el header
         const navItems = mobileNavOverlay.querySelectorAll('.mobile-nav-list a');
+
+        // Función para ajustar la posición y altura del overlay
+        function adjustOverlayPosition() {
+            if (mainHeader && mobileNavOverlay) {
+                const headerHeight = mainHeader.offsetHeight; // Obtiene la altura total del header
+                mobileNavOverlay.style.top = `${headerHeight}px`; // Posiciona el overlay debajo del header
+                mobileNavOverlay.style.height = `calc(100vh - ${headerHeight}px)`; // Ajusta la altura del overlay
+            }
+        }
+
+        // Ejecutar al cargar y al redimensionar la ventana
+        adjustOverlayPosition();
+        window.addEventListener('resize', adjustOverlayPosition);
 
         if (menuIcon && mobileNavOverlay) {
             menuIcon.addEventListener('click', () => {
