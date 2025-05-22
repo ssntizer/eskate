@@ -51,9 +51,7 @@
         }
 
         @media (max-width: 767.98px) {
-            .header {
-                /* padding-bottom ya lo ponemos en el header general */
-            }
+           
             .header h1 {
                 font-size: 1.4rem;
                 margin-top: 0;
