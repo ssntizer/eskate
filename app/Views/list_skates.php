@@ -293,7 +293,7 @@
 <nav class="mobile-nav-overlay" id="mobileNavOverlay">
     <div class="top-links">
         <ul class="mobile-nav-list">
-            <li><a href="<?= site_url('/') ?>"><i class="material-icons">home</i> Inicio</a></li>
+           
             <li><a href="<?= site_url('profile') ?>"><i class="material-icons">person</i> Perfil</a></li>
         </ul>
     </div>
