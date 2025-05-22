@@ -195,7 +195,6 @@
             transition: background-color 0.3s, transform 0.3s;
             z-index: 1002; 
             position: fixed; 
-            /* Se ha ajustado la posición top, pero manteniendo el valor del código base */
             top: calc(15px + env(safe-area-inset-top)); 
             right: 15px; 
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
@@ -221,7 +220,8 @@
             transition: right 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); 
             z-index: 1000; 
             padding: 20px;
-            padding-top: calc(20px + env(safe-area-inset-top)); /* Añade padding superior para safe area */
+            /* AJUSTE CLAVE AQUÍ: Reducimos un poco el padding superior para dar más espacio al primer elemento */
+            padding-top: calc(10px + env(safe-area-inset-top)); /* Antes era 20px, ahora 10px */
             display: flex;
             flex-direction: column; 
             justify-content: space-between; 
