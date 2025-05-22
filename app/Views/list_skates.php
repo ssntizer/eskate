@@ -27,41 +27,39 @@
 
         .header {
             background-color: #005f87;
-            padding: 15px;
+            padding: 15px; /* Padding base */
             display: flex;
             justify-content: space-between;
             align-items: center;
             border-bottom: 3px solid #004b6b;
-            position: sticky; /* O 'fixed' si quieres que siempre esté visible al hacer scroll */
+            position: sticky;
             top: 0;
             left: 0;
             right: 0;
-            z-index: 1001; /* El header se mantiene en este z-index para estar por encima del contenido principal */
-            /* Ajusta el padding superior del header si es fixed/sticky para no superponerse */
+            z-index: 1001;
+            /* **MODIFICADO/REVISADO:** Ajusta el padding superior del header. */
             padding-top: calc(15px + env(safe-area-inset-top));
-            box-sizing: border-box; /* Asegura que el padding no añada ancho/alto total inesperado */
+            box-sizing: border-box;
         }
 
         .header h1 {
             font-size: 1.5rem;
             font-family: "Baskervville SC", static;
-            margin: 0;
+            margin: 0; /* **MODIFICADO/REVISADO:** Aseguramos que no haya margin por defecto aquí. */
+            line-height: 1; /* Aseguramos que el line-height no empuje el texto */
         }
 
         /* MEDIA QUERY para ajustar el título del header y su altura solo en pantallas pequeñas */
         @media (max-width: 767.98px) { /* Bootstrap's 'md' breakpoint */
             .header {
-                /* Aumentamos el padding inferior del header para hacerlo un poco más alto */
                 padding-bottom: 25px; /* Valor ajustado para que el título se vea mejor */
             }
             .header h1 {
-                /* Ajustar el tamaño de fuente para que quepa mejor si es necesario */
                 font-size: 1.4rem;
-                /* Aseguramos que el título no quede bajo el notch en móviles, si es necesario */
-                margin-top: env(safe-area-inset-top);
+                /* Eliminamos el margin-top de aquí, ya que el padding-top del header lo maneja */
+                margin-top: 0; /* **MODIFICADO:** Aseguramos que no haya margin-top aquí. */
             }
         }
-
 
         .container {
             margin-top: 40px;
@@ -84,7 +82,6 @@
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
         }
 
-        /* LA LÍNEA 'content: url(...)' DE SHUTTERSTOCK HA SIDO ELIMINADA AQUÍ */
         .skate-item::before {
             position: absolute;
             top: -10px;
@@ -195,7 +192,7 @@
             justify-content: center;
             cursor: pointer;
             transition: background-color 0.3s, transform 0.3s;
-            z-index: 1002; /* Mantener este alto para que el icono del menú sea clickeable */
+            z-index: 1002;
             position: fixed;
             top: calc(15px + env(safe-area-inset-top));
             right: 15px;
@@ -213,16 +210,15 @@
 
         .mobile-nav-overlay {
             position: fixed;
-            top: 0; /* Esto será ajustado por JavaScript */
+            top: 0;
             right: -100vw;
             width: min(75vw, 300px);
-            height: 100vh; /* Esto también se ajustará dinámicamente */
-            background-color: #005f87; /* Color de fondo azul oscuro */
+            height: 100vh;
+            background-color: #005f87;
             box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
             transition: right 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            z-index: 999; /* Z-index más bajo que el header (1001) */
+            z-index: 999;
             padding: 20px;
-            /* ELIMINAMOS padding-top: env(safe-area-inset-top); DE AQUÍ */
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -267,8 +263,7 @@
 
         .mobile-nav-overlay .top-links {
             margin-bottom: auto;
-            /* Ajustar padding superior de los enlaces para que no estén pegados al borde superior del overlay */
-            padding-top: 15px; /* Un poco de padding para separar del borde superior del menú */
+            padding-top: 15px;
         }
 
         .mobile-nav-overlay .bottom-links {
@@ -284,7 +279,8 @@
 </head>
 <body>
 
-<div class="header" id="mainHeader"> <h1>Lista de Skates</h1>
+<div class="header" id="mainHeader">
+    <h1>Lista de Skates</h1>
     <div class="menu-icon" id="menuIcon">
         <i class="material-icons">menu</i>
     </div>
