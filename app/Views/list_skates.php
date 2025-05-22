@@ -9,7 +9,7 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Permanent+Marker&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Baskervville+SC&display=swap');
-        
+
         /* Ajuste para el área segura en dispositivos móviles */
         body {
             background-color: #00719c;
@@ -20,7 +20,7 @@
             display: flex;
             flex-direction: column;
             /* Añade padding superior dinámicamente para evitar el notch/barra de estado */
-            padding-top: env(safe-area-inset-top); 
+            padding-top: env(safe-area-inset-top);
             /* Para que el scroll se vea bien si hay padding */
             scroll-padding-top: env(safe-area-inset-top);
         }
@@ -36,9 +36,9 @@
             top: 0;
             left: 0;
             right: 0;
-            z-index: 1001; 
+            z-index: 1001;
             /* Ajusta el padding superior del header si es fixed/sticky para no superponerse */
-            padding-top: calc(15px + env(safe-area-inset-top)); 
+            padding-top: calc(15px + env(safe-area-inset-top));
             box-sizing: border-box; /* Asegura que el padding no añada ancho/alto total inesperado */
         }
 
@@ -56,7 +56,7 @@
             }
             .header h1 {
                 /* Ajustar el tamaño de fuente para que quepa mejor si es necesario */
-                font-size: 1.4rem; 
+                font-size: 1.4rem;
                 /* Aseguramos que el título no quede bajo el notch en móviles, si es necesario */
                 margin-top: env(safe-area-inset-top);
             }
@@ -65,7 +65,7 @@
 
         .container {
             margin-top: 40px;
-            flex: 1; 
+            flex: 1;
         }
 
         .skate-item {
@@ -84,15 +84,15 @@
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
         }
 
+        /* LA LÍNEA 'content: url(...)' DE SHUTTERSTOCK HA SIDO ELIMINADA AQUÍ */
         .skate-item::before {
-            content: url('https://image.shutterstock.com/image-vector/skateboard-wheel-icon-logo-vector-260nw-1551613316.jpg'); 
             position: absolute;
             top: -10px;
             right: -10px;
             opacity: 0.2;
-            width: 80px; 
+            width: 80px;
             height: auto;
-            pointer-events: none; 
+            pointer-events: none;
         }
 
         .skate-item h4 {
@@ -132,28 +132,28 @@
         }
 
         .btn-light {
-            background-color: #e6b800; 
+            background-color: #e6b800;
             color: #005f87;
             border-radius: 8px;
-            padding: 8px 16px; 
+            padding: 8px 16px;
             margin-bottom: 5px;
         }
 
         .btn-light:hover {
-            background-color: #cc9900; 
+            background-color: #cc9900;
             color: #004b6b;
         }
 
         .btn-danger {
-            background-color: #cc002a; 
+            background-color: #cc002a;
             border-color: #cc002a;
             border-radius: 8px;
-            padding: 8px 16px; 
+            padding: 8px 16px;
             margin-bottom: 5px;
         }
 
         .btn-danger:hover {
-            background-color: #990020; 
+            background-color: #990020;
             border-color: #990020;
         }
 
@@ -165,7 +165,7 @@
             text-align: center;
             padding: 20px 0;
             background-color: #005f87;
-            margin-top: auto; 
+            margin-top: auto;
         }
 
         footer p {
@@ -185,53 +185,53 @@
 
         /* ESTILOS DEL MENÚ HAMBURGUESA PERSONALIZADO */
         .menu-icon {
-            background-color: #005f87; 
+            background-color: #005f87;
             color: white;
             border-radius: 50%;
-            width: 48px; 
+            width: 48px;
             height: 48px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             transition: background-color 0.3s, transform 0.3s;
-            z-index: 1002; 
-            position: fixed; 
-            top: calc(15px + env(safe-area-inset-top)); 
-            right: 15px; 
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+            z-index: 1002;
+            position: fixed;
+            top: calc(15px + env(safe-area-inset-top));
+            right: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
-        
+
         .menu-icon:hover {
             background-color: #004b6b;
             transform: scale(1.05);
         }
 
         .menu-icon i {
-            font-size: 28px; 
+            font-size: 28px;
         }
 
         .mobile-nav-overlay {
             position: fixed;
             top: 0;
-            right: -100vw; 
-            width: min(75vw, 300px); 
+            right: -100vw;
+            width: min(75vw, 300px);
             height: 100vh;
             background-color: #005f87; /* Color de fondo azul oscuro */
             box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
-            transition: right 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); 
-            z-index: 1000; 
+            transition: right 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            z-index: 1000;
             padding: 20px;
-            /* **SOLUCIÓN APLICADA AQUÍ:** Eliminar el padding fijo adicional para evitar el desplazamiento */
-            padding-top: env(safe-area-inset-top); /* Solo el área segura, sin 10px o 20px fijos */
+            /* PAD TOP AJUSTADO: Solo env(safe-area-inset-top) para evitar conflicto con notch */
+            padding-top: env(safe-area-inset-top);
             display: flex;
-            flex-direction: column; 
-            justify-content: space-between; 
-            color: white; 
+            flex-direction: column;
+            justify-content: space-between;
+            color: white;
         }
 
         .mobile-nav-overlay.is-open {
-            right: 0; 
+            right: 0;
         }
 
         .mobile-nav-list {
@@ -257,8 +257,8 @@
         }
 
         .mobile-nav-list a:hover {
-            background-color: #00719c; 
-            color: #ffcc00; 
+            background-color: #00719c;
+            color: #ffcc00;
         }
 
         .mobile-nav-list a i.material-icons {
@@ -267,13 +267,13 @@
         }
 
         .mobile-nav-overlay .top-links {
-            margin-bottom: auto; 
+            margin-bottom: auto;
         }
 
         .mobile-nav-overlay .bottom-links {
-            margin-top: auto; 
-            padding-top: 20px; 
-            border-top: 1px solid rgba(255, 255, 255, 0.1); 
+            margin-top: auto;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         body.menu-active {
@@ -436,7 +436,7 @@
                 if (mobileNavOverlay.classList.contains('is-open') &&
                     !mobileNavOverlay.contains(event.target) &&
                     !menuIcon.contains(event.target)) {
-                    
+
                     mobileNavOverlay.classList.remove('is-open');
                     document.body.classList.remove('menu-active');
                     menuIcon.querySelector('i').textContent = 'menu';
