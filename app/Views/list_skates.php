@@ -37,18 +37,33 @@
             left: 0;
             right: 0;
             z-index: 1001; 
-            /* Añade padding superior al header si es fixed/sticky para no superponerse */
+            /* Ajusta el padding superior del header si es fixed/sticky para no superponerse con safe-area */
             padding-top: calc(15px + env(safe-area-inset-top)); 
-            /* Ajusta la altura del header para compensar el padding si es necesario */
+            /* Para que el título se vea bien en móvil */
+            box-sizing: border-box; /* Asegura que el padding no añada ancho/alto total inesperado */
         }
 
         .header h1 {
             font-size: 1.5rem;
             font-family: "Baskervville SC", static;
             margin: 0;
-            /* Asegura que el título no quede bajo el notch */
-            margin-top: env(safe-area-inset-top); 
+            /* Ajuste específico para el título en móvil */
+            /* Esto empuja el título hacia abajo para que no quede bajo el notch en móviles */
+            /* Se aplica solo en pantallas pequeñas si se pone dentro de una media query */
+            /* En este caso, lo aplicaremos a nivel general, y el padding-top del header lo maneja */
         }
+
+        /* MEDIA QUERY para ajustar el título del header solo en pantallas pequeñas */
+        @media (max-width: 767.98px) { /* Bootstrap's 'md' breakpoint */
+            .header h1 {
+                padding-top: 10px; /* Pequeño ajuste para bajarlo un poco más en móviles */
+                font-size: 1.4rem; /* Ajustar el tamaño de fuente para que quepa mejor */
+            }
+            .header {
+                padding-bottom: 10px; /* También ajustar el padding inferior del header */
+            }
+        }
+
 
         .container {
             margin-top: 40px;
@@ -336,104 +351,4 @@
 <div class="modal fade" id="addSkateModal" tabindex="-1" role="dialog" aria-labelledby="addSkateModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="addSkateModalLabel">Vincular un skate</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form action="<?= site_url('add-skate') ?>" method="POST">
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="codigo">Código del Skate</label>
-                        <input type="text" class="form-control" id="codigo" name="codigo" required>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-primary">Guardar Skate</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="apodoSkateModal" tabindex="-1" role="dialog" aria-labelledby="apodoSkateModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="addSkateModalLabel">Cambiar apodo</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form action="<?= site_url('update-skate-apodo/') ?>" method="POST">
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="codigo">Código del Skate</label>
-                        <input type="text" class="form-control" id="codigo" name="codigo" required>
-                        <label for="apodo">Apodo deseado</label>
-                        <input type="text" class="form-control" id="apodo" name="apodo" required>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-primary">Guardar cambios</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-<footer>
-    <p>&copy; 2024 E-skate - Diseñado para la acción - <a href="mailto:eskatevz@gmail.com">Contáctanos</a></p>
-</footer>
-
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const menuIcon = document.getElementById('menuIcon');
-        const mobileNavOverlay = document.getElementById('mobileNavOverlay');
-        const navItems = mobileNavOverlay.querySelectorAll('.mobile-nav-list a');
-
-        if (menuIcon && mobileNavOverlay) {
-            menuIcon.addEventListener('click', () => {
-                const isOpen = mobileNavOverlay.classList.toggle('is-open');
-                document.body.classList.toggle('menu-active');
-
-                // Cambiar el ícono de hamburguesa a cruz y viceversa
-                menuIcon.querySelector('i').textContent = isOpen ? 'close' : 'menu';
-            });
-
-            // Cerrar menú al hacer clic en un enlace del menú
-            navItems.forEach(item => {
-                item.addEventListener('click', () => {
-                    // Solo cerrar si el enlace no es '#', o si se dirige a otra página
-                    // Los modales no necesitan cerrar el menú explícitamente porque ya tienen su propio cierre.
-                    // Aquí, asumimos que los enlaces del menú principal son de navegación.
-                    mobileNavOverlay.classList.remove('is-open');
-                    document.body.classList.remove('menu-active');
-                    menuIcon.querySelector('i').textContent = 'menu';
-                });
-            });
-
-            // Cerrar menú al hacer clic fuera del menú
-            document.body.addEventListener('click', (event) => {
-                if (mobileNavOverlay.classList.contains('is-open') &&
-                    !mobileNavOverlay.contains(event.target) &&
-                    !menuIcon.contains(event.target)) {
-                    
-                    mobileNavOverlay.classList.remove('is-open');
-                    document.body.classList.remove('menu-active');
-                    menuIcon.querySelector('i').textContent = 'menu';
-                }
-            });
-        }
-    });
-</script>
-
-</body>
-</html>
+            <div class="modal
