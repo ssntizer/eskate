@@ -36,7 +36,7 @@
             top: 0;
             left: 0;
             right: 0;
-            z-index: 1001;
+            z-index: 1001; /* El header se mantiene en este z-index */
             /* Ajusta el padding superior del header si es fixed/sticky para no superponerse */
             padding-top: calc(15px + env(safe-area-inset-top));
             box-sizing: border-box; /* Asegura que el padding no añada ancho/alto total inesperado */
@@ -220,9 +220,9 @@
             background-color: #005f87; /* Color de fondo azul oscuro */
             box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
             transition: right 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            z-index: 1000;
+            /* AUMENTAR Z-INDEX PARA QUE ESTÉ POR ENCIMA DEL HEADER */
+            z-index: 1002; /* Cambiado de 1000 a 1002 */
             padding: 20px;
-            /* PAD TOP AJUSTADO: Solo env(safe-area-inset-top) para evitar conflicto con notch */
             padding-top: env(safe-area-inset-top);
             display: flex;
             flex-direction: column;
@@ -293,7 +293,7 @@
 <nav class="mobile-nav-overlay" id="mobileNavOverlay">
     <div class="top-links">
         <ul class="mobile-nav-list">
-           
+            <li><a href="<?= site_url('/') ?>"><i class="material-icons">home</i> Inicio</a></li>
             <li><a href="<?= site_url('profile') ?>"><i class="material-icons">person</i> Perfil</a></li>
         </ul>
     </div>
