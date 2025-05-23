@@ -5,81 +5,75 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mi Perfil - E-Skate</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> <style>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Permanent+Marker&display=swap');
-       @import url('https://fonts.googleapis.com/css2?family=Baskervville+SC&display=swap'); /* Añadido Baskervville SC para el título */
+       @import url('https://fonts.googleapis.com/css2?family=Baskervville+SC&display=swap');
 
         /* Ajuste para el área segura en dispositivos móviles */
         body {
-            background-color: #00719c; /* Fondo de la página */
-            color: #ffffff; /* Texto blanco */
+            background-color: #00719c;
+            color: #ffffff;
             font-family: 'Montserrat', sans-serif;
-            background-image: url('https://example.com/skate-pattern.png'), url('https://www.transparenttextures.com/patterns/asfalt-dark.png'); /* Textura ligera de asfalto */
-            background-size: cover, auto;
+            background-image: url('https://www.transparenttextures.com/patterns/asfalt-dark.png'); /* Se eliminó la imagen de skate, ya que no estaba definida y se duplicaba con el pattern */
+            background-size: auto; /* Ajuste para la textura */
             background-position: center;
-            display: flex; /* Habilita Flexbox */
-            flex-direction: column; /* Apila los elementos hijos verticalmente */
-            min-height: 100vh; /* Asegura que el body ocupe al menos toda la altura de la vista */
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
             margin: 0;
-            /* Añade padding superior dinámicamente para evitar el notch/barra de estado */
             padding-top: env(safe-area-inset-top);
-            /* Para que el scroll se vea bien si hay padding */
             scroll-padding-top: env(safe-area-inset-top);
         }
 
         .header {
-            background-color: #005f87; /* Color de fondo del encabezado */
+            background-color: #005f87;
             padding: 15px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             border-bottom: 3px solid #004b6b;
-            position: sticky; /* Cambiado de fixed a sticky para mejor comportamiento con el scroll */
+            position: sticky;
             top: 0;
             left: 0;
-            right: 0; /* Asegura que ocupe todo el ancho */
-            z-index: 1001; /* Asegura que esté siempre sobre el contenido */
+            right: 0;
+            z-index: 1001;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            /* Ajusta el padding superior del header si es fixed/sticky para no superponerse */
             padding-top: calc(15px + env(safe-area-inset-top));
-            box-sizing: border-box; /* Asegura que el padding no añada ancho/alto total inesperado */
+            box-sizing: border-box;
         }
 
         .header h1 {
             color: #ffffff;
             margin: 0;
-            font-size: 1.5rem; /* Ajustado para que el título no sea tan grande */
-            font-family: "Baskervville SC", static; /* Usando Baskervville SC para el título */
-            font-weight: bold; /* Mantener negrita si se desea */
+            font-size: 1.5rem;
+            font-family: "Baskervville SC", static;
+            font-weight: bold;
             letter-spacing: 1px;
+            text-align: left; /* Asegura que el título siempre esté a la izquierda */
+            flex-grow: 1; /* Permite que el título ocupe el espacio disponible */
         }
 
-        /* MEDIA QUERY para ajustar el título del header y su altura solo en pantallas pequeñas */
-        @media (max-width: 767.98px) { /* Bootstrap's 'md' breakpoint */
+        @media (max-width: 767.98px) {
             .header {
-                /* Aumentamos el padding inferior del header para hacerlo un poco más alto */
-                padding-bottom: 25px; /* Valor ajustado para que el título se vea mejor */
+                padding-bottom: 15px; /* Restablece el padding, el padding-top ya incluye el notch */
             }
             .header h1 {
-                /* Ajustar el tamaño de fuente para que quepa mejor si es necesario */
-                font-size: 1.4rem;
-                /* Aseguramos que el título no quede bajo el notch en móviles, si es necesario */
-                margin-top: env(safe-area-inset-top);
+                font-size: 1.3rem; /* Ligeramente más pequeño en móviles */
             }
         }
 
-        /* Los estilos .header-right, .nav-links, .profile-button fueron eliminados o adaptados */
-
-        /* Estilos específicos para el Perfil (Mantenidos de tu código original) */
+        /* Estilos específicos para el Perfil */
         .profile-container {
             background-color: #005f87;
             padding: 40px;
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            margin: 80px auto; /* Espacio arriba y abajo, centrado */
-            max-width: 700px; /* Ancho máximo similar al formulario de contacto */
+            margin: 80px auto;
+            max-width: 700px;
             position: relative;
             overflow: hidden;
+            box-sizing: border-box; /* Asegura que el padding no añada ancho/alto total inesperado */
         }
 
         .profile-container::before {
@@ -89,7 +83,7 @@
             left: 0;
             width: 100%;
             height: 5px;
-            background: linear-gradient(90deg, #ffcc00, #ffb700); /* Gradiente en la parte superior */
+            background: linear-gradient(90deg, #ffcc00, #ffb700);
         }
 
         .profile-container h2 {
@@ -97,17 +91,16 @@
             margin-bottom: 30px;
             font-size: 2.2rem;
             text-align: center;
-            position: relative; /* Para el pseudo-elemento after */
+            position: relative;
         }
 
-        /* Línea bajo el título del perfil */
         .profile-container h2::after {
             content: '';
             position: absolute;
-            bottom: -10px; /* Ajusta según sea necesario */
+            bottom: -10px;
             left: 50%;
             transform: translateX(-50%);
-            width: 100px; /* Ancho de la línea */
+            width: 100px;
             height: 3px;
             background: linear-gradient(90deg, transparent 0%, #ffcc00 50%, transparent 100%);
         }
@@ -118,25 +111,27 @@
         }
 
         .profile-container .form-group label {
-            color: #ffffff; /* Color de la etiqueta */
+            color: #ffffff;
             font-weight: bold;
             margin-bottom: 5px;
-            display: block; /* Para que la etiqueta esté en su propia línea */
+            display: block;
         }
 
         .profile-container input[type="text"],
         .profile-container input[type="email"],
         .profile-container input[type="password"] {
             width: 100%;
-            padding: 12px; /* Ajusta el padding */
-            margin-bottom: 5px; /* Espacio entre campos */
+            padding: 12px;
+            margin-bottom: 5px;
             border-radius: 8px;
             border: 2px solid #004b6b;
-            background-color: rgba(255, 255, 255, 0.9); /* Fondo del input */
+            background-color: rgba(255, 255, 255, 0.9);
             transition: all 0.3s ease;
             font-size: 1rem;
-            color: #333; /* Color del texto dentro del input */
-            padding-right: 120px; /* Espacio para el botón */
+            color: #333;
+            /* Ajustado para el botón cambiar en móviles */
+            padding-right: 120px; /* Suficiente espacio para el botón Cambiar */
+            box-sizing: border-box; /* Crucial para que el padding no cause desbordamiento */
         }
 
         .profile-container input[type="text"]:disabled,
@@ -149,7 +144,7 @@
         .profile-container input[type="text"]::placeholder,
         .profile-container input[type="email"]::placeholder,
         .profile-container input[type="password"]::placeholder {
-            color: #666; /* Color del placeholder */
+            color: #666;
         }
 
         .profile-container input[type="text"]:focus,
@@ -157,14 +152,15 @@
         .profile-container input[type="password"]:focus {
             outline: none;
             border-color: #ffcc00;
-            box-shadow: 0 0 0 3px rgba(255, 204, 0, 0.3); /* Sombra al enfocar */
+            box-shadow: 0 0 0 3px rgba(255, 204, 0, 0.3);
         }
 
         /* Botón de Cambiar */
         .change-btn {
             position: absolute;
             right: 0;
-            top: 30px;
+            top: 50%; /* Posición relativa al input */
+            transform: translateY(-50%); /* Centrar verticalmente */
             background-color: #ffcc00;
             color: #333;
             border: none;
@@ -173,15 +169,17 @@
             cursor: pointer;
             font-weight: 600;
             transition: all 0.3s ease;
-            height: 46px;
-            width: 100px;
+            height: 100%; /* Ocupa toda la altura del input */
+            width: 110px; /* Ancho un poco más pequeño para dar espacio */
+            box-sizing: border-box;
+            line-height: 1; /* Asegura el centrado vertical del texto */
         }
 
         .change-btn:hover {
             background-color: #ffb700;
         }
 
-        /* Botón de Actualizar - Usa los estilos del botón principal */
+        /* Botón de Actualizar */
         .profile-container button[type="submit"] {
             background-color: #ffcc00;
             color: #333;
@@ -191,11 +189,11 @@
             border: none;
             transition: all 0.4s ease;
             display: block;
-            margin: 30px auto 0; /* Espacio arriba, centrado */
+            margin: 30px auto 0;
             font-weight: 600;
             cursor: pointer;
-            position: relative; /* Para el efecto hover */
-            overflow: hidden; /* Para ocultar el efecto hover */
+            position: relative;
+            overflow: hidden;
             z-index: 1;
         }
 
@@ -206,7 +204,7 @@
             left: 0;
             width: 0;
             height: 100%;
-            background-color: #ffb700; /* Color de fondo del efecto hover */
+            background-color: #ffb700;
             transition: width 0.4s ease;
             z-index: -1;
             border-radius: 50px;
@@ -222,7 +220,7 @@
             width: 100%;
         }
 
-        /* Mensajes de éxito/error (Bootstrap alert styles adapted) */
+        /* Mensajes de alerta */
         .alert-custom {
             padding: 15px;
             margin-bottom: 20px;
@@ -230,13 +228,11 @@
             border-radius: 8px;
             text-align: center;
             font-weight: bold;
+            font-size: 0.95rem; /* Ajuste de tamaño para móviles */
         }
 
         .alert-success-custom {
-            color: #004085;
-            background-color: #cce5ff;
-            border-color: #b8daff;
-            color: #155724; /* Color para éxito */
+            color: #155724;
             background-color: #d4edda;
             border-color: #c3e6cb;
         }
@@ -252,15 +248,15 @@
             border-color: #ffeeba;
         }
 
-        /* Estilos para errores de validación individuales */
+        /* Errores de validación */
         .text-danger-custom {
-            color: #f8d7da; /* Usar un color que contraste con el fondo */
-            background-color: #721c24; /* Fondo para el texto de error */
+            color: #f8d7da;
+            background-color: #721c24;
             padding: 5px 10px;
             border-radius: 5px;
             margin-top: 5px;
-            display: block; /* Cada error en su línea */
-            font-size: 0.9rem;
+            display: block;
+            font-size: 0.85rem; /* Ligeramente más pequeño */
         }
 
         .password-section {
@@ -269,7 +265,7 @@
             border-top: 1px solid rgba(255, 255, 255, 0.2);
         }
 
-        /* Footer - Ajustado para ser sticky (Mantenido de tu código original) */
+        /* Footer */
         footer {
             background-color: #004b6b;
             color: #fff;
@@ -277,13 +273,13 @@
             text-align: center;
             width: 100%;
             border-top: 3px solid #005f87;
-            margin-top: auto; /* Esto empuja el footer hacia abajo en un flex container */
-            flex-shrink: 0; /* Evita que el footer se encoja */
+            margin-top: auto;
+            flex-shrink: 0;
         }
 
         footer p {
             margin: 0;
-            font-size: 1rem;
+            font-size: 0.9rem; /* Un poco más pequeño en el footer */
         }
 
         footer a {
@@ -315,91 +311,7 @@
             transform: translateY(-3px);
         }
 
-        /* Media Queries (Mantenidos de tu código original) */
-        @media (max-width: 992px) {
-            /* Reglas si es necesario */
-        }
-
-        @media (max-width: 768px) {
-            .header {
-                /* No flex-direction: column; aquí si queremos título a la izquierda y hamburguesa a la derecha */
-                padding: 15px; /* Vuelve a padding horizontal normal */
-                justify-content: space-between; /* Asegura espacio entre título y hamburguesa */
-                flex-direction: row; /* Fuerza la dirección de fila */
-            }
-
-            .header h1 {
-                margin-bottom: 0; /* No margin-bottom si es en fila */
-                font-size: 1.5rem; /* Ajustado */
-            }
-            /* .header-right fue eliminado */
-            /* .nav-links fue eliminado */
-            /* .profile-button fue eliminado */
-
-            .profile-container {
-                padding: 30px; /* Ajusta el padding en pantallas pequeñas */
-                margin: 50px auto; /* Ajusta el margen */
-                max-width: 95%; /* Permite que ocupe más ancho en pantallas pequeñas */
-            }
-
-            .profile-container h2 {
-                font-size: 1.8rem;
-            }
-
-            .profile-container input[type="text"],
-            .profile-container input[type="email"],
-            .profile-container input[type="password"] {
-                padding: 10px; /* Ajusta el padding de inputs */
-                margin-bottom: 15px; /* Ajusta el margen */
-            }
-
-            .profile-container button[type="submit"] {
-                padding: 12px 30px;
-                font-size: 1rem;
-            }
-
-            .change-btn {
-                top: 28px;
-                height: 42px;
-                width: 90px;
-                font-size: 0.9rem;
-            }
-        }
-
-        @media (max-width: 576px) {
-            /* .header-right fue eliminado */
-            /* .nav-links fue eliminado */
-            .profile-container {
-                padding: 20px; /* Ajusta el padding */
-            }
-
-            .profile-container h2 {
-                font-size: 1.5rem;
-            }
-
-            .profile-container input[type="text"],
-            .profile-container input[type="email"],
-            .profile-container input[type="password"] {
-                padding: 10px;
-                margin-bottom: 10px;
-            }
-
-            .profile-container button[type="submit"] {
-                padding: 10px 25px;
-                font-size: 0.9rem;
-            }
-
-            /* .profile-button fue eliminado */
-
-            .change-btn {
-                top: 26px;
-                height: 38px;
-                width: 80px;
-                font-size: 0.8rem;
-            }
-        }
-        
-        /* ESTILOS DEL MENÚ HAMBURGUESA PERSONALIZADO (Copiados de welcome.php) */
+        /* ESTILOS DEL MENÚ HAMBURGUESA PERSONALIZADO */
         .menu-icon {
             background-color: #005f87;
             color: white;
@@ -412,8 +324,8 @@
             cursor: pointer;
             transition: background-color 0.3s, transform 0.3s;
             z-index: 1002;
-            position: fixed; /* Ojo: esto lo pondrá fijo en la ventana, no en el header si el header no es fijo */
-            top: calc(15px + env(safe-area-inset-top)); /* Igualamos al padding-top del header */
+            position: fixed;
+            top: calc(15px + env(safe-area-inset-top));
             right: 15px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
@@ -429,21 +341,20 @@
 
         .mobile-nav-overlay {
             position: fixed;
-            top: 0; /* Esto será ajustado por JavaScript */
+            top: 0;
             right: -100vw;
             width: min(75vw, 300px);
-            height: 100vh; /* Esto también se ajustará dinámicamente */
-            background-color: #005f87; /* Color de fondo azul oscuro */
+            height: 100vh;
+            background-color: #005f87;
             box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
             transition: right 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            z-index: 999; /* Z-index más bajo que el header (1001) */
+            z-index: 999;
             padding: 20px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             color: white;
-            /* Padding superior específico para el contenido del overlay. */
-            padding-top: calc(15px + env(safe-area-inset-top)); /* Alineado con el header o un poco más */
+            padding-top: calc(15px + env(safe-area-inset-top));
         }
 
         .mobile-nav-overlay.is-open {
@@ -484,7 +395,7 @@
 
         .mobile-nav-overlay .top-links {
             margin-bottom: auto;
-            padding-top: 5px; /* Ajustado para que los enlaces no estén pegados al top */
+            padding-top: 5px;
         }
 
         .mobile-nav-overlay .bottom-links {
@@ -496,13 +407,119 @@
         body.menu-active {
             overflow: hidden;
         }
+
+        /* Nuevas Media Queries para asegurar la responsividad en pantallas muy pequeñas */
+        @media (max-width: 420px) {
+            .header h1 {
+                font-size: 1.2rem; /* Título aún más pequeño para evitar desbordamiento */
+            }
+
+            .menu-icon {
+                width: 40px;
+                height: 40px;
+            }
+
+            .menu-icon i {
+                font-size: 24px;
+            }
+
+            .profile-container {
+                padding: 15px; /* Reducir aún más el padding */
+                margin: 40px auto; /* Reducir margen */
+            }
+
+            .profile-container h2 {
+                font-size: 1.8rem;
+                margin-bottom: 20px;
+            }
+
+            .profile-container .form-group {
+                margin-bottom: 15px;
+            }
+
+            .profile-container input[type="text"],
+            .profile-container input[type="email"],
+            .profile-container input[type="password"] {
+                padding: 10px;
+                font-size: 0.9rem;
+                padding-right: 90px; /* Reducir espacio para el botón Cambiar */
+            }
+
+            .change-btn {
+                width: 80px; /* Ancho más pequeño para el botón */
+                padding: 8px 10px;
+                font-size: 0.75rem;
+            }
+
+            .profile-container button[type="submit"] {
+                padding: 10px 25px;
+                font-size: 0.9rem;
+            }
+
+            .alert-custom {
+                font-size: 0.85rem;
+                padding: 10px;
+            }
+
+            .text-danger-custom {
+                font-size: 0.75rem;
+                padding: 3px 8px;
+            }
+        }
+
+        @media (max-width: 320px) {
+            .header h1 {
+                font-size: 1.1rem;
+            }
+            .menu-icon {
+                width: 36px;
+                height: 36px;
+                right: 10px; /* Ajustar posición */
+            }
+            .menu-icon i {
+                font-size: 20px;
+            }
+            .profile-container {
+                padding: 10px;
+                margin: 30px auto;
+            }
+            .profile-container h2 {
+                font-size: 1.6rem;
+            }
+            .profile-container input[type="text"],
+            .profile-container input[type="email"],
+            .profile-container input[type="password"] {
+                padding: 8px;
+                font-size: 0.85rem;
+                padding-right: 75px;
+            }
+            .change-btn {
+                width: 65px;
+                padding: 6px 8px;
+                font-size: 0.7rem;
+            }
+            .profile-container button[type="submit"] {
+                padding: 8px 20px;
+                font-size: 0.8rem;
+            }
+            .alert-custom {
+                font-size: 0.8rem;
+            }
+            .text-danger-custom {
+                font-size: 0.7rem;
+            }
+            footer p {
+                font-size: 0.8rem;
+            }
+        }
     </style>
 </head>
 <body>
 <script src="https://kit.fontawesome.com/releases/v6.5.1/js/all.js" crossorigin="anonymous"></script>
 
 <div class="header" id="mainHeader">
-    <h1>Mi Perfil</h1> <div class="menu-icon" id="menuIcon">
+    <h1>Mi Perfil</h1>
+    <div class="menu-icon" id="menuIcon">
         <i class="material-icons">menu</i>
     </div>
 </div>
@@ -511,7 +528,8 @@
     <div class="top-links">
         <ul class="mobile-nav-list">
             <li><a href="<?= site_url('/') ?>"><i class="material-icons">home</i> Inicio</a></li>
-            <li><a href="<?= site_url('profile') ?>"><i class="material-icons">person</i> Perfil</a></li>     
+            <li><a href="<?= site_url('profile') ?>"><i class="material-icons">person</i> Perfil</a></li>
+            <li><a href="javascript:history.back()"><i class="material-icons">arrow_back</i> Volver atrás</a></li>
         </ul>
     </div>
     <div class="bottom-links">
@@ -621,19 +639,17 @@
     document.addEventListener('DOMContentLoaded', function() {
         const menuIcon = document.getElementById('menuIcon');
         const mobileNavOverlay = document.getElementById('mobileNavOverlay');
-        const mainHeader = document.getElementById('mainHeader'); // Obtenemos el header
+        const mainHeader = document.getElementById('mainHeader');
         const navItems = mobileNavOverlay.querySelectorAll('.mobile-nav-list a');
 
-        // Función para ajustar la posición y altura del overlay
         function adjustOverlayPosition() {
             if (mainHeader && mobileNavOverlay) {
-                const headerHeight = mainHeader.offsetHeight; // Obtiene la altura total del header
-                mobileNavOverlay.style.top = `${headerHeight}px`; // Posiciona el overlay debajo del header
-                mobileNavOverlay.style.height = `calc(100vh - ${headerHeight}px)`; // Ajusta la altura del overlay
+                const headerHeight = mainHeader.offsetHeight;
+                mobileNavOverlay.style.top = `${headerHeight}px`;
+                mobileNavOverlay.style.height = `calc(100vh - ${headerHeight}px)`;
             }
         }
 
-        // Ejecutar al cargar y al redimensionar la ventana
         adjustOverlayPosition();
         window.addEventListener('resize', adjustOverlayPosition);
 
@@ -641,12 +657,9 @@
             menuIcon.addEventListener('click', () => {
                 const isOpen = mobileNavOverlay.classList.toggle('is-open');
                 document.body.classList.toggle('menu-active');
-
-                // Cambiar el ícono de hamburguesa a cruz y viceversa
                 menuIcon.querySelector('i').textContent = isOpen ? 'close' : 'menu';
             });
 
-            // Cerrar menú al hacer clic en un enlace del menú
             navItems.forEach(item => {
                 item.addEventListener('click', () => {
                     mobileNavOverlay.classList.remove('is-open');
@@ -655,7 +668,6 @@
                 });
             });
 
-            // Cerrar menú al hacer clic fuera del menú
             document.body.addEventListener('click', (event) => {
                 if (mobileNavOverlay.classList.contains('is-open') &&
                     !mobileNavOverlay.contains(event.target) &&
@@ -677,7 +689,6 @@
   window.addEventListener('beforeinstallprompt', (event) => {
     event.preventDefault();
     installEvent = event;
-    // document.getElementById('installButton').style.display = 'inline-block'; // Este botón no está en esta vista, se puede quitar o adaptar
   });
 
   window.addEventListener("message", (event) => {
