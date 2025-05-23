@@ -232,10 +232,6 @@ class AuthController extends BaseController
     {
         return view('forgot_password'); // Asegúrate de tener la vista de recuperación de contraseña
     }
-     public function profile()
-    {
-        return view('profile'); // Asegúrate de tener la vista de recuperación de contraseña
-    }
     public function trayectoria()
     {
         return view('trayectoria'); // Asegúrate de tener la vista de recuperación de contraseña
@@ -524,5 +520,186 @@ public function eskate512()
 }
 public function instalarpwa(){
     return view ('instalarpwa');
+}
+public function updateUserProfile()
+{
+    $session = session();
+    $userModel = new UserModel();
+    $userId = $session->get('user_id');
+    $currentUser = $userModel->find($userId);
+
+    if (!$session->get('logged_in') || !$currentUser) {
+        return redirect()->to('/login')->with('error', 'Debes iniciar sesión para actualizar tu perfil');
+    }
+
+    $username = $this->request->getPost('username');
+    $newEmail = $this->request->getPost('email');
+    $newPassword = $this->request->getPost('new_password');
+    $currentPassword = $this->request->getPost('current_password');
+
+    if (!$userModel->verifyPassword($currentUser['email'], $currentPassword)) {
+        return redirect()->back()->with('error', 'La contraseña actual es incorrecta');
+    }
+
+    // Procesar cambio de username
+    if ($username && $username !== $currentUser['username']) {
+        try {
+            $userModel->update($userId, ['username' => $username]);
+            $session->set('username', $username);
+            $session->setFlashdata('success', 'Nombre de usuario actualizado correctamente.');
+        } catch (\Exception $e) {
+            log_message('error', 'Error al actualizar username: ' . $e->getMessage());
+            $session->setFlashdata('error', 'Error al actualizar nombre de usuario');
+        }
+    }
+
+    // Procesar cambio de email
+    if ($newEmail && $newEmail !== $currentUser['email']) {
+        if ($userModel->where('email', $newEmail)->first()) {
+            $session->setFlashdata('error', 'El correo electrónico ya está en uso');
+        } else {
+            $emailToken = bin2hex(random_bytes(16));
+            $emailExpire = date('Y-m-d H:i:s', strtotime('+1 hour'));
+
+            if ($userModel->setEmailResetToken($userId, $emailToken, $emailExpire)) {
+                $confirmLink = site_url('profile/confirm-email/' . $emailToken);
+                
+                $emailService = \Config\Services::email();
+                $emailService->clear();
+                
+                $emailService->setTo($currentUser['email']);
+                $emailService->setSubject('Confirma tu nuevo correo electrónico');
+                $emailService->setMessage("
+                    <h2>Confirmación de cambio de email</h2>
+                    <p>Hola {$currentUser['username']},</p>
+                    <p>Has solicitado cambiar tu correo electrónico a: {$newEmail}</p>
+                    <p>Por favor haz clic en el siguiente enlace para confirmar el cambio:</p>
+                    <p><a href='{$confirmLink}'>{$confirmLink}</a></p>
+                    <p>Si no solicitaste este cambio, por favor ignora este mensaje.</p>
+                ");
+                $emailService->setMailType('html');
+
+                if ($emailService->send()) {
+                    $session->set('pending_new_email', $newEmail);
+                    $session->setFlashdata('success', 'Se ha enviado un enlace de confirmación a tu correo actual.');
+                } else {
+                    $session->setFlashdata('error', 'Error al enviar correo de confirmación de email');
+                    log_message('error', $emailService->printDebugger(['headers']));
+                }
+            } else {
+                $session->setFlashdata('error', 'Error al generar token de confirmación de email');
+            }
+        }
+    }
+
+    // Procesar cambio de contraseña
+    if ($newPassword) {
+        $passwordToken = bin2hex(random_bytes(16));
+        $passwordExpire = date('Y-m-d H:i:s', strtotime('+1 hour'));
+
+        if ($userModel->setPasswordResetToken($currentUser['email'], $passwordToken, $passwordExpire)) {
+            $confirmLink = site_url('profile/confirm-password/' . $passwordToken);
+            
+            $emailService = \Config\Services::email();
+            $emailService->clear();
+            
+            $emailService->setTo($currentUser['email']);
+            $emailService->setSubject('Confirma el cambio de tu contraseña');
+            $emailService->setMessage("
+                <h2>Confirmación de cambio de contraseña</h2>
+                <p>Hola {$currentUser['username']},</p>
+                <p>Has solicitado cambiar tu contraseña.</p>
+                <p>Por favor haz clic en el siguiente enlace para confirmar el cambio:</p>
+                <p><a href='{$confirmLink}'>{$confirmLink}</a></p>
+                <p>Si no solicitaste este cambio, por favor cambia tu contraseña inmediatamente.</p>
+            ");
+            $emailService->setMailType('html');
+
+            if ($emailService->send()) {
+                $session->set('pending_new_password', password_hash($newPassword, PASSWORD_DEFAULT));
+                $session->setFlashdata('success', 'Se ha enviado un enlace de confirmación a tu correo actual.');
+            } else {
+                $session->setFlashdata('error', 'Error al enviar correo de confirmación de contraseña');
+                log_message('error', $emailService->printDebugger(['headers']));
+            }
+        } else {
+            $session->setFlashdata('error', 'Error al generar token de confirmación de contraseña');
+        }
+    }
+
+    return redirect()->to('/profile');
+}
+
+public function confirmEmail($token)
+{
+    $session = session();
+    $userModel = new UserModel();
+
+    $user = $userModel->verifyEmailToken($token);
+    $newEmail = $session->get('pending_new_email');
+
+    if ($user && $newEmail) {
+        $userModel->update($user['id'], [
+            'email' => $newEmail,
+            'email_reset_token' => null,
+            'email_reset_expire' => null
+        ]);
+        $session->set('email', $newEmail);
+        $session->remove('pending_new_email');
+        return redirect()->to('/profile')->with('success', 'Correo electrónico actualizado correctamente');
+    }
+
+    return redirect()->to('/profile')->with('error', 'Token inválido o expirado');
+}
+
+public function confirmPassword($token)
+{
+    $session = session();
+    $userModel = new UserModel();
+
+    $user = $userModel->verifyPasswordToken($token);
+    $newPassword = $session->get('pending_new_password');
+
+    if ($user && $newPassword) {
+        $userModel->update($user['id'], [
+            'password' => $newPassword,
+            'reset_token' => null,
+            'reset_expiration' => null
+        ]);
+        $session->remove('pending_new_password');
+        return redirect()->to('/profile')->with('success', 'Contraseña actualizada correctamente');
+    }
+
+    return redirect()->to('/profile')->with('error', 'Token inválido o expirado');
+}
+public function profile()
+{
+    $session = session();
+
+    if (!$session->get('logged_in')) {
+        return redirect()->to('/login')->with('error', 'Debes iniciar sesión para ver tu perfil');
+    }
+
+    $userModel = new UserModel();
+    $user = $userModel->find($session->get('user_id'));
+
+    return view('profile', ['user' => $user]);
+}
+public function eliminarUsuariosNoVerificadosCron()
+{
+    $userModel = new UserModel();
+    $cutoff = date('Y-m-d H:i:s');
+
+    $deletedUsers = $userModel->where('is_active', 0)
+                              ->where('verification_expires <', $cutoff)
+                              ->delete();
+
+    if ($deletedUsers) {
+        log_message('info', "Cron Job: Se eliminaron {$deletedUsers} cuentas no verificadas.");
+        echo "OK: Se eliminaron {$deletedUsers} cuentas.\n";
+    } else {
+        log_message('info', "Cron Job: No se encontraron cuentas no verificadas para eliminar.");
+        echo "OK: No se encontraron cuentas para eliminar.\n";
+    }
 }
 }
