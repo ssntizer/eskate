@@ -250,6 +250,7 @@
             align-items: center; /* Alinear verticalmente los elementos */
             position: relative; /* Mantener para el posicionamiento absoluto del botón en móviles si es necesario */
             margin-bottom: 20px;
+            flex-wrap: wrap; /* Permite que los elementos se envuelvan en la siguiente línea */
         }
 
         .profile-container .form-group label {
@@ -261,6 +262,14 @@
             text-align: left;
             margin-right: 10px; /* Espacio entre etiqueta e input */
             min-width: 90px; /* Asegura un ancho mínimo para la etiqueta */
+        }
+
+        /* Estilo para el nuevo contenedor del input y botón */
+        .input-group-wrapper {
+            display: flex;
+            align-items: center;
+            flex-grow: 1; /* Permite que el wrapper ocupe el espacio restante */
+            position: relative; /* Para el posicionamiento absoluto del botón dentro */
         }
 
         .profile-container input[type="text"],
@@ -349,7 +358,6 @@
 
         .change-btn:hover::before {
             width: 100%;
-            /* Asegúrate de que el ::before no crezca más allá del botón */
         }
 
         /* Botón de Actualizar */
@@ -431,7 +439,8 @@
             display: block;
             font-size: 0.9rem;
             width: 100%;
-            grid-column: 1 / -1; /* Para que ocupe todo el ancho en una cuadrícula (si fuera necesario) */
+            flex-basis: 100%; /* Ocupa toda la línea en un contexto flex */
+            order: 4; /* Lo coloca al final de los elementos flex */
         }
 
         .password-section {
@@ -483,6 +492,13 @@
             .header-buttons {
                 display: flex;
             }
+            .profile-container .form-group .change-btn {
+                position: relative; /* Vuelve a ser relativo en desktop */
+                transform: none;
+                margin-left: 10px;
+                top: auto;
+                right: auto;
+            }
         }
 
         @media (max-width: 767.98px) {
@@ -530,21 +546,27 @@
                 text-align: left;
             }
 
+            .input-group-wrapper {
+                display: flex; /* Convierte este contenedor en un flex container */
+                align-items: center; /* Centra verticalmente el input y el botón */
+                width: 100%; /* Ocupa el 100% del ancho disponible */
+                position: relative; /* Necesario para posicionar el botón dentro de este wrapper */
+            }
+
             .profile-container input[type="text"],
             .profile-container input[type="email"],
             .profile-container input[type="password"] {
-                width: 100%; /* Ocupa todo el ancho disponible */
+                flex-grow: 1; /* Permite que el input crezca para ocupar el espacio disponible */
                 padding: 10px;
-                margin-bottom: 15px; /* Espacio debajo del input */
+                margin-bottom: 0; /* Eliminar el margen inferior, ya que el botón estará al lado */
                 padding-right: 90px; /* Dejar espacio para el botón Cambiar */
             }
 
-            /* Botón "Cambiar" en móvil - Vuelve a posicionamiento absoluto */
+            /* Botón "Cambiar" en móvil - Posicionamiento absoluto dentro del nuevo wrapper */
             .profile-container .form-group .change-btn {
                 position: absolute;
-                right: 10px; /* 10px desde el borde derecho del .form-group */
-                /* Ajuste el 'top' para alinearlo con el input. La label ahora está encima. */
-                top: calc(50% + 15px); /* Esto asume que la label tiene aprox 20px de alto + 5px margin-bottom */
+                right: 10px; /* 10px desde el borde derecho del .input-group-wrapper */
+                top: 50%; /* Centra verticalmente el botón dentro del wrapper */
                 transform: translateY(-50%); /* Ajuste fino para centrar verticalmente */
                 margin-left: 0; /* Eliminar margen izquierdo */
                 font-size: 0.8rem;
@@ -553,8 +575,9 @@
                 width: auto;
                 min-width: unset; /* Eliminar min-width específico para móvil si no es necesario */
                 max-width: unset; /* Eliminar max-width específico para móvil si no es necesario */
+                border-radius: 50px; /* Asegura los bordes redondeados en móvil también */
+                flex-shrink: 0; /* Evita que el botón se encoja */
             }
-
 
             .profile-container button[type="submit"] {
                 padding: 10px 25px;
@@ -666,8 +689,9 @@
 
                 <div class="form-group">
                     <label for="username">Nombre de Usuario:</label>
-                    <input type="text" id="username" name="username" value="<?= old('username', $user['username'] ?? '') ?>" disabled required>
-                    <button type="button" class="change-btn" onclick="enableField('username')">Cambiar</button>
+                    <div class="input-group-wrapper"> <input type="text" id="username" name="username" value="<?= old('username', $user['username'] ?? '') ?>" disabled required>
+                        <button type="button" class="change-btn" onclick="enableField('username')">Cambiar</button>
+                    </div>
                      <?php if (session()->getFlashdata('errors') && isset(session()->getFlashdata('errors')['username'])): ?>
                         <div class="text-danger-custom">
                             <?= session()->getFlashdata('errors')['username'] ?>
@@ -677,8 +701,9 @@
 
                 <div class="form-group">
                     <label for="email">Correo Electrónico:</label>
-                     <input type="email" id="email" name="email" value="<?= old('email', $user['email'] ?? '') ?>" disabled required>
+                    <div class="input-group-wrapper"> <input type="email" id="email" name="email" value="<?= old('email', $user['email'] ?? '') ?>" disabled required>
                      <button type="button" class="change-btn" onclick="enableField('email')">Cambiar</button>
+                    </div>
                      <?php if (session()->getFlashdata('errors') && isset(session()->getFlashdata('errors')['email'])): ?>
                         <div class="text-danger-custom">
                             <?= session()->getFlashdata('errors')['email'] ?>
