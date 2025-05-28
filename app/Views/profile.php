@@ -260,6 +260,7 @@
             flex-basis: 25%; /* Ancho de la etiqueta */
             text-align: left;
             margin-right: 10px; /* Espacio entre etiqueta e input */
+            min-width: 90px; /* Asegura un ancho mínimo para la etiqueta */
         }
 
         .profile-container input[type="text"],
@@ -300,11 +301,11 @@
             box-shadow: 0 0 0 3px rgba(255, 204, 0, 0.3);
         }
 
-        /* Botón de Cambiar - Ajustado para Flexbox */
-        .profile-container .form-group .change-btn { /* Selectores más específicos para evitar conflictos */
-            position: static; /* Eliminar posicionamiento absoluto por defecto */
+        /* Botón de Cambiar - Ajustado para Flexbox y efecto hover */
+        .profile-container .form-group .change-btn {
+            position: relative; /* Cambiado a relative para el efecto hover, y static para el flexbox */
             transform: none; /* Eliminar la transformación de centrado vertical */
-            margin-left: auto; /* Empujar el botón hacia la derecha del grupo flex */
+            margin-left: 10px; /* Espacio entre el input y el botón */
             background-color: #ffcc00;
             color: #333;
             border: none;
@@ -313,15 +314,17 @@
             cursor: pointer;
             font-weight: 600;
             transition: all 0.3s ease;
-            height: auto; /* Dejar que la altura se ajuste al padding */
-            width: auto; /* Dejar que el ancho se ajuste al padding */
+            height: auto;
+            min-width: 90px; /* Añadido un ancho mínimo */
+            max-width: 120px; /* Añadido un ancho máximo para controlar la expansión */
             font-size: 0.85rem;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
             z-index: 1;
             overflow: hidden;
-            display: flex; /* Para centrar el texto del botón */
+            display: flex;
             align-items: center;
             justify-content: center;
+            flex-shrink: 0; /* Evita que el botón se encoja */
         }
 
         .change-btn::before {
@@ -340,12 +343,13 @@
         .change-btn:hover {
             background-color: #ffb700;
             color: #333;
-            transform: translateY(-2px); /* Mover hacia arriba sutilmente */
+            transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         }
-        
+
         .change-btn:hover::before {
             width: 100%;
+            /* Asegúrate de que el ::before no crezca más allá del botón */
         }
 
         /* Botón de Actualizar */
@@ -390,7 +394,7 @@
             width: 100%;
         }
 
-        /* Mensajes de éxito/error (mantienen el estilo) */
+        /* Mensajes de éxito/error */
         .alert-custom {
             padding: 15px;
             margin-bottom: 20px;
@@ -426,7 +430,8 @@
             margin-top: 5px;
             display: block;
             font-size: 0.9rem;
-            width: 100%; /* Ocupa todo el ancho */
+            width: 100%;
+            grid-column: 1 / -1; /* Para que ocupe todo el ancho en una cuadrícula (si fuera necesario) */
         }
 
         .password-section {
@@ -538,13 +543,16 @@
             .profile-container .form-group .change-btn {
                 position: absolute;
                 right: 10px; /* 10px desde el borde derecho del .form-group */
-                top: calc(50% + 15px); /* Ajusta para que quede centrado con el input y debajo de la label */
+                /* Ajuste el 'top' para alinearlo con el input. La label ahora está encima. */
+                top: calc(50% + 15px); /* Esto asume que la label tiene aprox 20px de alto + 5px margin-bottom */
                 transform: translateY(-50%); /* Ajuste fino para centrar verticalmente */
                 margin-left: 0; /* Eliminar margen izquierdo */
                 font-size: 0.8rem;
                 padding: 6px 10px;
                 height: auto;
                 width: auto;
+                min-width: unset; /* Eliminar min-width específico para móvil si no es necesario */
+                max-width: unset; /* Eliminar max-width específico para móvil si no es necesario */
             }
 
 
