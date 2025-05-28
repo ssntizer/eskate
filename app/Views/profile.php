@@ -627,7 +627,6 @@
 <nav class="mobile-nav-overlay" id="mobileNavOverlay">
     <div class="top-links">
         <ul class="mobile-nav-list">
-            <li><a href="<?= site_url('/') ?>"><i class="material-icons">home</i> Inicio</a></li>
             <li><a href="<?= site_url('list-skates') ?>"><i class="material-icons">directions_bike</i> Mis Skates</a></li>
             <li><a href="<?= site_url('profile') ?>"><i class="material-icons">person</i> Perfil</a></li>
             <li><a href="javascript:history.back()"><i class="material-icons">arrow_back</i> Volver atrás</a></li>
