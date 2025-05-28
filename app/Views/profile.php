@@ -117,6 +117,7 @@
             align-items: center; /* Alinear verticalmente los elementos */
             position: relative; /* Mantener para el posicionamiento absoluto del botón en móviles si es necesario */
             margin-bottom: 20px;
+            flex-wrap: wrap; /* Permite que los elementos se envuelvan en la siguiente línea */
         }
 
         .profile-container .form-group label {
@@ -128,6 +129,14 @@
             text-align: left;
             margin-right: 10px; /* Espacio entre etiqueta e input */
             min-width: 90px; /* Asegura un ancho mínimo para la etiqueta */
+        }
+
+        /* Estilo para el nuevo contenedor del input y botón */
+        .input-group-wrapper {
+            display: flex; /* Convierte este contenedor en un flex container */
+            align-items: center; /* Centra verticalmente el input y el botón */
+            flex-grow: 1; /* Permite que el wrapper ocupe el espacio restante */
+            position: relative; /* Necesario para posicionar el botón dentro de este wrapper */
         }
 
         .profile-container input[type="text"],
@@ -144,7 +153,7 @@
             color: #333;
             box-sizing: border-box;
             flex-grow: 1; /* Permitir que el input ocupe el espacio restante */
-            padding-right: 10px; /* Reducir el padding derecho ya que el botón está fuera del input */
+            padding-right: 100px; /* **Aumentado para dejar más espacio al botón** */
         }
 
         .profile-container input[type="text"]:disabled,
@@ -168,11 +177,13 @@
             box-shadow: 0 0 0 3px rgba(255, 204, 0, 0.3);
         }
 
-        /* Botón de Cambiar - Ajustado para Flexbox */
+        /* Botón de Cambiar - Ajustado para Flexbox y efecto hover */
         .profile-container .form-group .change-btn {
-            position: relative; /* Cambiado a relative para el efecto hover, y static para el flexbox */
-            transform: none; /* Eliminar la transformación de centrado vertical */
-            margin-left: 10px; /* Espacio entre el input y el botón */
+            position: absolute; /* **Cambiado a absoluto para posicionamiento dentro del wrapper** */
+            right: 10px; /* **10px desde el borde derecho del .input-group-wrapper** */
+            top: 50%; /* **Centra verticalmente el botón dentro del wrapper** */
+            transform: translateY(-50%); /* **Ajuste fino para centrar verticalmente** */
+            margin-left: 0; /* Eliminar margen izquierdo */
             background-color: #ffcc00;
             color: #333;
             border: none;
@@ -449,6 +460,20 @@
             .profile-container {
                 margin: 80px auto; /* Mantener margen para desktop */
             }
+            /* En desktop, el botón vuelve a ser relativo dentro del wrapper */
+            .profile-container .form-group .change-btn {
+                position: relative;
+                transform: none;
+                margin-left: 10px;
+                top: auto;
+                right: auto;
+            }
+            /* Y el padding-right del input puede ser menor */
+            .profile-container input[type="text"],
+            .profile-container input[type="email"],
+            .profile-container input[type="password"] {
+                padding-right: 12px; /* Valor normal para desktop */
+            }
         }
 
         @media (max-width: 767.98px) {
@@ -480,20 +505,26 @@
                 text-align: left;
             }
 
+            /* Asegurar que el input-group-wrapper ocupe todo el ancho disponible */
+            .input-group-wrapper {
+                width: 100%;
+                margin-bottom: 15px; /* Espacio debajo del input-group-wrapper apilado */
+            }
+
             .profile-container input[type="text"],
             .profile-container input[type="email"],
             .profile-container input[type="password"] {
-                width: 100%; /* Ocupa todo el ancho disponible */
+                width: 100%; /* Ocupa todo el ancho disponible dentro del wrapper */
                 padding: 10px;
-                margin-bottom: 15px; /* Espacio debajo del input */
+                margin-bottom: 0; /* Eliminar el margen inferior, ya que el botón estará al lado */
                 padding-right: 90px; /* Dejar espacio para el botón Cambiar */
             }
 
-            /* Botón "Cambiar" en móvil - Vuelve a posicionamiento absoluto */
+            /* Botón "Cambiar" en móvil - Posicionamiento absoluto dentro del nuevo wrapper */
             .profile-container .form-group .change-btn {
                 position: absolute;
-                right: 10px; /* 10px desde el borde derecho del .form-group */
-                top: calc(50% + 15px); /* Ajusta para que quede centrado con el input y debajo de la label */
+                right: 10px; /* 10px desde el borde derecho del .input-group-wrapper */
+                top: 50%; /* Centra verticalmente el botón dentro del wrapper */
                 transform: translateY(-50%); /* Ajuste fino para centrar verticalmente */
                 margin-left: 0; /* Eliminar margen izquierdo */
                 font-size: 0.8rem;
@@ -658,8 +689,9 @@
 
                 <div class="form-group">
                     <label for="username">Nombre de Usuario:</label>
-                    <input type="text" id="username" name="username" value="<?= old('username', $user['username'] ?? '') ?>" disabled required>
-                    <button type="button" class="change-btn" onclick="enableField('username')">Cambiar</button>
+                    <div class="input-group-wrapper"> <input type="text" id="username" name="username" value="<?= old('username', $user['username'] ?? '') ?>" disabled required>
+                        <button type="button" class="change-btn" onclick="enableField('username')">Cambiar</button>
+                    </div>
                     <?php if (session()->getFlashdata('errors') && isset(session()->getFlashdata('errors')['username'])): ?>
                         <div class="text-danger-custom">
                             <?= session()->getFlashdata('errors')['username'] ?>
@@ -669,8 +701,9 @@
 
                 <div class="form-group">
                     <label for="email">Correo Electrónico:</label>
-                    <input type="email" id="email" name="email" value="<?= old('email', $user['email'] ?? '') ?>" disabled required>
-                    <button type="button" class="change-btn" onclick="enableField('email')">Cambiar</button>
+                    <div class="input-group-wrapper"> <input type="email" id="email" name="email" value="<?= old('email', $user['email'] ?? '') ?>" disabled required>
+                     <button type="button" class="change-btn" onclick="enableField('email')">Cambiar</button>
+                    </div>
                     <?php if (session()->getFlashdata('errors') && isset(session()->getFlashdata('errors')['email'])): ?>
                         <div class="text-danger-custom">
                             <?= session()->getFlashdata('errors')['email'] ?>
