@@ -5,484 +5,611 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mi Perfil - E-Skate</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Quicksand:wght@500;700&family=Baskervville&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style>
-       @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Quicksand:wght@500;700&display=swap');
+        /* Estilos generales del BODY para coincidir con la página de bienvenida */
+        body {
+            background-color: #00719c;
+            background-image: url('https://www.transparenttextures.com/patterns/asfalt-dark.png');
+            color: #ffffff;
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+            padding-top: 70px; /* Espacio para el header fijo */
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            box-sizing: border-box;
+        }
 
-/* Estilos generales */
-body {
-    background-color: #00719c; /* Fondo de la página */
-    background-image: url('https://www.transparenttextures.com/patterns/asfalt-dark.png');
-    color: #ffffff; /* Texto blanco */
-    font-family: 'Montserrat', sans-serif;
-    margin: 0;
-    padding: 0;
-    padding-top: 70px; /* Espacio para el header fijo */
-    min-height: 100vh; /* Asegura que el body ocupe al menos toda la altura de la vista */
-    display: flex; /* Habilita Flexbox */
-    flex-direction: column; /* Apila los elementos hijos verticalmente */
-}
+        /* HEADER CONSISTENTE CON LA PÁGINA DE BIENVENIDA */
+        .header {
+            background-color: #005f87;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid #004b6b;
+            position: fixed; /* Fija el header en la parte superior */
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000; /* Asegura que esté siempre sobre el contenido */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
+        }
 
-/* Header mejorado */
-.header {
-    background-color: #005f87; /* Color de fondo del encabezado */
-    padding: 15px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 3px solid #004b6b;
-    position: fixed; /* Fija el header en la parte superior */
-    width: 100%;
-    top: 0;
-    left: 0;
-    z-index: 1000; /* Asegura que esté siempre sobre el contenido */
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
+        .header h1 {
+            color: #ffffff;
+            margin: 0;
+            font-size: 1.8rem;
+            font-family: "Quicksand", sans-serif;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+        
+        .header h1 a {
+            text-decoration: none;
+            color: inherit;
+        }
 
-.header h1 {
-    color: #ffffff;
-    margin: 0;
-    font-size: 1.8rem;
-    font-family: "Quicksand", sans-serif;
-    font-weight: bold;
-    letter-spacing: 1px;
-}
+        /* Contenedor de botones del header (visibles en desktop) */
+        .header-buttons {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
 
-/* Contenedor flexible para nav y botón de perfil */
-.header-right {
-    display: flex;
-    align-items: center; /* Alinea verticalmente los elementos */
-    gap: 25px; /* Espacio entre nav-links y profile-button */
-}
+        .header-buttons a {
+            color: #333;
+            text-decoration: none;
+            font-size: 0.9rem;
+            padding: 8px 20px;
+            border-radius: 50px;
+            background-color: #ffcc00;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            display: inline-block;
+        }
 
-.nav-links {
-    display: flex;
-    gap: 25px;
-}
+        .header-buttons a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background-color: #ffb700;
+            transition: width 0.3s ease;
+            z-index: -1;
+            border-radius: 50px;
+        }
 
-.nav-links a {
-    color: #ffffff;
-    text-decoration: none;
-    font-size: 1.1rem;
-    transition: all 0.3s ease;
-    padding: 8px 15px;
-    border-radius: 30px;
-    position: relative;
-    font-weight: 500;
-}
+        .header-buttons a:hover {
+            color: #333;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 204, 0, 0.4);
+            text-decoration: none;
+        }
 
-.nav-links a:hover {
-    color: #ffcc00;
-    background-color: rgba(255, 204, 0, 0.1);
-}
+        .header-buttons a:hover::before {
+            width: 100%;
+        }
 
-.nav-links a::after {
-    content: '';
-    position: absolute;
-    width: 0;
-    height: 2px;
-    bottom: 0;
-    left: 0;
-    background-color: #ffcc00;
-    transition: width 0.3s ease;
-}
+        /* MENÚ HAMBURGUESA Y OVERLAY (reincorporado) */
+        .menu-icon {
+            background-color: #ffcc00; /* Color amarillo para el icono de hamburguesa */
+            color: #333;
+            border-radius: 50%;
+            width: 45px; /* Ajustado el tamaño */
+            height: 45px;
+            display: none; /* Oculto por defecto, visible en móviles */
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            z-index: 1001; /* Más alto que el header para que esté encima */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            font-size: 24px; /* Tamaño del icono */
+        }
 
-.nav-links a:hover::after {
-    width: 100%;
-}
+        .menu-icon:hover {
+            background-color: #ffb700;
+            transform: scale(1.05);
+        }
 
-/* Estilo para el nuevo botón de perfil */
-.profile-button {
-    display: flex; /* Permite centrar el icono */
-    align-items: center;
-    justify-content: center;
-    background-color: #ffcc00; /* Color de fondo amarillo */
-    color: #333; /* Color del icono oscuro */
-    width: 40px; /* Ancho fijo para hacerlo redondo */
-    height: 40px; /* Alto fijo para hacerlo redondo */
-    border-radius: 50%; /* Lo hace redondo */
-    text-decoration: none; /* Quita el subrayado */
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Sombra sutil */
-    font-size: 1.2rem; /* Tamaño del icono */
-    flex-shrink: 0; /* Evita que se encoja en pantallas pequeñas */
-}
+        .mobile-nav-overlay {
+            position: fixed;
+            top: 0; /* Se ajusta con JS */
+            right: -100vw; /* Fuera de la vista por defecto */
+            width: min(75vw, 300px); /* Ancho máximo para el overlay */
+            height: 100vh; /* Se ajusta con JS */
+            background-color: #005f87;
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
+            transition: right 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            z-index: 999; /* Z-index para el overlay */
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            color: white;
+            padding-top: 70px; /* Espacio para el header, se ajustará con JS */
+        }
 
-.profile-button:hover {
-    background-color: #ffb700; /* Amarillo más oscuro al pasar el ratón */
-    color: #333;
-    transform: scale(1.1); /* Efecto de escala */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-}
+        .mobile-nav-overlay.is-open {
+            right: 0;
+        }
 
-/* Estilos específicos para el Perfil */
-.profile-container {
-    background-color: #005f87;
-    padding: 40px;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-    margin: 80px auto; /* Espacio arriba y abajo, centrado */
-    max-width: 700px; /* Ancho máximo similar al formulario de contacto */
-    position: relative;
-    overflow: hidden;
-}
+        .mobile-nav-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
 
-.profile-container::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 5px;
-    background: linear-gradient(90deg, #ffcc00, #ffb700); /* Gradiente en la parte superior */
-}
+        .mobile-nav-list li {
+            margin-bottom: 10px;
+        }
 
-.profile-container h2 {
-    color: #ffcc00;
-    margin-bottom: 30px;
-    font-size: 2.2rem;
-    text-align: center;
-    position: relative; /* Para el pseudo-elemento after */
-}
+        .mobile-nav-list a {
+            display: block;
+            padding: 12px 15px;
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+            border-radius: 8px;
+            transition: background-color 0.3s, color 0.3s;
+            display: flex;
+            align-items: center;
+        }
 
-/* Línea bajo el título del perfil */
-.profile-container h2::after {
-    content: '';
-    position: absolute;
-    bottom: -10px; /* Ajusta según sea necesario */
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100px; /* Ancho de la línea */
-    height: 3px;
-    background: linear-gradient(90deg, transparent 0%, #ffcc00 50%, transparent 100%);
-}
+        .mobile-nav-list a:hover {
+            background-color: #00719c;
+            color: #ffcc00;
+        }
 
-.profile-container .form-group {
-    margin-bottom: 20px;
-    position: relative;
-}
+        .mobile-nav-list a i.material-icons {
+            margin-right: 10px;
+            font-size: 1.4rem;
+        }
 
-.profile-container .form-group label {
-    color: #ffffff; /* Color de la etiqueta */
-    font-weight: bold;
-    margin-bottom: 5px;
-    display: block; /* Para que la etiqueta esté en su propia línea */
-}
+        .mobile-nav-overlay .top-links {
+            margin-bottom: auto;
+            padding-top: 5px;
+        }
 
-.profile-container input[type="text"],
-.profile-container input[type="email"],
-.profile-container input[type="password"] {
-    width: 100%;
-    padding: 12px; /* Ajusta el padding */
-    margin-bottom: 5px; /* Espacio entre campos */
-    border-radius: 8px;
-    border: 2px solid #004b6b;
-    background-color: rgba(255, 255, 255, 0.9); /* Fondo del input */
-    transition: all 0.3s ease;
-    font-size: 1rem;
-    color: #333; /* Color del texto dentro del input */
-    padding-right: 120px; /* Espacio para el botón */
-}
+        .mobile-nav-overlay .bottom-links {
+            margin-top: auto;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
 
-.profile-container input[type="text"]:disabled,
-.profile-container input[type="email"]:disabled,
-.profile-container input[type="password"]:disabled {
-    background-color: rgba(255, 255, 255, 0.7);
-    cursor: not-allowed;
-}
+        body.menu-active {
+            overflow: hidden; /* Evita el scroll del body cuando el menú está abierto */
+        }
 
-.profile-container input[type="text"]::placeholder,
-.profile-container input[type="email"]::placeholder,
-.profile-container input[type="password"]::placeholder {
-    color: #666; /* Color del placeholder */
-}
+        /* Contenido principal del perfil */
+        .main-content-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding-bottom: 60px;
+        }
 
-.profile-container input[type="text"]:focus,
-.profile-container input[type="email"]:focus,
-.profile-container input[type="password"]:focus {
-    outline: none;
-    border-color: #ffcc00;
-    box-shadow: 0 0 0 3px rgba(255, 204, 0, 0.3); /* Sombra al enfocar */
-}
+        .container {
+            width: 100%;
+            max-width: 700px;
+            padding-left: 15px; /* Asegura padding en los bordes para móviles */
+            padding-right: 15px; /* Asegura padding en los bordes para móviles */
+        }
 
-/* Botón de Cambiar */
-.change-btn {
-    position: absolute;
-    right: 0;
-    top: 30px;
-    background-color: #ffcc00;
-    color: #333;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 0 8px 8px 0;
-    cursor: pointer;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    height: 46px;
-    width: 100px;
-}
+        .profile-container {
+            background-color: #005f87;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            margin: 40px auto;
+            position: relative;
+            overflow: hidden;
+            box-sizing: border-box;
+        }
 
-.change-btn:hover {
-    background-color: #ffb700;
-}
+        .profile-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #ffcc00, #ffb700);
+        }
 
-/* Botón de Actualizar - Usa los estilos del botón principal */
-.profile-container button[type="submit"] {
-    background-color: #ffcc00;
-    color: #333;
-    padding: 15px 40px;
-    font-size: 1.1rem;
-    border-radius: 50px;
-    border: none;
-    transition: all 0.4s ease;
-    display: block;
-    margin: 30px auto 0; /* Espacio arriba, centrado */
-    font-weight: 600;
-    cursor: pointer;
-    position: relative; /* Para el efecto hover */
-    overflow: hidden; /* Para ocultar el efecto hover */
-    z-index: 1;
-}
+        .profile-container h2 {
+            color: #ffcc00;
+            margin-bottom: 30px;
+            font-size: 2.2rem;
+            text-align: center;
+            position: relative;
+            font-family: 'Baskervville', serif;
+        }
 
-.profile-container button[type="submit"]::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 0;
-    height: 100%;
-    background-color: #ffb700; /* Color de fondo del efecto hover */
-    transition: width 0.4s ease;
-    z-index: -1;
-    border-radius: 50px;
-}
+        .profile-container h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent 0%, #ffcc00 50%, transparent 100%);
+        }
 
-.profile-container button[type="submit"]:hover {
-    color: #333;
-    transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgba(255, 204, 0, 0.4);
-}
+        .profile-container .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
 
-.profile-container button[type="submit"]:hover::before {
-    width: 100%;
-}
+        .profile-container .form-group label {
+            color: #ffffff;
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
+        }
 
-/* Mensajes de éxito/error (Bootstrap alert styles adapted) */
-.alert-custom {
-    padding: 15px;
-    margin-bottom: 20px;
-    border: 1px solid transparent;
-    border-radius: 8px;
-    text-align: center;
-    font-weight: bold;
-}
+        .profile-container input[type="text"],
+        .profile-container input[type="email"],
+        .profile-container input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 5px;
+            border-radius: 8px;
+            border: 2px solid #004b6b;
+            background-color: rgba(255, 255, 255, 0.9);
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            color: #333;
+            padding-right: 120px;
+            box-sizing: border-box;
+        }
 
-.alert-success-custom {
-    color: #004085;
-    background-color: #cce5ff;
-    border-color: #b8daff;
-    color: #155724; /* Color para éxito */
-    background-color: #d4edda;
-    border-color: #c3e6cb;
-}
+        .profile-container input[type="text"]:disabled,
+        .profile-container input[type="email"]:disabled,
+        .profile-container input[type="password"]:disabled {
+            background-color: rgba(255, 255, 255, 0.7);
+            cursor: not-allowed;
+        }
 
-.alert-danger-custom {
-    color: #721c24;
-    background-color: #f8d7da;
-    border-color: #f5c6cb;
-}
-.alert-warning-custom {
-     color: #856404;
-     background-color: #fff3cd;
-     border-color: #ffeeba;
-}
+        .profile-container input[type="text"]::placeholder,
+        .profile-container input[type="email"]::placeholder,
+        .profile-container input[type="password"]::placeholder {
+            color: #666;
+        }
 
-/* Estilos para errores de validación individuales */
-.text-danger-custom {
-    color: #f8d7da; /* Usar un color que contraste con el fondo */
-    background-color: #721c24; /* Fondo para el texto de error */
-    padding: 5px 10px;
-    border-radius: 5px;
-    margin-top: 5px;
-    display: block; /* Cada error en su línea */
-    font-size: 0.9rem;
-}
+        .profile-container input[type="text"]:focus,
+        .profile-container input[type="email"]:focus,
+        .profile-container input[type="password"]:focus {
+            outline: none;
+            border-color: #ffcc00;
+            box-shadow: 0 0 0 3px rgba(255, 204, 0, 0.3);
+        }
 
-.password-section {
-    margin-top: 30px;
-    padding-top: 20px;
-    border-top: 1px solid rgba(255, 255, 255, 0.2);
-}
+        /* Botón de Cambiar - ESTILO CONSISTENTE CON LA PÁGINA DE BIENVENIDA */
+        .change-btn {
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: #ffcc00;
+            color: #333;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            height: 40px;
+            width: 90px;
+            font-size: 0.85rem;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .change-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background-color: #ffb700;
+            transition: width 0.3s ease;
+            z-index: -1;
+            border-radius: 50px;
+        }
 
-/* Footer - Ajustado para ser sticky */
-footer {
-    background-color: #004b6b;
-    color: #fff;
-    padding: 20px 0;
-    text-align: center;
-    width: 100%;
-    border-top: 3px solid #005f87;
-    margin-top: auto; /* Esto empuja el footer hacia abajo en un flex container */
-    flex-shrink: 0; /* Evita que el footer se encoja */
-}
+        .change-btn:hover {
+            color: #333;
+            transform: translateY(-2px) translateY(-50%);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        
+        .change-btn:hover::before {
+            width: 100%;
+        }
 
-footer p {
-    margin: 0;
-    font-size: 1rem;
-}
+        /* Botón de Actualizar - ESTILO CONSISTENTE CON LA PÁGINA DE BIENVENIDA (btn-main) */
+        .profile-container button[type="submit"] {
+            background-color: #ffcc00;
+            color: #333;
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            border: none;
+            transition: all 0.4s ease;
+            display: block;
+            margin: 30px auto 0;
+            font-weight: 600;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            text-decoration: none;
+        }
 
-footer a {
-    color: #ffcc00;
-    text-decoration: none;
-    transition: all 0.3s ease;
-    font-weight: 500;
-}
+        .profile-container button[type="submit"]::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background-color: #ffb700;
+            transition: width 0.4s ease;
+            z-index: -1;
+            border-radius: 50px;
+        }
 
-footer a:hover {
-    color: #ffb700;
-    text-decoration: underline;
-}
+        .profile-container button[type="submit"]:hover {
+            color: #333;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 204, 0, 0.4);
+        }
 
-.social-links {
-    margin: 20px 0;
-}
+        .profile-container button[type="submit"]:hover::before {
+            width: 100%;
+        }
 
-.social-links a {
-    display: inline-block;
-    margin: 0 10px;
-    font-size: 1.5rem;
-    color: #ffffff;
-    transition: all 0.3s ease;
-}
+        /* Mensajes de éxito/error (mantienen el estilo) */
+        .alert-custom {
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid transparent;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+        }
 
-.social-links a:hover {
-    color: #ffcc00;
-    transform: translateY(-3px);
-}
+        .alert-success-custom {
+            color: #155724;
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+        }
 
-/* Media Queries */
-@media (max-width: 992px) {
-    /* Reglas si es necesario */
-}
+        .alert-danger-custom {
+            color: #721c24;
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+        }
+        .alert-warning-custom {
+            color: #856404;
+            background-color: #fff3cd;
+            border-color: #ffeeba;
+        }
 
-@media (max-width: 768px) {
-    .header {
-        flex-direction: column;
-        padding: 15px 0;
-         gap: 10px; /* Espacio al apilar elementos del header */
-    }
+        /* Estilos para errores de validación individuales */
+        .text-danger-custom {
+            color: #f8d7da;
+            background-color: #721c24;
+            padding: 5px 10px;
+            border-radius: 5px;
+            margin-top: 5px;
+            display: block;
+            font-size: 0.9rem;
+        }
 
-    .header h1 {
-        margin-bottom: 15px;
-        font-size: 1.8rem;
-    }
+        .password-section {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
 
-     .header-right {
-        flex-direction: column; /* Apila nav-links y profile-button */
-        gap: 10px; /* Espacio entre elementos apilados */
-        width: 100%; /* Ocupa todo el ancho */
-        align-items: center; /* Centra los elementos apilados */
-    }
+        /* FOOTER CONSISTENTE CON LA PÁGINA DE BIENVENIDA */
+        footer {
+            background-color: #004b6b;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+            position: relative;
+            width: 100%;
+            margin-top: auto;
+            flex-shrink: 0;
+            z-index: 999;
+        }
+        
+        footer p {
+            margin: 0;
+            font-size: 0.9rem;
+        }
 
-    .nav-links {
-        gap: 15px;
-        flex-wrap: wrap;
-        justify-content: center;
-    }
+        footer a {
+            color: #ffcc00;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
 
-    .nav-links a {
-        padding: 6px 12px;
-        font-size: 1rem;
-    }
+        footer a:hover {
+            color: #ffb700;
+            text-decoration: underline;
+        }
 
-    .profile-button {
-        margin-top: 5px; /* Espacio adicional si está apilado */
-    }
+        /* MEDIA QUERIES */
+        @media (min-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            .header-buttons a {
+                font-size: 1rem;
+                padding: 10px 25px;
+            }
+            .menu-icon { /* Asegura que el icono de menú esté oculto en desktop */
+                display: none;
+            }
+            .header-buttons { /* Asegura que los botones estén visibles en desktop */
+                display: flex;
+            }
+        }
 
-    .profile-container {
-        padding: 30px; /* Ajusta el padding en pantallas pequeñas */
-        margin: 50px auto; /* Ajusta el margen */
-        max-width: 95%; /* Permite que ocupe más ancho en pantallas pequeñas */
-    }
+        @media (max-width: 767.98px) { /* Bootstrap's 'md' breakpoint y hacia abajo */
+            body {
+                padding-top: 70px; /* Altura del header estándar en móvil (no se apila el header entero) */
+            }
+            .header {
+                flex-direction: row; /* Título a la izquierda, hamburguesa a la derecha */
+                justify-content: space-between;
+                padding: 15px; /* Padding estándar */
+            }
+            
+            .header h1 {
+                margin-bottom: 0; /* No hay margen inferior si están en fila */
+                text-align: left; /* Alinea a la izquierda */
+                font-size: 1.6rem;
+            }
+            
+            .header-buttons { /* Oculta los botones en móvil para que aparezca la hamburguesa */
+                display: none;
+            }
+            .menu-icon { /* Muestra el icono de menú en móvil */
+                display: flex;
+            }
 
-     .profile-container h2 {
-        font-size: 1.8rem;
-    }
+            .profile-container {
+                padding: 30px;
+                margin: 30px auto;
+                max-width: 95%;
+            }
 
-    .profile-container input[type="text"],
-    .profile-container input[type="email"],
-    .profile-container input[type="password"] {
-        padding: 10px; /* Ajusta el padding de inputs */
-        margin-bottom: 15px; /* Ajusta el margen */
-    }
+            .profile-container h2 {
+                font-size: 1.8rem;
+            }
 
-    .profile-container button[type="submit"] {
-        padding: 12px 30px;
-        font-size: 1rem;
-    }
+            .profile-container input[type="text"],
+            .profile-container input[type="email"],
+            .profile-container input[type="password"] {
+                padding: 10px;
+                margin-bottom: 15px;
+                padding-right: 100px;
+            }
 
-    .change-btn {
-        top: 28px;
-        height: 42px;
-        width: 90px;
-        font-size: 0.9rem;
-    }
-}
+            .change-btn {
+                height: 38px;
+                width: 80px;
+                font-size: 0.8rem;
+                padding: 6px 10px;
+            }
 
-@media (max-width: 576px) {
-     .header-right {
-         gap: 5px; /* Reduce el espacio si se apilan mucho */
-     }
-     .nav-links {
-         gap: 10px; /* Reduce el espacio entre links */
-     }
-    .profile-container {
-        padding: 20px; /* Ajusta el padding */
-    }
+            .profile-container button[type="submit"] {
+                padding: 10px 25px;
+                font-size: 1rem;
+            }
 
-     .profile-container h2 {
-        font-size: 1.5rem;
-    }
+            .alert-custom, .text-danger-custom {
+                font-size: 0.9rem;
+            }
+        }
 
-    .profile-container input[type="text"],
-    .profile-container input[type="email"],
-    .profile-container input[type="password"] {
-        padding: 10px;
-        margin-bottom: 10px;
-    }
-
-     .profile-container button[type="submit"] {
-         padding: 10px 25px;
-         font-size: 0.9rem;
-     }
-
-      .profile-button {
-         width: 35px; /* Un poco más pequeño en pantallas muy pequeñas */
-         height: 35px;
-         font-size: 1rem;
-     }
-     
-     .change-btn {
-        top: 26px;
-        height: 38px;
-        width: 80px;
-        font-size: 0.8rem;
-    }
-}
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.4rem;
+            }
+            .menu-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 20px;
+            }
+            .profile-container {
+                padding: 20px;
+                margin: 20px auto;
+            }
+            .profile-container h2 {
+                font-size: 1.6rem;
+            }
+            .profile-container input[type="text"],
+            .profile-container input[type="email"],
+            .profile-container input[type="password"] {
+                padding: 8px;
+                font-size: 0.9rem;
+                padding-right: 90px;
+            }
+            .change-btn {
+                height: 34px;
+                width: 70px;
+                font-size: 0.75rem;
+                padding: 5px 8px;
+            }
+            .profile-container button[type="submit"] {
+                padding: 8px 20px;
+                font-size: 0.9rem;
+            }
+            .alert-custom, .text-danger-custom {
+                font-size: 0.85rem;
+                padding: 10px;
+            }
+            footer p {
+                font-size: 0.8rem;
+            }
+        }
     </style>
 </head>
 <body>
 <script src="https://kit.fontawesome.com/releases/v6.5.1/js/all.js" crossorigin="anonymous"></script>
 
 <div class="header">
-    <h1><a href="<?= site_url('/') ?>" style="text-decoration: none; color: inherit;">E-Skate</a></h1>
-    <div class="header-right">
-        <div class="nav-links">
-                <a href="<?= site_url('/') ?>">Inicio</a> <a href="<?= site_url('list-skates') ?>">Mis Skates</a>
-                <a href="<?= site_url('logout') ?>">Salir</a>
-        </div>
+    <h1><a href="<?= site_url('/') ?>">E-Skate</a></h1>
+    <div class="header-buttons">
+        <a href="javascript:history.back()">Volver atrás</a>
+        <a href="<?= site_url('list-skates') ?>">Mis Skates</a>
+        <a href="<?= site_url('profile') ?>">Perfil</a>
+        <a href="<?= site_url('logout') ?>">Cerrar sesión</a>
+    </div>
+    <div class="menu-icon" id="menuIcon">
+        <i class="material-icons">menu</i>
     </div>
 </div>
+
+<nav class="mobile-nav-overlay" id="mobileNavOverlay">
+    <div class="top-links">
+        <ul class="mobile-nav-list">
+            <li><a href="<?= site_url('/') ?>"><i class="material-icons">home</i> Inicio</a></li>
+            <li><a href="<?= site_url('list-skates') ?>"><i class="material-icons">directions_bike</i> Mis Skates</a></li>
+            <li><a href="<?= site_url('profile') ?>"><i class="material-icons">person</i> Perfil</a></li>     
+            <li><a href="javascript:history.back()"><i class="material-icons">arrow_back</i> Volver atrás</a></li>
+        </ul>
+    </div>
+    <div class="bottom-links">
+        <ul class="mobile-nav-list">
+            <li><a href="<?= site_url('logout') ?>"><i class="material-icons">exit_to_app</i> Cerrar sesión</a></li>
+        </ul>
+    </div>
+</nav>
 
 <div class="main-content-wrapper">
     <div class="container">
@@ -560,12 +687,14 @@ footer a:hover {
             </form>
         </div>
     </div>
-</div> <footer>
-    <div class="container">
-        <p>&copy; <?= date('Y') ?> E-Skate. Todos los derechos reservados.</p>
-        <p><a href="#">Política de Privacidad</a> | <a href="#">Términos de Servicio</a></p>
-    </div>
+</div>
+<footer>
+    <p>&copy; <?= date('Y') ?> E-skate - Diseñado para la acción - <a href="mailto:eskatevz@gmail.com">Contáctanos</a></p>
 </footer>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 <script>
     function enableField(fieldId) {
@@ -576,6 +705,58 @@ footer a:hover {
 </script>
 
 <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const menuIcon = document.getElementById('menuIcon');
+        const mobileNavOverlay = document.getElementById('mobileNavOverlay');
+        const mainHeader = document.querySelector('.header'); // Selecciona el header
+        const navItems = mobileNavOverlay.querySelectorAll('.mobile-nav-list a');
+
+        // Función para ajustar la posición y altura del overlay
+        function adjustOverlayPosition() {
+            if (mainHeader && mobileNavOverlay) {
+                const headerHeight = mainHeader.offsetHeight;
+                mobileNavOverlay.style.top = `${headerHeight}px`;
+                mobileNavOverlay.style.height = `calc(100vh - ${headerHeight}px)`;
+            }
+        }
+
+        // Ejecutar al cargar y al redimensionar la ventana
+        adjustOverlayPosition();
+        window.addEventListener('resize', adjustOverlayPosition);
+
+        if (menuIcon && mobileNavOverlay) {
+            menuIcon.addEventListener('click', () => {
+                const isOpen = mobileNavOverlay.classList.toggle('is-open');
+                document.body.classList.toggle('menu-active');
+                menuIcon.querySelector('i').textContent = isOpen ? 'close' : 'menu';
+            });
+
+            // Cerrar menú al hacer clic en un enlace del menú
+            navItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    mobileNavOverlay.classList.remove('is-open');
+                    document.body.classList.remove('menu-active');
+                    menuIcon.querySelector('i').textContent = 'menu';
+                });
+            });
+
+            // Cerrar menú al hacer clic fuera del menú
+            document.body.addEventListener('click', (event) => {
+                if (mobileNavOverlay.classList.contains('is-open') &&
+                    !mobileNavOverlay.contains(event.target) &&
+                    !menuIcon.contains(event.target)) {
+
+                    mobileNavOverlay.classList.remove('is-open');
+                    document.body.classList.remove('menu-active');
+                    menuIcon.querySelector('i').textContent = 'menu';
+                }
+            });
+        }
+    });
+</script>
+
+<script>
+    // Script para manejar el scroll suave a secciones, si lo necesitas en el futuro.
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
@@ -583,39 +764,15 @@ footer a:hover {
             const targetId = this.getAttribute('href');
             const targetElement = document.querySelector(targetId);
 
-            if (targetElement) { // Verifica si el elemento existe
+            if (targetElement) {
                  targetElement.scrollIntoView({
                     behavior: 'smooth'
                 });
             } else {
-                // Si el enlace es a una sección de otra página (como en el header)
-                // Redirige y luego intenta hacer scroll (puede requerir lógica adicional al cargar la página)
-                // Nota: Esta lógica puede no ser perfecta para todas las situaciones.
                 window.location.href = '<?= site_url('/') ?>' + targetId;
             }
         });
     });
-</script>
-<script>
-  let installEvent;
-  let installPopup;
-
-  window.addEventListener('beforeinstallprompt', (event) => {
-    event.preventDefault();
-    installEvent = event;
-    // document.getElementById('installButton').style.display = 'inline-block'; // Este botón no está en esta vista, se puede quitar o adaptar
-  });
-
-  window.addEventListener("message", (event) => {
-    if (event.data === "cerrarPestana") {
-      if (installPopup) {
-        installPopup.close();
-      }
-    }
-  });
-
-  // Los listeners y timeout relacionados con el botón de instalación PWA se pueden quitar
-  // si no hay botón de instalación en esta página.
 </script>
 </body>
 </html>
