@@ -5,25 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mi Perfil - E-Skate</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Quicksand:wght@500;700&family=Baskervville&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style>
-       @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Permanent+Marker&display=swap');
-       @import url('https://fonts.googleapis.com/css2?family=Baskervville+SC&display=swap');
-
-        /* Ajuste para el área segura en dispositivos móviles */
+        /* Ajuste para el área segura en dispositivos móviles y estilos generales */
         body {
             background-color: #00719c;
+            background-image: url('https://www.transparenttextures.com/patterns/asfalt-dark.png');
             color: #ffffff;
             font-family: 'Montserrat', sans-serif;
-            background-image: url('https://www.transparenttextures.com/patterns/asfalt-dark.png'); /* Se eliminó la imagen de skate, ya que no estaba definida y se duplicaba con el pattern */
-            background-size: auto; /* Ajuste para la textura */
+            background-size: auto;
             background-position: center;
             display: flex;
             flex-direction: column;
             min-height: 100vh;
             margin: 0;
-            padding-top: env(safe-area-inset-top);
+            /* padding-top ajustado por el header, env(safe-area-inset-top) será manejado por el header */
             scroll-padding-top: env(safe-area-inset-top);
+            box-sizing: border-box; /* Asegura que padding no añada ancho/alto inesperado */
         }
 
         .header {
@@ -33,12 +32,13 @@
             justify-content: space-between;
             align-items: center;
             border-bottom: 3px solid #004b6b;
-            position: sticky;
+            position: sticky; /* Sticky para que se quede arriba en la PWA */
             top: 0;
             left: 0;
             right: 0;
             z-index: 1001;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            /* padding-top dinámico para manejar el notch */
             padding-top: calc(15px + env(safe-area-inset-top));
             box-sizing: border-box;
         }
@@ -46,21 +46,22 @@
         .header h1 {
             color: #ffffff;
             margin: 0;
-            font-size: 1.5rem;
-            font-family: "Baskervville SC", static;
+            font-size: 1.8rem; /* Tamaño consistente con la otra versión */
+            font-family: "Quicksand", sans-serif; /* Consistente con la otra versión */
             font-weight: bold;
             letter-spacing: 1px;
-            text-align: left; /* Asegura que el título siempre esté a la izquierda */
-            flex-grow: 1; /* Permite que el título ocupe el espacio disponible */
+            text-align: left;
+            flex-grow: 1;
         }
 
-        @media (max-width: 767.98px) {
-            .header {
-                padding-bottom: 15px; /* Restablece el padding, el padding-top ya incluye el notch */
-            }
-            .header h1 {
-                font-size: 1.3rem; /* Ligeramente más pequeño en móviles */
-            }
+        .header h1 a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* Ocultar botones de navegación normales en la PWA ya que usamos el menú hamburguesa */
+        .header-buttons {
+            display: none;
         }
 
         /* Estilos específicos para el Perfil */
@@ -69,11 +70,16 @@
             padding: 40px;
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            margin: 80px auto;
+            /* Ajustar margin-top para que no choque con el header fijo */
+            margin: 40px auto; /* Usar 40px para desktops y ajustar en media query */
             max-width: 700px;
             position: relative;
             overflow: hidden;
-            box-sizing: border-box; /* Asegura que el padding no añada ancho/alto total inesperado */
+            box-sizing: border-box;
+            flex-grow: 1; /* Permite que el contenedor crezca y empuje el footer */
+            display: flex; /* Para centrar el contenido si es más pequeño */
+            flex-direction: column;
+            justify-content: center; /* Centrar verticalmente */
         }
 
         .profile-container::before {
@@ -92,6 +98,7 @@
             font-size: 2.2rem;
             text-align: center;
             position: relative;
+            font-family: 'Baskervville', serif; /* Consistente con la otra versión */
         }
 
         .profile-container h2::after {
@@ -106,15 +113,21 @@
         }
 
         .profile-container .form-group {
+            display: flex; /* Usar flexbox para alinear */
+            align-items: center; /* Alinear verticalmente los elementos */
+            position: relative; /* Mantener para el posicionamiento absoluto del botón en móviles si es necesario */
             margin-bottom: 20px;
-            position: relative;
         }
 
         .profile-container .form-group label {
             color: #ffffff;
             font-weight: bold;
-            margin-bottom: 5px;
+            margin-bottom: 0; /* Eliminar el margen inferior para flexbox */
             display: block;
+            flex-basis: 25%; /* Ancho de la etiqueta */
+            text-align: left;
+            margin-right: 10px; /* Espacio entre etiqueta e input */
+            min-width: 90px; /* Asegura un ancho mínimo para la etiqueta */
         }
 
         .profile-container input[type="text"],
@@ -122,16 +135,16 @@
         .profile-container input[type="password"] {
             width: 100%;
             padding: 12px;
-            margin-bottom: 5px;
+            margin-bottom: 0; /* Eliminar el margen inferior para flexbox */
             border-radius: 8px;
             border: 2px solid #004b6b;
             background-color: rgba(255, 255, 255, 0.9);
             transition: all 0.3s ease;
             font-size: 1rem;
             color: #333;
-            /* Ajustado para el botón cambiar en móviles */
-            padding-right: 120px; /* Suficiente espacio para el botón Cambiar */
-            box-sizing: border-box; /* Crucial para que el padding no cause desbordamiento */
+            box-sizing: border-box;
+            flex-grow: 1; /* Permitir que el input ocupe el espacio restante */
+            padding-right: 10px; /* Reducir el padding derecho ya que el botón está fuera del input */
         }
 
         .profile-container input[type="text"]:disabled,
@@ -155,35 +168,61 @@
             box-shadow: 0 0 0 3px rgba(255, 204, 0, 0.3);
         }
 
-        /* Botón de Cambiar */
-        .change-btn {
-            position: absolute;
-            right: 0;
-            top: 50%; /* Posición relativa al input */
-            transform: translateY(-50%); /* Centrar verticalmente */
+        /* Botón de Cambiar - Ajustado para Flexbox */
+        .profile-container .form-group .change-btn {
+            position: relative; /* Cambiado a relative para el efecto hover, y static para el flexbox */
+            transform: none; /* Eliminar la transformación de centrado vertical */
+            margin-left: 10px; /* Espacio entre el input y el botón */
             background-color: #ffcc00;
             color: #333;
             border: none;
-            padding: 10px 15px;
-            border-radius: 0 8px 8px 0;
+            padding: 8px 15px;
+            border-radius: 50px; /* Bordes redondeados consistentes */
             cursor: pointer;
             font-weight: 600;
             transition: all 0.3s ease;
-            height: 100%; /* Ocupa toda la altura del input */
-            width: 110px; /* Ancho un poco más pequeño para dar espacio */
-            box-sizing: border-box;
-            line-height: 1; /* Asegura el centrado vertical del texto */
+            height: auto;
+            min-width: 90px; /* Añadido un ancho mínimo */
+            max-width: 120px; /* Añadido un ancho máximo para controlar la expansión */
+            font-size: 0.85rem;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            overflow: hidden; /* Muy importante para el efecto ::before */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0; /* Evita que el botón se encoja */
+        }
+
+        .change-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background-color: #ffb700;
+            transition: width 0.3s ease;
+            z-index: -1;
+            border-radius: 50px;
         }
 
         .change-btn:hover {
-            background-color: #ffb700;
+            color: #333;
+            transform: translateY(-2px); /* Mover hacia arriba sutilmente */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         }
+
+        .change-btn:hover::before {
+            width: 100%;
+        }
+
 
         /* Botón de Actualizar */
         .profile-container button[type="submit"] {
             background-color: #ffcc00;
             color: #333;
-            padding: 15px 40px;
+            padding: 12px 30px;
             font-size: 1.1rem;
             border-radius: 50px;
             border: none;
@@ -195,6 +234,7 @@
             position: relative;
             overflow: hidden;
             z-index: 1;
+            text-decoration: none;
         }
 
         .profile-container button[type="submit"]::before {
@@ -228,7 +268,7 @@
             border-radius: 8px;
             text-align: center;
             font-weight: bold;
-            font-size: 0.95rem; /* Ajuste de tamaño para móviles */
+            font-size: 0.95rem;
         }
 
         .alert-success-custom {
@@ -256,7 +296,11 @@
             border-radius: 5px;
             margin-top: 5px;
             display: block;
-            font-size: 0.85rem; /* Ligeramente más pequeño */
+            font-size: 0.9rem; /* Consistente con la otra versión */
+            width: 100%; /* Asegura que ocupe el ancho completo debajo del campo */
+            /* En flexbox, esto debería estar fuera del .form-group o en una nueva línea */
+            flex-basis: 100%; /* Ocupa toda la línea en un contexto flex */
+            order: 4; /* Lo coloca al final de los elementos flex */
         }
 
         .password-section {
@@ -273,13 +317,13 @@
             text-align: center;
             width: 100%;
             border-top: 3px solid #005f87;
-            margin-top: auto;
+            margin-top: auto; /* Empuja el footer hacia abajo */
             flex-shrink: 0;
         }
 
         footer p {
             margin: 0;
-            font-size: 0.9rem; /* Un poco más pequeño en el footer */
+            font-size: 0.9rem;
         }
 
         footer a {
@@ -292,23 +336,6 @@
         footer a:hover {
             color: #ffb700;
             text-decoration: underline;
-        }
-
-        .social-links {
-            margin: 20px 0;
-        }
-
-        .social-links a {
-            display: inline-block;
-            margin: 0 10px;
-            font-size: 1.5rem;
-            color: #ffffff;
-            transition: all 0.3s ease;
-        }
-
-        .social-links a:hover {
-            color: #ffcc00;
-            transform: translateY(-3px);
         }
 
         /* ESTILOS DEL MENÚ HAMBURGUESA PERSONALIZADO */
@@ -324,8 +351,9 @@
             cursor: pointer;
             transition: background-color 0.3s, transform 0.3s;
             z-index: 1002;
+            /* Posicionamiento fijo para que siempre esté visible en la PWA */
             position: fixed;
-            top: calc(15px + env(safe-area-inset-top));
+            top: calc(15px + env(safe-area-inset-top)); /* Ajusta para el notch */
             right: 15px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
@@ -341,10 +369,10 @@
 
         .mobile-nav-overlay {
             position: fixed;
-            top: 0;
+            top: 0; /* Se ajusta con JS */
             right: -100vw;
             width: min(75vw, 300px);
-            height: 100vh;
+            height: 100vh; /* Se ajusta con JS */
             background-color: #005f87;
             box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
             transition: right 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -408,80 +436,97 @@
             overflow: hidden;
         }
 
-        /* Nuevas Media Queries para asegurar la responsividad en pantallas muy pequeñas */
-        @media (max-width: 420px) {
+        /* Media Queries para responsividad */
+        @media (min-width: 768px) {
             .header h1 {
-                font-size: 1.2rem; /* Título aún más pequeño para evitar desbordamiento */
+                font-size: 2rem;
             }
-
+            /* En pantallas grandes, el menú hamburguesa no es necesario si tienes botones de navegación normales */
+            /* Sin embargo, la consigna es NO CAMBIAR el botón hamburguesa, así que se mantendrá visible */
             .menu-icon {
-                width: 40px;
-                height: 40px;
+                display: flex; /* Aseguramos que siempre sea visible si no hay otros botones de navegación */
             }
-
-            .menu-icon i {
-                font-size: 24px;
-            }
-
             .profile-container {
-                padding: 15px; /* Reducir aún más el padding */
-                margin: 40px auto; /* Reducir margen */
+                margin: 80px auto; /* Mantener margen para desktop */
+            }
+        }
+
+        @media (max-width: 767.98px) {
+            .header {
+                padding-bottom: 15px;
+            }
+            .header h1 {
+                font-size: 1.6rem;
+            }
+            .profile-container {
+                padding: 30px;
+                margin: 30px auto;
+                max-width: 95%;
             }
 
             .profile-container h2 {
                 font-size: 1.8rem;
-                margin-bottom: 20px;
             }
 
             .profile-container .form-group {
-                margin-bottom: 15px;
+                flex-direction: column; /* Apila los elementos en móvil */
+                align-items: flex-start; /* Alinea al inicio de la columna */
+            }
+
+            .profile-container .form-group label {
+                width: 100%; /* Ocupa todo el ancho en móvil */
+                margin-bottom: 5px; /* Espacio debajo de la etiqueta */
+                margin-right: 0; /* Eliminar margen derecho */
+                text-align: left;
             }
 
             .profile-container input[type="text"],
             .profile-container input[type="email"],
             .profile-container input[type="password"] {
+                width: 100%; /* Ocupa todo el ancho disponible */
                 padding: 10px;
-                font-size: 0.9rem;
-                padding-right: 90px; /* Reducir espacio para el botón Cambiar */
+                margin-bottom: 15px; /* Espacio debajo del input */
+                padding-right: 90px; /* Dejar espacio para el botón Cambiar */
             }
 
-            .change-btn {
-                width: 80px; /* Ancho más pequeño para el botón */
-                padding: 8px 10px;
-                font-size: 0.75rem;
+            /* Botón "Cambiar" en móvil - Vuelve a posicionamiento absoluto */
+            .profile-container .form-group .change-btn {
+                position: absolute;
+                right: 10px; /* 10px desde el borde derecho del .form-group */
+                top: calc(50% + 15px); /* Ajusta para que quede centrado con el input y debajo de la label */
+                transform: translateY(-50%); /* Ajuste fino para centrar verticalmente */
+                margin-left: 0; /* Eliminar margen izquierdo */
+                font-size: 0.8rem;
+                padding: 6px 10px;
+                height: auto;
+                width: auto;
+                min-width: unset; /* Eliminar min-width específico para móvil si no es necesario */
+                max-width: unset; /* Eliminar max-width específico para móvil si no es necesario */
+                border-radius: 50px; /* Asegura los bordes redondeados en móvil también */
             }
 
             .profile-container button[type="submit"] {
                 padding: 10px 25px;
+                font-size: 1rem;
+            }
+
+            .alert-custom, .text-danger-custom {
                 font-size: 0.9rem;
-            }
-
-            .alert-custom {
-                font-size: 0.85rem;
-                padding: 10px;
-            }
-
-            .text-danger-custom {
-                font-size: 0.75rem;
-                padding: 3px 8px;
             }
         }
 
-        @media (max-width: 320px) {
+        @media (max-width: 480px) {
             .header h1 {
-                font-size: 1.1rem;
+                font-size: 1.4rem;
             }
             .menu-icon {
-                width: 36px;
-                height: 36px;
-                right: 10px; /* Ajustar posición */
-            }
-            .menu-icon i {
+                width: 40px;
+                height: 40px;
                 font-size: 20px;
             }
             .profile-container {
-                padding: 10px;
-                margin: 30px auto;
+                padding: 20px;
+                margin: 20px auto;
             }
             .profile-container h2 {
                 font-size: 1.6rem;
@@ -490,26 +535,74 @@
             .profile-container input[type="email"],
             .profile-container input[type="password"] {
                 padding: 8px;
-                font-size: 0.85rem;
-                padding-right: 75px;
+                font-size: 0.9rem;
+                padding-right: 80px;
             }
-            .change-btn {
-                width: 65px;
-                padding: 6px 8px;
-                font-size: 0.7rem;
+            /* Ajuste para el botón Cambiar en móviles muy pequeños */
+            .profile-container .form-group .change-btn {
+                font-size: 0.75rem;
+                padding: 5px 8px;
             }
             .profile-container button[type="submit"] {
                 padding: 8px 20px;
+                font-size: 0.9rem;
+            }
+            .alert-custom, .text-danger-custom {
+                font-size: 0.85rem;
+                padding: 10px;
+            }
+            footer p {
                 font-size: 0.8rem;
             }
-            .alert-custom {
+        }
+
+        @media (max-width: 320px) {
+            .header h1 {
+                font-size: 1.2rem;
+            }
+            .menu-icon {
+                width: 36px;
+                height: 36px;
+                font-size: 18px;
+                right: 10px;
+                top: calc(10px + env(safe-area-inset-top)); /* Ajuste fino */
+            }
+            .profile-container {
+                padding: 15px;
+                margin: 15px auto;
+            }
+            .profile-container h2 {
+                font-size: 1.4rem;
+            }
+            .profile-container input[type="text"],
+            .profile-container input[type="email"],
+            .profile-container input[type="password"] {
+                padding: 6px;
                 font-size: 0.8rem;
+                padding-right: 70px;
+            }
+            .profile-container .form-group label {
+                font-size: 0.9rem;
+            }
+            .profile-container .form-group .change-btn {
+                font-size: 0.65rem;
+                padding: 4px 6px;
+                min-width: unset;
+                max-width: unset;
+            }
+            .profile-container button[type="submit"] {
+                padding: 6px 15px;
+                font-size: 0.8rem;
+            }
+            .alert-custom, .text-danger-custom {
+                font-size: 0.75rem;
+                padding: 8px;
             }
             .text-danger-custom {
                 font-size: 0.7rem;
             }
             footer p {
-                font-size: 0.8rem;
+                font-size: 0.75rem;
             }
         }
     </style>
@@ -518,7 +611,7 @@
 <script src="https://kit.fontawesome.com/releases/v6.5.1/js/all.js" crossorigin="anonymous"></script>
 
 <div class="header" id="mainHeader">
-    <h1>Mi Perfil</h1>
+    <h1><a href="<?= site_url('/') ?>">E-Skate</a></h1>
     <div class="menu-icon" id="menuIcon">
         <i class="material-icons">menu</i>
     </div>
@@ -528,7 +621,7 @@
     <div class="top-links">
         <ul class="mobile-nav-list">
             <li><a href="<?= site_url('/') ?>"><i class="material-icons">home</i> Inicio</a></li>
-            <li><a href="<?= site_url('profile') ?>"><i class="material-icons">person</i> Perfil</a></li>
+            <li><a href="<?= site_url('list-skates') ?>"><i class="material-icons">directions_bike</i> Mis Skates</a></li> <li><a href="<?= site_url('profile') ?>"><i class="material-icons">person</i> Perfil</a></li>
             <li><a href="javascript:history.back()"><i class="material-icons">arrow_back</i> Volver atrás</a></li>
         </ul>
     </div>
@@ -560,7 +653,6 @@
                 </div>
             <?php endif; ?>
 
-
             <form action="<?= site_url('update-profile') ?>" method="post">
                 <?= csrf_field() ?>
 
@@ -568,7 +660,7 @@
                     <label for="username">Nombre de Usuario:</label>
                     <input type="text" id="username" name="username" value="<?= old('username', $user['username'] ?? '') ?>" disabled required>
                     <button type="button" class="change-btn" onclick="enableField('username')">Cambiar</button>
-                     <?php if (session()->getFlashdata('errors') && isset(session()->getFlashdata('errors')['username'])): ?>
+                    <?php if (session()->getFlashdata('errors') && isset(session()->getFlashdata('errors')['username'])): ?>
                         <div class="text-danger-custom">
                             <?= session()->getFlashdata('errors')['username'] ?>
                         </div>
@@ -577,9 +669,9 @@
 
                 <div class="form-group">
                     <label for="email">Correo Electrónico:</label>
-                     <input type="email" id="email" name="email" value="<?= old('email', $user['email'] ?? '') ?>" disabled required>
-                     <button type="button" class="change-btn" onclick="enableField('email')">Cambiar</button>
-                     <?php if (session()->getFlashdata('errors') && isset(session()->getFlashdata('errors')['email'])): ?>
+                    <input type="email" id="email" name="email" value="<?= old('email', $user['email'] ?? '') ?>" disabled required>
+                    <button type="button" class="change-btn" onclick="enableField('email')">Cambiar</button>
+                    <?php if (session()->getFlashdata('errors') && isset(session()->getFlashdata('errors')['email'])): ?>
                         <div class="text-danger-custom">
                             <?= session()->getFlashdata('errors')['email'] ?>
                         </div>
@@ -593,7 +685,7 @@
                      <div class="form-group">
                         <label for="current_password">Contraseña Actual:</label>
                         <input type="password" id="current_password" name="current_password" placeholder="Ingresa tu contraseña actual">
-                         <?php if (session()->getFlashdata('errors') && isset(session()->getFlashdata('errors')['current_password'])): ?>
+                        <?php if (session()->getFlashdata('errors') && isset(session()->getFlashdata('errors')['current_password'])): ?>
                             <div class="text-danger-custom">
                                 <?= session()->getFlashdata('errors')['current_password'] ?>
                             </div>
@@ -601,11 +693,9 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="password">Nueva Contraseña:</label>
-                        <input type="password" id="new_password" name="new_password" placeholder="Ingresa tu nueva contraseña">
-                         <?php if (session()->getFlashdata('errors') && isset(session()->getFlashdata('errors')['password'])): ?>
-                            <div class="text-danger-custom">
-                                <?= session()->getFlashdata('errors')['password'] ?>
+                        <label for="new_password">Nueva Contraseña:</label> <input type="password" id="new_password" name="new_password" placeholder="Ingresa tu nueva contraseña">
+                        <?php if (session()->getFlashdata('errors') && isset(session()->getFlashdata('errors')['new_password'])): ?> <div class="text-danger-custom">
+                                <?= session()->getFlashdata('errors')['new_password'] ?>
                             </div>
                         <?php endif; ?>
                     </div>
@@ -669,6 +759,7 @@
             });
 
             document.body.addEventListener('click', (event) => {
+                // Si el overlay está abierto y el clic no fue dentro del overlay ni en el ícono del menú
                 if (mobileNavOverlay.classList.contains('is-open') &&
                     !mobileNavOverlay.contains(event.target) &&
                     !menuIcon.contains(event.target)) {
