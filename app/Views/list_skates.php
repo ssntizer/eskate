@@ -479,11 +479,6 @@
                 <a href="<?= site_url('login') ?>">Ingresar</a>
             <?php endif; ?>
         </div>
-
-        <?php if(session()->get('logged_in')): ?>
-            <a href="<?= site_url('profile') ?>" class="profile-button" aria-label="Mi Perfil">
-                <i class="fas fa-user"></i> </a>
-        <?php endif; ?>
     </div>
 </div>
 
