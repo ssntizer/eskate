@@ -292,6 +292,7 @@
     <h1>Bienvenido, <?= session()->get('username') ?>!</h1>
     <div class="header-buttons">
         <a href="javascript:history.back()">Volver atrás</a>
+         <a href="<?= site_url('profile') ?>">Perfil</a>
         <a href="<?= site_url('logout') ?>">Cerrar sesión</a>
     </div>
 </div>

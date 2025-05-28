@@ -473,6 +473,7 @@
         <div class="header-buttons">
             <?php if(session()->get('logged_in')): ?>
                 <a href="<?= site_url('/') ?>">Inicio</a>
+                <a href="<?= site_url('profile') ?>">Perfil</a>
                 <a href="<?= site_url('logout') ?>">Cerrar sesión</a>
             <?php else: ?>
                 <a href="<?= site_url('login') ?>">Ingresar</a>

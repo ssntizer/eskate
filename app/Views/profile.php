@@ -481,10 +481,6 @@ footer a:hover {
                 <a href="<?= site_url('/') ?>">Inicio</a> <a href="<?= site_url('list-skates') ?>">Mis Skates</a>
                 <a href="<?= site_url('logout') ?>">Salir</a>
         </div>
-        <?php if(session()->get('logged_in')): ?>
-            <a href="<?= site_url('profile') ?>" class="profile-button" aria-label="Mi Perfil">
-                <i class="fas fa-user"></i> </a>
-        <?php endif; ?>
     </div>
 </div>
 
