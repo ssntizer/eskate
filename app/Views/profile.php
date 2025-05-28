@@ -23,7 +23,6 @@
             box-sizing: border-box;
         }
 
-        /* HEADER CONSISTENTE CON LA PÁGINA DE BIENVENIDA */
         .header {
             background-color: #005f87;
             padding: 15px;
@@ -31,11 +30,11 @@
             justify-content: space-between;
             align-items: center;
             border-bottom: 3px solid #004b6b;
-            position: fixed; /* Fija el header en la parte superior */
+            position: fixed;
             width: 100%;
             top: 0;
             left: 0;
-            z-index: 1000; /* Asegura que esté siempre sobre el contenido */
+            z-index: 1000;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             box-sizing: border-box;
         }
@@ -48,13 +47,12 @@
             font-weight: bold;
             letter-spacing: 1px;
         }
-        
+
         .header h1 a {
             text-decoration: none;
             color: inherit;
         }
 
-        /* Contenedor de botones del header (visibles en desktop) */
         .header-buttons {
             display: flex;
             align-items: center;
@@ -100,21 +98,20 @@
             width: 100%;
         }
 
-        /* MENÚ HAMBURGUESA Y OVERLAY (reincorporado) */
         .menu-icon {
-            background-color: #ffcc00; /* Color amarillo para el icono de hamburguesa */
+            background-color: #ffcc00;
             color: #333;
             border-radius: 50%;
-            width: 45px; /* Ajustado el tamaño */
+            width: 45px;
             height: 45px;
-            display: none; /* Oculto por defecto, visible en móviles */
+            display: none;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             transition: background-color 0.3s, transform 0.3s;
-            z-index: 1001; /* Más alto que el header para que esté encima */
+            z-index: 1001;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            font-size: 24px; /* Tamaño del icono */
+            font-size: 24px;
         }
 
         .menu-icon:hover {
@@ -124,20 +121,20 @@
 
         .mobile-nav-overlay {
             position: fixed;
-            top: 0; /* Se ajusta con JS */
-            right: -100vw; /* Fuera de la vista por defecto */
-            width: min(75vw, 300px); /* Ancho máximo para el overlay */
-            height: 100vh; /* Se ajusta con JS */
+            top: 0;
+            right: -100vw;
+            width: min(75vw, 300px);
+            height: 100vh;
             background-color: #005f87;
             box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
             transition: right 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            z-index: 999; /* Z-index para el overlay */
+            z-index: 999;
             padding: 20px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             color: white;
-            padding-top: 70px; /* Espacio para el header, se ajustará con JS */
+            padding-top: 70px;
         }
 
         .mobile-nav-overlay.is-open {
@@ -188,10 +185,9 @@
         }
 
         body.menu-active {
-            overflow: hidden; /* Evita el scroll del body cuando el menú está abierto */
+            overflow: hidden;
         }
 
-        /* Contenido principal del perfil */
         .main-content-wrapper {
             flex: 1;
             display: flex;
@@ -204,8 +200,8 @@
         .container {
             width: 100%;
             max-width: 700px;
-            padding-left: 15px; /* Asegura padding en los bordes para móviles */
-            padding-right: 15px; /* Asegura padding en los bordes para móviles */
+            padding-left: 15px;
+            padding-right: 15px;
         }
 
         .profile-container {
@@ -250,15 +246,20 @@
         }
 
         .profile-container .form-group {
+            display: flex; /* Usar flexbox para alinear */
+            align-items: center; /* Alinear verticalmente los elementos */
+            position: relative; /* Mantener para el posicionamiento absoluto del botón en móviles si es necesario */
             margin-bottom: 20px;
-            position: relative;
         }
 
         .profile-container .form-group label {
             color: #ffffff;
             font-weight: bold;
-            margin-bottom: 5px;
+            margin-bottom: 0; /* Eliminar el margen inferior para flexbox */
             display: block;
+            flex-basis: 25%; /* Ancho de la etiqueta */
+            text-align: left;
+            margin-right: 10px; /* Espacio entre etiqueta e input */
         }
 
         .profile-container input[type="text"],
@@ -266,15 +267,16 @@
         .profile-container input[type="password"] {
             width: 100%;
             padding: 12px;
-            margin-bottom: 5px;
+            margin-bottom: 0; /* Eliminar el margen inferior para flexbox */
             border-radius: 8px;
             border: 2px solid #004b6b;
             background-color: rgba(255, 255, 255, 0.9);
             transition: all 0.3s ease;
             font-size: 1rem;
             color: #333;
-            padding-right: 120px;
             box-sizing: border-box;
+            flex-grow: 1; /* Permitir que el input ocupe el espacio restante */
+            padding-right: 10px; /* Reducir el padding derecho ya que el botón está fuera del input */
         }
 
         .profile-container input[type="text"]:disabled,
@@ -298,12 +300,11 @@
             box-shadow: 0 0 0 3px rgba(255, 204, 0, 0.3);
         }
 
-        /* Botón de Cambiar - ESTILO CONSISTENTE CON LA PÁGINA DE BIENVENIDA */
-        .change-btn {
-            position: absolute;
-            right: 0;
-            top: 50%;
-            transform: translateY(-50%);
+        /* Botón de Cambiar - Ajustado para Flexbox */
+        .profile-container .form-group .change-btn { /* Selectores más específicos para evitar conflictos */
+            position: static; /* Eliminar posicionamiento absoluto por defecto */
+            transform: none; /* Eliminar la transformación de centrado vertical */
+            margin-left: auto; /* Empujar el botón hacia la derecha del grupo flex */
             background-color: #ffcc00;
             color: #333;
             border: none;
@@ -312,17 +313,17 @@
             cursor: pointer;
             font-weight: 600;
             transition: all 0.3s ease;
-            height: 40px;
-            width: 90px;
+            height: auto; /* Dejar que la altura se ajuste al padding */
+            width: auto; /* Dejar que el ancho se ajuste al padding */
             font-size: 0.85rem;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
             z-index: 1;
             overflow: hidden;
-            display: flex;
+            display: flex; /* Para centrar el texto del botón */
             align-items: center;
             justify-content: center;
         }
-        
+
         .change-btn::before {
             content: '';
             position: absolute;
@@ -337,8 +338,9 @@
         }
 
         .change-btn:hover {
+            background-color: #ffb700;
             color: #333;
-            transform: translateY(-2px) translateY(-50%);
+            transform: translateY(-2px); /* Mover hacia arriba sutilmente */
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         }
         
@@ -346,7 +348,7 @@
             width: 100%;
         }
 
-        /* Botón de Actualizar - ESTILO CONSISTENTE CON LA PÁGINA DE BIENVENIDA (btn-main) */
+        /* Botón de Actualizar */
         .profile-container button[type="submit"] {
             background-color: #ffcc00;
             color: #333;
@@ -424,6 +426,7 @@
             margin-top: 5px;
             display: block;
             font-size: 0.9rem;
+            width: 100%; /* Ocupa todo el ancho */
         }
 
         .password-section {
@@ -432,7 +435,6 @@
             border-top: 1px solid rgba(255, 255, 255, 0.2);
         }
 
-        /* FOOTER CONSISTENTE CON LA PÁGINA DE BIENVENIDA */
         footer {
             background-color: #004b6b;
             color: #fff;
@@ -444,7 +446,7 @@
             flex-shrink: 0;
             z-index: 999;
         }
-        
+
         footer p {
             margin: 0;
             font-size: 0.9rem;
@@ -470,34 +472,34 @@
                 font-size: 1rem;
                 padding: 10px 25px;
             }
-            .menu-icon { /* Asegura que el icono de menú esté oculto en desktop */
+            .menu-icon {
                 display: none;
             }
-            .header-buttons { /* Asegura que los botones estén visibles en desktop */
+            .header-buttons {
                 display: flex;
             }
         }
 
-        @media (max-width: 767.98px) { /* Bootstrap's 'md' breakpoint y hacia abajo */
+        @media (max-width: 767.98px) {
             body {
-                padding-top: 70px; /* Altura del header estándar en móvil (no se apila el header entero) */
+                padding-top: 70px;
             }
             .header {
-                flex-direction: row; /* Título a la izquierda, hamburguesa a la derecha */
+                flex-direction: row;
                 justify-content: space-between;
-                padding: 15px; /* Padding estándar */
+                padding: 15px;
             }
-            
+
             .header h1 {
-                margin-bottom: 0; /* No hay margen inferior si están en fila */
-                text-align: left; /* Alinea a la izquierda */
+                margin-bottom: 0;
+                text-align: left;
                 font-size: 1.6rem;
             }
-            
-            .header-buttons { /* Oculta los botones en móvil para que aparezca la hamburguesa */
+
+            .header-buttons {
                 display: none;
             }
-            .menu-icon { /* Muestra el icono de menú en móvil */
+            .menu-icon {
                 display: flex;
             }
 
@@ -511,20 +513,40 @@
                 font-size: 1.8rem;
             }
 
+            .profile-container .form-group {
+                flex-direction: column; /* Apila los elementos en móvil */
+                align-items: flex-start; /* Alinea al inicio de la columna */
+            }
+
+            .profile-container .form-group label {
+                width: 100%; /* Ocupa todo el ancho en móvil */
+                margin-bottom: 5px; /* Espacio debajo de la etiqueta */
+                margin-right: 0; /* Eliminar margen derecho */
+                text-align: left;
+            }
+
             .profile-container input[type="text"],
             .profile-container input[type="email"],
             .profile-container input[type="password"] {
+                width: 100%; /* Ocupa todo el ancho disponible */
                 padding: 10px;
-                margin-bottom: 15px;
-                padding-right: 100px;
+                margin-bottom: 15px; /* Espacio debajo del input */
+                padding-right: 90px; /* Dejar espacio para el botón Cambiar */
             }
 
-            .change-btn {
-                height: 38px;
-                width: 80px;
+            /* Botón "Cambiar" en móvil - Vuelve a posicionamiento absoluto */
+            .profile-container .form-group .change-btn {
+                position: absolute;
+                right: 10px; /* 10px desde el borde derecho del .form-group */
+                top: calc(50% + 15px); /* Ajusta para que quede centrado con el input y debajo de la label */
+                transform: translateY(-50%); /* Ajuste fino para centrar verticalmente */
+                margin-left: 0; /* Eliminar margen izquierdo */
                 font-size: 0.8rem;
                 padding: 6px 10px;
+                height: auto;
+                width: auto;
             }
+
 
             .profile-container button[type="submit"] {
                 padding: 10px 25px;
@@ -557,11 +579,10 @@
             .profile-container input[type="password"] {
                 padding: 8px;
                 font-size: 0.9rem;
-                padding-right: 90px;
+                padding-right: 80px;
             }
-            .change-btn {
-                height: 34px;
-                width: 70px;
+            /* Ajuste para el botón Cambiar en móviles muy pequeños */
+            .profile-container .form-group .change-btn {
                 font-size: 0.75rem;
                 padding: 5px 8px;
             }
@@ -600,7 +621,7 @@
         <ul class="mobile-nav-list">
             <li><a href="<?= site_url('/') ?>"><i class="material-icons">home</i> Inicio</a></li>
             <li><a href="<?= site_url('list-skates') ?>"><i class="material-icons">directions_bike</i> Mis Skates</a></li>
-            <li><a href="<?= site_url('profile') ?>"><i class="material-icons">person</i> Perfil</a></li>     
+            <li><a href="<?= site_url('profile') ?>"><i class="material-icons">person</i> Perfil</a></li>
             <li><a href="javascript:history.back()"><i class="material-icons">arrow_back</i> Volver atrás</a></li>
         </ul>
     </div>
@@ -708,10 +729,9 @@
     document.addEventListener('DOMContentLoaded', function() {
         const menuIcon = document.getElementById('menuIcon');
         const mobileNavOverlay = document.getElementById('mobileNavOverlay');
-        const mainHeader = document.querySelector('.header'); // Selecciona el header
+        const mainHeader = document.querySelector('.header');
         const navItems = mobileNavOverlay.querySelectorAll('.mobile-nav-list a');
 
-        // Función para ajustar la posición y altura del overlay
         function adjustOverlayPosition() {
             if (mainHeader && mobileNavOverlay) {
                 const headerHeight = mainHeader.offsetHeight;
@@ -720,7 +740,6 @@
             }
         }
 
-        // Ejecutar al cargar y al redimensionar la ventana
         adjustOverlayPosition();
         window.addEventListener('resize', adjustOverlayPosition);
 
@@ -731,7 +750,6 @@
                 menuIcon.querySelector('i').textContent = isOpen ? 'close' : 'menu';
             });
 
-            // Cerrar menú al hacer clic en un enlace del menú
             navItems.forEach(item => {
                 item.addEventListener('click', () => {
                     mobileNavOverlay.classList.remove('is-open');
@@ -740,7 +758,6 @@
                 });
             });
 
-            // Cerrar menú al hacer clic fuera del menú
             document.body.addEventListener('click', (event) => {
                 if (mobileNavOverlay.classList.contains('is-open') &&
                     !mobileNavOverlay.contains(event.target) &&
@@ -756,7 +773,6 @@
 </script>
 
 <script>
-    // Script para manejar el scroll suave a secciones, si lo necesitas en el futuro.
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
