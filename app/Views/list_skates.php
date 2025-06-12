@@ -327,10 +327,10 @@
             <p>Batería: <?= esc($skate['bateria']) ?>%</p>
             <p>Velocidad: <?= esc($skate['velocidad']) ?> km/h</p>
             <form action="<?= site_url('unlink-skate/' . esc($skate['codigo'])) ?>" method="POST">
-                <button type="submit" class="btn btn-danger">Borrar Skate</button>
+                <button type="submit" class="btn btn-danger" onclick="event.stopPropagation();">Borrar Skate</button>
             </form>
             <form action="<?= site_url('deleteapodo/' . esc($skate['codigo'])) ?>" method="POST">
-                <button type="submit" class="btn btn-danger">Borrar Apodo</button>
+                <button type="submit" class="btn btn-danger" onclick="event.stopPropagation();">Borrar Apodo</button>
             </form>
         </div>
     </div>
@@ -338,7 +338,7 @@
         </div>
     <?php else: ?>
         <div class="alert alert-info">
-           Este usuario no tiene skates
+            Este usuario no tiene skates
         </div>
     <?php endif; ?>
 
