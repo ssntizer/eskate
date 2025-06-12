@@ -507,12 +507,12 @@
                             <p>Velocidad: <?= esc($skate['velocidad']) ?> km/h</p>
                             <form action="<?= site_url('unlink-skate/' . esc($skate['codigo'])) ?>" method="POST" onsubmit="return confirm('¿Estás seguro de que quieres desvincular este skate?');">
                                 <?= csrf_field() ?>
-                                <button type="submit" class="btn btn-danger">Borrar Skate</button>
+                                <button type="submit" class="btn btn-danger" onclick="event.stopPropagation();">Borrar Skate</button>
                             </form>
                             <?php if(!empty($skate['apodo'])): ?>
                                 <form action="<?= site_url('deleteapodo/' . esc($skate['codigo'])) ?>" method="POST" onsubmit="return confirm('¿Estás seguro de que quieres borrar el apodo de este skate?');">
                                     <?= csrf_field() ?>
-                                    <button type="submit" class="btn btn-danger">Borrar Apodo</button>
+                                    <button type="submit" class="btn btn-danger" onclick="event.stopPropagation();">Borrar Apodo</button>
                                 </form>
                             <?php endif; ?>
                         </div>
