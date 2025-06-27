@@ -602,13 +602,7 @@ footer a:hover {
 </section>
 
 <footer>
-    <div class="container">
-        <div class="social-links">
-            <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
-            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-        </div>
-        <p>&copy; 2023 E-Skate. Todos los derechos reservados.</p>
+        <p>&copy; 2024 E-Skate. Todos los derechos reservados.</p>
         <p><a href="#">Política de Privacidad</a> | <a href="#">Términos de Servicio</a></p>
     </div>
 </footer>

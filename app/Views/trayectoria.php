@@ -246,9 +246,8 @@ $waypointsJson = json_encode($waypoints);
 </div>
 
 <footer>
-    <p>&copy; 2025 E-skate - Diseñado para la acción - <a href="mailto:eskatevz@gmail.com">Contáctanos</a></p>
+    <p>&copy; 2024 E-skate - Diseñado para la acción - <a href="mailto:eskatevz@gmail.com">Contáctanos</a></p>
 </footer>
-
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 <script>
     var waypoints = <?php echo $waypointsJson; ?>;
