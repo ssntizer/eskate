@@ -68,6 +68,17 @@ class SkateController extends ResourceController
             'latitud' => $latitud
         ]);
 
-        return $this->respond(['message' => 'Datos guardados correctamente.'], 200);
+        // --- Lógica para eliminar registros antiguos ---
+        // Calcular la fecha límite (hace 3 días)
+        $threeDaysAgo = date('Y-m-d H:i:s', strtotime('-3 days'));
+
+        // Eliminar registros de skate_tracking con más de 3 días de antigüedad para el código específico
+        $this->skateTrackingModel
+             ->where('codigo', $codigo)
+             ->where('timestamp <', $threeDaysAgo)
+             ->delete();
+        // --- Fin de la lógica para eliminar registros antiguos ---
+
+        return $this->respond(['message' => 'Datos guardados y registros antiguos eliminados correctamente.'], 200);
     }
 }
