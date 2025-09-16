@@ -44,7 +44,7 @@
 
         .header h1 {
             font-size: 1.5rem;
-            font-family: "Baskervville SC", static;
+            font-family: "Quicksand", sans-serif;
             margin: 0;
         }
 
