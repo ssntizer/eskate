@@ -1,7 +1,7 @@
 <?php
 namespace App\Controllers;
 use App\Models\UserModel;
-use App\Models\SkateModel;
+use App\Models\skatemodel;
 use App\Models\DireccionModel;
 use App\Models\ProvinciaModel;
 use App\Models\LocalidadModel;
