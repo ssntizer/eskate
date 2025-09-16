@@ -2,11 +2,10 @@
 namespace App\Controllers;
 
 use App\Models\UserModel;
-use App\Models\skatemodel;
+use App\Models\SkateModel;
 use App\Models\DireccionModel;
 use App\Models\ProvinciaModel;
 use App\Models\LocalidadModel;
-
 
 class AuthController extends BaseController
 {
@@ -16,31 +15,103 @@ class AuthController extends BaseController
     {
         $this->skateModel = new SkateModel();
     }
+
     public function register()
     {
         return view('register');
     }
 
-    public function registerUser()
+    public function trayectoria()
     {
-        $userModel = new UserModel();
-    
-        // Obtener datos del formulario
-        $data = [
-            'username' => $this->request->getPost('username'),
-            'email' => $this->request->getPost('email'),
-            'password' => $this->request->getPost('password') 
-        ];
-    
-        // Verificar si el email ya existe
-        if ($userModel->where('email', $data['email'])->first()) {
-            return redirect()->back()->with('error', 'El correo electrónico ya está registrado.')->withInput();
+        return view('trayectoria.php');
+    }
+
+    public function registerUser()
+{
+    $session = session();
+    $userModel = new UserModel();
+
+    // Obtener datos del formulario
+    $data = [
+        'username' => $this->request->getPost('username'),
+        'email' => $this->request->getPost('email'),
+        'password' => $this->request->getPost('password'),
+        'is_active' => 0, // Cuenta inactiva hasta confirmación
+        'created_at' => date('Y-m-d H:i:s')
+    ];
+
+    // Verificar si el email ya existe
+    if ($userModel->where('email', $data['email'])->first()) {
+        return redirect()->back()->with('error', 'El correo electrónico ya está registrado.')->withInput();
+    }
+
+    // Generar token de verificación
+    $verificationToken = bin2hex(random_bytes(16));
+    $verificationExpire = date('Y-m-d H:i:s', strtotime('+1 hour')); // ¡Expira en 1 minuto!
+
+    // Guardar el nuevo usuario con token
+    $data['verification_token'] = $verificationToken;
+    $data['verification_expires'] = $verificationExpire;
+
+    try {
+        $userId = $userModel->insert($data);
+
+        if ($userId) {
+            // Enviar email de verificación
+            $verifyLink = site_url('auth/verify-email/' . $verificationToken);
+
+            $emailService = \Config\Services::email();
+            $emailService->clear();
+
+            $emailService->setTo($data['email']);
+            $emailService->setSubject('Verifica tu cuenta');
+            $emailService->setMessage("
+                <h2>Bienvenido a nuestro sitio, {$data['username']}!</h2>
+                <p>Gracias por registrarte. Por favor verifica tu correo electrónico haciendo clic en el siguiente enlace:</p>
+                <p><a href='{$verifyLink}'>{$verifyLink}</a></p>
+                <p>Este enlace expirará en 1 hora.</p>
+                <p>Si no te registraste en nuestro sitio, por favor ignora este mensaje.</p>
+            ");
+            $emailService->setMailType('html');
+
+            if ($emailService->send()) {
+                return redirect()->to('/login')->with('success', 'Registro exitoso. Por favor verifica tu correo electrónico para activar tu cuenta.');
+            } else {
+                // Si falla el envío, eliminar el usuario creado
+                $userModel->delete($userId);
+                log_message('error', $emailService->printDebugger(['headers']));
+                return redirect()->back()->with('error', 'Error al enviar correo de verificación. Por favor intenta nuevamente.')->withInput();
+            }
         }
-    
-        // Guardar el nuevo usuario
-        $userModel->save($data);
-    
-        return redirect()->to('/login')->with('success', 'Registro exitoso');
+    } catch (\Exception $e) {
+        log_message('error', 'Error en registro: ' . $e->getMessage());
+        return redirect()->back()->with('error', 'Ocurrió un error durante el registro. Por favor intenta nuevamente.')->withInput();
+    }
+
+    return redirect()->back()->with('error', 'Ocurrió un error inesperado.')->withInput();
+}
+
+    public function verifyEmail($token)
+    {
+        $session = session();
+        $userModel = new UserModel();
+        
+        $user = $userModel->where('verification_token', $token)
+                         ->where('verification_expires >', date('Y-m-d H:i:s'))
+                         ->first();
+        
+        if (!$user) {
+            return redirect()->to('/login')->with('error', 'Token inválido o expirado.');
+        }
+        
+        // Activar cuenta
+        $userModel->update($user['id'], [
+            'is_active' => 1,
+            'verification_token' => null,
+            'verification_expires' => null
+        ]);
+        
+        return redirect()->to('/login')->with('success', 'Cuenta verificada correctamente. Ya puedes iniciar sesión.');
     }
 
     public function login()
@@ -49,15 +120,15 @@ class AuthController extends BaseController
 
         if ($session->get('logged_in')) {
             return redirect()->to('/list-skates');
+        } else {
+            return view('login');
         }
-        else{
-        return view('login');
     }
-}
 
     public function loginUser()
     {
         $userModel = new UserModel();
+        $session = session();
 
         $email = $this->request->getPost('email');
         $password = $this->request->getPost('password');
@@ -65,15 +136,33 @@ class AuthController extends BaseController
         $user = $userModel->where('email', $email)->first();
 
         if ($user) {
+            // Verificar si la cuenta está activa
+            if (!$user['is_active']) {
+                return redirect()->back()->with('error', 'Tu cuenta no está activada. Por favor verifica tu correo electrónico.');
+            }
+
             log_message('debug', 'User found: ' . print_r($user, true));
 
             if (password_verify($password, $user['password'])) {
                 log_message('debug', 'Password verified successfully.');
-                session()->set([
+                
+                // Configurar datos de sesión
+                $session->set([
                     'username' => $user['username'],
                     'user_id' => $user['id'],
                     'logged_in' => true,
                 ]);
+                
+                // Verificar si hay una URL de redirección guardada
+                $redirect_url = $session->get('redirect_url');
+                
+                if ($redirect_url) {
+                    // Eliminar la URL de redirección de la sesión
+                    $session->remove('redirect_url');
+                    return redirect()->to($redirect_url);
+                }
+                
+                // Redirección por defecto
                 return redirect()->to('/list-skates');
             } else {
                 log_message('debug', 'Password verification failed.');
@@ -88,7 +177,7 @@ class AuthController extends BaseController
     public function logout()
     {
         session()->destroy();
-        return redirect()->to('/');
+        return redirect()->to('/primerpagina');
     }
 
     public function listSkates()
@@ -232,10 +321,6 @@ class AuthController extends BaseController
     {
         return view('forgot_password'); // Asegúrate de tener la vista de recuperación de contraseña
     }
-    public function trayectoria()
-    {
-        return view('trayectoria'); // Asegúrate de tener la vista de recuperación de contraseña
-    }
 
     public function primerpag()
     {
@@ -243,59 +328,61 @@ class AuthController extends BaseController
         return view('Primerpagina');
     }
     public function detail($id) {
-
         $session = session();
-        if ($session->get('logged_in')) {// Definir los modelos de skates en un array
-
-        $modelos = [
-            1 => [
-                'id' => 1,
-                'nombre' => 'E-Skate 1',
-                'precio' => '$299',
-                'descripcion' => 'Descripción del Modelo E-Skate 1.',
-                'imagen' => 'https://imgs.search.brave.com/tps24H47-2oaLseYhRphCnOSszeFXtoK-3EaI9JezrA/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9za2F0/ZXNlbGVjdHJpY29z/LmNvbS93cC1jb250/ZW50L3VwbG9hZHMv/MjAyMS8wNi9tZWVw/by1taW5pMi1zY2Fs/ZWQuanBlZw'
-            ],
-            2 => [
-                'id' => 2,
-                'nombre' => 'E-Skate 2',
-                'precio' => '$599',
-                'descripcion' => 'Descripción del Modelo E-Skate 2.',
-                'imagen' => 'https://imgs.search.brave.com/qH8RsQ019QLQkGLFWZExzsnL4kvsrQ_GwfP-ckTx5pI/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL0kv/NTF1a3dQK3F5b1Mu/anBn'
-            ],
-            3 => [
-                'id' => 3,
-                'nombre' => 'E-Skate 3',
-                'precio' => '$699',
-                'descripcion' => 'Descripción del Modelo E-Skate 3.',
-                'imagen' => 'https://imgs.search.brave.com/4hfX1Aw6h9uwaa7HX6i2vtgTdUT3mvVz1GoT5ojtQQE/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL0kv/NDFNMnd5YTMzMEwu/anBn'
-            ],
-        ];
-    
-        // Registro de depuración en el log
-        log_message('debug', 'ID recibido: ' . $id);
-        log_message('debug', 'Modelos disponibles: ' . print_r(array_keys($modelos), true));
-    
-        // Verifica si el modelo existe
-        if (!array_key_exists($id, $modelos)) {
-            log_message('error', 'Modelo no encontrado para el ID: ' . $id);
-            throw new \CodeIgniter\Exceptions\PageNotFoundException("Modelo no encontrado");
+        
+        if ($session->get('logged_in')) {
+            // Definir los modelos de skates en un array
+            $modelos = [
+                1 => [
+                    'id' => 1,
+                    'nombre' => 'E-Skate 1',
+                    'precio' => '$299',
+                    'descripcion' => 'Descripción del Modelo E-Skate 1.',
+                    'imagen' => 'https://imgs.search.brave.com/tps24H47-2oaLseYhRphCnOSszeFXtoK-3EaI9JezrA/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9za2F0/ZXNlbGVjdHJpY29z/LmNvbS93cC1jb250/ZW50L3VwbG9hZHMv/MjAyMS8wNi9tZWVw/by1taW5pMi1zY2Fs/ZWQuanBlZw'
+                ],
+                2 => [
+                    'id' => 2,
+                    'nombre' => 'E-Skate 2',
+                    'precio' => '$599',
+                    'descripcion' => 'Descripción del Modelo E-Skate 2.',
+                    'imagen' => 'https://imgs.search.brave.com/qH8RsQ019QLQkGLFWZExzsnL4kvsrQ_GwfP-ckTx5pI/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL0kv/NTF1a3dQK3F5b1Mu/anBn'
+                ],
+                3 => [
+                    'id' => 3,
+                    'nombre' => 'E-Skate 3',
+                    'precio' => '$699',
+                    'descripcion' => 'Descripción del Modelo E-Skate 3.',
+                    'imagen' => 'https://imgs.search.brave.com/4hfX1Aw6h9uwaa7HX6i2vtgTdUT3mvVz1GoT5ojtQQE/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL0kv/NDFNMnd5YTMzMEwu/anBn'
+                ],
+            ];
+        
+            // Registro de depuración en el log
+            log_message('debug', 'ID recibido: ' . $id);
+            log_message('debug', 'Modelos disponibles: ' . print_r(array_keys($modelos), true));
+        
+            // Verifica si el modelo existe
+            if (!array_key_exists($id, $modelos)) {
+                log_message('error', 'Modelo no encontrado para el ID: ' . $id);
+                throw new \CodeIgniter\Exceptions\PageNotFoundException("Modelo no encontrado");
+            }
+        
+            // Obtener los otros modelos
+            $otrosModelos = array_filter($modelos, function($modelo) use ($id) {
+                return $modelo['id'] != $id; // Excluye el modelo actual
+            });
+        
+            // Pasa la información a la vista
+            log_message('debug', 'Modelo encontrado: ' . print_r($modelos[$id], true));
+            return view('skate_detail', [
+                'modelo' => $modelos[$id],
+                'otrosModelos' => $otrosModelos // Pasa los otros modelos a la vista
+            ]);
+        } else {
+            // Guardar la URL actual en la sesión antes de redirigir
+            $session->set('redirect_url', current_url());
+            return redirect()->to('/login')->with('error', 'Debes iniciar sesión para acceder a esta página');
         }
-    
-        // Obtener los otros modelos
-        $otrosModelos = array_filter($modelos, function($modelo) use ($id) {
-            return $modelo['id'] != $id; // Excluye el modelo actual
-        });
-    
-        // Pasa la información a la vista
-        log_message('debug', 'Modelo encontrado: ' . print_r($modelos[$id], true));
-        return view('skate_detail', [
-            'modelo' => $modelos[$id],
-            'otrosModelos' => $otrosModelos // Pasa los otros modelos a la vista
-        ]);
-
-    }else{
-        return redirect()->to('/login');
-    }}
+    }
 
     public function updateSkateApodo()
 {
@@ -359,13 +446,17 @@ public function enviarmail()
 }
 public function comprar()
 {
+    $session = session();
+    
     // Verificar que el usuario está logueado
-    if (!session()->has('user_id')) {
-        return redirect()->to('login');  // Si no está logueado, redirigir al login
+    if (!$session->get('logged_in')) {
+        // Guardar la URL de redirección en sesión antes de enviar al login
+        $session->set('redirect_url', current_url());
+        return redirect()->to('/login')->with('error', 'Debes iniciar sesión para realizar una compra');
     }
 
     // Obtener el ID del usuario
-    $userId = session()->get('user_id');
+    $userId = $session->get('user_id');
     
     // Obtener las direcciones asociadas a este usuario
     $direccionModel = new DireccionModel();
@@ -373,7 +464,7 @@ public function comprar()
     
     // Verificar si hay direcciones
     if (empty($userAddresses)) {
-        session()->setFlashdata('error', 'No tienes direcciones registradas.');
+        $session->setFlashdata('error', 'No tienes direcciones registradas.');
         return redirect()->to('nuevadireccion');  // Redirigir a la página de registrar nueva dirección
     }
 
@@ -393,7 +484,6 @@ public function comprar()
     // Pasar las direcciones a la vista
     return view('comprar', ['userAddresses' => $userAddresses]);
 }
-
 public function guardar()
 {
     // Verificar que el usuario está logueado
@@ -494,32 +584,6 @@ public function obtenerLocalidadesPorProvincia($provinciaId)
         // Si no hay localidades, devuelve un error 404
         return $this->response->setStatusCode(404, 'No se encontraron localidades');
     }
-}
-public function manifest()
-{
-    // Enviar el archivo manifest.json
-    return $this->response->setHeader('Content-Type', 'application/json')
-                          ->setHeader('Cache-Control', 'public, max-age=3600')
-                          ->download(FCPATH . 'manifest.json', null);
-}
-
-public function eskate192()
-{
-    // Enviar el archivo eskate192x192.png
-    return $this->response->setHeader('Content-Type', 'image/png')
-                          ->setHeader('Cache-Control', 'public, max-age=3600')
-                          ->download(FCPATH . 'icons/eskate192x192.png', null);
-}
-
-public function eskate512()
-{
-    // Enviar el archivo eskate512x512.png
-    return $this->response->setHeader('Content-Type', 'image/png')
-                          ->setHeader('Cache-Control', 'public, max-age=3600')
-                          ->download(FCPATH . 'icons/eskate512x512.png', null);
-}
-public function instalarpwa(){
-    return view ('instalarpwa');
 }
 public function updateUserProfile()
 {
@@ -702,4 +766,5 @@ public function eliminarUsuariosNoVerificadosCron()
         echo "OK: No se encontraron cuentas para eliminar.\n";
     }
 }
+
 }
