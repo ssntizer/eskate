@@ -51,7 +51,8 @@ class SkateModel extends Model
         }
 
         // Actualizar el campo ID_usuario a null
-        $data = ['ID_usuario' => null];
+        $data = ['ID_usuario' => null,
+                 'apodo' => null];
         return $this->update($codigo, $data); // Actualizar el registro
     }
     public function updateApodo($codigo, $apodo)
