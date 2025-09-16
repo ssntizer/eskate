@@ -15,6 +15,7 @@ $routes->get('/forgot-password', 'AuthController::forgotPassword');
 $routes->post('passwordreset/request', 'PasswordResetController::requestReset');
 $routes->get('passwordreset/reset/(:any)', 'PasswordResetController::reset/$1');
 $routes->post('passwordreset/update', 'PasswordResetController::updatePassword');
+$routes->get('auth/verify-email/(:segment)', 'AuthController::verifyEmail/$1');
 // Esta ruta de primerpagina se mantiene como pública si aún no la hemos decidido mover
 $routes->get('/primerpagina', 'AuthController::primerpag');
 $routes->post('enviarmail', 'AuthController::enviarmail');
