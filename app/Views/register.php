@@ -109,6 +109,20 @@
         .register-form a#bl:hover {
             color: #00e5ff; /* Color al pasar el mouse */
         }
+
+        #password-requirements {
+            text-align: left;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        #password-requirements li {
+            color: #e74c3c; /* Rojo por defecto */
+        }
+
+        #password-requirements li.valid {
+            color: #2ecc71; /* Verde cuando válido */
+        }
     </style>
 </head>
 
@@ -129,6 +143,13 @@
             <input type="text" name="username" placeholder="Nombre de usuario" value="<?= old('username') ?>" required>
             <input type="email" name="email" placeholder="Correo electrónico" value="<?= old('email') ?>" required>
             <input type="password" name="password" id="password" placeholder="Contraseña" required>
+            <div id="password-requirements">
+                <ul>
+                    <li id="length">Al menos 8 caracteres</li>
+                    <li id="uppercase">Al menos una letra mayúscula</li>
+                    <li id="symbol">Al menos un símbolo (!@#$%^&*()_+-=[]{}|;':",./<>?)</li>
+                </ul>
+            </div>
             <input type="password" name="confirm_password" id="confirm_password" placeholder="Confirmar contraseña" required>
             <div id="error-message" class="error" style="display:none;"></div>
             <button type="submit">Registrar</button>
@@ -137,17 +158,74 @@
     </div>
 
     <script>
+        const passwordInput = document.getElementById('password');
+        const lengthReq = document.getElementById('length');
+        const uppercaseReq = document.getElementById('uppercase');
+        const symbolReq = document.getElementById('symbol');
+
+        passwordInput.addEventListener('input', function () {
+            const password = passwordInput.value;
+
+            // Validar longitud
+            if (password.length >= 8) {
+                lengthReq.classList.add('valid');
+            } else {
+                lengthReq.classList.remove('valid');
+            }
+
+            // Validar mayúscula
+            if (/[A-Z]/.test(password)) {
+                uppercaseReq.classList.add('valid');
+            } else {
+                uppercaseReq.classList.remove('valid');
+            }
+
+            // Validar símbolo
+            if (/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password)) {
+                symbolReq.classList.add('valid');
+            } else {
+                symbolReq.classList.remove('valid');
+            }
+        });
+
         document.getElementById('registrationForm').addEventListener('submit', function (event) {
             const password = document.getElementById('password').value;
             const confirmPassword = document.getElementById('confirm_password').value;
             const errorMessage = document.getElementById('error-message');
 
+            // Verificar requisitos de contraseña
+            let passwordValid = true;
+            let errorText = '';
+
+            if (password.length < 8) {
+                passwordValid = false;
+                errorText += 'La contraseña debe tener al menos 8 caracteres. ';
+            }
+
+            if (!/[A-Z]/.test(password)) {
+                passwordValid = false;
+                errorText += 'La contraseña debe tener al menos una letra mayúscula. ';
+            }
+
+            if (!/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password)) {
+                passwordValid = false;
+                errorText += 'La contraseña debe tener al menos un símbolo. ';
+            }
+
+            if (!passwordValid) {
+                errorMessage.textContent = errorText;
+                errorMessage.style.display = 'block';
+                event.preventDefault();
+                return;
+            }
+
+            // Verificar coincidencia de contraseñas
             if (password !== confirmPassword) {
-                errorMessage.textContent = 'Las contraseñas no coinciden.'; // Mensaje de error
-                errorMessage.style.display = 'block'; // Mostrar mensaje de error
-                event.preventDefault(); // Previene el envío del formulario
+                errorMessage.textContent = 'Las contraseñas no coinciden.';
+                errorMessage.style.display = 'block';
+                event.preventDefault();
             } else {
-                errorMessage.style.display = 'none'; // Ocultar mensaje de error
+                errorMessage.style.display = 'none';
             }
         });
     </script>
