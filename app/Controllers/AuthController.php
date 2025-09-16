@@ -766,4 +766,7 @@ public function eliminarUsuariosNoVerificadosCron()
     }
 }
 
+public function instalarpwa(){
+    return view ('instalarpwa');
+}
 }
