@@ -449,6 +449,16 @@
             border-top: 1px solid rgba(255, 255, 255, 0.2);
         }
 
+        .password-section h4 {
+            color: #ffcc00;
+            text-align: center;
+        }
+
+        .password-section p {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
         footer {
             background-color: #004b6b;
             color: #fff;
@@ -629,6 +639,39 @@
                 font-size: 0.8rem;
             }
         }
+
+        .error {
+            color: #ff6b6b;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            text-align: center;
+            padding: 0 10px; /* Alineado con el resto */
+        }
+
+        #password-requirements {
+            text-align: left;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            padding: 0 10px; /* Alineado */
+            color: #ffffff;
+        }
+
+        #password-requirements ul {
+            padding-left: 20px;
+            margin: 0;
+        }
+
+        #password-requirements li {
+            color: #ff6b6b; /* Rojo por defecto */
+        }
+
+        #password-requirements li.valid {
+            color: #2ecc71; /* Verde cuando válido */
+        }
+
+        #error-message {
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -684,7 +727,7 @@
             <?php endif; ?>
 
 
-            <form action="<?= site_url('update-profile') ?>" method="post">
+            <form id="profileForm" action="<?= site_url('update-profile') ?>" method="post">
                 <?= csrf_field() ?>
 
                 <div class="form-group">
@@ -712,8 +755,8 @@
                 </div>
 
                  <div class="password-section">
-                     <h4>Cambiar Contraseña</h4>
-                     <p>Para cambiar tu contraseña, debes ingresar tu contraseña actual.</p>
+                     <h4>Cambiar Contraseña o Email</h4>
+                     <p>Para cambiar tu contraseña, Email o ambas debes ingresar tu contraseña actual.</p>
 
                      <div class="form-group">
                         <label for="current_password">Contraseña Actual:</label>
@@ -726,7 +769,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="password">Nueva Contraseña:</label>
+                        <label for="new_password">Nueva Contraseña:</label>
                         <input type="password" id="new_password" name="new_password" placeholder="Ingresa tu nueva contraseña">
                          <?php if (session()->getFlashdata('errors') && isset(session()->getFlashdata('errors')['password'])): ?>
                             <div class="text-danger-custom">
@@ -734,6 +777,23 @@
                             </div>
                         <?php endif; ?>
                     </div>
+                    <div id="password-requirements">
+                        <ul>
+                            <li id="length">Al menos 8 caracteres</li>
+                            <li id="uppercase">Al menos una letra mayúscula</li>
+                            <li id="symbol">Al menos un símbolo (!@#$%^&*()_+-=[]{}|;':",./<>?)</li>
+                        </ul>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirm_new_password">Confirmar Nueva Contraseña:</label>
+                        <input type="password" id="confirm_new_password" name="confirm_new_password" placeholder="Confirma tu nueva contraseña">
+                         <?php if (session()->getFlashdata('errors') && isset(session()->getFlashdata('errors')['confirm_password'])): ?>
+                            <div class="text-danger-custom">
+                                <?= session()->getFlashdata('errors')['confirm_password'] ?>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                    <div id="error-message" class="error"></div>
                  </div>
 
                  <button type="submit">Actualizar Perfil</button>
@@ -822,5 +882,99 @@
         });
     });
 </script>
+
+<script>
+    const passwordInput = document.getElementById('new_password');
+    const lengthReq = document.getElementById('length');
+    const uppercaseReq = document.getElementById('uppercase');
+    const symbolReq = document.getElementById('symbol');
+
+    passwordInput.addEventListener('input', function () {
+        const password = passwordInput.value;
+
+        // Validar longitud
+        if (password.length >= 8) {
+            lengthReq.classList.add('valid');
+        } else {
+            lengthReq.classList.remove('valid');
+        }
+
+        // Validar mayúscula
+        if (/[A-Z]/.test(password)) {
+            uppercaseReq.classList.add('valid');
+        } else {
+            uppercaseReq.classList.remove('valid');
+        }
+
+        // Validar símbolo
+        if (/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password)) {
+            symbolReq.classList.add('valid');
+        } else {
+            symbolReq.classList.remove('valid');
+        }
+    });
+
+    document.getElementById('profileForm').addEventListener('submit', function (event) {
+        const password = document.getElementById('new_password').value;
+        const confirmPassword = document.getElementById('confirm_new_password').value;
+        const currentPassword = document.getElementById('current_password').value;
+        const errorMessage = document.getElementById('error-message');
+
+        if (password === '' && confirmPassword === '' && currentPassword === '') {
+            errorMessage.style.display = 'none';
+            return;
+        }
+
+        let passwordValid = true;
+        let errorText = '';
+
+        if (currentPassword === '') {
+            passwordValid = false;
+            errorText += 'Debes ingresar tu contraseña actual para cambiarla. ';
+        }
+
+        if (password === '') {
+            passwordValid = false;
+            errorText += 'Debes ingresar una nueva contraseña. ';
+        }
+
+        if (confirmPassword === '') {
+            passwordValid = false;
+            errorText += 'Debes confirmar la nueva contraseña. ';
+        }
+
+        if (password.length < 8) {
+            passwordValid = false;
+            errorText += 'La nueva contraseña debe tener al menos 8 caracteres. ';
+        }
+
+        if (!/[A-Z]/.test(password)) {
+            passwordValid = false;
+            errorText += 'La nueva contraseña debe tener al menos una letra mayúscula. ';
+        }
+
+        if (!/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password)) {
+            passwordValid = false;
+            errorText += 'La nueva contraseña debe tener al menos un símbolo. ';
+        }
+
+        if (!passwordValid) {
+            errorMessage.textContent = errorText;
+            errorMessage.style.display = 'block';
+            event.preventDefault();
+            return;
+        }
+
+        // Verificar coincidencia de contraseñas
+        if (password !== confirmPassword) {
+            errorMessage.textContent = 'Las nuevas contraseñas no coinciden.';
+            errorMessage.style.display = 'block';
+            event.preventDefault();
+        } else {
+            errorMessage.style.display = 'none';
+        }
+    });
+</script>
+
 </body>
 </html>
