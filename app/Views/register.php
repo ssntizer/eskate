@@ -4,145 +4,237 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Registro | E-Skate</title>
+    <link href="https://fonts.googleapis.com/css2?family=Baskervville&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Permanent+Marker&display=swap');
-
         body {
-            background-color: #00719c; /* Color de fondo */
-            color: #ffffff; /* Color del texto */
-            font-family: "Baskervville SC", serif; /* Fuente del texto */
-            background-image: url('https://www.transparenttextures.com/patterns/asfalt-dark.png'); /* Textura de fondo */
+            background-color: #00719c;
+            background-image: url('https://www.transparenttextures.com/patterns/asfalt-dark.png');
+            color: #ffffff;
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh; /* Altura completa de la ventana */
-            margin: 0;
         }
 
         .register-form {
-            width: 90%; /* Ancho del formulario adaptativo */
-            max-width: 400px; /* Ancho máximo del formulario */
-            padding: 40px; /* Espaciado interno */
-            border-radius: 15px; /* Bordes redondeados */
-            background: linear-gradient(145deg, #006f99, #008dc2); /* Degradado de fondo */
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Sombra */
-            text-align: center; /* Alinear texto al centro */
-            color: #fff; /* Color del texto */
+            width: 90%;
+            max-width: 400px;
+            padding: 40px 30px; /* Ajuste de padding lateral */
+            background-color: #005f87;
+            background-image: url('https://www.transparenttextures.com/patterns/asfalt-dark.png');
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border: 1px solid #004b6b;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .register-form::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #ffcc00, #ffb700);
         }
 
         .register-form h2 {
-            margin-bottom: 20px; /* Margen inferior */
-            font-family: "Baskervville SC", static; /* Fuente del título */
-            font-size: 2rem; /* Tamaño de fuente */
+            text-align: center;
+            margin-bottom: 30px;
+            color: #ffcc00;
+            font-size: 2rem;
+            font-family: 'Baskervville', serif;
+            position: relative;
+            padding: 0 10px; /* Asegura que el título no toque los bordes */
+        }
+
+        .register-form h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent 0%, #ffcc00 50%, transparent 100%);
+        }
+
+        .input-container {
+            width: 100%;
+            margin-bottom: 20px;
+            padding: 0 10px; /* Padding simétrico para los inputs */
+            box-sizing: border-box;
         }
 
         .register-form input[type="text"],
-        .register-form input[type="email"],
+        .register-form input[type="email"], 
         .register-form input[type="password"] {
-            width: 100%; /* Ancho completo */
-            height: 50px; /* Altura del campo */
-            margin-bottom: 20px; /* Margen inferior */
-            padding: 10px; /* Espaciado interno */
-            border: none; /* Sin borde */
-            border-radius: 10px; /* Bordes redondeados */
-            font-size: 1.2rem; /* Tamaño de fuente */
-            color: #333; /* Color del texto en los campos */
+            width: 100%;
+            padding: 15px 20px; /* Más padding horizontal */
+            border-radius: 8px;
+            border: 2px solid #004b6b;
+            background-color: rgba(255, 255, 255, 0.9);
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            box-sizing: border-box; /* Asegura que el padding no afecte el ancho */
+            display: block;
+            margin: 0 auto; /* Centrado adicional */
         }
 
         .register-form input[type="text"]:focus,
-        .register-form input[type="email"]:focus,
+        .register-form input[type="email"]:focus, 
         .register-form input[type="password"]:focus {
-            border-color: #00e5ff; /* Color del borde al enfocar */
-            outline: none; /* Sin contorno */
-            box-shadow: 0 0 8px rgba(0, 229, 255, 0.5); /* Sombra al enfocar */
+            outline: none;
+            border-color: #ffcc00;
+            box-shadow: 0 0 0 3px rgba(255, 204, 0, 0.3);
+        }
+
+        .button-container {
+            padding: 0 10px; /* Mismo padding que los inputs */
+            box-sizing: border-box;
         }
 
         .register-form button[type="submit"] {
-            width: 100%; /* Ancho completo */
-            height: 50px; /* Altura del botón */
-            border: none; /* Sin borde */
-            border-radius: 10px; /* Bordes redondeados */
-            background-color: #ff6600; /* Color de fondo */
-            color: white; /* Color del texto */
-            font-size: 18px; /* Tamaño de fuente */
-            font-weight: 600; /* Peso de fuente */
-            cursor: pointer; /* Cursor de puntero */
-            transition: background-color 0.3s ease, transform 0.2s; /* Transiciones suaves */
+            background-color: #ffcc00;
+            color: #333;
+            padding: 15px;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            border: none;
+            transition: all 0.4s ease;
+            width: 100%;
+            font-weight: 600;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            display: block;
+            margin: 0 auto; /* Centrado perfecto */
+        }
+
+        .register-form button[type="submit"]::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background-color: #ffb700;
+            transition: width 0.4s ease;
+            z-index: -1;
+            border-radius: 50px;
         }
 
         .register-form button[type="submit"]:hover {
-            background-color: #e65c00; /* Color de fondo al pasar el mouse */
-            transform: scale(1.05); /* Escala al pasar el mouse */
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 204, 0, 0.4);
         }
 
-        .register-form button[type="submit"]:active {
-            transform: scale(0.98); /* Escala al hacer clic */
+        .register-form button[type="submit"]:hover::before {
+            width: 100%;
+        }
+
+        .register-links {
+            margin-top: 20px;
+            text-align: center;
+            padding: 0 10px; /* Mismo padding para consistencia */
+        }
+
+        .register-links a {
+            color: #ffcc00;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            display: block;
+            margin: 12px 0; /* Espaciado uniforme */
+            padding: 5px 0; /* Pequeño padding para mejor tact */
+        }
+
+        .register-links a:hover {
+            color: #ffb700;
+            text-decoration: underline;
         }
 
         .error,
         .success {
-            font-size: 14px; /* Tamaño de fuente */
-            margin-bottom: 20px; /* Margen inferior */
-            text-align: left; /* Alinear texto a la izquierda */
-        }
-
-        .error {
-            color: #e74c3c; /* Color del texto de error */
+            color: #ff6b6b;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            text-align: center;
+            padding: 0 10px; /* Alineado con el resto */
         }
 
         .success {
-            color: #2ecc71; /* Color del texto de éxito */
-        }
-
-        .register-form a#bl {
-            display: block; /* Mostrar como bloque */
-            margin-top: 15px; /* Margen superior */
-            text-decoration: none; /* Sin subrayado */
-            font-size: 16px; /* Tamaño de fuente */
-            font-weight: 600; /* Peso de fuente */
-            color: #fff; /* Color del texto */
-            transition: color 0.3s ease; /* Transición suave del color */
-        }
-
-        .register-form a#bl:hover {
-            color: #00e5ff; /* Color al pasar el mouse */
+            color: #2ecc71;
         }
 
         #password-requirements {
             text-align: left;
             margin-bottom: 20px;
-            font-size: 14px;
+            font-size: 0.9rem;
+            padding: 0 10px; /* Alineado */
+            color: #ffffff;
+        }
+
+        #password-requirements ul {
+            padding-left: 20px;
+            margin: 0;
         }
 
         #password-requirements li {
-            color: #e74c3c; /* Rojo por defecto */
+            color: #ff6b6b; /* Rojo por defecto */
         }
 
         #password-requirements li.valid {
             color: #2ecc71; /* Verde cuando válido */
+        }
+
+        #error-message {
+            display: none;
+        }
+
+        @media (max-width: 576px) {
+            .register-form {
+                padding: 30px 20px;
+            }
+            
+            .register-form h2 {
+                font-size: 1.8rem;
+            }
+            
+            .input-container, 
+            .button-container {
+                padding: 0 5px; /* Padding ligeramente menor en móviles */
+            }
         }
     </style>
 </head>
 
 <body>
     <div class="register-form">
-        <?php if (session()->getFlashdata('error')): ?>
-            <div class="error">
-                <?= session()->getFlashdata('error') ?>
-            </div>
-        <?php elseif (session()->getFlashdata('success')): ?>
-            <div class="success">
-                <?= session()->getFlashdata('success') ?>
-            </div>
-        <?php endif; ?>
-
         <h2>Registro</h2>
+        
+        <?php if (session()->getFlashdata('error')): ?>
+            <div class="error"><?= session()->getFlashdata('error') ?></div>
+        <?php elseif (session()->getFlashdata('success')): ?>
+            <div class="success"><?= session()->getFlashdata('success') ?></div>
+        <?php endif; ?>
+        
         <form id="registrationForm" method="post" action="<?= site_url('registerUser') ?>">
-            <input type="text" name="username" placeholder="Nombre de usuario" value="<?= old('username') ?>" required>
-            <input type="email" name="email" placeholder="Correo electrónico" value="<?= old('email') ?>" required>
-            <input type="password" name="password" id="password" placeholder="Contraseña" required>
+            <div class="input-container">
+                <input type="text" name="username" placeholder="Nombre de usuario" value="<?= old('username') ?>" required>
+            </div>
+            <div class="input-container">
+                <input type="email" name="email" placeholder="Correo electrónico" value="<?= old('email') ?>" required>
+            </div>
+            <div class="input-container">
+                <input type="password" name="password" id="password" placeholder="Contraseña" required>
+            </div>
             <div id="password-requirements">
                 <ul>
                     <li id="length">Al menos 8 caracteres</li>
@@ -150,11 +242,18 @@
                     <li id="symbol">Al menos un símbolo (!@#$%^&*()_+-=[]{}|;':",./<>?)</li>
                 </ul>
             </div>
-            <input type="password" name="confirm_password" id="confirm_password" placeholder="Confirmar contraseña" required>
-            <div id="error-message" class="error" style="display:none;"></div>
-            <button type="submit">Registrar</button>
+            <div class="input-container">
+                <input type="password" name="confirm_password" id="confirm_password" placeholder="Confirmar contraseña" required>
+            </div>
+            <div id="error-message" class="error"></div>
+            <div class="button-container">
+                <button type="submit">Registrar</button>
+            </div>
         </form>
-        <a id="bl" href="<?= site_url('login') ?>">Ir a login</a>
+        
+        <div class="register-links">
+            <a href="<?= site_url('login') ?>">Ir a login</a>
+        </div>
     </div>
 
     <script>
