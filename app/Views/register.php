@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,7 +23,7 @@
         .register-form {
             width: 90%;
             max-width: 400px;
-            padding: 40px 30px;
+            padding: 40px 30px; /* Ajuste de padding lateral */
             background-color: #005f87;
             background-image: url('https://www.transparenttextures.com/patterns/asfalt-dark.png');
             border-radius: 15px;
@@ -49,7 +50,7 @@
             font-size: 2rem;
             font-family: 'Baskervville', serif;
             position: relative;
-            padding: 0 10px;
+            padding: 0 10px; /* Asegura que el título no toque los bordes */
         }
 
         .register-form h2::after {
@@ -66,7 +67,7 @@
         .input-container {
             width: 100%;
             margin-bottom: 20px;
-            padding: 0 10px;
+            padding: 0 10px; /* Padding simétrico para los inputs */
             box-sizing: border-box;
         }
 
@@ -74,15 +75,15 @@
         .register-form input[type="email"], 
         .register-form input[type="password"] {
             width: 100%;
-            padding: 15px 20px;
+            padding: 15px 20px; /* Más padding horizontal */
             border-radius: 8px;
             border: 2px solid #004b6b;
             background-color: rgba(255, 255, 255, 0.9);
             transition: all 0.3s ease;
             font-size: 1rem;
-            box-sizing: border-box;
+            box-sizing: border-box; /* Asegura que el padding no afecte el ancho */
             display: block;
-            margin: 0 auto;
+            margin: 0 auto; /* Centrado adicional */
         }
 
         .register-form input[type="text"]:focus,
@@ -94,7 +95,7 @@
         }
 
         .button-container {
-            padding: 0 10px;
+            padding: 0 10px; /* Mismo padding que los inputs */
             box-sizing: border-box;
         }
 
@@ -113,7 +114,7 @@
             overflow: hidden;
             z-index: 1;
             display: block;
-            margin: 0 auto;
+            margin: 0 auto; /* Centrado perfecto */
         }
 
         .register-form button[type="submit"]::before {
@@ -141,7 +142,7 @@
         .register-links {
             margin-top: 20px;
             text-align: center;
-            padding: 0 10px;
+            padding: 0 10px; /* Mismo padding para consistencia */
         }
 
         .register-links a {
@@ -150,8 +151,8 @@
             transition: all 0.3s ease;
             font-weight: 500;
             display: block;
-            margin: 12px 0;
-            padding: 5px 0;
+            margin: 12px 0; /* Espaciado uniforme */
+            padding: 5px 0; /* Pequeño padding para mejor tact */
         }
 
         .register-links a:hover {
@@ -159,28 +160,42 @@
             text-decoration: underline;
         }
 
-        .error {
+        .error,
+        .success {
             color: #ff6b6b;
             font-size: 0.9rem;
             margin-bottom: 15px;
             text-align: center;
-            padding: 0 10px;
+            padding: 0 10px; /* Alineado con el resto */
         }
 
         .success {
-            color: #6bff6b;
+            color: #2ecc71;
+        }
+
+        #password-requirements {
+            text-align: left;
+            margin-bottom: 20px;
             font-size: 0.9rem;
-            margin-bottom: 15px;
-            text-align: center;
-            padding: 0 10px;
+            padding: 0 10px; /* Alineado */
+            color: #ffffff;
+        }
+
+        #password-requirements ul {
+            padding-left: 20px;
+            margin: 0;
+        }
+
+        #password-requirements li {
+            color: #ff6b6b; /* Rojo por defecto */
+        }
+
+        #password-requirements li.valid {
+            color: #2ecc71; /* Verde cuando válido */
         }
 
         #error-message {
-            color: #ff6b6b;
-            font-size: 0.9rem;
-            margin-bottom: 15px;
-            text-align: center;
-            padding: 0 10px;
+            display: none;
         }
 
         @media (max-width: 576px) {
@@ -194,7 +209,7 @@
             
             .input-container, 
             .button-container {
-                padding: 0 5px;
+                padding: 0 5px; /* Padding ligeramente menor en móviles */
             }
         }
     </style>
@@ -220,26 +235,90 @@
             <div class="input-container">
                 <input type="password" name="password" id="password" placeholder="Contraseña" required>
             </div>
+            <div id="password-requirements">
+                <ul>
+                    <li id="length">Al menos 8 caracteres</li>
+                    <li id="uppercase">Al menos una letra mayúscula</li>
+                    <li id="symbol">Al menos un símbolo (!@#$%^&*()_+-=[]{}|;':",./<>?)</li>
+                </ul>
+            </div>
             <div class="input-container">
                 <input type="password" name="confirm_password" id="confirm_password" placeholder="Confirmar contraseña" required>
             </div>
-            <div id="error-message" style="display:none;"></div>
+            <div id="error-message" class="error"></div>
             <div class="button-container">
-                <button type="submit">Registrarse</button>
+                <button type="submit">Registrar</button>
             </div>
         </form>
         
         <div class="register-links">
-            <a href="<?= site_url('login') ?>">¿Ya tienes una cuenta? Inicia sesión</a>
+            <a href="<?= site_url('login') ?>">Ir a login</a>
         </div>
     </div>
 
     <script>
+        const passwordInput = document.getElementById('password');
+        const lengthReq = document.getElementById('length');
+        const uppercaseReq = document.getElementById('uppercase');
+        const symbolReq = document.getElementById('symbol');
+
+        passwordInput.addEventListener('input', function () {
+            const password = passwordInput.value;
+
+            // Validar longitud
+            if (password.length >= 8) {
+                lengthReq.classList.add('valid');
+            } else {
+                lengthReq.classList.remove('valid');
+            }
+
+            // Validar mayúscula
+            if (/[A-Z]/.test(password)) {
+                uppercaseReq.classList.add('valid');
+            } else {
+                uppercaseReq.classList.remove('valid');
+            }
+
+            // Validar símbolo
+            if (/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password)) {
+                symbolReq.classList.add('valid');
+            } else {
+                symbolReq.classList.remove('valid');
+            }
+        });
+
         document.getElementById('registrationForm').addEventListener('submit', function (event) {
             const password = document.getElementById('password').value;
             const confirmPassword = document.getElementById('confirm_password').value;
             const errorMessage = document.getElementById('error-message');
 
+            // Verificar requisitos de contraseña
+            let passwordValid = true;
+            let errorText = '';
+
+            if (password.length < 8) {
+                passwordValid = false;
+                errorText += 'La contraseña debe tener al menos 8 caracteres. ';
+            }
+
+            if (!/[A-Z]/.test(password)) {
+                passwordValid = false;
+                errorText += 'La contraseña debe tener al menos una letra mayúscula. ';
+            }
+
+            if (!/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password)) {
+                passwordValid = false;
+                errorText += 'La contraseña debe tener al menos un símbolo. ';
+            }
+
+            if (!passwordValid) {
+                errorMessage.textContent = errorText;
+                errorMessage.style.display = 'block';
+                event.preventDefault();
+                return;
+            }
+
+            // Verificar coincidencia de contraseñas
             if (password !== confirmPassword) {
                 errorMessage.textContent = 'Las contraseñas no coinciden.';
                 errorMessage.style.display = 'block';
@@ -249,5 +328,7 @@
             }
         });
     </script>
+
 </body>
+
 </html>
