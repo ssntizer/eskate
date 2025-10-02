@@ -1,0 +1,70 @@
+INFO - 2025-10-02 17:09:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-10-02 17:09:48 --> Email: Unable to send email using SMTP. Your server might not be configured to send mail using this method.
+ERROR - 2025-10-02 17:09:48 --> 220 smtp.gmail.com ESMTP 41be03b00d2f7-b6099f5b7c5sm2361587a12.42 - gsmtp
+
+hello: 250-smtp.gmail.com at your service, [186.124.202.171]
+250-SIZE 35882577
+250-8BITMIME
+250-AUTH LOGIN PLAIN XOAUTH2 PLAIN-CLIENTTOKEN OAUTHBEARER XOAUTH
+250-ENHANCEDSTATUSCODES
+250-PIPELINING
+250-CHUNKING
+250 SMTPUTF8
+
+Failed to authenticate password. Error: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials 41be03b00d2f7-b6099f5b7c5sm2361587a12.42 - gsmtp
+
+ERROR - 2025-10-02 17:09:48 --> 220 smtp.gmail.com ESMTP 41be03b00d2f7-b6099f5b7c5sm2361587a12.42 - gsmtp
+<br><pre>hello: 250-smtp.gmail.com at your service, [186.124.202.171]
+250-SIZE 35882577
+250-8BITMIME
+250-AUTH LOGIN PLAIN XOAUTH2 PLAIN-CLIENTTOKEN OAUTHBEARER XOAUTH
+250-ENHANCEDSTATUSCODES
+250-PIPELINING
+250-CHUNKING
+250 SMTPUTF8
+</pre>Failed to authenticate password. Error: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials 41be03b00d2f7-b6099f5b7c5sm2361587a12.42 - gsmtp
+<br>Unable to send email using SMTP. Your server might not be configured to send mail using this method.<br><pre>Date: Thu, 2 Oct 2025 17:09:47 +0000
+To: erieventurini@alumnos.itr3.edu.ar
+Subject: =?UTF-8?Q?Verifica=20tu=20cuenta?=
+From: &quot;E-Skate&quot; &lt;eskatevz@gmail.com&gt;
+Return-Path: &lt;eskatevz@gmail.com&gt;
+Reply-To: &lt;eskatevz@gmail.com&gt;
+User-Agent: CodeIgniter
+X-Sender: eskatevz@gmail.com
+X-Mailer: CodeIgniter
+X-Priority: 3 (Normal)
+Message-ID: &lt;68deb1db0cf7b7.31884377@gmail.com&gt;
+Mime-Version: 1.0
+
+</pre>
+INFO - 2025-10-02 17:09:48 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 17:11:40 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 17:11:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 17:11:50 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 17:11:52 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 17:12:05 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-10-02 17:12:06 --> User found: Array
+(
+    [id] => 99
+    [username] => Erie
+    [email] => erieventurini@alumnos.itr3.edu.ar
+    [password] => $2y$10$uGyOoLDAjyckRRgwrN3EveLH71.RMbtVEND5znTATAh9PwULn2m8O
+    [reset_token] => 
+    [reset_expiration] => 
+    [email_reset_token] => 
+    [email_reset_expire] => 
+    [password_reset_token] => 
+    [password_reset_expire] => 
+    [is_active] => 1
+    [verification_token] => 
+    [verification_expires] => 
+    [created_at] => 2025-10-02 17:11:40
+)
+
+DEBUG - 2025-10-02 17:12:07 --> Password verified successfully.
+INFO - 2025-10-02 17:12:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 17:13:43 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 17:14:53 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 17:14:54 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
