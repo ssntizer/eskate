@@ -47,3 +47,4 @@ $routes->group('', ['filter' => 'auth'], function($routes) {
 
 // Rutas del SkateController (si necesitan autenticación, deberías moverlas al grupo)
 $routes->post('/skate/update', 'SkateController::updateSkateData');
+$routes->get('test/email', 'PasswordResetController::debugEmail'); 

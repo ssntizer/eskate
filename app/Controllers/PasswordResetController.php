@@ -71,5 +71,39 @@ class PasswordResetController extends Controller
         }
     }
 
+     public function debugEmail()
+    {
+        // ** CAMBIA ESTO ** a un correo tuyo personal para recibir la prueba.
+        $testEmail = 'tu_correo_personal@dominio.com'; 
+        $asunto = 'Prueba de Conexión SMTP CodeIgniter';
+        $cuerpo = '¡Hola! Si ves este correo, la configuración SMTP y la Contraseña de Aplicación funcionan correctamente. Si no lo ves, el log a continuación tendrá la respuesta.';
+
+        $emailService = \Config\Services::email();
+
+        // Si has cambiado la configuración en Config/Email.php, no necesitas esto. 
+        // Si no has hecho el cambio, puedes forzar el uso de la config 587/TLS aquí:
+        /*
+        $emailService->SMTPPort = 587;
+        $emailService->SMTPCrypto = 'tls';
+        $emailService->initialize();
+        */
+
+        $emailService->setTo($testEmail);
+        $emailService->setSubject($asunto);
+        $emailService->setMessage($cuerpo);
+
+        // Intenta enviar el correo
+        if ($emailService->send()) {
+            echo "<h1>✅ Éxito: Correo de prueba enviado a {$testEmail}.</h1>";
+            echo "<p>Revisa tu bandeja de entrada o spam. ¡El problema ha sido resuelto!</p>";
+        } else {
+            // Muestra los errores detallados de la conexión SMTP
+            echo "<h1>❌ Error al enviar el correo.</h1>";
+            echo "<p>Copia el contenido del recuadro de abajo para que podamos diagnosticar el problema de conexión.</p>";
+            // Imprime el log de depuración (CRÍTICO para ver por qué falla)
+            echo "<pre style='background-color:#f8d7da; padding:15px; border: 1px solid #f5c6cb; color:#721c24;'>" . $emailService->printDebugger(['headers', 'subject', 'body']) . "</pre>";
+        }
+    }
+
 }
 
