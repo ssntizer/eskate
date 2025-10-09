@@ -16,7 +16,7 @@ class MqttSubscriber {
 
     public function run() {
         $server = 'broker.hivemq.com';
-        $port = 1883;
+        $port = 1884;
         $clientId = 'php_mqtt_subscriber_' . uniqid();
         $topic = 'skate/data';
 
