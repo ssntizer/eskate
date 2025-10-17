@@ -1,0 +1,280 @@
+INFO - 2025-10-17 11:38:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-17 11:39:23 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-17 11:39:34 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-10-17 11:39:35 --> User found: Array
+(
+    [id] => 99
+    [username] => Erie
+    [email] => erieventurini@alumnos.itr3.edu.ar
+    [password] => $2y$10$uGyOoLDAjyckRRgwrN3EveLH71.RMbtVEND5znTATAh9PwULn2m8O
+    [reset_token] => 623d91
+    [reset_expiration] => 2025-10-17 04:14:25
+    [email_reset_token] => 
+    [email_reset_expire] => 
+    [password_reset_token] => 
+    [password_reset_expire] => 
+    [is_active] => 1
+    [verification_token] => 
+    [verification_expires] => 
+    [created_at] => 2025-10-02 17:11:40
+)
+
+DEBUG - 2025-10-17 11:39:36 --> Password verified successfully.
+INFO - 2025-10-17 11:39:36 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-17 13:04:30 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-17 13:04:33 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-17 13:05:39 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-10-17 13:05:41 --> User found: Array
+(
+    [id] => 99
+    [username] => Erie
+    [email] => erieventurini@alumnos.itr3.edu.ar
+    [password] => $2y$10$uGyOoLDAjyckRRgwrN3EveLH71.RMbtVEND5znTATAh9PwULn2m8O
+    [reset_token] => 623d91
+    [reset_expiration] => 2025-10-17 04:14:25
+    [email_reset_token] => 
+    [email_reset_expire] => 
+    [password_reset_token] => 
+    [password_reset_expire] => 
+    [is_active] => 1
+    [verification_token] => 
+    [verification_expires] => 
+    [created_at] => 2025-10-02 17:11:40
+)
+
+DEBUG - 2025-10-17 13:05:41 --> Password verified successfully.
+INFO - 2025-10-17 13:05:42 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-17 13:05:46 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-17 13:05:48 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-17 13:05:51 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-17 13:06:03 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-17 13:06:03 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-17 13:06:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-17 13:07:05 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-17 13:07:10 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-17 13:09:18 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-17 13:10:15 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-17 13:10:19 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-17 13:23:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-17 13:23:09 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-17 13:23:10 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-17 13:23:11 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-17 13:23:13 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-17 13:23:13 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-17 13:23:21 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-10-17 13:23:22 --> User found: Array
+(
+    [id] => 99
+    [username] => Erie
+    [email] => erieventurini@alumnos.itr3.edu.ar
+    [password] => $2y$10$uGyOoLDAjyckRRgwrN3EveLH71.RMbtVEND5znTATAh9PwULn2m8O
+    [reset_token] => 623d91
+    [reset_expiration] => 2025-10-17 04:14:25
+    [email_reset_token] => 
+    [email_reset_expire] => 
+    [password_reset_token] => 
+    [password_reset_expire] => 
+    [is_active] => 1
+    [verification_token] => 
+    [verification_expires] => 
+    [created_at] => 2025-10-02 17:11:40
+)
+
+DEBUG - 2025-10-17 13:23:22 --> Password verified successfully.
+INFO - 2025-10-17 13:23:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-10-17 13:23:22 --> ID recibido: 1
+DEBUG - 2025-10-17 13:23:22 --> Modelos disponibles: Array
+(
+    [0] => 1
+    [1] => 2
+    [2] => 3
+)
+
+DEBUG - 2025-10-17 13:23:22 --> Modelo encontrado: Array
+(
+    [id] => 1
+    [nombre] => E-Skate 1
+    [precio] => $299
+    [descripcion] => Descripción del Modelo E-Skate 1.
+    [imagen] => https://imgs.search.brave.com/tps24H47-2oaLseYhRphCnOSszeFXtoK-3EaI9JezrA/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9za2F0/ZXNlbGVjdHJpY29z/LmNvbS93cC1jb250/ZW50L3VwbG9hZHMv/MjAyMS8wNi9tZWVw/by1taW5pMi1zY2Fs/ZWQuanBlZw
+)
+
+INFO - 2025-10-17 13:23:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-10-17 13:23:29 --> ID recibido: 2
+DEBUG - 2025-10-17 13:23:29 --> Modelos disponibles: Array
+(
+    [0] => 1
+    [1] => 2
+    [2] => 3
+)
+
+DEBUG - 2025-10-17 13:23:29 --> Modelo encontrado: Array
+(
+    [id] => 2
+    [nombre] => E-Skate 2
+    [precio] => $599
+    [descripcion] => Descripción del Modelo E-Skate 2.
+    [imagen] => https://imgs.search.brave.com/qH8RsQ019QLQkGLFWZExzsnL4kvsrQ_GwfP-ckTx5pI/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL0kv/NTF1a3dQK3F5b1Mu/anBn
+)
+
+INFO - 2025-10-17 13:23:34 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-10-17 13:23:34 --> ID recibido: 1
+DEBUG - 2025-10-17 13:23:34 --> Modelos disponibles: Array
+(
+    [0] => 1
+    [1] => 2
+    [2] => 3
+)
+
+DEBUG - 2025-10-17 13:23:34 --> Modelo encontrado: Array
+(
+    [id] => 1
+    [nombre] => E-Skate 1
+    [precio] => $299
+    [descripcion] => Descripción del Modelo E-Skate 1.
+    [imagen] => https://imgs.search.brave.com/tps24H47-2oaLseYhRphCnOSszeFXtoK-3EaI9JezrA/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9za2F0/ZXNlbGVjdHJpY29z/LmNvbS93cC1jb250/ZW50L3VwbG9hZHMv/MjAyMS8wNi9tZWVw/by1taW5pMi1zY2Fs/ZWQuanBlZw
+)
+
+INFO - 2025-10-17 13:23:38 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-17 13:25:02 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-17 13:25:02 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-17 13:25:05 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-17 13:25:06 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-17 13:25:19 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-10-17 13:25:20 --> User found: Array
+(
+    [id] => 85
+    [username] => santiago
+    [email] => santizerbini3@gmail.com
+    [password] => $2y$10$dv5wdF5ZEDehZo5tJO1KJu/KUNejCawxhStFVHeo.YFkcmXBPLL1a
+    [reset_token] => 2bcf81
+    [reset_expiration] => 2025-10-02 18:07:38
+    [email_reset_token] => 933bbc588a8b621aeea25d63a0028d1e
+    [email_reset_expire] => 2025-05-16 12:10:08
+    [password_reset_token] => 
+    [password_reset_expire] => 
+    [is_active] => 1
+    [verification_token] => 
+    [verification_expires] => 
+    [created_at] => 
+)
+
+DEBUG - 2025-10-17 13:25:20 --> Password verified successfully.
+INFO - 2025-10-17 13:25:20 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-17 13:25:26 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-10-17 13:25:26 --> ID recibido: 1
+DEBUG - 2025-10-17 13:25:26 --> Modelos disponibles: Array
+(
+    [0] => 1
+    [1] => 2
+    [2] => 3
+)
+
+DEBUG - 2025-10-17 13:25:26 --> Modelo encontrado: Array
+(
+    [id] => 1
+    [nombre] => E-Skate 1
+    [precio] => $299
+    [descripcion] => Descripción del Modelo E-Skate 1.
+    [imagen] => https://imgs.search.brave.com/tps24H47-2oaLseYhRphCnOSszeFXtoK-3EaI9JezrA/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9za2F0/ZXNlbGVjdHJpY29z/LmNvbS93cC1jb250/ZW50L3VwbG9hZHMv/MjAyMS8wNi9tZWVw/by1taW5pMi1zY2Fs/ZWQuanBlZw
+)
+
+INFO - 2025-10-17 13:25:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-17 13:25:28 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-17 13:26:00 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-17 13:28:56 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-17 13:28:58 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-17 13:32:38 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-17 13:32:38 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-17 13:33:44 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-17 13:33:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-17 13:34:00 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-17 13:34:01 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-17 13:34:11 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-17 13:59:59 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-17 14:00:46 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-17 14:01:36 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-17 14:02:10 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-17 14:04:21 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-17 14:16:52 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-17 14:17:03 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-17 14:18:21 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-17 14:22:33 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-17 14:22:35 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-17 14:23:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-17 14:29:11 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-17 14:31:12 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-17 14:31:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+WARNING - 2025-10-17 14:31:23 --> [DEPRECATED] password_verify(): Passing null to parameter #1 ($password) of type string is deprecated in APPPATH\Models\UserModel.php on line 61.
+ 1 APPPATH\Models\UserModel.php(61): password_verify(Object(SensitiveParameterValue), '$2y$10$dv5wdF5ZEDehZo5tJO1KJu/KUNejCawxhStFVHeo.YFkcmXBPLL1a')
+ 2 APPPATH\Controllers\AuthController.php(656): App\Models\UserModel->verifyPassword('santizerbini3@gmail.com', null)
+ 3 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\AuthController->updateUserProfile()
+ 4 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+ 5 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 8 FCPATH\index.php(58): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+INFO - 2025-10-17 14:31:23 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-17 14:31:32 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+WARNING - 2025-10-17 14:31:33 --> [DEPRECATED] password_verify(): Passing null to parameter #1 ($password) of type string is deprecated in APPPATH\Models\UserModel.php on line 61.
+ 1 APPPATH\Models\UserModel.php(61): password_verify(Object(SensitiveParameterValue), '$2y$10$dv5wdF5ZEDehZo5tJO1KJu/KUNejCawxhStFVHeo.YFkcmXBPLL1a')
+ 2 APPPATH\Controllers\AuthController.php(656): App\Models\UserModel->verifyPassword('santizerbini3@gmail.com', null)
+ 3 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\AuthController->updateUserProfile()
+ 4 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+ 5 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 8 FCPATH\index.php(58): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+INFO - 2025-10-17 14:31:33 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-17 14:31:44 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-17 14:31:49 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+WARNING - 2025-10-17 14:31:50 --> [DEPRECATED] password_verify(): Passing null to parameter #1 ($password) of type string is deprecated in APPPATH\Models\UserModel.php on line 61.
+ 1 APPPATH\Models\UserModel.php(61): password_verify(Object(SensitiveParameterValue), '$2y$10$dv5wdF5ZEDehZo5tJO1KJu/KUNejCawxhStFVHeo.YFkcmXBPLL1a')
+ 2 APPPATH\Controllers\AuthController.php(656): App\Models\UserModel->verifyPassword('santizerbini3@gmail.com', null)
+ 3 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\AuthController->updateUserProfile()
+ 4 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+ 5 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 8 FCPATH\index.php(58): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+INFO - 2025-10-17 14:31:50 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-17 14:31:58 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+WARNING - 2025-10-17 14:31:59 --> [DEPRECATED] password_verify(): Passing null to parameter #1 ($password) of type string is deprecated in APPPATH\Models\UserModel.php on line 61.
+ 1 APPPATH\Models\UserModel.php(61): password_verify(Object(SensitiveParameterValue), '$2y$10$dv5wdF5ZEDehZo5tJO1KJu/KUNejCawxhStFVHeo.YFkcmXBPLL1a')
+ 2 APPPATH\Controllers\AuthController.php(656): App\Models\UserModel->verifyPassword('santizerbini3@gmail.com', null)
+ 3 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\AuthController->updateUserProfile()
+ 4 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+ 5 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 8 FCPATH\index.php(58): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+INFO - 2025-10-17 14:31:59 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-17 14:35:32 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-17 14:36:05 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-17 14:36:11 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-17 14:36:13 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-17 14:36:32 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-17 14:36:34 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-17 14:39:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-17 14:39:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-17 14:40:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-17 14:40:24 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-17 14:41:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-17 14:41:26 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-17 14:41:28 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-17 14:41:42 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-17 14:41:48 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-17 14:41:57 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-17 14:41:59 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-17 14:42:04 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-17 14:42:05 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-17 14:42:30 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-17 14:42:38 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-17 14:42:42 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-17 14:42:58 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-17 14:42:59 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-17 14:43:19 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-17 14:43:23 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-17 14:44:51 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-17 14:45:00 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-17 14:45:01 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.

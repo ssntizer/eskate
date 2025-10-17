@@ -602,7 +602,7 @@ footer a:hover {
 </section>
 
 <footer>
-        <p>&copy; 2024 E-Skate. Todos los derechos reservados.</p>
+        <p>&copy; 2024 E-skate - Diseñado para la acción.</p>
         <p><a href="#">Política de Privacidad</a> | <a href="#">Términos de Servicio</a></p>
     </div>
 </footer>

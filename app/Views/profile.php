@@ -933,15 +933,8 @@
             errorText += 'Debes ingresar tu contraseña actual para cambiarla. ';
         }
 
-        if (password === '') {
-            passwordValid = false;
-            errorText += 'Debes ingresar una nueva contraseña. ';
-        }
-
-        if (confirmPassword === '') {
-            passwordValid = false;
-            errorText += 'Debes confirmar la nueva contraseña. ';
-        }
+        
+    if(password !== ''){
 
         if (password.length < 8) {
             passwordValid = false;
@@ -964,6 +957,7 @@
             event.preventDefault();
             return;
         }
+    }
 
         // Verificar coincidencia de contraseñas
         if (password !== confirmPassword) {
