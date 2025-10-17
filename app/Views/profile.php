@@ -756,7 +756,7 @@
 
                  <div class="password-section">
                      <h4>Cambiar Contraseña o Email</h4>
-                     <p>Para cambiar tu contraseña, Email o ambas debes ingresar tu contraseña actual.</p>
+                     <p>Para cambiar tus datos debes ingresar tu contraseña actual.</p>
 
                      <div class="form-group">
                         <label for="current_password">Contraseña Actual:</label>
