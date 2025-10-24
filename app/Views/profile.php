@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mi Perfil - E-Skate</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel=" LETTERspacing" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Quicksand:wght@500;700&family=Baskervville&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style>
@@ -246,30 +246,24 @@
         }
 
         .profile-container .form-group {
-            display: flex; /* Usar flexbox para alinear */
-            align-items: center; /* Alinear verticalmente los elementos */
-            position: relative; /* Mantener para el posicionamiento absoluto del botón en móviles si es necesario */
+            display: flex;
+            flex-direction: column;
             margin-bottom: 20px;
-            flex-wrap: wrap; /* Permite que los elementos se envuelvan en la siguiente línea */
         }
 
         .profile-container .form-group label {
             color: #ffffff;
             font-weight: bold;
-            margin-bottom: 0; /* Eliminar el margen inferior para flexbox */
+            margin-bottom: 5px;
             display: block;
-            flex-basis: 25%; /* Ancho de la etiqueta */
+            width: 100%;
             text-align: left;
-            margin-right: 10px; /* Espacio entre etiqueta e input */
-            min-width: 90px; /* Asegura un ancho mínimo para la etiqueta */
         }
 
         /* Estilo para el nuevo contenedor del input y botón */
         .input-group-wrapper {
-            display: flex;
-            align-items: center;
-            flex-grow: 1; /* Permite que el wrapper ocupe el espacio restante */
-            position: relative; /* Para el posicionamiento absoluto del botón dentro */
+            width: 100%;
+            position: relative;
         }
 
         .profile-container input[type="text"],
@@ -277,7 +271,7 @@
         .profile-container input[type="password"] {
             width: 100%;
             padding: 12px;
-            margin-bottom: 0; /* Eliminar el margen inferior para flexbox */
+            margin-bottom: 0;
             border-radius: 8px;
             border: 2px solid #004b6b;
             background-color: rgba(255, 255, 255, 0.9);
@@ -285,8 +279,12 @@
             font-size: 1rem;
             color: #333;
             box-sizing: border-box;
-            flex-grow: 1; /* Permitir que el input ocupe el espacio restante */
-            padding-right: 10px; /* Reducir el padding derecho ya que el botón está fuera del input */
+        }
+
+        .profile-container .input-group-wrapper input[type="text"],
+        .profile-container .input-group-wrapper input[type="email"],
+        .profile-container .input-group-wrapper input[type="password"] {
+            padding-right: 110px;
         }
 
         .profile-container input[type="text"]:disabled,
@@ -312,9 +310,10 @@
 
         /* Botón de Cambiar - Ajustado para Flexbox y efecto hover */
         .profile-container .form-group .change-btn {
-            position: relative; /* Cambiado a relative para el efecto hover, y static para el flexbox */
-            transform: none; /* Eliminar la transformación de centrado vertical */
-            margin-left: 10px; /* Espacio entre el input y el botón */
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
             background-color: #ffcc00;
             color: #333;
             border: none;
@@ -323,9 +322,8 @@
             cursor: pointer;
             font-weight: 600;
             transition: all 0.3s ease;
-            height: auto;
-            min-width: 90px; /* Añadido un ancho mínimo */
-            max-width: 120px; /* Añadido un ancho máximo para controlar la expansión */
+            min-width: 90px;
+            max-width: 120px;
             font-size: 0.85rem;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
             z-index: 1;
@@ -333,7 +331,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            flex-shrink: 0; /* Evita que el botón se encoja */
+            flex-shrink: 0;
         }
 
         .change-btn::before {
@@ -352,7 +350,7 @@
         .change-btn:hover {
             background-color: #ffb700;
             color: #333;
-            transform: translateY(-2px);
+            transform: translateY(-50%) translateY(-2px);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         }
 
@@ -439,8 +437,6 @@
             display: block;
             font-size: 0.9rem;
             width: 100%;
-            flex-basis: 100%; /* Ocupa toda la línea en un contexto flex */
-            order: 4; /* Lo coloca al final de los elementos flex */
         }
 
         .password-section {
@@ -502,13 +498,6 @@
             .header-buttons {
                 display: flex;
             }
-            .profile-container .form-group .change-btn {
-                position: relative; /* Vuelve a ser relativo en desktop */
-                transform: none;
-                margin-left: 10px;
-                top: auto;
-                right: auto;
-            }
         }
 
         @media (max-width: 767.98px) {
@@ -544,49 +533,21 @@
                 font-size: 1.8rem;
             }
 
-            .profile-container .form-group {
-                flex-direction: column; /* Apila los elementos en móvil */
-                align-items: flex-start; /* Alinea al inicio de la columna */
-            }
-
-            .profile-container .form-group label {
-                width: 100%; /* Ocupa todo el ancho en móvil */
-                margin-bottom: 5px; /* Espacio debajo de la etiqueta */
-                margin-right: 0; /* Eliminar margen derecho */
-                text-align: left;
-            }
-
-            .input-group-wrapper {
-                display: flex; /* Convierte este contenedor en un flex container */
-                align-items: center; /* Centra verticalmente el input y el botón */
-                width: 100%; /* Ocupa el 100% del ancho disponible */
-                position: relative; /* Necesario para posicionar el botón dentro de este wrapper */
-            }
-
             .profile-container input[type="text"],
             .profile-container input[type="email"],
             .profile-container input[type="password"] {
-                flex-grow: 1; /* Permite que el input crezca para ocupar el espacio disponible */
                 padding: 10px;
-                margin-bottom: 0; /* Eliminar el margen inferior, ya que el botón estará al lado */
-                padding-right: 90px; /* Dejar espacio para el botón Cambiar */
             }
 
-            /* Botón "Cambiar" en móvil - Posicionamiento absoluto dentro del nuevo wrapper */
+            .profile-container .input-group-wrapper input[type="text"],
+            .profile-container .input-group-wrapper input[type="email"],
+            .profile-container .input-group-wrapper input[type="password"] {
+                padding-right: 90px;
+            }
+
             .profile-container .form-group .change-btn {
-                position: absolute;
-                right: 10px; /* 10px desde el borde derecho del .input-group-wrapper */
-                top: 50%; /* Centra verticalmente el botón dentro del wrapper */
-                transform: translateY(-50%); /* Ajuste fino para centrar verticalmente */
-                margin-left: 0; /* Eliminar margen izquierdo */
                 font-size: 0.8rem;
                 padding: 6px 10px;
-                height: auto;
-                width: auto;
-                min-width: unset; /* Eliminar min-width específico para móvil si no es necesario */
-                max-width: unset; /* Eliminar max-width específico para móvil si no es necesario */
-                border-radius: 50px; /* Asegura los bordes redondeados en móvil también */
-                flex-shrink: 0; /* Evita que el botón se encoja */
             }
 
             .profile-container button[type="submit"] {
@@ -620,6 +581,10 @@
             .profile-container input[type="password"] {
                 padding: 8px;
                 font-size: 0.9rem;
+            }
+            .profile-container .input-group-wrapper input[type="text"],
+            .profile-container .input-group-wrapper input[type="email"],
+            .profile-container .input-group-wrapper input[type="password"] {
                 padding-right: 80px;
             }
             /* Ajuste para el botón Cambiar en móviles muy pequeños */
