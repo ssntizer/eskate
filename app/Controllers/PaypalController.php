@@ -12,7 +12,7 @@ class PayPalController extends Controller
     public function createOrder()
     {
         $input = $this->request->getJSON();
-        $amount = $input->amount ?? "10.00";
+        $amount = $input->amount ?? 0;
 
         $accessToken = $this->getAccessToken();
         if (!$accessToken) {
@@ -94,14 +94,27 @@ class PayPalController extends Controller
     {
         $db = \Config\Database::connect();
         
+        $monto = 0;
+        $moneda = 'USD';
+
+        // ⭐ CORRECCIÓN: Intenta obtener el monto del array 'captures'
+        // que es donde reside el monto final de la transacción capturada.
+        $captureAmountPath = $paymentData['purchase_units'][0]['payments']['captures'][0]['amount'] ?? null;
+        
+        if ($captureAmountPath) {
+            $monto = $captureAmountPath['value'] ?? 0;
+            $moneda = $captureAmountPath['currency_code'] ?? 'USD';
+        }
+        // FIN DE LA CORRECCIÓN
+
         try {
             $db->transStart();
             
             $data = [
                 'order_id' => $orderID,
                 'email' => $paymentData['payer']['email_address'] ?? '',
-                'monto' => $paymentData['purchase_units'][0]['amount']['value'] ?? 0,
-                'moneda' => $paymentData['purchase_units'][0]['amount']['currency_code'] ?? 'USD',
+                'monto' => $monto, // ¡Usamos la variable $monto corregida!
+                'moneda' => $moneda,
                 'fecha' => date('Y-m-d H:i:s'),
                 'estado' => strtolower($paymentData['status']),
                 'detalles' => json_encode($paymentData)

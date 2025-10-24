@@ -373,7 +373,7 @@ body {
                 <h1 class="product-title">Modelo <?= $modelo['nombre'] ?></h1>
                 <p class="product-price">Precio: <?= $modelo['precio'] ?></p>
                 <p class="product-description"><?= $modelo['descripcion'] ?></p>
-                <a class="btn btn-buy" href="<?= site_url('comprar') ?>">Comprar</a>
+                <a class="btn btn-buy" href="<?= site_url('comprar/' . $modelo['precio']) ?>">Comprar</a>
             </div>
         </div>
 

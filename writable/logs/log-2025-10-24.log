@@ -1,0 +1,361 @@
+INFO - 2025-10-24 11:10:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-24 11:10:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-24 11:10:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-10-24 11:10:31 --> User found: Array
+(
+    [id] => 99
+    [username] => Erie
+    [email] => erieventurini@alumnos.itr3.edu.ar
+    [password] => $2y$10$uGyOoLDAjyckRRgwrN3EveLH71.RMbtVEND5znTATAh9PwULn2m8O
+    [reset_token] => 623d91
+    [reset_expiration] => 2025-10-17 04:14:25
+    [email_reset_token] => 
+    [email_reset_expire] => 
+    [password_reset_token] => 
+    [password_reset_expire] => 
+    [is_active] => 1
+    [verification_token] => 
+    [verification_expires] => 
+    [created_at] => 2025-10-02 17:11:40
+)
+
+DEBUG - 2025-10-24 11:10:32 --> Password verification failed.
+INFO - 2025-10-24 11:10:32 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-24 11:10:41 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-10-24 11:10:42 --> User found: Array
+(
+    [id] => 85
+    [username] => santiago
+    [email] => santizerbini3@gmail.com
+    [password] => $2y$10$dv5wdF5ZEDehZo5tJO1KJu/KUNejCawxhStFVHeo.YFkcmXBPLL1a
+    [reset_token] => 180490714f647b88eb5bc956780f9363
+    [reset_expiration] => 2025-10-17 15:43:20
+    [email_reset_token] => 933bbc588a8b621aeea25d63a0028d1e
+    [email_reset_expire] => 2025-05-16 12:10:08
+    [password_reset_token] => 
+    [password_reset_expire] => 
+    [is_active] => 1
+    [verification_token] => 
+    [verification_expires] => 
+    [created_at] => 
+)
+
+DEBUG - 2025-10-24 11:10:42 --> Password verified successfully.
+INFO - 2025-10-24 11:10:43 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-10-24 11:10:43 --> ID recibido: 2
+DEBUG - 2025-10-24 11:10:43 --> Modelos disponibles: Array
+(
+    [0] => 1
+    [1] => 2
+    [2] => 3
+)
+
+DEBUG - 2025-10-24 11:10:43 --> Modelo encontrado: Array
+(
+    [id] => 2
+    [nombre] => E-Skate 2
+    [precio] => $599
+    [descripcion] => Descripción del Modelo E-Skate 2.
+    [imagen] => https://imgs.search.brave.com/qH8RsQ019QLQkGLFWZExzsnL4kvsrQ_GwfP-ckTx5pI/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL0kv/NTF1a3dQK3F5b1Mu/anBn
+)
+
+INFO - 2025-10-24 11:10:55 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-24 11:11:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-24 11:20:49 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-10-24 11:20:49 --> ID recibido: 2
+DEBUG - 2025-10-24 11:20:49 --> Modelos disponibles: Array
+(
+    [0] => 1
+    [1] => 2
+    [2] => 3
+)
+
+DEBUG - 2025-10-24 11:20:49 --> Modelo encontrado: Array
+(
+    [id] => 2
+    [nombre] => E-Skate 2
+    [precio] => $599
+    [descripcion] => Descripción del Modelo E-Skate 2.
+    [imagen] => https://imgs.search.brave.com/qH8RsQ019QLQkGLFWZExzsnL4kvsrQ_GwfP-ckTx5pI/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL0kv/NTF1a3dQK3F5b1Mu/anBn
+)
+
+INFO - 2025-10-24 11:20:50 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-24 11:20:50 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-24 11:22:30 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-24 11:22:30 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-24 11:22:43 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-10-24 11:22:44 --> User found: Array
+(
+    [id] => 85
+    [username] => santiago
+    [email] => santizerbini3@gmail.com
+    [password] => $2y$10$dv5wdF5ZEDehZo5tJO1KJu/KUNejCawxhStFVHeo.YFkcmXBPLL1a
+    [reset_token] => 180490714f647b88eb5bc956780f9363
+    [reset_expiration] => 2025-10-17 15:43:20
+    [email_reset_token] => 933bbc588a8b621aeea25d63a0028d1e
+    [email_reset_expire] => 2025-05-16 12:10:08
+    [password_reset_token] => 
+    [password_reset_expire] => 
+    [is_active] => 1
+    [verification_token] => 
+    [verification_expires] => 
+    [created_at] => 
+)
+
+DEBUG - 2025-10-24 11:22:45 --> Password verified successfully.
+INFO - 2025-10-24 11:22:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-10-24 11:22:45 --> ID recibido: 2
+DEBUG - 2025-10-24 11:22:45 --> Modelos disponibles: Array
+(
+    [0] => 1
+    [1] => 2
+    [2] => 3
+)
+
+DEBUG - 2025-10-24 11:22:45 --> Modelo encontrado: Array
+(
+    [id] => 2
+    [nombre] => E-Skate 2
+    [precio] => $599
+    [descripcion] => Descripción del Modelo E-Skate 2.
+    [imagen] => https://imgs.search.brave.com/qH8RsQ019QLQkGLFWZExzsnL4kvsrQ_GwfP-ckTx5pI/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL0kv/NTF1a3dQK3F5b1Mu/anBn
+)
+
+INFO - 2025-10-24 11:22:47 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-24 11:22:51 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-24 11:23:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-24 11:35:50 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-10-24 11:35:50 --> ID recibido: 2
+DEBUG - 2025-10-24 11:35:50 --> Modelos disponibles: Array
+(
+    [0] => 1
+    [1] => 2
+    [2] => 3
+)
+
+DEBUG - 2025-10-24 11:35:50 --> Modelo encontrado: Array
+(
+    [id] => 2
+    [nombre] => E-Skate 2
+    [precio] => $599
+    [descripcion] => Descripción del Modelo E-Skate 2.
+    [imagen] => https://imgs.search.brave.com/qH8RsQ019QLQkGLFWZExzsnL4kvsrQ_GwfP-ckTx5pI/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL0kv/NTF1a3dQK3F5b1Mu/anBn
+)
+
+INFO - 2025-10-24 11:35:51 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-10-24 11:35:51 --> ID recibido: 2
+DEBUG - 2025-10-24 11:35:51 --> Modelos disponibles: Array
+(
+    [0] => 1
+    [1] => 2
+    [2] => 3
+)
+
+DEBUG - 2025-10-24 11:35:51 --> Modelo encontrado: Array
+(
+    [id] => 2
+    [nombre] => E-Skate 2
+    [precio] => $599
+    [descripcion] => Descripción del Modelo E-Skate 2.
+    [imagen] => https://imgs.search.brave.com/qH8RsQ019QLQkGLFWZExzsnL4kvsrQ_GwfP-ckTx5pI/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL0kv/NTF1a3dQK3F5b1Mu/anBn
+)
+
+CRITICAL - 2025-10-24 11:35:54 --> CodeIgniter\HTTP\Exceptions\BadRequestException: The URI you submitted has disallowed characters: "$599"
+[Method: GET, Route: comprar/$599]
+in SYSTEMPATH/Router/Router.php on line 737.
+ 1 SYSTEMPATH/Router/Router.php(204): CodeIgniter\Router\Router->checkDisallowedChars('comprar/$599')
+ 2 SYSTEMPATH/CodeIgniter.php(834): CodeIgniter\Router\Router->handle('comprar/$599')
+ 3 SYSTEMPATH/CodeIgniter.php(457): CodeIgniter\CodeIgniter->tryToRouteIt(Object(CodeIgniter\Router\RouteCollection))
+ 4 SYSTEMPATH/CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH/Boot.php(325): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH/Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH/index.php(58): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH/rewrite.php(44): require_once('/Applications/MAMP/htdocs/eskate/public/index.php')
+INFO - 2025-10-24 11:36:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-10-24 11:36:22 --> ID recibido: 2
+DEBUG - 2025-10-24 11:36:22 --> Modelos disponibles: Array
+(
+    [0] => 1
+    [1] => 2
+    [2] => 3
+)
+
+DEBUG - 2025-10-24 11:36:22 --> Modelo encontrado: Array
+(
+    [id] => 2
+    [nombre] => E-Skate 2
+    [precio] => $599
+    [descripcion] => Descripción del Modelo E-Skate 2.
+    [imagen] => https://imgs.search.brave.com/qH8RsQ019QLQkGLFWZExzsnL4kvsrQ_GwfP-ckTx5pI/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL0kv/NTF1a3dQK3F5b1Mu/anBn
+)
+
+INFO - 2025-10-24 11:36:23 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-10-24 11:36:23 --> ID recibido: 2
+DEBUG - 2025-10-24 11:36:23 --> Modelos disponibles: Array
+(
+    [0] => 1
+    [1] => 2
+    [2] => 3
+)
+
+DEBUG - 2025-10-24 11:36:23 --> Modelo encontrado: Array
+(
+    [id] => 2
+    [nombre] => E-Skate 2
+    [precio] => $599
+    [descripcion] => Descripción del Modelo E-Skate 2.
+    [imagen] => https://imgs.search.brave.com/qH8RsQ019QLQkGLFWZExzsnL4kvsrQ_GwfP-ckTx5pI/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL0kv/NTF1a3dQK3F5b1Mu/anBn
+)
+
+CRITICAL - 2025-10-24 11:36:24 --> CodeIgniter\HTTP\Exceptions\BadRequestException: The URI you submitted has disallowed characters: "$599"
+[Method: GET, Route: comprar/$599]
+in SYSTEMPATH/Router/Router.php on line 737.
+ 1 SYSTEMPATH/Router/Router.php(204): CodeIgniter\Router\Router->checkDisallowedChars('comprar/$599')
+ 2 SYSTEMPATH/CodeIgniter.php(834): CodeIgniter\Router\Router->handle('comprar/$599')
+ 3 SYSTEMPATH/CodeIgniter.php(457): CodeIgniter\CodeIgniter->tryToRouteIt(Object(CodeIgniter\Router\RouteCollection))
+ 4 SYSTEMPATH/CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH/Boot.php(325): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH/Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH/index.php(58): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH/rewrite.php(44): require_once('/Applications/MAMP/htdocs/eskate/public/index.php')
+INFO - 2025-10-24 11:37:38 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-10-24 11:37:38 --> ID recibido: 2
+DEBUG - 2025-10-24 11:37:38 --> Modelos disponibles: Array
+(
+    [0] => 1
+    [1] => 2
+    [2] => 3
+)
+
+DEBUG - 2025-10-24 11:37:38 --> Modelo encontrado: Array
+(
+    [id] => 2
+    [nombre] => E-Skate 2
+    [precio] => 599
+    [descripcion] => Descripción del Modelo E-Skate 2.
+    [imagen] => https://imgs.search.brave.com/qH8RsQ019QLQkGLFWZExzsnL4kvsrQ_GwfP-ckTx5pI/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL0kv/NTF1a3dQK3F5b1Mu/anBn
+)
+
+INFO - 2025-10-24 11:37:38 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-10-24 11:37:38 --> ID recibido: 2
+DEBUG - 2025-10-24 11:37:38 --> Modelos disponibles: Array
+(
+    [0] => 1
+    [1] => 2
+    [2] => 3
+)
+
+DEBUG - 2025-10-24 11:37:38 --> Modelo encontrado: Array
+(
+    [id] => 2
+    [nombre] => E-Skate 2
+    [precio] => 599
+    [descripcion] => Descripción del Modelo E-Skate 2.
+    [imagen] => https://imgs.search.brave.com/qH8RsQ019QLQkGLFWZExzsnL4kvsrQ_GwfP-ckTx5pI/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL0kv/NTF1a3dQK3F5b1Mu/anBn
+)
+
+INFO - 2025-10-24 11:37:39 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2025-10-24 11:37:41 --> ErrorException: Undefined variable $monto_skate
+[Method: GET, Route: comprar/599]
+in APPPATH/Views/comprar.php on line 260.
+ 1 APPPATH/Views/comprar.php(260): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $monto_skate', '/Applications/MAMP/htdocs/eskate/app/Views/comprar.php', 260)
+ 2 SYSTEMPATH/View/View.php(234): include('/Applications/MAMP/htdocs/eskate/app/Views/comprar.php')
+ 3 SYSTEMPATH/View/View.php(237): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH/Common.php(1169): CodeIgniter\View\View->render('comprar', [...], true)
+ 5 APPPATH/Controllers/AuthController.php(487): view('comprar', [...], [...])
+ 6 SYSTEMPATH/CodeIgniter.php(933): App\Controllers\AuthController->comprar('599')
+ 7 SYSTEMPATH/CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+ 8 SYSTEMPATH/CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH/Boot.php(325): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH/Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH/index.php(58): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+12 SYSTEMPATH/rewrite.php(44): require_once('/Applications/MAMP/htdocs/eskate/public/index.php')
+INFO - 2025-10-24 11:40:31 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-10-24 11:40:31 --> ID recibido: 2
+DEBUG - 2025-10-24 11:40:31 --> Modelos disponibles: Array
+(
+    [0] => 1
+    [1] => 2
+    [2] => 3
+)
+
+DEBUG - 2025-10-24 11:40:31 --> Modelo encontrado: Array
+(
+    [id] => 2
+    [nombre] => E-Skate 2
+    [precio] => 599
+    [descripcion] => Descripción del Modelo E-Skate 2.
+    [imagen] => https://imgs.search.brave.com/qH8RsQ019QLQkGLFWZExzsnL4kvsrQ_GwfP-ckTx5pI/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL0kv/NTF1a3dQK3F5b1Mu/anBn
+)
+
+INFO - 2025-10-24 11:40:31 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-10-24 11:40:31 --> ID recibido: 2
+DEBUG - 2025-10-24 11:40:31 --> Modelos disponibles: Array
+(
+    [0] => 1
+    [1] => 2
+    [2] => 3
+)
+
+DEBUG - 2025-10-24 11:40:31 --> Modelo encontrado: Array
+(
+    [id] => 2
+    [nombre] => E-Skate 2
+    [precio] => 599
+    [descripcion] => Descripción del Modelo E-Skate 2.
+    [imagen] => https://imgs.search.brave.com/qH8RsQ019QLQkGLFWZExzsnL4kvsrQ_GwfP-ckTx5pI/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL0kv/NTF1a3dQK3F5b1Mu/anBn
+)
+
+INFO - 2025-10-24 11:40:32 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-24 11:40:36 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-24 11:41:10 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-24 11:43:13 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-24 11:43:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-24 11:43:20 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-24 11:43:23 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-24 11:43:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-10-24 11:43:25 --> ID recibido: 2
+DEBUG - 2025-10-24 11:43:25 --> Modelos disponibles: Array
+(
+    [0] => 1
+    [1] => 2
+    [2] => 3
+)
+
+DEBUG - 2025-10-24 11:43:25 --> Modelo encontrado: Array
+(
+    [id] => 2
+    [nombre] => E-Skate 2
+    [precio] => 599
+    [descripcion] => Descripción del Modelo E-Skate 2.
+    [imagen] => https://imgs.search.brave.com/qH8RsQ019QLQkGLFWZExzsnL4kvsrQ_GwfP-ckTx5pI/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL0kv/NTF1a3dQK3F5b1Mu/anBn
+)
+
+INFO - 2025-10-24 11:43:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-10-24 11:43:27 --> ID recibido: 2
+DEBUG - 2025-10-24 11:43:27 --> Modelos disponibles: Array
+(
+    [0] => 1
+    [1] => 2
+    [2] => 3
+)
+
+DEBUG - 2025-10-24 11:43:27 --> Modelo encontrado: Array
+(
+    [id] => 2
+    [nombre] => E-Skate 2
+    [precio] => 599
+    [descripcion] => Descripción del Modelo E-Skate 2.
+    [imagen] => https://imgs.search.brave.com/qH8RsQ019QLQkGLFWZExzsnL4kvsrQ_GwfP-ckTx5pI/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL0kv/NTF1a3dQK3F5b1Mu/anBn
+)
+
+INFO - 2025-10-24 11:43:28 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-24 11:43:32 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-24 11:44:34 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-24 11:44:41 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-10-24 11:44:43 --> PayPal Auth Error: Fallo al obtener token. Detalles: file_get_contents(https://api-m.sandbox.paypal.com/v1/oauth2/token): Failed to open stream: HTTP request failed! HTTP/1.1 401 Unauthorized
+
+ERROR - 2025-10-24 11:44:43 --> PayPal Error: Fallo al obtener Access Token para createOrder.
+INFO - 2025-10-24 11:46:36 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-24 11:46:41 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-24 11:47:00 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.

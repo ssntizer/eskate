@@ -336,21 +336,21 @@ class AuthController extends BaseController
                 1 => [
                     'id' => 1,
                     'nombre' => 'E-Skate 1',
-                    'precio' => '$299',
+                    'precio' => 299,
                     'descripcion' => 'Descripción del Modelo E-Skate 1.',
                     'imagen' => 'https://imgs.search.brave.com/tps24H47-2oaLseYhRphCnOSszeFXtoK-3EaI9JezrA/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9za2F0/ZXNlbGVjdHJpY29z/LmNvbS93cC1jb250/ZW50L3VwbG9hZHMv/MjAyMS8wNi9tZWVw/by1taW5pMi1zY2Fs/ZWQuanBlZw'
                 ],
                 2 => [
                     'id' => 2,
                     'nombre' => 'E-Skate 2',
-                    'precio' => '$599',
+                    'precio' => 599,
                     'descripcion' => 'Descripción del Modelo E-Skate 2.',
                     'imagen' => 'https://imgs.search.brave.com/qH8RsQ019QLQkGLFWZExzsnL4kvsrQ_GwfP-ckTx5pI/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL0kv/NTF1a3dQK3F5b1Mu/anBn'
                 ],
                 3 => [
                     'id' => 3,
                     'nombre' => 'E-Skate 3',
-                    'precio' => '$699',
+                    'precio' => 699,
                     'descripcion' => 'Descripción del Modelo E-Skate 3.',
                     'imagen' => 'https://imgs.search.brave.com/4hfX1Aw6h9uwaa7HX6i2vtgTdUT3mvVz1GoT5ojtQQE/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL0kv/NDFNMnd5YTMzMEwu/anBn'
                 ],
@@ -444,7 +444,7 @@ public function enviarmail()
         return redirect()->back()->with('error', 'Hubo un problema al enviar tu mensaje. Inténtalo de nuevo.');
     }
 }
-public function comprar()
+public function comprar($precio = 0)
 {
     $session = session();
     
@@ -480,9 +480,12 @@ public function comprar()
         $address['provincia_nombre'] = $provincia ? $provincia['provincia'] : 'Desconocida';
         $address['localidad_nombre'] = $localidad ? $localidad['localidad'] : 'Desconocida';
     }
-
+    $Data = [
+        'monto_skate' => $precio,
+        'userAddresses' => $userAddresses
+    ];
     // Pasar las direcciones a la vista
-    return view('comprar', ['userAddresses' => $userAddresses]);
+    return view('comprar', $Data);
 }
 public function guardar()
 {

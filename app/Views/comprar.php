@@ -257,6 +257,7 @@ body {
     </div>
 
     <script>
+        const skateAmount = '<?= esc($monto_skate) ?>';
     paypal.Buttons({
         createOrder: function(data, actions) {
             return fetch("<?= base_url('paypal/createOrder') ?>", {
@@ -265,7 +266,7 @@ body {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    amount: "59.99" // Monto de la transacción
+                    amount: skateAmount // Monto de la transacción
                 }),
             })
             .then(response => response.json())
