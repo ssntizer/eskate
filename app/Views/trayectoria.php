@@ -1,7 +1,12 @@
 <?php
+// === LÓGICA PHP ===
+
 // Conectar a la base de datos
 $db = \Config\Database::connect();
 $codigo = 'YYYYY1';
+
+// Bandera para detectar si la solicitud es AJAX (para obtener solo el JSON)
+$is_ajax = isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
 
 // Obtener los datos del recorrido
 $query = $db->query("SELECT longitud, latitud FROM skate_tracking WHERE codigo = '$codigo' ORDER BY timestamp ASC");
@@ -11,7 +16,14 @@ foreach ($query->getResultArray() as $row) {
     $waypoints[] = [$row['latitud'], $row['longitud']]; // Leaflet usa [latitud, longitud]
 }
 
-// Convertir los waypoints en formato JSON para usarlos en JavaScript
+// === RESPUESTA AJAX: Si la solicitud es AJAX, devuelve solo el JSON y termina ===
+if ($is_ajax) {
+    header('Content-Type: application/json');
+    echo json_encode($waypoints);
+    exit; // Crucial para detener la generación del HTML
+}
+
+// Convertir los waypoints en formato JSON para usarlos en JavaScript (carga inicial)
 $waypointsJson = json_encode($waypoints);
 ?>
 
@@ -25,6 +37,7 @@ $waypointsJson = json_encode($waypoints);
     <link href="https://fonts.googleapis.com/css2?family=Baskervville&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <style>
+        /*  */
         body {
             background-color: #00719c;
             background-image: url('https://www.transparenttextures.com/patterns/asfalt-dark.png');
@@ -37,8 +50,7 @@ $waypointsJson = json_encode($waypoints);
             display: flex;
             flex-direction: column;
         }
-
-        /* Header consistente */
+        /* ... (CSS existente, no es necesario cambiarlo) ... */
         .header {
             background-color: #005f87;
             padding: 15px;
@@ -248,41 +260,140 @@ $waypointsJson = json_encode($waypoints);
 <footer>
     <p>&copy; 2024 E-skate - Diseñado para la acción - <a href="mailto:eskatevz@gmail.com">Contáctanos</a></p>
 </footer>
+
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 <script>
-    var waypoints = <?php echo $waypointsJson; ?>;
-    var map = L.map('map').setView(waypoints[0], 15);
+    const REFRESH_INTERVAL_MS = 5000; // Refrescar cada 10 segundos
+    const PAGE_URL = window.location.href; // La URL de este mismo archivo
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '© OpenStreetMap contributors'
-    }).addTo(map);
+    var map;
+    var polyline;
+    var startMarker;
+    var endMarker;
+    var initialized = false;
 
-    // Cambiamos el color de la línea a amarillo para que combine con el tema
-    var polyline = L.polyline(waypoints, {color: '#ffcc00', weight: 5}).addTo(map);
-    
-    // Añadir marcador de inicio
-    if(waypoints.length > 0) {
-        L.marker(waypoints[0], {
-            icon: L.divIcon({
-                className: 'start-marker',
-                html: '<div style="background-color:#ffcc00; border-radius:50%; width:20px; height:20px; border:3px solid #ffb700;"></div>',
-                iconSize: [20, 20]
-            })
-        }).addTo(map).bindPopup("Punto de inicio");
+    /**
+     * Dibuja y/o actualiza la ruta en el mapa.
+     */
+    function updateMap(newWaypoints) {
+        if (newWaypoints.length === 0) {
+            console.log("No hay waypoints para dibujar.");
+            return;
+        }
+
+        // 1. Inicialización
+        if (!initialized) {
+            console.log("Inicializando mapa...");
+            
+            // Usar la primera coordenada de la ruta
+            map = L.map('map').setView(newWaypoints[0], 15);
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(map);
+
+            polyline = L.polyline(newWaypoints, {color: '#ffcc00', weight: 5}).addTo(map);
+            map.fitBounds(polyline.getBounds());
+            initialized = true;
+
+        } else {
+            // 2. Actualización (solo mueve la línea, no redibuja el mapa base)
+            
+            // Actualizar polilínea
+            polyline.setLatLngs(newWaypoints);
+
+            // Intentar reajustar la vista si el último punto está fuera
+            if (map.getBounds().contains(newWaypoints[newWaypoints.length - 1]) === false) {
+                 map.fitBounds(polyline.getBounds());
+            }
+        }
+        
+        // --- Actualización de Marcadores ---
+        var firstPoint = newWaypoints[0];
+        var lastPoint = newWaypoints[newWaypoints.length - 1];
+        
+        // Marcador de Inicio
+        if (startMarker) {
+            startMarker.setLatLng(firstPoint);
+        } else {
+            startMarker = L.marker(firstPoint, {
+                icon: L.divIcon({
+                    className: 'start-marker',
+                    html: '<div style="background-color:#ffcc00; border-radius:50%; width:20px; height:20px; border:3px solid #ffb700;"></div>',
+                    iconSize: [20, 20]
+                })
+            }).addTo(map).bindPopup("Punto de inicio");
+        }
+        
+        // Marcador de Fin
+        if (newWaypoints.length > 1) {
+             if (endMarker) {
+                endMarker.setLatLng(lastPoint);
+            } else {
+                endMarker = L.marker(lastPoint, {
+                    icon: L.divIcon({
+                        className: 'end-marker',
+                        html: '<div style="background-color:#ff0033; border-radius:50%; width:20px; height:20px; border:3px solid #cc002a;"></div>',
+                        iconSize: [20, 20]
+                    })
+                }).addTo(map).bindPopup("Punto final");
+            }
+        } else if (endMarker) {
+            // Si solo hay un punto, eliminamos el marcador final si existe
+            map.removeLayer(endMarker);
+            endMarker = null;
+        }
     }
-    
-    // Añadir marcador de fin
-    if(waypoints.length > 1) {
-        L.marker(waypoints[waypoints.length-1], {
-            icon: L.divIcon({
-                className: 'end-marker',
-                html: '<div style="background-color:#ff0033; border-radius:50%; width:20px; height:20px; border:3px solid #cc002a;"></div>',
-                iconSize: [20, 20]
-            })
-        }).addTo(map).bindPopup("Punto final");
+
+    /**
+     * Función que pide los datos al servidor de forma asíncrona (AJAX).
+     */
+    function fetchWaypoints() {
+        fetch(PAGE_URL, {
+            // Se envía un encabezado especial que PHP usa para detectar AJAX
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Error HTTP: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data && data.length > 0) {
+                updateMap(data);
+            }
+        })
+        .catch(error => {
+            console.error('Error al obtener los waypoints:', error);
+        })
+        .finally(() => {
+            // Configurar el temporizador para la próxima actualización
+            setTimeout(fetchWaypoints, REFRESH_INTERVAL_MS);
+        });
     }
-    
-    map.fitBounds(polyline.getBounds());
+
+    // --- Inicio del Script ---
+
+    // 1. Carga inicial: Usa los datos generados por PHP en la carga de la página
+    var initialWaypoints = <?php echo $waypointsJson; ?>;
+    if (initialWaypoints.length > 0) {
+        updateMap(initialWaypoints);
+    } else {
+        // Inicializar un mapa básico si no hay datos iniciales
+        map = L.map('map').setView([-32.1880, -64.1105], 13);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+        initialized = true;
+        console.log("Mapa inicializado sin ruta, esperando datos.");
+    }
+
+    // 2. Iniciar el ciclo de actualización automática DESPUÉS de la carga inicial
+    setTimeout(fetchWaypoints, REFRESH_INTERVAL_MS); 
+
 </script>
 
 </body>
