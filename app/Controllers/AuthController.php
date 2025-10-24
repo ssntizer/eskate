@@ -26,7 +26,7 @@ class AuthController extends BaseController
         return view('trayectoria.php');
     }
 
-    public function registerUser()
+   public function registerUser()
 {
     $session = session();
     $userModel = new UserModel();
@@ -47,7 +47,7 @@ class AuthController extends BaseController
 
     // Generar token de verificación
     $verificationToken = bin2hex(random_bytes(16));
-    $verificationExpire = date('Y-m-d H:i:s', strtotime('+1 hour')); // ¡Expira en 1 minuto!
+    $verificationExpire = date('Y-m-d H:i:s', strtotime('+1 hour')); // Expira en 1 hora
 
     // Guardar el nuevo usuario con token
     $data['verification_token'] = $verificationToken;
@@ -75,7 +75,9 @@ class AuthController extends BaseController
             $emailService->setMailType('html');
 
             if ($emailService->send()) {
-                return redirect()->to('/login')->with('success', 'Registro exitoso. Por favor verifica tu correo electrónico para activar tu cuenta.');
+                // ⭐ CAMBIO REALIZADO AQUÍ ⭐
+                $session->setFlashdata('success', '¡Registro exitoso! Por favor, revisa tu correo electrónico para confirmar tu cuenta y poder iniciar sesión.');
+                return redirect()->to('/login');
             } else {
                 // Si falla el envío, eliminar el usuario creado
                 $userModel->delete($userId);

@@ -157,12 +157,22 @@
             text-decoration: underline;
         }
 
+        /* Estilo para mensajes de error */
         .error {
-            color: #ff6b6b;
+            color: #ff6b6b; /* Rojo */
             font-size: 0.9rem;
             margin-bottom: 15px;
             text-align: center;
             padding: 0 10px; /* Alineado con el resto */
+        }
+        
+        /* ⭐ NUEVO ESTILO PARA MENSAJES DE ÉXITO ⭐ */
+        .success {
+            color: #2ecc71; /* Verde */
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            text-align: center;
+            padding: 0 10px;
         }
 
         @media (max-width: 576px) {
@@ -188,8 +198,9 @@
         
         <?php if (session()->getFlashdata('error')): ?>
             <div class="error"><?= session()->getFlashdata('error') ?></div>
+        <?php elseif (session()->getFlashdata('success')): ?>
+            <div class="success"><?= session()->getFlashdata('success') ?></div>
         <?php endif; ?>
-        
         <form method="post" action="<?= site_url('loginUser') ?>">
             <div class="input-container">
                 <input type="email" name="email" placeholder="Correo electrónico" required>
