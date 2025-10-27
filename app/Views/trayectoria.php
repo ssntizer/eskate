@@ -2,6 +2,7 @@
 // === LÓGICA PHP ===
 
 // Conectar a la base de datos
+// ASUMIMOS que CodeIgniter u otro framework ha cargado la configuración de base de datos
 $db = \Config\Database::connect();
 $codigo = 'YYYYY1';
 
@@ -13,7 +14,8 @@ $query = $db->query("SELECT longitud, latitud FROM skate_tracking WHERE codigo =
 $waypoints = [];
 
 foreach ($query->getResultArray() as $row) {
-    $waypoints[] = [$row['latitud'], $row['longitud']]; // Leaflet usa [latitud, longitud]
+    // Leaflet usa [latitud, longitud]
+    $waypoints[] = [(float)$row['latitud'], (float)$row['longitud']]; 
 }
 
 // === RESPUESTA AJAX: Si la solicitud es AJAX, devuelve solo el JSON y termina ===
@@ -37,7 +39,7 @@ $waypointsJson = json_encode($waypoints);
     <link href="https://fonts.googleapis.com/css2?family=Baskervville&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <style>
-        /*  */
+        /* (Se asume que el CSS es correcto y no requiere cambios para la funcionalidad) */
         body {
             background-color: #00719c;
             background-image: url('https://www.transparenttextures.com/patterns/asfalt-dark.png');
@@ -45,12 +47,11 @@ $waypointsJson = json_encode($waypoints);
             font-family: 'Montserrat', sans-serif;
             margin: 0;
             padding: 0;
-            padding-top: 70px; /* Espacio para el header */
+            padding-top: 70px;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
         }
-        /* ... (CSS existente, no es necesario cambiarlo) ... */
         .header {
             background-color: #005f87;
             padding: 15px;
@@ -75,7 +76,6 @@ $waypointsJson = json_encode($waypoints);
             letter-spacing: 1px;
         }
 
-        /* Botones del header */
         .header-buttons {
             display: flex;
             gap: 15px;
@@ -118,10 +118,9 @@ $waypointsJson = json_encode($waypoints);
             width: 100%;
         }
 
-        /* Contenido principal */
         .container {
             margin-top: 30px;
-            padding-bottom: 60px; /* Espacio para el footer */
+            padding-bottom: 60px;
             flex: 1;
         }
 
@@ -144,7 +143,6 @@ $waypointsJson = json_encode($waypoints);
             background: linear-gradient(90deg, transparent 0%, #ffcc00 50%, transparent 100%);
         }
 
-        /* Mapa */
         .map-container {
             width: 100%;
             height: 500px;
@@ -166,7 +164,6 @@ $waypointsJson = json_encode($waypoints);
             z-index: 1000;
         }
 
-        /* Footer */
         footer {
             background-color: #004b6b;
             color: #fff;
@@ -192,7 +189,6 @@ $waypointsJson = json_encode($waypoints);
             text-decoration: underline;
         }
 
-        /* Estilos para el mapa */
         .leaflet-container {
             background-color: #005f87 !important;
         }
@@ -208,7 +204,6 @@ $waypointsJson = json_encode($waypoints);
             color: #ffcc00;
         }
 
-        /* Responsive */
         @media (max-width: 768px) {
             .header {
                 flex-direction: column;
@@ -263,8 +258,8 @@ $waypointsJson = json_encode($waypoints);
 
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 <script>
-    const REFRESH_INTERVAL_MS = 5000; // Refrescar cada 10 segundos
-    const PAGE_URL = window.location.href; // La URL de este mismo archivo
+    const REFRESH_INTERVAL_MS = 10000; // Aumentado a 10s para reducir carga si es necesario. (Puedes usar 5000)
+    const PAGE_URL = window.location.href; 
 
     var map;
     var polyline;
@@ -278,15 +273,21 @@ $waypointsJson = json_encode($waypoints);
     function updateMap(newWaypoints) {
         if (newWaypoints.length === 0) {
             console.log("No hay waypoints para dibujar.");
+            // Si el mapa ya fue inicializado (aunque sea con un centro por defecto), no hacemos nada más.
+            if (!initialized) {
+                 initializeDefaultMap();
+            }
             return;
         }
 
-        // 1. Inicialización
+        var firstPoint = newWaypoints[0];
+        var lastPoint = newWaypoints[newWaypoints.length - 1];
+
+        // 1. Inicialización del mapa Leaflet
         if (!initialized) {
-            console.log("Inicializando mapa...");
+            console.log("Inicializando mapa con la ruta inicial...");
             
-            // Usar la primera coordenada de la ruta
-            map = L.map('map').setView(newWaypoints[0], 15);
+            map = L.map('map').setView(firstPoint, 15);
 
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '© OpenStreetMap contributors'
@@ -297,20 +298,18 @@ $waypointsJson = json_encode($waypoints);
             initialized = true;
 
         } else {
-            // 2. Actualización (solo mueve la línea, no redibuja el mapa base)
+            // 2. Actualización (solo mueve la línea y marcadores)
             
             // Actualizar polilínea
             polyline.setLatLngs(newWaypoints);
 
-            // Intentar reajustar la vista si el último punto está fuera
-            if (map.getBounds().contains(newWaypoints[newWaypoints.length - 1]) === false) {
-                 map.fitBounds(polyline.getBounds());
+            // Intentar reajustar la vista si el último punto está fuera de la pantalla
+            if (map.getBounds().contains(lastPoint) === false) {
+                 map.setView(lastPoint, map.getZoom()); // Mover el centro al último punto
             }
         }
         
         // --- Actualización de Marcadores ---
-        var firstPoint = newWaypoints[0];
-        var lastPoint = newWaypoints[newWaypoints.length - 1];
         
         // Marcador de Inicio
         if (startMarker) {
@@ -325,7 +324,7 @@ $waypointsJson = json_encode($waypoints);
             }).addTo(map).bindPopup("Punto de inicio");
         }
         
-        // Marcador de Fin
+        // Marcador de Fin (solo si hay más de un punto)
         if (newWaypoints.length > 1) {
              if (endMarker) {
                 endMarker.setLatLng(lastPoint);
@@ -339,10 +338,23 @@ $waypointsJson = json_encode($waypoints);
                 }).addTo(map).bindPopup("Punto final");
             }
         } else if (endMarker) {
-            // Si solo hay un punto, eliminamos el marcador final si existe
+            // Si solo hay un punto o menos, eliminamos el marcador final si existe
             map.removeLayer(endMarker);
             endMarker = null;
         }
+    }
+
+    /**
+     * Inicializa un mapa vacío en una ubicación por defecto.
+     */
+    function initializeDefaultMap() {
+        if (initialized) return; // Evitar doble inicialización
+        console.log("Mapa inicializado sin ruta, esperando datos.");
+        map = L.map('map').setView([-32.1880, -64.1105], 13); // Coordenada central de Río Tercero
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+        initialized = true;
     }
 
     /**
@@ -364,10 +376,17 @@ $waypointsJson = json_encode($waypoints);
         .then(data => {
             if (data && data.length > 0) {
                 updateMap(data);
+            } else if (!initialized) {
+                 // Si no hay datos, pero el mapa no está inicializado, lo inicializamos en un punto por defecto
+                initializeDefaultMap();
             }
         })
         .catch(error => {
             console.error('Error al obtener los waypoints:', error);
+            // Aseguramos que el mapa se inicialice en caso de fallo AJAX
+            if (!initialized) {
+                initializeDefaultMap();
+            }
         })
         .finally(() => {
             // Configurar el temporizador para la próxima actualización
@@ -376,23 +395,20 @@ $waypointsJson = json_encode($waypoints);
     }
 
     // --- Inicio del Script ---
-
     // 1. Carga inicial: Usa los datos generados por PHP en la carga de la página
     var initialWaypoints = <?php echo $waypointsJson; ?>;
+
     if (initialWaypoints.length > 0) {
         updateMap(initialWaypoints);
     } else {
         // Inicializar un mapa básico si no hay datos iniciales
-        map = L.map('map').setView([-32.1880, -64.1105], 13);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '© OpenStreetMap contributors'
-        }).addTo(map);
-        initialized = true;
-        console.log("Mapa inicializado sin ruta, esperando datos.");
+        initializeDefaultMap();
     }
 
-    // 2. Iniciar el ciclo de actualización automática DESPUÉS de la carga inicial
-    setTimeout(fetchWaypoints, REFRESH_INTERVAL_MS); 
+    // 2. Iniciar el ciclo de actualización automática INMEDIATAMENTE después de la carga inicial
+    // Llamar directamente a fetchWaypoints() iniciará el ciclo, y la función se llama a sí misma
+    // al final con setTimeout.
+    fetchWaypoints();
 
 </script>
 

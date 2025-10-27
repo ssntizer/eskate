@@ -1,0 +1,15 @@
+INFO - 2025-10-26 19:23:43 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2025-10-26 19:24:13 --> ErrorException: Maximum execution time of 30 seconds exceeded
+[Method: GET, Route: view-skate/YYYYY1]
+in SYSTEMPATH/Debug/Exceptions.php on line 209.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+INFO - 2025-10-26 19:24:13 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2025-10-26 19:24:43 --> ErrorException: Maximum execution time of 30 seconds exceeded
+[Method: GET, Route: view-skate/YYYYY1]
+in SYSTEMPATH/Debug/Exceptions.php on line 209.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+INFO - 2025-10-26 19:24:43 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2025-10-26 19:25:13 --> ErrorException: Maximum execution time of 30 seconds exceeded
+[Method: GET, Route: view-skate/YYYYY1]
+in SYSTEMPATH/Debug/Exceptions.php on line 209.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
