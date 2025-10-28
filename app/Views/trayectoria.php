@@ -258,7 +258,7 @@ $waypointsJson = json_encode($waypoints);
 
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 <script>
-    const REFRESH_INTERVAL_MS = 10000; // Aumentado a 10s para reducir carga si es necesario. (Puedes usar 5000)
+    const REFRESH_INTERVAL_MS = 5000; // Aumentado a 10s para reducir carga si es necesario. (Puedes usar 5000)
     const PAGE_URL = window.location.href; 
 
     var map;
