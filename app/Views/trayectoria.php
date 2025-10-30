@@ -303,10 +303,8 @@ $waypointsJson = json_encode($waypoints);
             // Actualizar polilínea
             polyline.setLatLngs(newWaypoints);
 
-            // Intentar reajustar la vista si el último punto está fuera de la pantalla
-            if (map.getBounds().contains(lastPoint) === false) {
-                 map.setView(lastPoint, map.getZoom()); // Mover el centro al último punto
-            }
+            // Ajustar la vista para mostrar la trayectoria completa
+            map.fitBounds(polyline.getBounds());
         }
         
         // --- Actualización de Marcadores ---

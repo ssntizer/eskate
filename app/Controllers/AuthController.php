@@ -452,10 +452,13 @@ public function comprar($precio = 0)
     
     // Verificar que el usuario está logueado
     if (!$session->get('logged_in')) {
-        // Guardar la URL de redirección en sesión antes de enviar al login
+        // Guardar la URL actual (con precio) para redirigir después del login
         $session->set('redirect_url', current_url());
         return redirect()->to('/login')->with('error', 'Debes iniciar sesión para realizar una compra');
     }
+
+    // GUARDAR EL PRECIO TEMPORALMENTE EN SESIÓN
+    $session->set('temp_precio_compra', $precio);
 
     // Obtener el ID del usuario
     $userId = $session->get('user_id');
@@ -467,7 +470,7 @@ public function comprar($precio = 0)
     // Verificar si hay direcciones
     if (empty($userAddresses)) {
         $session->setFlashdata('error', 'No tienes direcciones registradas.');
-        return redirect()->to('nuevadireccion');  // Redirigir a la página de registrar nueva dirección
+        return redirect()->to('nuevadireccion');
     }
 
     // Obtener las provincias y localidades
@@ -475,18 +478,18 @@ public function comprar($precio = 0)
     $localidadModel = new LocalidadModel();
 
     foreach ($userAddresses as &$address) {
-        // Obtener nombre de la provincia y localidad usando sus IDs
         $provincia = $provinciaModel->find($address['ID_provincia']);
         $localidad = $localidadModel->find($address['ID_localidad']);
         
         $address['provincia_nombre'] = $provincia ? $provincia['provincia'] : 'Desconocida';
         $address['localidad_nombre'] = $localidad ? $localidad['localidad'] : 'Desconocida';
     }
+
     $Data = [
         'monto_skate' => $precio,
         'userAddresses' => $userAddresses
     ];
-    // Pasar las direcciones a la vista
+
     return view('comprar', $Data);
 }
 public function guardar()
@@ -520,61 +523,73 @@ public function guardar()
 public function guardarNueva()
 {
     // Validar los campos
-    if ($this->validate([
+    if (!$this->validate([
         'calle' => 'required|string',
         'numero' => 'required|integer',
         'localidad' => 'required|string',
         'provincia' => 'required|string',
     ])) {
-        
-        // Obtener los valores del formulario
-        $calle = $this->request->getPost('calle');
-        $numero = $this->request->getPost('numero');
-        $localidadNombre = $this->request->getPost('localidad');
-        $provinciaNombre = $this->request->getPost('provincia');
-        $user_id = session()->get('user_id');
-        if (!$user_id) {
-            session()->setFlashdata('error', 'No se pudo identificar al usuario.');
-            return redirect()->to('/');
-        }
-        
-        // Buscar el ID de la localidad
-        $localidadModel = new LocalidadModel();
-        $localidad = $localidadModel->where('localidad', $localidadNombre)->first();
-        $id_localidad = $localidad ? $localidad['id'] : null;
-
-        // Buscar el ID de la provincia
-        $provinciaModel = new ProvinciaModel();
-        $provincia = $provinciaModel->where('provincia', $provinciaNombre)->first();
-        $id_provincia = $provincia ? $provincia['id'] : null;
-
-        // Verificar si se encontraron los IDs
-        if ($id_localidad && $id_provincia) {
-            // Guardar los datos en la tabla direccion
-            $direccionModel = new DireccionModel();
-            $direccionData = [
-                'calle' => $calle,
-                'numero' => $numero,
-                'ID_localidad' => $id_localidad,
-                'ID_provincia' => $id_provincia,
-                'ID_usuario' => $user_id 
-            ];
-
-            // Intentar guardar la dirección
-            if ($direccionModel->save($direccionData)) {
-                session()->setFlashdata('success', 'Dirección guardada correctamente.');
-            } else {
-                session()->setFlashdata('error', 'Hubo un error al guardar la dirección.');
-            }
-        } else {
-            session()->setFlashdata('error', 'La localidad o provincia no se encuentran registradas.');
-        }
-    } else {
         session()->setFlashdata('error', 'Por favor, completa todos los campos correctamente.');
+        return redirect()->to('/nuevadireccion');
     }
 
-    // Redirigir después de la operación
-    return redirect()->to('/comprar');
+    // Obtener los valores del formulario
+    $calle = $this->request->getPost('calle');
+    $numero = $this->request->getPost('numero');
+    $localidadNombre = $this->request->getPost('localidad');
+    $provinciaNombre = $this->request->getPost('provincia');
+    $user_id = session()->get('user_id');
+
+    if (!$user_id) {
+        session()->setFlashdata('error', 'No se pudo identificar al usuario.');
+        return redirect()->to('/');
+    }
+    
+    // Buscar el ID de la localidad
+    $localidadModel = new LocalidadModel();
+    $localidad = $localidadModel->where('localidad', $localidadNombre)->first();
+    $id_localidad = $localidad ? $localidad['id'] : null;
+
+    // Buscar el ID de la provincia
+    $provinciaModel = new ProvinciaModel();
+    $provincia = $provinciaModel->where('provincia', $provinciaNombre)->first();
+    $id_provincia = $provincia ? $provincia['id'] : null;
+
+    // Verificar si se encontraron los IDs
+    if (!$id_localidad || !$id_provincia) {
+        session()->setFlashdata('error', 'La localidad o provincia no se encuentran registradas.');
+        return redirect()->to('/nuevadireccion');
+    }
+
+    // Guardar la dirección
+    $direccionModel = new DireccionModel();
+    $direccionData = [
+        'calle' => $calle,
+        'numero' => $numero,
+        'ID_localidad' => $id_localidad,
+        'ID_provincia' => $id_provincia,
+        'ID_usuario' => $user_id 
+    ];
+
+    if (!$direccionModel->save($direccionData)) {
+        session()->setFlashdata('error', 'Hubo un error al guardar la dirección.');
+        return redirect()->to('/nuevadireccion');
+    }
+
+    // ÉXITO: Recuperar el precio guardado y redirigir
+    $session = session();
+    $precio = $session->get('temp_precio_compra') ?? 0;
+    $session->remove('temp_precio_compra'); // Limpiar
+
+    session()->setFlashdata('success', 'Dirección guardada correctamente.');
+
+    // Redirigir a /comprar con el precio correcto
+    if ($precio > 0) {
+        return redirect()->to("/comprar/{$precio}");
+    } else {
+        // Fallback si no hay precio (poco probable)
+        return redirect()->to('/list-skates');
+    }
 }
 public function obtenerLocalidadesPorProvincia($provinciaId)
 {
