@@ -7,7 +7,7 @@ import utime  # Biblioteca para manejar el tiempo
 import micropyGPS  # Asegúrate de que el archivo se llama microGPS.py
 
 # Configuración del servidor y clave API
-SERVER_URL = "http://192.168.118.24:80/eskate/public/index.php/skate/update"
+SERVER_URL = "https://eskate.onrender.com/index.php/skate/update"
 API_KEY = "YYYYY1"  # Clave API que se verifica en el servidor
 
 # Credenciales de la red Wi-Fi
