@@ -13,7 +13,10 @@
         "php": "^8.1",
         "ext-intl": "*",
         "ext-mbstring": "*",
+        "ext-pgsql": "*",
+        "guzzlehttp/guzzle": "^7.0",
         "laminas/laminas-escaper": "^2.13",
+        "php-mqtt/client": "^2.3",
         "psr/log": "^3.0"
     },
     "require-dev": {
@@ -27,7 +30,7 @@
         "predis/predis": "^1.1 || ^2.0"
     },
     "suggest": {
-        "ext-curl": "If you use CURLRequest class",
+        "ext-curl": "*",
         "ext-dom": "If you use TestResponse",
         "ext-exif": "If you run Image class tests",
         "ext-fileinfo": "Improves mime type detection for files",
@@ -51,6 +54,9 @@
         "psr-4": {
             "CodeIgniter\\": "system/"
         },
+        "files": [
+            "vendor/autoload.php"
+        ],
         "exclude-from-classmap": [
             "**/Database/Migrations/**"
         ]
@@ -61,6 +67,9 @@
         "sort-packages": true
     },
     "scripts": {
+        "post-install-cmd": [
+            "composer install --no-dev --optimize-autoloader"
+        ],
         "test": "phpunit"
     }
 }

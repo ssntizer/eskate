@@ -3,141 +3,194 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recuperar Contraseña</title>
+    <title>Recuperar Contraseña | E-Skate</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Permanent+Marker&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Baskervville&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
             background-color: #00719c;
+            background-image: url('https://www.transparenttextures.com/patterns/asfalt-dark.png');
             color: #ffffff;
-            font-family: "Baskervville SC", static;
-            background-image: url('https://www.transparenttextures.com/patterns/asfalt-dark.png'); /* Textura de fondo */
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
         }
 
-        .login-form {
+        .recovery-form {
+            width: 90%;
+            max-width: 400px;
+            padding: 40px 30px;
+            background-color: #005f87;
+            background-image: url('https://www.transparenttextures.com/patterns/asfalt-dark.png');
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border: 1px solid #004b6b;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .recovery-form::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
-            max-width: 400px; /* Ancho máximo del formulario */
-            padding: 40px; /* Espaciado interno */
-            border-radius: 15px; /* Bordes redondeados */
-            background: linear-gradient(145deg, #006f99, #008dc2); /* Degradado de fondo */
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Sombra */
-            text-align: center; /* Alinear texto al centro */
+            height: 5px;
+            background: linear-gradient(90deg, #ffcc00, #ffb700);
         }
 
-        .login-form h2 {
-            margin-bottom: 20px; /* Margen inferior */
-            font-family: "Baskervville SC", static; /* Fuente del título */
-            font-size: 2rem; /* Tamaño de fuente */
+        .recovery-form h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #ffcc00;
+            font-size: 2rem;
+            font-family: 'Baskervville', serif;
+            position: relative;
         }
 
-        .login-form input[type="email"] {
-            width: 100%; /* Ancho completo */
-            height: 50px; /* Altura del campo */
-            margin-bottom: 20px; /* Margen inferior */
-            padding: 10px; /* Espaciado interno */
-            border: none; /* Sin borde */
-            border-radius: 10px; /* Bordes redondeados */
-            font-size: 1.2rem; /* Tamaño de fuente */
-            color: #333; /* Color del texto en los campos */
+        .recovery-form h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent 0%, #ffcc00 50%, transparent 100%);
         }
 
-        .login-form input[type="email"]:focus {
-            border-color: #00e5ff; /* Color del borde al enfocar */
-            outline: none; /* Sin contorno */
-            box-shadow: 0 0 8px rgba(0, 229, 255, 0.5); /* Sombra al enfocar */
+        .input-container {
+            width: 100%;
+            margin-bottom: 25px;
         }
 
-        .login-form button[type="submit"] {
-            width: 100%; /* Ancho completo */
-            height: 50px; /* Altura del botón */
-            border: none; /* Sin borde */
-            border-radius: 10px; /* Bordes redondeados */
-            background-color: #ff6600; /* Color de fondo */
-            color: white; /* Color del texto */
-            font-size: 18px; /* Tamaño de fuente */
-            font-weight: 600; /* Peso de fuente */
-            cursor: pointer; /* Cursor de puntero */
-            transition: background-color 0.3s ease, transform 0.2s; /* Transiciones suaves */
+        .recovery-form label {
+            display: block;
+            margin-bottom: 8px;
+            color: #ffffff;
+            font-weight: 500;
         }
 
-        .login-form button[type="submit"]:hover {
-            background-color: #e65c00; /* Color de fondo al pasar el mouse */
-            transform: scale(1.05); /* Escala al pasar el mouse */
+        .recovery-form input[type="email"] {
+            width: 100%;
+            padding: 15px 20px;
+            border-radius: 8px;
+            border: 2px solid #004b6b;
+            background-color: rgba(255, 255, 255, 0.9);
+            transition: all 0.3s ease;
+            font-size: 1rem;
         }
 
-        .login-form button[type="submit"]:active {
-            transform: scale(0.98); /* Escala al hacer clic */
+        .recovery-form input[type="email"]:focus {
+            outline: none;
+            border-color: #ffcc00;
+            box-shadow: 0 0 0 3px rgba(255, 204, 0, 0.3);
+        }
+
+        .recovery-form button[type="submit"] {
+            background-color: #ffcc00;
+            color: #333;
+            padding: 15px;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            border: none;
+            transition: all 0.4s ease;
+            width: 100%;
+            font-weight: 600;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .recovery-form button[type="submit"]::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background-color: #ffb700;
+            transition: width 0.4s ease;
+            z-index: -1;
+            border-radius: 50px;
+        }
+
+        .recovery-form button[type="submit"]:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 204, 0, 0.4);
+        }
+
+        .recovery-form button[type="submit"]:hover::before {
+            width: 100%;
         }
 
         .error {
-            color: #e74c3c; /* Color del texto de error */
-            font-size: 14px; /* Tamaño de fuente */
-            margin-bottom: 20px; /* Margen inferior */
+            color: #ff6b6b;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            text-align: center;
         }
 
-        .login-form p {
-            color: #e74c3c; /* Color del mensaje */
+        .recovery-links {
+            margin-top: 20px;
+            text-align: center;
         }
 
-        @media (max-width: 768px) {
-            body {
-                height: auto; /* Ajustar la altura en dispositivos más pequeños */
-                padding: 20px; /* Añadir padding */
-            }
-
-            .login-form {
-                padding: 30px; /* Ajustar el padding del formulario */
-            }
-
-            .login-form h2 {
-                font-size: 1.8rem; /* Ajustar el tamaño del título */
-            }
-
-            .login-form button[type="submit"] {
-                height: 45px; /* Ajustar la altura del botón */
-                font-size: 16px; /* Ajustar el tamaño de la fuente */
-            }
+        .recovery-links a {
+            color: #ffcc00;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            display: inline-block;
+            margin: 5px 0;
         }
 
-        @media (max-width: 480px) {
-            .login-form {
-                padding: 20px; /* Reducir el padding en pantallas más pequeñas */
-            }
+        .recovery-links a:hover {
+            color: #ffb700;
+            text-decoration: underline;
+        }
 
-            .login-form h2 {
-                font-size: 1.6rem; /* Reducir el tamaño del título */
+        @media (max-width: 576px) {
+            .recovery-form {
+                padding: 30px 20px;
             }
-
-            .login-form button[type="submit"] {
-                height: 40px; /* Reducir la altura del botón */
-                font-size: 14px; /* Reducir el tamaño de la fuente */
+            
+            .recovery-form h2 {
+                font-size: 1.8rem;
             }
-
-            .login-form input[type="email"] {
-                height: 45px; /* Reducir la altura de los campos de texto */
-                font-size: 1rem; /* Ajustar el tamaño de la fuente en los campos */
+            
+            .recovery-form input[type="email"],
+            .recovery-form button[type="submit"] {
+                padding: 12px 15px;
+                font-size: 0.95rem;
             }
         }
     </style>
 </head>
 <body>
-    <div class="login-form">
+    <div class="recovery-form">
         <h2>Recuperar contraseña</h2>
+        
+        <?php if (session()->getFlashdata('message')): ?>
+            <div class="error"><?= session()->getFlashdata('message') ?></div>
+        <?php endif; ?>
+        
         <form action="<?= site_url('passwordreset/request') ?>" method="post">
-            <div>
-                <label for="email" style="color: #ffffff;">Correo electrónico:</label>
-                <input type="email" name="email" required>
+            <div class="input-container">
+                <label for="email">Correo electrónico:</label>
+                <input type="email" id="email" name="email" required>
             </div>
             <button type="submit">Enviar enlace de recuperación</button>
         </form>
-        <?php if (session()->getFlashdata('message')): ?>
-            <p class="error"><?= session()->getFlashdata('message') ?></p> <!-- Añadido estilo de error -->
-        <?php endif; ?>
+        
+        <div class="recovery-links">
+            <a href="<?= site_url('login') ?>">Volver al inicio de sesión</a>
+        </div>
     </div>
 </body>
 </html>

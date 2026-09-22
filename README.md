@@ -1,60 +1,46 @@
-# CodeIgniter 4 Framework
+# 🛹 Eskate - Sistema IoT de Telemetría y Seguridad
 
-## What is CodeIgniter?
+Eskate es una plataforma integral de hardware y software diseñada para el rastreo, telemetría y seguridad de vehículos ligeros (skates/longboards). Este proyecto abarca desde la programación a bajo nivel de microcontroladores hasta el desarrollo de una aplicación web completa con pasarela de pagos.
 
-CodeIgniter is a PHP full-stack web framework that is light, fast, flexible and secure.
-More information can be found at the [official site](https://codeigniter.com).
+## 🚀 Sobre el Proyecto
 
-This repository holds the distributable version of the framework.
-It has been built from the
-[development repository](https://github.com/codeigniter4/CodeIgniter4).
+Este sistema fue desarrollado de forma independiente como proyecto de demostración técnica para aplicar a pasantías y posiciones de desarrollo de software (dado que, al cursar el primer año de Ingeniería en Computación, las pasantías universitarias aún no están habilitadas). 
 
-More information about the plans for version 4 can be found in [CodeIgniter 4](https://forum.codeigniter.com/forumdisplay.php?fid=28) on the forums.
+El objetivo principal fue resolver un problema real de hardware y conectividad, construyendo una arquitectura robusta capaz de procesar datos en tiempo real y exponerlos a los usuarios de forma segura.
 
-You can read the [user guide](https://codeigniter.com/user_guide/)
-corresponding to the latest version of the framework.
+## 🛠️ Stack Tecnológico
 
-## Important Change with index.php
+**Hardware & IoT:**
+* **Microcontrolador:** ESP32 (Programado en C++ / MicroPython)
+* **Conectividad:** Redes móviles 4G LTE
+* **Protocolo de Transmisión:** MQTT (Migrado desde HTTPS para optimizar la latencia y el consumo de datos en IoT).
 
-`index.php` is no longer in the root of the project! It has been moved inside the *public* folder,
-for better security and separation of components.
+**Backend & Web:**
+* **Framework:** CodeIgniter 4 (PHP)
+* **Base de Datos:** MySQL / MariaDB (Estructura relacional para Usuarios, Skates, Tracking, Direcciones y Pagos).
+* **Integraciones:** API de PayPal para el módulo de compras.
 
-This means that you should configure your web server to "point" to your project's *public* folder, and
-not to the project root. A better practice would be to configure a virtual host to point there. A poor practice would be to point your web server to the project root and expect to enter *public/...*, as the rest of your logic and the
-framework are exposed.
+## ⚙️ Arquitectura y Funcionalidades Principales
 
-**Please** read the user guide for a better explanation of how CI4 works!
+1. **Telemetría en Tiempo Real (`SkateTrackingModel`):** El ESP32 captura datos geográficos (Latitud, Longitud), métricas de rendimiento (Velocidad, Batería, Temperatura) y los transmite vía MQTT. El backend recibe, filtra y almacena estos datos eliminando registros obsoletos automáticamente para optimizar el almacenamiento.
+2. **Sistema de Autenticación y Seguridad (`UserModel`):** Control de acceso estricto con encriptación de contraseñas (`password_hash`), tokens de verificación y recuperación de cuenta por email.
+3. **Gestión de Dispositivos (`SkateModel`):** Lógica de vinculación única (un skate solo puede pertenecer a un usuario), asignación de apodos y desvinculación de hardware.
+4. **Módulo E-Commerce y Logística:** 
+   * Plataforma de venta integrada con **PayPal** (`CompraModel`).
+   * Gestión de direcciones de envío (`DireccionModel`) estructurada por Provincias y Localidades.
+   * Seguimiento de entregas (`EntregaModel`).
 
-## Repository Management
+## 🧠 Desafíos Técnicos Resueltos
 
-We use GitHub issues, in our main repository, to track **BUGS** and to track approved **DEVELOPMENT** work packages.
-We use our [forum](http://forum.codeigniter.com) to provide SUPPORT and to discuss
-FEATURE REQUESTS.
+El desafío más complejo del proyecto fue lograr la estabilidad en la transmisión de datos del hardware al servidor a través de redes móviles. 
 
-This repository is a "distribution" one, built by our release preparation script.
-Problems with it can be raised on our forum, or as issues in the main repository.
+Inicialmente, el sistema utilizaba Webhooks (HTTPS), pero presentaba alta latencia y pérdida de paquetes debido a la inestabilidad de las redes celulares en movimiento. La solución fue **reescribir la capa de comunicación del ESP32 para utilizar el protocolo MQTT**, logrando una arquitectura orientada a eventos mucho más ligera, rápida y confiable para un entorno de Internet de las Cosas (IoT).
 
-## Contributing
+## 📂 Estructura de la Base de Datos
+El proyecto cuenta con un esquema relacional diseñado para escalabilidad:
+* `users` / `direccion` / `localidades` / `provincias`: Gestión integral de clientes y logística.
+* `skate` / `skate_tracking`: Core del sistema IoT para la última ubicación y el historial de recorrido.
+* `pagos` / `entrega`: Registro de transacciones financieras y estado logístico.
 
-We welcome contributions from the community.
-
-Please read the [*Contributing to CodeIgniter*](https://github.com/codeigniter4/CodeIgniter4/blob/develop/CONTRIBUTING.md) section in the development repository.
-
-## Server Requirements
-
-PHP version 8.1 or higher is required, with the following extensions installed:
-
-- [intl](http://php.net/manual/en/intl.requirements.php)
-- [mbstring](http://php.net/manual/en/mbstring.installation.php)
-
-> [!WARNING]
-> - The end of life date for PHP 7.4 was November 28, 2022.
-> - The end of life date for PHP 8.0 was November 26, 2023.
-> - If you are still using PHP 7.4 or 8.0, you should upgrade immediately.
-> - The end of life date for PHP 8.1 will be December 31, 2025.
-
-Additionally, make sure that the following extensions are enabled in your PHP:
-
-- json (enabled by default - don't turn it off)
-- [mysqlnd](http://php.net/manual/en/mysqlnd.install.php) if you plan to use MySQL
-- [libcurl](http://php.net/manual/en/curl.requirements.php) if you plan to use the HTTP\CURLRequest library
+---
+*Desarrollado con pasión por la ingeniería, la resolución de problemas y el código limpio.*

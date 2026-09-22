@@ -2,8 +2,10 @@
 namespace App\Controllers;
 
 use App\Models\UserModel;
-use App\Models\skatemodel;
+use App\Models\SkateModel;
 use App\Models\DireccionModel;
+use App\Models\ProvinciaModel;
+use App\Models\LocalidadModel;
 
 class AuthController extends BaseController
 {
@@ -13,31 +15,103 @@ class AuthController extends BaseController
     {
         $this->skateModel = new SkateModel();
     }
+
     public function register()
     {
         return view('register');
     }
 
-    public function registerUser()
+    public function trayectoria()
     {
-        $userModel = new UserModel();
-    
-        // Obtener datos del formulario
-        $data = [
-            'username' => $this->request->getPost('username'),
-            'email' => $this->request->getPost('email'),
-            'password' => $this->request->getPost('password') 
-        ];
-    
-        // Verificar si el email ya existe
-        if ($userModel->where('email', $data['email'])->first()) {
-            return redirect()->back()->with('error', 'El correo electrónico ya está registrado.')->withInput();
+        return view('trayectoria.php');
+    }
+
+    public function registerUser()
+{
+    $session = session();
+    $userModel = new UserModel();
+
+    // Obtener datos del formulario
+    $data = [
+        'username' => $this->request->getPost('username'),
+        'email' => $this->request->getPost('email'),
+        'password' => $this->request->getPost('password'),
+        'is_active' => 0, // Cuenta inactiva hasta confirmación
+        'created_at' => date('Y-m-d H:i:s')
+    ];
+
+    // Verificar si el email ya existe
+    if ($userModel->where('email', $data['email'])->first()) {
+        return redirect()->back()->with('error', 'El correo electrónico ya está registrado.')->withInput();
+    }
+
+    // Generar token de verificación
+    $verificationToken = bin2hex(random_bytes(16));
+    $verificationExpire = date('Y-m-d H:i:s', strtotime('+1 hour')); // ¡Expira en 1 minuto!
+
+    // Guardar el nuevo usuario con token
+    $data['verification_token'] = $verificationToken;
+    $data['verification_expires'] = $verificationExpire;
+
+    try {
+        $userId = $userModel->insert($data);
+
+        if ($userId) {
+            // Enviar email de verificación
+            $verifyLink = site_url('auth/verify-email/' . $verificationToken);
+
+            $emailService = \Config\Services::email();
+            $emailService->clear();
+
+            $emailService->setTo($data['email']);
+            $emailService->setSubject('Verifica tu cuenta');
+            $emailService->setMessage("
+                <h2>Bienvenido a nuestro sitio, {$data['username']}!</h2>
+                <p>Gracias por registrarte. Por favor verifica tu correo electrónico haciendo clic en el siguiente enlace:</p>
+                <p><a href='{$verifyLink}'>{$verifyLink}</a></p>
+                <p>Este enlace expirará en 1 hora.</p>
+                <p>Si no te registraste en nuestro sitio, por favor ignora este mensaje.</p>
+            ");
+            $emailService->setMailType('html');
+
+            if ($emailService->send()) {
+                return redirect()->to('/login')->with('success', 'Registro exitoso. Por favor verifica tu correo electrónico para activar tu cuenta.');
+            } else {
+                // Si falla el envío, eliminar el usuario creado
+                $userModel->delete($userId);
+                log_message('error', $emailService->printDebugger(['headers']));
+                return redirect()->back()->with('error', 'Error al enviar correo de verificación. Por favor intenta nuevamente.')->withInput();
+            }
         }
-    
-        // Guardar el nuevo usuario
-        $userModel->save($data);
-    
-        return redirect()->to('/login')->with('success', 'Registro exitoso');
+    } catch (\Exception $e) {
+        log_message('error', 'Error en registro: ' . $e->getMessage());
+        return redirect()->back()->with('error', 'Ocurrió un error durante el registro. Por favor intenta nuevamente.')->withInput();
+    }
+
+    return redirect()->back()->with('error', 'Ocurrió un error inesperado.')->withInput();
+}
+
+    public function verifyEmail($token)
+    {
+        $session = session();
+        $userModel = new UserModel();
+        
+        $user = $userModel->where('verification_token', $token)
+                         ->where('verification_expires >', date('Y-m-d H:i:s'))
+                         ->first();
+        
+        if (!$user) {
+            return redirect()->to('/login')->with('error', 'Token inválido o expirado.');
+        }
+        
+        // Activar cuenta
+        $userModel->update($user['id'], [
+            'is_active' => 1,
+            'verification_token' => null,
+            'verification_expires' => null
+        ]);
+        
+        return redirect()->to('/login')->with('success', 'Cuenta verificada correctamente. Ya puedes iniciar sesión.');
     }
 
     public function login()
@@ -46,15 +120,15 @@ class AuthController extends BaseController
 
         if ($session->get('logged_in')) {
             return redirect()->to('/list-skates');
+        } else {
+            return view('login');
         }
-        else{
-        return view('login');
     }
-}
 
     public function loginUser()
     {
         $userModel = new UserModel();
+        $session = session();
 
         $email = $this->request->getPost('email');
         $password = $this->request->getPost('password');
@@ -62,15 +136,33 @@ class AuthController extends BaseController
         $user = $userModel->where('email', $email)->first();
 
         if ($user) {
+            // Verificar si la cuenta está activa
+            if (!$user['is_active']) {
+                return redirect()->back()->with('error', 'Tu cuenta no está activada. Por favor verifica tu correo electrónico.');
+            }
+
             log_message('debug', 'User found: ' . print_r($user, true));
 
             if (password_verify($password, $user['password'])) {
                 log_message('debug', 'Password verified successfully.');
-                session()->set([
+                
+                // Configurar datos de sesión
+                $session->set([
                     'username' => $user['username'],
                     'user_id' => $user['id'],
                     'logged_in' => true,
                 ]);
+                
+                // Verificar si hay una URL de redirección guardada
+                $redirect_url = $session->get('redirect_url');
+                
+                if ($redirect_url) {
+                    // Eliminar la URL de redirección de la sesión
+                    $session->remove('redirect_url');
+                    return redirect()->to($redirect_url);
+                }
+                
+                // Redirección por defecto
                 return redirect()->to('/list-skates');
             } else {
                 log_message('debug', 'Password verification failed.');
@@ -189,11 +281,13 @@ class AuthController extends BaseController
                 if ($skateModel->unlinkSkate($codigo)) {
                     return redirect()->to('/list-skates')->with('message', 'Skate desvinculado exitosamente.');
                 } else {
+
                     return redirect()->back()->with('error', 'No se pudo borrar este apodo');
                 }
             } catch (\Exception $e) {
                 log_message('error', 'Error al desvincular el skate: ' . $e->getMessage());
                 return redirect()->back()->with('error', 'No se pudo borrar este apodo');
+
             }
         } else {
             return redirect()->back()->with('error', 'No puedes desvincular este skate.');
@@ -235,55 +329,60 @@ class AuthController extends BaseController
     }
     public function detail($id) {
         $session = session();
-        if ($session->get('logged_in')) {// Definir los modelos de skates en un array
-        $modelos = [
-            1 => [
-                'id' => 1,
-                'nombre' => 'E-Skate 1',
-                'precio' => '$299',
-                'descripcion' => 'Descripción del Modelo E-Skate 1.',
-                'imagen' => 'https://imgs.search.brave.com/tps24H47-2oaLseYhRphCnOSszeFXtoK-3EaI9JezrA/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9za2F0/ZXNlbGVjdHJpY29z/LmNvbS93cC1jb250/ZW50L3VwbG9hZHMv/MjAyMS8wNi9tZWVw/by1taW5pMi1zY2Fs/ZWQuanBlZw'
-            ],
-            2 => [
-                'id' => 2,
-                'nombre' => 'E-Skate 2',
-                'precio' => '$599',
-                'descripcion' => 'Descripción del Modelo E-Skate 2.',
-                'imagen' => 'https://imgs.search.brave.com/qH8RsQ019QLQkGLFWZExzsnL4kvsrQ_GwfP-ckTx5pI/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL0kv/NTF1a3dQK3F5b1Mu/anBn'
-            ],
-            3 => [
-                'id' => 3,
-                'nombre' => 'E-Skate 3',
-                'precio' => '$699',
-                'descripcion' => 'Descripción del Modelo E-Skate 3.',
-                'imagen' => 'https://imgs.search.brave.com/4hfX1Aw6h9uwaa7HX6i2vtgTdUT3mvVz1GoT5ojtQQE/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL0kv/NDFNMnd5YTMzMEwu/anBn'
-            ],
-        ];
-    
-        // Registro de depuración en el log
-        log_message('debug', 'ID recibido: ' . $id);
-        log_message('debug', 'Modelos disponibles: ' . print_r(array_keys($modelos), true));
-    
-        // Verifica si el modelo existe
-        if (!array_key_exists($id, $modelos)) {
-            log_message('error', 'Modelo no encontrado para el ID: ' . $id);
-            throw new \CodeIgniter\Exceptions\PageNotFoundException("Modelo no encontrado");
+        
+        if ($session->get('logged_in')) {
+            // Definir los modelos de skates en un array
+            $modelos = [
+                1 => [
+                    'id' => 1,
+                    'nombre' => 'E-Skate 1',
+                    'precio' => '$299',
+                    'descripcion' => 'Descripción del Modelo E-Skate 1.',
+                    'imagen' => 'https://imgs.search.brave.com/tps24H47-2oaLseYhRphCnOSszeFXtoK-3EaI9JezrA/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9za2F0/ZXNlbGVjdHJpY29z/LmNvbS93cC1jb250/ZW50L3VwbG9hZHMv/MjAyMS8wNi9tZWVw/by1taW5pMi1zY2Fs/ZWQuanBlZw'
+                ],
+                2 => [
+                    'id' => 2,
+                    'nombre' => 'E-Skate 2',
+                    'precio' => '$599',
+                    'descripcion' => 'Descripción del Modelo E-Skate 2.',
+                    'imagen' => 'https://imgs.search.brave.com/qH8RsQ019QLQkGLFWZExzsnL4kvsrQ_GwfP-ckTx5pI/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL0kv/NTF1a3dQK3F5b1Mu/anBn'
+                ],
+                3 => [
+                    'id' => 3,
+                    'nombre' => 'E-Skate 3',
+                    'precio' => '$699',
+                    'descripcion' => 'Descripción del Modelo E-Skate 3.',
+                    'imagen' => 'https://imgs.search.brave.com/4hfX1Aw6h9uwaa7HX6i2vtgTdUT3mvVz1GoT5ojtQQE/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL0kv/NDFNMnd5YTMzMEwu/anBn'
+                ],
+            ];
+        
+            // Registro de depuración en el log
+            log_message('debug', 'ID recibido: ' . $id);
+            log_message('debug', 'Modelos disponibles: ' . print_r(array_keys($modelos), true));
+        
+            // Verifica si el modelo existe
+            if (!array_key_exists($id, $modelos)) {
+                log_message('error', 'Modelo no encontrado para el ID: ' . $id);
+                throw new \CodeIgniter\Exceptions\PageNotFoundException("Modelo no encontrado");
+            }
+        
+            // Obtener los otros modelos
+            $otrosModelos = array_filter($modelos, function($modelo) use ($id) {
+                return $modelo['id'] != $id; // Excluye el modelo actual
+            });
+        
+            // Pasa la información a la vista
+            log_message('debug', 'Modelo encontrado: ' . print_r($modelos[$id], true));
+            return view('skate_detail', [
+                'modelo' => $modelos[$id],
+                'otrosModelos' => $otrosModelos // Pasa los otros modelos a la vista
+            ]);
+        } else {
+            // Guardar la URL actual en la sesión antes de redirigir
+            $session->set('redirect_url', current_url());
+            return redirect()->to('/login')->with('error', 'Debes iniciar sesión para acceder a esta página');
         }
-    
-        // Obtener los otros modelos
-        $otrosModelos = array_filter($modelos, function($modelo) use ($id) {
-            return $modelo['id'] != $id; // Excluye el modelo actual
-        });
-    
-        // Pasa la información a la vista
-        log_message('debug', 'Modelo encontrado: ' . print_r($modelos[$id], true));
-        return view('skate_detail', [
-            'modelo' => $modelos[$id],
-            'otrosModelos' => $otrosModelos // Pasa los otros modelos a la vista
-        ]);
-    }else{
-        return redirect()->to('/login');
-    }}
+    }
 
     public function updateSkateApodo()
 {
@@ -308,6 +407,7 @@ class AuthController extends BaseController
     } else {
         return redirect()->back()->with('error', 'No se pudo actualizar el apodo. Verifica el código.');
     }
+
 }
 public function enviarmail()
 {
@@ -346,65 +446,325 @@ public function enviarmail()
 }
 public function comprar()
 {
-    $direccionModel = new \App\Models\DireccionModel();
     $session = session();
-
-    // Obtener el ID del usuario desde la sesión
-    $userId = $session->get('user_id');
-    if (!$userId) {
-        log_message('error', 'Usuario no logueado');
-        return redirect()->to('/login')->with('error', 'Por favor inicia sesión para realizar una compra.');
+    
+    // Verificar que el usuario está logueado
+    if (!$session->get('logged_in')) {
+        // Guardar la URL de redirección en sesión antes de enviar al login
+        $session->set('redirect_url', current_url());
+        return redirect()->to('/login')->with('error', 'Debes iniciar sesión para realizar una compra');
     }
 
-    // Obtener todas las direcciones del usuario
-    $userAddresses = $direccionModel->getDireccionesPorUsuario($userId);
+    // Obtener el ID del usuario
+    $userId = $session->get('user_id');
     
-    log_message('debug', 'Direcciones obtenidas: ' . print_r($userAddresses, true));
+    // Obtener las direcciones asociadas a este usuario
+    $direccionModel = new DireccionModel();
+    $userAddresses = $direccionModel->where('ID_usuario', $userId)->findAll();
+    
+    // Verificar si hay direcciones
+    if (empty($userAddresses)) {
+        $session->setFlashdata('error', 'No tienes direcciones registradas.');
+        return redirect()->to('nuevadireccion');  // Redirigir a la página de registrar nueva dirección
+    }
 
-    // Pasar las direcciones a la vista sin más procesamiento
-    return view('comprar', [
-        'userAddresses' => $userAddresses,  // Aquí pasas las direcciones al frontend
+    // Obtener las provincias y localidades
+    $provinciaModel = new ProvinciaModel();
+    $localidadModel = new LocalidadModel();
+
+    foreach ($userAddresses as &$address) {
+        // Obtener nombre de la provincia y localidad usando sus IDs
+        $provincia = $provinciaModel->find($address['ID_provincia']);
+        $localidad = $localidadModel->find($address['ID_localidad']);
+        
+        $address['provincia_nombre'] = $provincia ? $provincia['provincia'] : 'Desconocida';
+        $address['localidad_nombre'] = $localidad ? $localidad['localidad'] : 'Desconocida';
+    }
+
+    // Pasar las direcciones a la vista
+    return view('comprar', ['userAddresses' => $userAddresses]);
+}
+public function guardar()
+{
+    // Verificar que el usuario está logueado
+    $userId = session()->get('user_id');
+    if (!$userId) {
+        return redirect()->to('/login');
+    }
+
+    // Obtener las direcciones del usuario
+    $direccionModel = new DireccionModel();
+    $direcciones = $direccionModel->getDireccionesPorUsuario($userId);
+
+    // Obtener provincias disponibles
+    $provinciaModel = new ProvinciaModel();
+    $provincias = $provinciaModel->findAll();
+
+    // Obtener todas las localidades para usar con la función de búsqueda en el frontend
+    $localidadModel = new LocalidadModel();
+    $localidades = $localidadModel->select('id, localidad, id_provincia')->findAll();
+
+    // Cargar la vista con las direcciones y las provincias/localidades
+    return view('nuevadireccion', [
+        'direcciones' => $direcciones,
+        'provincias'  => $provincias,
+        'localidades' => $localidades
     ]);
 }
-public function nuevadireccion(){
-    return view ('nuevadireccion');
-}
-public function guardardireccion()
+
+public function guardarNueva()
 {
-    // Depuración: verificar si la solicitud es POST
-    log_message('debug', 'Método POST recibido para guardar dirección');
-
-    // Validación básica de campos
-    if (!$this->validate([
-        'calle'    => 'required|min_length[3]',
-        'provincia' => 'required|min_length[3]',
-        'numero'   => 'required|is_natural_no_zero'
+    // Validar los campos
+    if ($this->validate([
+        'calle' => 'required|string',
+        'numero' => 'required|integer',
+        'localidad' => 'required|string',
+        'provincia' => 'required|string',
     ])) {
-        // Depuración: mostrar el error de validación
-        log_message('debug', 'Validación fallida: ' . implode(', ', $this->validator->getErrors()));
-        return redirect()->back()->withInput()->with('error', 'Hubo un problema con los datos ingresados');
+        
+        // Obtener los valores del formulario
+        $calle = $this->request->getPost('calle');
+        $numero = $this->request->getPost('numero');
+        $localidadNombre = $this->request->getPost('localidad');
+        $provinciaNombre = $this->request->getPost('provincia');
+        $user_id = session()->get('user_id');
+        if (!$user_id) {
+            session()->setFlashdata('error', 'No se pudo identificar al usuario.');
+            return redirect()->to('/');
+        }
+        
+        // Buscar el ID de la localidad
+        $localidadModel = new LocalidadModel();
+        $localidad = $localidadModel->where('localidad', $localidadNombre)->first();
+        $id_localidad = $localidad ? $localidad['id'] : null;
+
+        // Buscar el ID de la provincia
+        $provinciaModel = new ProvinciaModel();
+        $provincia = $provinciaModel->where('provincia', $provinciaNombre)->first();
+        $id_provincia = $provincia ? $provincia['id'] : null;
+
+        // Verificar si se encontraron los IDs
+        if ($id_localidad && $id_provincia) {
+            // Guardar los datos en la tabla direccion
+            $direccionModel = new DireccionModel();
+            $direccionData = [
+                'calle' => $calle,
+                'numero' => $numero,
+                'ID_localidad' => $id_localidad,
+                'ID_provincia' => $id_provincia,
+                'ID_usuario' => $user_id 
+            ];
+
+            // Intentar guardar la dirección
+            if ($direccionModel->save($direccionData)) {
+                session()->setFlashdata('success', 'Dirección guardada correctamente.');
+            } else {
+                session()->setFlashdata('error', 'Hubo un error al guardar la dirección.');
+            }
+        } else {
+            session()->setFlashdata('error', 'La localidad o provincia no se encuentran registradas.');
+        }
+    } else {
+        session()->setFlashdata('error', 'Por favor, completa todos los campos correctamente.');
     }
 
-    // Obtener los datos del formulario
-    $data = [
-        'calle'    => $this->request->getPost('calle'),
-        'ciudad' => $this->request->getPost('ciudad'),
-        'provincia' => $this->request->getPost('provincia'),
-        'numero'   => $this->request->getPost('numero'),
-        'ID_usuario' => session()->get('user_id'), // Asumiendo que el usuario está logueado
-    ];
+    // Redirigir después de la operación
+    return redirect()->to('/comprar');
+}
+public function obtenerLocalidadesPorProvincia($provinciaId)
+{
+    $localidadModel = new LocalidadModel();
 
-    // Insertar la dirección en la base de datos
-    $direccionModel = new DireccionModel();
-    if ($direccionModel->insert($data)) {
-        // Depuración: confirmación de inserción exitosa
-        log_message('debug', 'Dirección guardada exitosamente');
-        // Redirigir a la página de compra con un mensaje de éxito
-        return redirect()->to('/comprar')->with('success', 'Dirección guardada correctamente');
+    // Obtener las localidades asociadas a la provincia
+    $localidades = $localidadModel->where('id_provincia', $provinciaId)->findAll();
+
+    if ($localidades) {
+        return $this->response->setJSON($localidades);  // Devuelve las localidades en formato JSON
     } else {
-        // Depuración: error en la inserción
-        log_message('debug', 'Error al guardar la dirección');
-        return redirect()->back()->withInput()->with('error', 'Error al guardar la dirección');
+        // Si no hay localidades, devuelve un error 404
+        return $this->response->setStatusCode(404, 'No se encontraron localidades');
     }
 }
+public function updateUserProfile()
+{
+    $session = session();
+    $userModel = new UserModel();
+    $userId = $session->get('user_id');
+    $currentUser = $userModel->find($userId);
+
+    if (!$session->get('logged_in') || !$currentUser) {
+        return redirect()->to('/login')->with('error', 'Debes iniciar sesión para actualizar tu perfil');
+    }
+
+    $username = $this->request->getPost('username');
+    $newEmail = $this->request->getPost('email');
+    $newPassword = $this->request->getPost('new_password');
+    $currentPassword = $this->request->getPost('current_password');
+
+    if (!$userModel->verifyPassword($currentUser['email'], $currentPassword)) {
+        return redirect()->back()->with('error', 'La contraseña actual es incorrecta');
+    }
+
+    // Procesar cambio de username
+    if ($username && $username !== $currentUser['username']) {
+        try {
+            $userModel->update($userId, ['username' => $username]);
+            $session->set('username', $username);
+            $session->setFlashdata('success', 'Nombre de usuario actualizado correctamente.');
+        } catch (\Exception $e) {
+            log_message('error', 'Error al actualizar username: ' . $e->getMessage());
+            $session->setFlashdata('error', 'Error al actualizar nombre de usuario');
+        }
+    }
+
+    // Procesar cambio de email
+    if ($newEmail && $newEmail !== $currentUser['email']) {
+        if ($userModel->where('email', $newEmail)->first()) {
+            $session->setFlashdata('error', 'El correo electrónico ya está en uso');
+        } else {
+            $emailToken = bin2hex(random_bytes(16));
+            $emailExpire = date('Y-m-d H:i:s', strtotime('+1 hour'));
+
+            if ($userModel->setEmailResetToken($userId, $emailToken, $emailExpire)) {
+                $confirmLink = site_url('profile/confirm-email/' . $emailToken);
+                
+                $emailService = \Config\Services::email();
+                $emailService->clear();
+                
+                $emailService->setTo($currentUser['email']);
+                $emailService->setSubject('Confirma tu nuevo correo electrónico');
+                $emailService->setMessage("
+                    <h2>Confirmación de cambio de email</h2>
+                    <p>Hola {$currentUser['username']},</p>
+                    <p>Has solicitado cambiar tu correo electrónico a: {$newEmail}</p>
+                    <p>Por favor haz clic en el siguiente enlace para confirmar el cambio:</p>
+                    <p><a href='{$confirmLink}'>{$confirmLink}</a></p>
+                    <p>Si no solicitaste este cambio, por favor ignora este mensaje.</p>
+                ");
+                $emailService->setMailType('html');
+
+                if ($emailService->send()) {
+                    $session->set('pending_new_email', $newEmail);
+                    $session->setFlashdata('success', 'Se ha enviado un enlace de confirmación a tu correo actual.');
+                } else {
+                    $session->setFlashdata('error', 'Error al enviar correo de confirmación de email');
+                    log_message('error', $emailService->printDebugger(['headers']));
+                }
+            } else {
+                $session->setFlashdata('error', 'Error al generar token de confirmación de email');
+            }
+        }
+    }
+
+    // Procesar cambio de contraseña
+    if ($newPassword) {
+        $passwordToken = bin2hex(random_bytes(16));
+        $passwordExpire = date('Y-m-d H:i:s', strtotime('+1 hour'));
+
+        if ($userModel->setPasswordResetToken($currentUser['email'], $passwordToken, $passwordExpire)) {
+            $confirmLink = site_url('profile/confirm-password/' . $passwordToken);
+            
+            $emailService = \Config\Services::email();
+            $emailService->clear();
+            
+            $emailService->setTo($currentUser['email']);
+            $emailService->setSubject('Confirma el cambio de tu contraseña');
+            $emailService->setMessage("
+                <h2>Confirmación de cambio de contraseña</h2>
+                <p>Hola {$currentUser['username']},</p>
+                <p>Has solicitado cambiar tu contraseña.</p>
+                <p>Por favor haz clic en el siguiente enlace para confirmar el cambio:</p>
+                <p><a href='{$confirmLink}'>{$confirmLink}</a></p>
+                <p>Si no solicitaste este cambio, por favor cambia tu contraseña inmediatamente.</p>
+            ");
+            $emailService->setMailType('html');
+
+            if ($emailService->send()) {
+                $session->set('pending_new_password', password_hash($newPassword, PASSWORD_DEFAULT));
+                $session->setFlashdata('success', 'Se ha enviado un enlace de confirmación a tu correo actual.');
+            } else {
+                $session->setFlashdata('error', 'Error al enviar correo de confirmación de contraseña');
+                log_message('error', $emailService->printDebugger(['headers']));
+            }
+        } else {
+            $session->setFlashdata('error', 'Error al generar token de confirmación de contraseña');
+        }
+    }
+
+    return redirect()->to('/profile');
+}
+
+public function confirmEmail($token)
+{
+    $session = session();
+    $userModel = new UserModel();
+
+    $user = $userModel->verifyEmailToken($token);
+    $newEmail = $session->get('pending_new_email');
+
+    if ($user && $newEmail) {
+        $userModel->update($user['id'], [
+            'email' => $newEmail,
+            'email_reset_token' => null,
+            'email_reset_expire' => null
+        ]);
+        $session->set('email', $newEmail);
+        $session->remove('pending_new_email');
+        return redirect()->to('/profile')->with('success', 'Correo electrónico actualizado correctamente');
+    }
+
+    return redirect()->to('/profile')->with('error', 'Token inválido o expirado');
+}
+
+public function confirmPassword($token)
+{
+    $session = session();
+    $userModel = new UserModel();
+
+    $user = $userModel->verifyPasswordToken($token);
+    $newPassword = $session->get('pending_new_password');
+
+    if ($user && $newPassword) {
+        $userModel->update($user['id'], [
+            'password' => $newPassword,
+            'reset_token' => null,
+            'reset_expiration' => null
+        ]);
+        $session->remove('pending_new_password');
+        return redirect()->to('/profile')->with('success', 'Contraseña actualizada correctamente');
+    }
+
+    return redirect()->to('/profile')->with('error', 'Token inválido o expirado');
+}
+public function profile()
+{
+    $session = session();
+
+    if (!$session->get('logged_in')) {
+        return redirect()->to('/login')->with('error', 'Debes iniciar sesión para ver tu perfil');
+    }
+
+    $userModel = new UserModel();
+    $user = $userModel->find($session->get('user_id'));
+
+    return view('profile', ['user' => $user]);
+}
+public function eliminarUsuariosNoVerificadosCron()
+{
+    $userModel = new UserModel();
+    $cutoff = date('Y-m-d H:i:s');
+
+    $deletedUsers = $userModel->where('is_active', 0)
+                              ->where('verification_expires <', $cutoff)
+                              ->delete();
+
+    if ($deletedUsers) {
+        log_message('info', "Cron Job: Se eliminaron {$deletedUsers} cuentas no verificadas.");
+        echo "OK: Se eliminaron {$deletedUsers} cuentas.\n";
+    } else {
+        log_message('info', "Cron Job: No se encontraron cuentas no verificadas para eliminar.");
+        echo "OK: No se encontraron cuentas para eliminar.\n";
+    }
+}
+
 }
